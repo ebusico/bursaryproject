@@ -1,2 +1,6 @@
 # bursaryproject
-Hello World!
+
+To Deploy, run:
+```
+node server.js
+```
