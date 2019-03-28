@@ -4,6 +4,7 @@
   "description": "package information listed here",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "mongodb": "^3.2.2"
   },
   "devDependencies": {},
