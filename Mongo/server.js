@@ -12,9 +12,7 @@ MongoClient.connect(url, function(err, db) {
     const dbo = db.db("sampleDB");
     
    insertDocument(dbo, function(){
-      viewDocuments(dbo, function(){  
-        db.close();
-      });
+       db.close()
    });
 });
 
