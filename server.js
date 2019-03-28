@@ -3,29 +3,27 @@ const assert = require('assert');
 const bodyParser = require('body-parser');
 
 // Connection URL
-const url = "mongodb://localhost:27017/users_db";
+const url = "mongodb://localhost:27017/hello";
 
 MongoClient.connect(url, function(err, db) {
     if (err) return console.log(err);
     console.log("Database connected!");
     
-    const dbo = db.db("users_db");
+    const dbo = db.db("sampleDB");
     
-    insertDocument(dbo, function(){
+   insertDocument(dbo, function(){
       viewDocuments(dbo, function(){  
-        removeDocument(dbo, function(){
         db.close();
       });
-    });
    });
 });
 
 const insertDocument = function(dbo, callback){
     //Get collection
-    const collection = dbo.collection("trainees");
+    const collection = dbo.collection("hello");
 
     //insert documents
-    collection.insertOne({"first_name":"John","last_name":"Smith"}, function(err, result) {
+    collection.insertOne({"string":"hello World"}, function(err, result) {
         if (err) return console.log(err);
         console.log("1 document inserted");
     callback(result);
