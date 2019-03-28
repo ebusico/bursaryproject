@@ -1,0 +1,24 @@
+{
+  "name": "qa_bp",
+  "version": "1.0.0",
+  "description": "package information listed here",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "mongodb": "^3.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebusico/bursaryproject.git"
+  },
+  "author": "Dev_team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ebusico/bursaryproject/issues"
+  },
+  "homepage": "https://github.com/ebusico/bursaryproject#readme"
+}

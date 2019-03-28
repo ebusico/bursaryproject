@@ -11,7 +11,7 @@ As a prerequiste Node.js needs to be installed
 ```
 mongod.exe
 ```
-- Navigate to <Local_Git_Folder>/MongoDB and and run:
+- Navigate to <Local_Git_Folder>/Mongo and and run:
 ```
 npm install
 node server.js
