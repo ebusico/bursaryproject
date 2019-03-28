@@ -10,8 +10,8 @@ var db
 MongoClient.connect('mongodb://localhost:27017/sampleDB', { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log(err)
   db = client.db('sampleDB') // whatever your database name is
-  app.listen(3000, () => {
-    console.log('listening on 3000')
+  app.listen(4000, () => {
+    console.log('listening on 4000')
   })
 })
 
