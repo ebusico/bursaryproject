@@ -15,8 +15,8 @@ MongoClient.connect('mongodb://localhost:27017/sampleDB', { useNewUrlParser: tru
   })
 })
 
-app.get('/', (req, res) => {
+app.get('/express_backend', (req, res) => {
   db.collection('hello').find().toArray(function(err, results) {
-    res.send(results[0].string)
+    res.send(results[0])
   })
 })
