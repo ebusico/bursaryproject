@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './QA.png';
 import './App.css';
+import Nav from './Nav.js';
+import CardExample from './Card.js'
 
 class App extends Component {
   state = { 
@@ -27,12 +29,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          </header>
-          <h1 className="App-database">{this.state.data}</h1>
-          
+      <div className="Card">
+        <Nav/>
+        <CardExample title={this.state.data} subtitle="Sample"/>
       </div>
     );
   }
