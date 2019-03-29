@@ -30,7 +30,7 @@ node server.js
 - Navigate to <Local_Git_Folder>/React and and run:
 ```
 npm install
-node server.js
+npm start
 ```
 
 Navigate to localhost:3000 and the React symbol along with "Hello World!" should be displayed.
