@@ -66,4 +66,4 @@ Navigate to localhost:3000 to test deployment.
 
 ## Troubleshooting
 
-If the email fails to authenticate, it may be neccessary to allow "less secure apps" to access the chosed email address. Please refer to your email provider for details on how to do so.S
+If the email fails to authenticate, it may be neccessary to allow "less secure apps" to access the chosen email address. Please refer to your email provider for details on how to do so.S
