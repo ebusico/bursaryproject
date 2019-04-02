@@ -62,4 +62,4 @@ npm install
 npm start
 ```
 
-Navigate to localhost:3000 and click "Add Trainee" from the Nav bar, fill and submit the form. Navigate to localhost:4000/trainee and your added trainee should be displayed.
+Navigate to localhost:3000 to test deployment.
