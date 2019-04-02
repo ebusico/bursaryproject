@@ -16,6 +16,38 @@ use trainees
 
 ## Start Express/Node App
 
+- Open <Local_Git_Folder>/NodeExpress/server.js
+
+- Edit the "/send-email" route by replacing "<Service>" with you email provider, "<Sender Email>" with your email and "<Sender Password>" with your email password.
+
+Example:
+```
+traineeRoutes.route('/send-email').post(function(req, res) {
+      let transporter = nodeMailer.createTransport({
+          service: 'GMail',
+          auth: {
+              user: 'example@gmail.com',
+              pass: 'password'
+          }
+      });
+      let mailOptions = {
+          from: 'example@gmail.com', // sender address
+          to: req.body.trainee_email, // list of receivers
+          subject: 'test', // Subject line
+          text: 'test', // plain text body
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);
+          res.status(200).json({'email': 'Email Sent'});
+      });
+});
+
+```
+
 - Navigate to <Local_Git_Folder>/NodeExpress and and run:
 ```
 npm install
