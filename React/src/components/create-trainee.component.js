@@ -41,7 +41,10 @@ export default class CreateTrainee extends Component {
         };
         
         axios.post('http://localhost:4000/trainee/add', newTrainee)
-            .then(res => console.log(res.data));        
+            .then(res => console.log(res.data)); 
+        
+        axios.post('http://localhost:4000/trainee/send-email', newTrainee)
+            .then(res => console.log(res.data));
 
         this.setState({
             trainee_name: '',

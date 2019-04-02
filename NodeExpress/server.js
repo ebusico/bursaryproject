@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const traineeRoutes = express.Router();
+const nodeMailer = require('nodemailer');
 const PORT = 4000;
 
 let Trainee = require('./trainee.model');
@@ -65,6 +66,31 @@ traineeRoutes.route('/add').post(function(req, res) {
             res.status(400).send('Adding new trainee failed');
         });
 });
+
+traineeRoutes.route('/send-email').post(function(req, res) {
+      let transporter = nodeMailer.createTransport({
+          service: 'AOL',
+          auth: {
+              user: 'QABursary@aol.com',
+              pass: 'Passw0rd123'
+          }
+      });
+      let mailOptions = {
+          from: 'QABursary@aol.com', // sender address
+          to: req.body.trainee_email, // list of receivers
+          subject: 'test', // Subject line
+          text: 'test', // plain text body
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);
+          res.status(200).json({'email': 'Email Sent'});
+      });
+});
+
 
 app.use('/trainee', traineeRoutes);
 
