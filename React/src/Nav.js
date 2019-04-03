@@ -34,6 +34,7 @@ export default class Example extends React.Component {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink href="/create">Add Trainee</NavLink>
+                <NavLink href="/login"> Login </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
