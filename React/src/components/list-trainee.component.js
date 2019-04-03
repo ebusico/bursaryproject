@@ -11,6 +11,8 @@ const Trainee = props => (
             <Link to={"/edit/"+props.trainee._id}>Edit</Link>
 			&ensp;
 			<Link to={"/changePassword/"+props.trainee._id}>Change Password</Link>
+			&ensp;
+			<Link to={"/trainee-details/"+props.trainee._id}>Full Details</Link>
         </td>
     </tr>
 )
