@@ -7,10 +7,100 @@ const traineeRoutes = express.Router();
 const nodeMailer = require('nodemailer');
 const PORT = 4000;
 
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var passport = require('passport');
+var User = require('./models/staff.js');
+var CryptoJS = require("crypto-js");
+var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
+var key = CryptoJS.enc.Hex.parse('bW5Ks7SIJu');
+
 let Trainee = require('./trainee.model');
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// Express Session
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+  }));
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+traineeRoutes.route('/register').post(function(req,res){
+        var encryptedemail = CryptoJS.AES.encrypt(req.body.email, key, options);
+        var newUser = new User({
+          email: encryptedemail.toString(),
+          password: req.body.password,
+          role: req.body.role
+        });
+
+        User.createUser(newUser, function(err, user){
+          if(err) throw err;
+          res.send(user).end()
+        });
+});
+
+// Endpoint to login
+traineeRoutes.route('/login').post(passport.authenticate('local'),
+  function(req, res) {
+    res.send({result: true, email: req.user.email});
+  }
+);
+
+// Endpoint to get current user
+traineeRoutes.route('/user').get(function(req, res){
+  res.send(req.user);
+})
+
+
+// Endpoint to logout
+traineeRoutes.route('logout').get(function(req, res){
+  req.logout();
+  res.send(null)
+});
+
+
+var LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    var encryptedemail = CryptoJS.AES.encrypt(email, key, options);
+    var mail = encryptedemail.toString();
+    console.log(mail);
+    User.getUserByEmail(mail, function(err, user){
+      if(err) throw err;
+      if(!user){
+        return done(null, false, {message: 'Unknown User'});
+      }
+      User.comparePassword(password, user.password, function(err, isMatch){
+        if(err) throw err;
+     	if(isMatch){
+     	  return done(null, user);
+     	} else {
+     	  return done(null, false, {message: 'Invalid password'});
+     	}
+     });
+   });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
+      done(err, user);
+    });
+  });
 
 mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
