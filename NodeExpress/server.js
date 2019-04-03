@@ -57,14 +57,6 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-//traineeRoutes.route('/update-password/:id').post(function(req, res) {
-//    Trainee.updateOne(
-//        {_id: req.params.id},
-//        { $set: { trainee_password: req.body.trainee_password }},
-//        function(err, trainee) {
-//           if (err) res.status(400).send("Password update not possible");
-//    });
-//});
 traineeRoutes.route('/update-password/:id').post(function(req, res) {
     Trainee.findById(req.params.id, function(err, trainee) {
         if (!trainee)
@@ -93,30 +85,58 @@ traineeRoutes.route('/add').post(function(req, res) {
         });
 });
 
+//traineeRoutes.route('/send-email').post(function(req, res) {
+//      let transporter = nodeMailer.createTransport({
+//          service: 'AOL',
+//          auth: {
+//              user: 'QABursary@aol.com',
+//              pass: 'Passw0rd123'
+//          }
+//      });
+//      let mailOptions = {
+//          from: 'QABursary@aol.com', // sender address
+//          to: req.body.trainee_email, // list of receivers
+//          subject: 'test', // Subject line
+//          text: 'test', // plain text body
+//      };
+//
+//      transporter.sendMail(mailOptions, (error, info) => {
+//          if (error) {
+//              return console.log(error);
+//          }
+//          console.log('Message %s sent: %s', info.messageId, info.response);
+//          res.status(200).json({'email': 'Email Sent'});
+//      });
+//});
+
 traineeRoutes.route('/send-email').post(function(req, res) {
-      let transporter = nodeMailer.createTransport({
-          service: 'AOL',
-          auth: {
-              user: 'QABursary@aol.com',
-              pass: 'Passw0rd123'
-          }
-      });
-      let mailOptions = {
-          from: 'QABursary@aol.com', // sender address
-          to: req.body.trainee_email, // list of receivers
-          subject: 'test', // Subject line
-          text: 'test', // plain text body
-      };
+    Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+        if (!trainee)
+            res.status(404).send("Email is not found");
+        else
+            var transporter = nodeMailer.createTransport({
+                service: 'AOL',
+                auth: {
+                    user: 'QABursary@aol.com',
+                    pass: 'Passw0rd123'
+                }
+            });
+            var mailOptions = {
+                from: 'QABursary@aol.com', // sender address
+                to: req.body.trainee_email, // list of receivers
+                subject: 'test', // Subject line
+                text: 'http://localhost:3000/edit/'+ trainee._id, // plain text body
+            };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              return console.log(error);
-          }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-          res.status(200).json({'email': 'Email Sent'});
-      });
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message %s sent: %s', info.messageId, info.response);
+                res.status(200).json({'email': 'Email Sent'});
+            });
+    });
 });
-
 
 app.use('/trainee', traineeRoutes);
 
