@@ -69,14 +69,14 @@ traineeRoutes.route('/add').post(function(req, res) {
 
 traineeRoutes.route('/send-email').post(function(req, res) {
       let transporter = nodeMailer.createTransport({
-          service: '<Service>',
+          service: 'AOL',
           auth: {
-              user: '<Sender Email>',
-              pass: '<Sender Password>'
+              user: 'QABursary@aol.com',
+              pass: 'Passw0rd123'
           }
       });
       let mailOptions = {
-          from: '<Sender Email>', // sender address
+          from: 'QABursary@aol.com', // sender address
           to: req.body.trainee_email, // list of receivers
           subject: 'test', // Subject line
           text: 'test', // plain text body

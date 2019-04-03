@@ -6,14 +6,16 @@ export default class EditTrainee extends Component {
     constructor(props) {
         super(props);
         
-        this.onChangeTraineeName = this.onChangeTraineeName.bind(this);
+        this.onChangeTraineeFname = this.onChangeTraineeFname.bind(this);
+        this.onChangeTraineeLname = this.onChangeTraineeLname.bind(this);
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineeAccount = this.onChangeTraineeAccount.bind(this);
         this.onChangeTraineeSort = this.onChangeTraineeSort.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            trainee_name: '',
+            trainee_fname: '',
+            trainee_lname: '',
             trainee_email: '',
             trainee_account_no: '',
             trainee_sort_code: ''
@@ -24,7 +26,8 @@ export default class EditTrainee extends Component {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
-                    trainee_name: response.data.trainee_name,
+                    trainee_fname: response.data.trainee_fname,
+                    trainee_lname: response.data.trainee_lname,
                     trainee_email: response.data.trainee_email,
                     trainee_account_no: response.data.trainee_account_no,
                     trainee_sort_code: response.data.trainee_sort_code
@@ -35,9 +38,15 @@ export default class EditTrainee extends Component {
             })
     }
     
-    onChangeTraineeName(e) {
+    onChangeTraineeFname(e) {
         this.setState({
-            trainee_name: e.target.value
+            trainee_fname: e.target.value
+        });
+    }
+    
+    onChangeTraineeLname(e) {
+        this.setState({
+            trainee_lname: e.target.value
         });
     }
 
@@ -62,7 +71,8 @@ export default class EditTrainee extends Component {
     onSubmit(e) {
         e.preventDefault();
         const obj = {
-            trainee_name: this.state.trainee_name,
+            trainee_fname: this.state.trainee_fname,
+            trainee_lname: this.state.trainee_lname,
             trainee_email: this.state.trainee_email,
             trainee_account_no: this.state.trainee_account_no,
             trainee_sort_code: this.state.trainee_sort_code
@@ -80,13 +90,21 @@ export default class EditTrainee extends Component {
                 <h3 align="center">Update Trainee</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
-                        <label>Name: </label>
+                        <label>First Name: </label>
                         <input  type="text"
                                 className="form-control"
-                                value={this.state.trainee_name}
-                                onChange={this.onChangeTraineeName}
+                                value={this.state.trainee_fname}
+                                onChange={this.onChangeTraineeFname}
                                 />
                     </div>
+                     <div className="form-group"> 
+                        <label>Last Name: </label>
+                        <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_lname}
+                                onChange={this.onChangeTraineeLname}
+                                />
+                    </div>           
                     <div className="form-group">
                         <label>Email: </label>
                         <input 

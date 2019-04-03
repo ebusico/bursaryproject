@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let Trainee = new Schema({
-    trainee_name: {
+    trainee_fname: {
+        type: String
+    },
+    trainee_lname: {
         type: String
     },
     trainee_email: {
@@ -16,6 +19,9 @@ let Trainee = new Schema({
     },    
     trainee_sort_code: {
         type: String
+    },
+    trainee_approved:{
+        type: Boolean
     }
 });
 
