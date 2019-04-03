@@ -87,7 +87,7 @@ export default class EditTrainee extends Component {
     render() {
         return (
             <div>
-                <h3 align="center">Update Trainee</h3>
+                <h3 align="center">Update Details</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
                         <label>First Name: </label>
@@ -133,7 +133,7 @@ export default class EditTrainee extends Component {
                     </div>
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Update Trainee" className="btn btn-primary" />
+                        <input type="submit" value="Update" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

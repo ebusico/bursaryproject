@@ -34,7 +34,6 @@ export default class TraineeDetails extends Component {
     }
 
     onSubmit(e) {
-        alert ("Has been approved and will download trainee details")
         const obj = {
 			trainee_fname: this.state.trainee_fname,
             trainee_lname: this.state.trainee_lname,
@@ -45,6 +44,7 @@ export default class TraineeDetails extends Component {
             trainee_approved: this.state.trainee_approved,
         };
         console.log(obj);
+        this.props.history.push('/edit/'+this.props.match.params.id);
     }
 
 render() {
@@ -67,7 +67,7 @@ render() {
                     <td>{this.state.trainee_email}</td>
                     <td>{this.state.trainee_account_no}</td>
                     <td>{this.state.trainee_sort_code}</td>
-                    <td><form><input type="submit" value="Download file" className="btn btn-primary" /></form></td>
+                    <td><form><input type="submit" value="Edit" className="btn btn-primary" /></form></td>
                 </table>
             </div>
 

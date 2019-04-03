@@ -125,7 +125,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'test', // Subject line
-                text: 'http://localhost:3000/edit/'+ trainee._id, // plain text body
+                text: 'http://localhost:3000/changePassword/'+ trainee._id, // plain text body
             };
 
             transporter.sendMail(mailOptions, (error, info) => {

@@ -54,7 +54,7 @@ export default class EditTrainee extends Component {
         axios.post('http://localhost:4000/trainee/update-password/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
-        this.props.history.push('/');
+        this.props.history.push('/trainee-details/'+this.props.match.params.id);
     }
 }
     render() {
@@ -70,7 +70,7 @@ export default class EditTrainee extends Component {
                         />
                     </div>
                     <div className="form-group"> 
-                        <label>Password: </label>
+                        <label>New Password: </label>
                         <input type="password"
                                className="form-control"
                                onChange={this.onChangeTraineePassword}
@@ -86,7 +86,7 @@ export default class EditTrainee extends Component {
 					
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Update Trainee" className="btn btn-primary" />
+                        <input type="submit" value="Update Password" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
