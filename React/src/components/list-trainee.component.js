@@ -9,6 +9,8 @@ const Trainee = props => (
         <td>{props.trainee.trainee_email}</td>
         <td>
             <Link to={"/edit/"+props.trainee._id}>Edit</Link>
+			&ensp;
+			<Link to={"/changePassword/"+props.trainee._id}>Change Password</Link>
         </td>
     </tr>
 )
