@@ -81,7 +81,7 @@ export default class EditTrainee extends Component {
         axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
-        this.props.history.push('/');
+        this.props.history.push('/trainee-details/'+this.props.match.params.id);
     }
     
     render() {

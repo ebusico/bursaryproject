@@ -39,6 +39,7 @@ export default class ListTrainee extends Component {
         return (
             <div>
                 <h3>Trainees List</h3>
+                <Link to={"/create"}>Add Trainee</Link>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
