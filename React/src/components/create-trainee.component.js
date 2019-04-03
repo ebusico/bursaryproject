@@ -9,12 +9,14 @@ export default class CreateTrainee extends Component {
         this.onChangeTraineeFname = this.onChangeTraineeFname.bind(this);
         this.onChangeTraineeLname = this.onChangeTraineeLname.bind(this);
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
+        this.onChangeTraineePassword = this.onChangeTraineePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',
+            trainee_password: ''
         }
     }
     
@@ -37,6 +39,12 @@ export default class CreateTrainee extends Component {
         });
     }
     
+    onChangeTraineePassword(e) {
+        this.setState({
+            trainee_password: e.target.value
+        });
+    }
+    
     onSubmit(e) {
         e.preventDefault();
         
@@ -48,7 +56,8 @@ export default class CreateTrainee extends Component {
         const newTrainee = {
             trainee_fname: this.state.trainee_fname,
             trainee_lname: this.state.trainee_lname,
-            trainee_email: this.state.trainee_email
+            trainee_email: this.state.trainee_email,
+            trainee_password: Math.random().toString(36).slice(-8)
         };
         
         axios.post('http://localhost:4000/trainee/add', newTrainee)
@@ -61,6 +70,7 @@ export default class CreateTrainee extends Component {
             trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',
+            trainee_password: ''
         })
         
         this.props.history.push('/');

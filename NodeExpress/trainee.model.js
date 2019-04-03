@@ -12,8 +12,7 @@ let Trainee = new Schema({
         type: String
     },
     trainee_password: {
-        type: String,
-        default: Math.random().toString(36).slice(-8)
+        type: String
     },
     trainee_account_no: {
         type: String

@@ -6,17 +6,13 @@ export default class EditTrainee extends Component {
     constructor(props) {
         super(props);
 		
-        this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineePassword = this.onChangeTraineePassword.bind(this);
         this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-			trainee_fname: '',
-            trainee_lname: '',
             trainee_email: '',
-            trainee_password: '',
-			confirmPassword: '',
+            trainee_password: ''
         }
     }
     
@@ -24,8 +20,6 @@ export default class EditTrainee extends Component {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
-                    trainee_fname: response.data.trainee_fname,
-                    trainee_lname: response.data.trainee_lname,
                     trainee_email: response.data.trainee_email,
                     trainee_password: response.data.trainee_password,
                 })   
@@ -46,12 +40,6 @@ export default class EditTrainee extends Component {
 			confirmPassword: e.target.value,
 		});
 	}
-
-    onChangeTraineeEmail(e) {
-        this.setState({
-            trainee_email: e.target.value,
-        });
-    }
     
     onSubmit(e) {
         e.preventDefault();
@@ -60,13 +48,10 @@ export default class EditTrainee extends Component {
 			alert("Password does not match");
 		} else {
         const obj = {
-			trainee_fname: this.state.trainee_fname,
-            trainee_lname: this.state.trainee_lname,
-            trainee_email: this.state.trainee_email,
-            trainee_password: this.state.trainee_password,
+            trainee_password: this.state.trainee_password
         };
         console.log(obj);
-        axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)
+        axios.post('http://localhost:4000/trainee/update-password/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
         this.props.history.push('/');
@@ -79,27 +64,23 @@ export default class EditTrainee extends Component {
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Email: </label>
-                        <input 
-                                type="text" 
-                                className="form-control"
-                                value={this.state.trainee_email}
-                                onChange={this.onChangeTraineeEmail}
-                                />
+                        <input type="text" 
+                               className="form-control"
+                               readOnly value={this.state.trainee_email}
+                        />
                     </div>
                     <div className="form-group"> 
                         <label>Password: </label>
-                        <input  type="password"
-                                className="form-control"
-                                value={this.state.trainee_password}
-                                onChange={this.onChangeTraineePassword}
-                                />
+                        <input type="password"
+                               className="form-control"
+                               onChange={this.onChangeTraineePassword}
+                        />
                     </div>
 					<div className="form-group">
-					<label>Confirm Password: </label>
-					<input type ="password"
-						className="form-control"
-						value={this.state.confirmPassword}
-						onChange={this.onChangeConfirmPassword}
+					   <label>Confirm Password: </label>
+					   <input type ="password"
+						      className="form-control"
+						      onChange={this.onChangeConfirmPassword}
 						/>
 					</div>
 					

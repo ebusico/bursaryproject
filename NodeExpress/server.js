@@ -36,14 +36,15 @@ traineeRoutes.route('/:id').get(function(req, res) {
     });
 });
 
+
 traineeRoutes.route('/update/:id').post(function(req, res) {
     Trainee.findById(req.params.id, function(err, trainee) {
         if (!trainee)
             res.status(404).send("data is not found");
         else
-            trainee.trainee_name = req.body.trainee_name;
+            trainee.trainee_fname = req.body.trainee_fname;
+            trainee.trainee_lname = req.body.trainee_lname;
             trainee.trainee_email = req.body.trainee_email;
-            trainee.trainee_password = req.body.trainee_password;
             trainee.trainee_account_no = req.body.trainee_account_no;
             trainee.trainee_sort_code = req.body.trainee_sort_code;
 
@@ -55,6 +56,31 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
             });
     });
 });
+
+//traineeRoutes.route('/update-password/:id').post(function(req, res) {
+//    Trainee.updateOne(
+//        {_id: req.params.id},
+//        { $set: { trainee_password: req.body.trainee_password }},
+//        function(err, trainee) {
+//           if (err) res.status(400).send("Password update not possible");
+//    });
+//});
+traineeRoutes.route('/update-password/:id').post(function(req, res) {
+    Trainee.findById(req.params.id, function(err, trainee) {
+        if (!trainee)
+            res.status(404).send("data is not found");
+        else
+            trainee.trainee_password = req.body.trainee_password;
+
+            trainee.save().then(trainee => {
+                res.json('Password updated!');
+            })
+            .catch(err => {
+                res.status(400).send("Update not possible");
+            });
+    });
+});
+
 
 traineeRoutes.route('/add').post(function(req, res) {
     let trainee = new Trainee(req.body);
