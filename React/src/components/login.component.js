@@ -41,10 +41,10 @@ export default class Login extends Component {
                 }
                 else{
                     console.log('Unsuccessful Login attempt');
-                    
                 }
             })
             .catch(error => {
+                alert("Invalid Email/Password");
                 console.log(error.response)
             });
     }
@@ -55,8 +55,8 @@ export default class Login extends Component {
             <div className="Login">
                     <form onSubmit={this.onSubmit}>
 
-                        <label className="uname"><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="uname" onChange={this.handleUsername} required/>
+                        <label className="uname"><b>Email</b></label>
+                        <input type="text" placeholder="Enter Email" name="uname" onChange={this.handleUsername} required/>
 
                         <label className="psw"><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="psw" onChange={this.handlePassword} required/>

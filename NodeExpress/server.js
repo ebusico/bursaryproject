@@ -225,6 +225,7 @@ traineeRoutes.route('/add').post(function(req, res) {
 
 traineeRoutes.route('/send-email').post(function(req, res) {
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+        console.log(trainee)
         if (!trainee)
             res.status(404).send("Email is not found");
         else
