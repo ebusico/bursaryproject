@@ -2,6 +2,9 @@ const express = require('express')
 const bodyParser= require('body-parser')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
+const path = require(“path”);
+
+app.use(express.static(path.join(__dirname, “client/build”)))
 
 app.use(bodyParser.urlencoded({extended: true}))
 
