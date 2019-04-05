@@ -35,5 +35,12 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.6.0",
     "react-test-renderer": "^16.8.6"
-  }
+  },
+  "jest": {
+    "moduleNameMapper": {
+	"\\.(svg|jpg|png)$": "<rootDir>/empty-module.js",
+	"\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
 }
+}
+

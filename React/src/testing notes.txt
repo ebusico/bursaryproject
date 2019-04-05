@@ -1,0 +1,1 @@
+ nav component line 31 <NavbarBrand href="/"><img src={logo} width="40px" /></NavbarBrand>
