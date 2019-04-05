@@ -7,6 +7,7 @@ export default class TraineeDetails extends Component {
         super(props);
 
         this.state = {
+			id: '',
 			trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',

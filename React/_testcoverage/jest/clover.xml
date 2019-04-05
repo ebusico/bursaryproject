@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1554459450401" clover="3.2.0">
-  <project timestamp="1554459450402" name="All files">
-    <metrics statements="108" coveredstatements="29" conditionals="4" coveredconditionals="0" methods="54" coveredmethods="12" elements="166" coveredelements="41" complexity="0" loc="108" ncloc="108" packages="2" files="8" classes="8"/>
+<coverage generated="1554473447350" clover="3.2.0">
+  <project timestamp="1554473447351" name="All files">
+    <metrics statements="108" coveredstatements="41" conditionals="4" coveredconditionals="0" methods="54" coveredmethods="18" elements="166" coveredelements="59" complexity="0" loc="108" ncloc="108" packages="2" files="8" classes="8"/>
     <package name="src">
       <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
       <file name="App.js" path="C:\Users\QAKrisDuff\Documents\Github\bursaryproject\React\src\App.js">
@@ -18,15 +18,15 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="102" coveredstatements="24" conditionals="4" coveredconditionals="0" methods="50" coveredmethods="9"/>
+      <metrics statements="102" coveredstatements="36" conditionals="4" coveredconditionals="0" methods="50" coveredmethods="15"/>
       <file name="change-password-trainee.component.js" path="C:\Users\QAKrisDuff\Documents\Github\bursaryproject\React\src\components\change-password-trainee.component.js">
-        <metrics statements="20" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <metrics statements="20" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="3"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
@@ -40,7 +40,7 @@
         <line num="54" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
       </file>
       <file name="create-trainee.component.js" path="C:\Users\QAKrisDuff\Documents\Github\bursaryproject\React\src\components\create-trainee.component.js">
         <metrics statements="23" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="2"/>
@@ -100,7 +100,7 @@
         <line num="6" count="0" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="32" count="3" type="stmt"/>
@@ -127,17 +127,17 @@
         <line num="54" count="0" type="stmt"/>
       </file>
       <file name="trainee-details.component.js" path="C:\Users\QAKrisDuff\Documents\Github\bursaryproject\React\src\components\trainee-details.component.js">
-        <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
+        <metrics statements="10" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="3"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
       </file>
     </package>
   </project>
