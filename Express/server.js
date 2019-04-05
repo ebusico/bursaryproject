@@ -3,8 +3,6 @@ const bodyParser= require('body-parser')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
 
-app.use(bodyParser.urlencoded({extended: true}))
-
 var db
 
 MongoClient.connect('mongodb://localhost:27017/sampleDB', { useNewUrlParser: true }, (err, client) => {
