@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --coverage --coverageDirectory=_testcoverage/jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -25,5 +25,15 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.6.0",
+    "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.6.0",
+    "react-test-renderer": "^16.8.6"
+  }
 }
