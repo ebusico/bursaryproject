@@ -2,12 +2,8 @@ const express = require('express')
 const bodyParser= require('body-parser')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
-const path = require('path')
 
 var db
-
-app.use(express.static(path.join(__dirname, 'React/src')))
-
 
 MongoClient.connect('mongodb://localhost:27017/sampleDB', { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log(err)
