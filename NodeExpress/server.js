@@ -225,10 +225,12 @@ traineeRoutes.route('/add').post(function(req, res) {
 
 traineeRoutes.route('/send-email').post(function(req, res) {
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+        console.log(req.body.trainee_email)
         console.log(trainee)
-        if (!trainee)
+        if (!trainee){
             res.status(404).send("Email is not found");
-        else
+        }
+        else{
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
                 auth: {
@@ -239,9 +241,9 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             var mailOptions = {
                 from: 'QABursary@aol.com', // sender address
                 to: req.body.trainee_email, // list of receivers
-                subject: 'test', // Subject line
+                subject: 'Password Reset', // Subject line
                 text: 'http://localhost:3000/changePassword/'+ trainee._id, // plain text body
-            };
+            }            
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
@@ -250,6 +252,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 console.log('Message %s sent: %s', info.messageId, info.response);
                 res.status(200).json({'email': 'Email Sent'});
             });
+        }
     });
 });
 

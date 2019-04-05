@@ -53,18 +53,20 @@ export default class CreateTrainee extends Component {
         console.log(`Trainee Lname: ${this.state.trainee_lname}`);
         console.log(`Trainee Email: ${this.state.trainee_email}`);
         
-        const newTrainee = {
+        var newTrainee = {
             trainee_fname: this.state.trainee_fname,
             trainee_lname: this.state.trainee_lname,
             trainee_email: this.state.trainee_email,
             trainee_password: Math.random().toString(36).slice(-8)
         };
         
-        axios.post('http://localhost:4000/trainee/add', newTrainee)
-            .then(res => console.log(res.data)); 
+        console.log(newTrainee)
         
-        axios.post('http://localhost:4000/trainee/send-email', newTrainee)
-            .then(res => console.log(res.data));
+        axios.post('http://localhost:4000/trainee/add', newTrainee)
+            .then( (response) => {axios.post('http://localhost:4000/trainee/send-email', newTrainee)}); 
+        
+//        axios.post('http://localhost:4000/trainee/send-email', newTrainee)
+//            .then(res => console.log(res.data));
 
         this.setState({
             trainee_fname: '',
