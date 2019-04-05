@@ -4,7 +4,7 @@ const app = express()
 const MongoClient = require('mongodb').MongoClient
 const path = require(“path”);
 
-app.use(express.static(path.join(__dirname, “client/build”)))
+app.use(express.static(path.join(__dirname, “React”)))
 
 app.use(bodyParser.urlencoded({extended: true}))
 
