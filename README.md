@@ -14,15 +14,15 @@ mongod.exe
 - Navigate to <Local_Git_Folder>/Mongo and and run:
 ```
 npm install
-node server.js
+node mongo.js
 ```
 
 ## Start Express App
 
-- Navigate to <Local_Git_Folder>/Express and and run:
+- Navigate to <Local_Git_Folder> and and run:
 ```
 npm install
-node server.js
+node express.js
 ```
 
 ## Start React App
