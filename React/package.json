@@ -31,10 +31,8 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "axios-mock-adapter": "^1.16.0",
-    "babel-jest": "^24.7.1",
     "babel-polyfill": "^6.26.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.7.1",
     "react-test-renderer": "^16.8.6"
   },
   "jest": {
