@@ -1,5 +1,5 @@
 import React from 'react';
-//import logo from './logo.svg';
+import logo from './logo.svg';
 import {
   Collapse,
   Navbar,
@@ -27,6 +27,7 @@ export default class Example extends React.Component {
   render() {
     return (
       <div>
+	  <NavbarBrand href="/"><img src={logo} width="40px" /></NavbarBrand>
         <Navbar color="light" light expand="md">
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
