@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 
 export default class EditTrainee extends Component {
     
@@ -20,8 +21,8 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, '3FJSei8zPx');
-                var trainee_password  = CryptoJS.AES.decrypt(response.data.trainee_password, '3FJSei8zPx');
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);
+                var trainee_password  = CryptoJS.AES.decrypt(response.data.trainee_password, codes.trainee);
                 this.setState({
                     trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
                     trainee_password: trainee_password.toString(CryptoJS.enc.Utf8),
@@ -50,7 +51,7 @@ export default class EditTrainee extends Component {
 		if (trainee_password !== confirmPassword){
 			alert("Password does not match");
 		} else {
-        var pass = CryptoJS.AES.encrypt(this.state.trainee_password, '3FJSei8zPx');
+        var pass = CryptoJS.AES.encrypt(this.state.trainee_password, codes.trainee);
         const obj = {
             trainee_password: pass.toString()
         };

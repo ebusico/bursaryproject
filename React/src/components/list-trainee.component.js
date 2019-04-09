@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 
 const Trainee = props => (
     <tr>
@@ -32,11 +33,11 @@ export default class ListTrainee extends Component {
     traineeList() {
         return this.state.trainees.map(function(currentTrainee, i){
             console.log(currentTrainee);
-            var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, '3FJSei8zPx');
+            var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.trainee);
             currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
-            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
+            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);
             currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
-            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx');
+            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, codes.trainee);
             currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
             return <Trainee trainee={currentTrainee} key={i} />;
         })

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 
 
 export default class Login extends Component {
@@ -29,12 +30,10 @@ export default class Login extends Component {
     onSubmit = event => {
         event.preventDefault();
         CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
-        var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-        var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
 
-        var encrypted = CryptoJS.AES.encrypt(this.state.uname, key, {iv: iv, padding: CryptoJS.pad.NoPadding});
+        var encrypted = CryptoJS.AES.encrypt(this.state.uname, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
         console.log(encrypted.toString());
-        var pass = CryptoJS.AES.encrypt(this.state.psw, 'c9nMaacr2Y');
+        var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
         console.log(pass);
         const user = {
             username: encrypted.toString(),

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js"
 
 export default class CreateTrainee extends Component {
     
@@ -54,10 +55,10 @@ export default class CreateTrainee extends Component {
         console.log(`Trainee Lname: ${this.state.trainee_lname}`);
         console.log(`Trainee Email: ${this.state.trainee_email}`);
         
-        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, '3FJSei8zPx');
-        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, '3FJSei8zPx');
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, '3FJSei8zPx');
-        var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), '3FJSei8zPx');
+        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
+        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
+        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.trainee);
+        var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
 
         var newTrainee = {
             trainee_fname: fname.toString(),

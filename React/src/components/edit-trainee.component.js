@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 
 export default class EditTrainee extends Component {
     
@@ -26,13 +27,13 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, '3FJSei8zPx');
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, '3FJSei8zPx');
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, '3FJSei8zPx');
+                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
+                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);
                 
                 if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
-                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, '3FJSei8zPx');
-                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, '3FJSei8zPx');
+                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
+                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);
                     this.setState({
                         trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
                         trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
@@ -82,11 +83,11 @@ export default class EditTrainee extends Component {
     
     onSubmit(e) {
         e.preventDefault();
-        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, '3FJSei8zPx');
-        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, '3FJSei8zPx');
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, '3FJSei8zPx');
-        var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, '3FJSei8zPx');
-        var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, '3FJSei8zPx');
+        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
+        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
+        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.trainee);
+        var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, codes.trainee);
+        var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, codes.trainee);
         const obj = {
             trainee_fname: fname.toString(),
             trainee_lname: lname.toString(),

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 
 export default class TraineeDetails extends Component {
     
@@ -25,16 +26,16 @@ export default class TraineeDetails extends Component {
                 console.log(response.data);
                 console.log(response.data.trainee_account_no);
                 if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
-                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, '3FJSei8zPx');
-                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, '3FJSei8zPx');
+                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
+                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);
                     this.setState({
                         trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
                         trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8),
                     }) 
                 }
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, '3FJSei8zPx');
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, '3FJSei8zPx');
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, '3FJSei8zPx');
+                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
+                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);
                 this.setState({
                     trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
                     trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
