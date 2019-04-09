@@ -31,13 +31,13 @@ export default class Login extends Component {
             username: this.state.uname,
             password: this.state.psw
         };
-        axios.post('http://localhost:4000/trainee/login', user)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/login', user)
             .then(function(res){
                 console.log(res);
                 console.log(res.data);
                 if(res.data.result === true ){
                     console.log('Successful, now redirecting');
-                    document.location.href = 'http://localhost:3000/';
+                    document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
                 }
                 else{
                     console.log('Unsuccessful Login attempt');

@@ -8,6 +8,7 @@ const nodeMailer = require('nodemailer');
 const PORT = 4000;
 const bcrypt = require('bcrypt');
 
+require('dotenv').config();
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -199,30 +200,6 @@ traineeRoutes.route('/add').post(function(req, res) {
         });
 });
 
-//traineeRoutes.route('/send-email').post(function(req, res) {
-//      let transporter = nodeMailer.createTransport({
-//          service: 'AOL',
-//          auth: {
-//              user: 'QABursary@aol.com',
-//              pass: 'Passw0rd123'
-//          }
-//      });
-//      let mailOptions = {
-//          from: 'QABursary@aol.com', // sender address
-//          to: req.body.trainee_email, // list of receivers
-//          subject: 'test', // Subject line
-//          text: 'test', // plain text body
-//      };
-//
-//      transporter.sendMail(mailOptions, (error, info) => {
-//          if (error) {
-//              return console.log(error);
-//          }
-//          console.log('Message %s sent: %s', info.messageId, info.response);
-//          res.status(200).json({'email': 'Email Sent'});
-//      });
-//});
-
 traineeRoutes.route('/send-email').post(function(req, res) {
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         console.log(req.body.trainee_email)
@@ -234,8 +211,8 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
                 auth: {
-                    user: 'QABursary@aol.com',
-                    pass: 'Passw0rd123'
+                    user: process.env.QA_BURSARY_EMAIL,
+                    pass: process.env.QA_BURSARY_PASSWORD
                 }
             });
             var mailOptions = {
@@ -259,5 +236,5 @@ traineeRoutes.route('/send-email').post(function(req, res) {
 app.use('/trainee', traineeRoutes);
 
 app.listen(PORT, function() {
-    console.log("Server is running on Port: " + PORT);
+    console.log("Server is running on Port: " + PORT + process.env.QA_BURSARY_EMAIL);
 });

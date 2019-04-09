@@ -19,7 +19,7 @@ export default class TraineeDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
                     trainee_fname: response.data.trainee_fname,

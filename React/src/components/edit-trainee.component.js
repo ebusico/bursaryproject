@@ -23,7 +23,7 @@ export default class EditTrainee extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
                     trainee_fname: response.data.trainee_fname,
@@ -78,7 +78,7 @@ export default class EditTrainee extends Component {
             trainee_sort_code: this.state.trainee_sort_code
         };
         console.log(obj);
-        axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
         this.props.history.push('/trainee-details/'+this.props.match.params.id);

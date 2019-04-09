@@ -19,7 +19,7 @@ export default class ListTrainee extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:4000/trainee/')
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
             .then(response => {
                 this.setState({ trainees: response.data });
             })
