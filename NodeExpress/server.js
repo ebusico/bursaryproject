@@ -15,7 +15,7 @@ var passport = require('passport');
 var User = require('./models/staff.js');
 var CryptoJS = require("crypto-js");
 var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
-var key = CryptoJS.enc.Hex.parse('bW5Ks7SIJu');
+//var key = CryptoJS.enc.Hex.parse('bW5Ks7SIJu');
 
 let Trainee = require('./trainee.model');
 
@@ -37,9 +37,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 traineeRoutes.route('/register').post(function(req,res){
-        var encryptedemail = CryptoJS.AES.encrypt(req.body.email, key, options);
+  CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
+  var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+  var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+
+  var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv, padding: CryptoJS.pad.NoPadding});
+        //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
         var newUser = new User({
-          email: encryptedemail.toString(),
+          email: encrypted.toString(),
           password: req.body.password,
           role: req.body.role
         });
@@ -71,14 +76,17 @@ traineeRoutes.route('logout').get(function(req, res){
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(
   function(email, password, done) {
-    var encryptedemail = CryptoJS.AES.encrypt(email, key, options);
-    var mail = encryptedemail.toString();
-    User.getUserByEmail(mail, function(err, user){
+    console.log(email);
+    console.log(password);
+    var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
+    var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
+
+    User.getUserByEmail(email, function(err, user){
       if(err) throw err;
       if(!user){
         return done(null, false, {message: 'Unknown User'});
       }
-      User.comparePassword(password, user.password, function(err, isMatch){
+      User.comparePassword(decryptPass, user.password, function(err, isMatch){
         if(err) throw err;
      	if(isMatch){
      	  return done(null, user);
@@ -170,8 +178,10 @@ traineeRoutes.route('/update-password/:id').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
+            var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, 'traineePassword');
+            var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
             bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(req.body.trainee_password, salt, function(err, hash) {
+                bcrypt.hash(decryptPass, salt, function(err, hash) {
                   req.body.trainee_password = hash;
                   trainee.trainee_password = req.body.trainee_password;
                   trainee.save().then(trainee => {
@@ -224,6 +234,7 @@ traineeRoutes.route('/add').post(function(req, res) {
 //});
 
 traineeRoutes.route('/send-email').post(function(req, res) {
+    var email = CryptoJS.AES.decrypt(req.body.trainee_email, '3FJSei8zPx');
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         console.log(req.body.trainee_email)
         console.log(trainee)
@@ -240,7 +251,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             });
             var mailOptions = {
                 from: 'QABursary@aol.com', // sender address
-                to: req.body.trainee_email, // list of receivers
+                to: email.toString(CryptoJS.enc.Utf8), // list of receivers
                 subject: 'Password Reset', // Subject line
                 text: 'http://localhost:3000/changePassword/'+ trainee._id, // plain text body
             }            

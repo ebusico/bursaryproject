@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import CryptoJS from "react-native-crypto-js";
 
 export default class TraineeDetails extends Component {
     
@@ -21,13 +22,25 @@ export default class TraineeDetails extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
+                console.log(response.data);
+                console.log(response.data.trainee_account_no);
+                if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
+                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, '3FJSei8zPx');
+                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, '3FJSei8zPx');
+                    this.setState({
+                        trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
+                        trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8),
+                    }) 
+                }
+                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, '3FJSei8zPx');
+                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, '3FJSei8zPx');
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, '3FJSei8zPx');
                 this.setState({
-                    trainee_fname: response.data.trainee_fname,
-                    trainee_lname: response.data.trainee_lname,
-                    trainee_email: response.data.trainee_email,
-                    trainee_account_no: response.data.trainee_account_no,
-                    trainee_sort_code: response.data.trainee_sort_code,
-                })  
+                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
+                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
+                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
+                }) 
+                
             })
             .catch(function (error) {
                 console.log(error);
@@ -35,6 +48,7 @@ export default class TraineeDetails extends Component {
     }
 
     onSubmit(e) {
+
         const obj = {
 			trainee_fname: this.state.trainee_fname,
             trainee_lname: this.state.trainee_lname,
@@ -63,12 +77,16 @@ render() {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <td>{this.state.trainee_fname}</td>
-                    <td>{this.state.trainee_lname}</td>
-                    <td>{this.state.trainee_email}</td>
-                    <td>{this.state.trainee_account_no}</td>
-                    <td>{this.state.trainee_sort_code}</td>
-                    <td><form><input type="submit" value="Edit" className="btn btn-primary" /></form></td>
+                    <tbody>
+                        <tr>
+                            <td>{this.state.trainee_fname}</td>
+                            <td>{this.state.trainee_lname}</td>
+                            <td>{this.state.trainee_email}</td>
+                            <td>{this.state.trainee_account_no}</td>
+                            <td>{this.state.trainee_sort_code}</td>
+                            <td><form><input type="submit" value="Edit" className="btn btn-primary" /></form></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 

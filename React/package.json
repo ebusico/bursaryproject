@@ -5,9 +5,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
-    "jquery": "^1.9.1",
+    "jquery": "^3.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-native-crypto-js": "^1.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "reactstrap": "^7.1.0"
@@ -31,10 +32,8 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "axios-mock-adapter": "^1.16.0",
-    "babel-jest": "^24.7.1",
     "babel-polyfill": "^6.26.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.7.1",
     "react-test-renderer": "^16.8.6"
   },
   "jest": {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import CryptoJS from "react-native-crypto-js";
 
 export default class EditTrainee extends Component {
     
@@ -25,12 +26,23 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
+                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, '3FJSei8zPx');
+                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, '3FJSei8zPx');
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, '3FJSei8zPx');
+                
+                if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
+                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, '3FJSei8zPx');
+                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, '3FJSei8zPx');
+                    this.setState({
+                        trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
+                        trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
+                    })
+                }
+                
                 this.setState({
-                    trainee_fname: response.data.trainee_fname,
-                    trainee_lname: response.data.trainee_lname,
-                    trainee_email: response.data.trainee_email,
-                    trainee_account_no: response.data.trainee_account_no,
-                    trainee_sort_code: response.data.trainee_sort_code
+                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
+                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
+                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
                 })   
             })
             .catch(function (error) {
@@ -70,12 +82,17 @@ export default class EditTrainee extends Component {
     
     onSubmit(e) {
         e.preventDefault();
+        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, '3FJSei8zPx');
+        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, '3FJSei8zPx');
+        var email = CryptoJS.AES.encrypt(this.state.trainee_email, '3FJSei8zPx');
+        var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, '3FJSei8zPx');
+        var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, '3FJSei8zPx');
         const obj = {
-            trainee_fname: this.state.trainee_fname,
-            trainee_lname: this.state.trainee_lname,
-            trainee_email: this.state.trainee_email,
-            trainee_account_no: this.state.trainee_account_no,
-            trainee_sort_code: this.state.trainee_sort_code
+            trainee_fname: fname.toString(),
+            trainee_lname: lname.toString(),
+            trainee_email: email.toString(),
+            trainee_account_no: accountNo.toString(),
+            trainee_sort_code: sortCode.toString()
         };
         console.log(obj);
         axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)
