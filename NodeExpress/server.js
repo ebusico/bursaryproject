@@ -219,7 +219,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'http://localhost:3000/changePassword/'+ trainee._id, // plain text body
+                text: 'http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+ trainee._id, // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {
