@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.48% </span>
+        <span class="strong">28.57% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>10/23</span>
+        <span class='fraction'>10/35</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>0/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">25% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>3/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">43.48% </span>
+        <span class="strong">28.57% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>10/23</span>
+        <span class='fraction'>10/35</span>
       </div>
     </div>
     <p class="quiet">
@@ -187,7 +187,27 @@
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
 <a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,8 +235,19 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,6 +289,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,6 +366,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
 import axios from 'axios';
+import CryptoJS from "react-native-crypto-js";
+import { codes } from "../secrets/secrets.js";
 &nbsp;
 export default class EditTrainee extends Component {
     
@@ -355,12 +393,23 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; {
+                var trainee_fname  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);</span>
+                var trainee_lname  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);</span>
+                var trainee_email  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);</span>
+                
+<span class="cstat-no" title="statement not covered" >                if(response.data.trainee_account_no != null &amp;&amp; response.data.trainee_sort_code != null){</span>
+                    var trainee_account_no = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);</span>
+                    var trainee_sort_code = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);</span>
+<span class="cstat-no" title="statement not covered" >                    this.setState({</span>
+                        trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
+                        trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
+                    })
+                }
+                
 <span class="cstat-no" title="statement not covered" >                this.setState({</span>
-                    trainee_fname: response.data.trainee_fname,
-                    trainee_lname: response.data.trainee_lname,
-                    trainee_email: response.data.trainee_email,
-                    trainee_account_no: response.data.trainee_account_no,
-                    trainee_sort_code: response.data.trainee_sort_code
+                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
+                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
+                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
                 })   
             })
             .catch(<span class="fstat-no" title="function not covered" >fu</span>nction (error) {
@@ -400,12 +449,17 @@ export default class EditTrainee extends Component {
     
 <span class="fstat-no" title="function not covered" >    on</span>Submit(e) {
 <span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
+        var fname = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);</span>
+        var lname = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);</span>
+        var email = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.encrypt(this.state.trainee_email, codes.trainee);</span>
+        var accountNo = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.encrypt(this.state.trainee_account_no, codes.trainee);</span>
+        var sortCode = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.encrypt(this.state.trainee_sort_code, codes.trainee);</span>
         const obj = <span class="cstat-no" title="statement not covered" >{</span>
-            trainee_fname: this.state.trainee_fname,
-            trainee_lname: this.state.trainee_lname,
-            trainee_email: this.state.trainee_email,
-            trainee_account_no: this.state.trainee_account_no,
-            trainee_sort_code: this.state.trainee_sort_code
+            trainee_fname: fname.toString(),
+            trainee_lname: lname.toString(),
+            trainee_email: email.toString(),
+            trainee_account_no: accountNo.toString(),
+            trainee_sort_code: sortCode.toString()
         };
 <span class="cstat-no" title="statement not covered" >        console.log(obj);</span>
 <span class="cstat-no" title="statement not covered" >        axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)</span>
@@ -475,7 +529,7 @@ export default class EditTrainee extends Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 05 2019 15:10:47 GMT+0100 (British Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 10 2019 17:47:37 GMT+0100 (British Summer Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

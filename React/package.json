@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-jest": "^24.7.1",
     "bootstrap": "^4.3.1",
+    "jest": "^24.7.1",
     "jquery": "^3.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -34,7 +36,9 @@
     "axios-mock-adapter": "^1.16.0",
     "babel-polyfill": "^6.26.0",
     "identity-obj-proxy": "^3.0.0",
-    "react-test-renderer": "^16.8.6"
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-test-renderer": "^16.8.6",
+    "redux-mock-store": "^1.5.3"
   },
   "jest": {
     "moduleNameMapper": {
