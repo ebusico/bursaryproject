@@ -32,20 +32,16 @@ export default class Login extends Component {
         CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
 
         var encrypted = CryptoJS.AES.encrypt(this.state.uname, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
-        console.log(encrypted.toString());
         var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
-        console.log(pass);
         const user = {
             username: encrypted.toString(),
             password: pass.toString()
         };
         axios.post('http://localhost:4000/trainee/login', user)
             .then(function(res){
-                console.log(res);
                 console.log(res.data);
                 if(res.data.result === true ){
                     console.log('Successful, now redirecting');
-                    document.location.href = 'http://localhost:3000/';
                 }
                 else{
                     console.log('Unsuccessful Login attempt');

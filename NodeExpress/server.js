@@ -7,7 +7,11 @@ const traineeRoutes = express.Router();
 const nodeMailer = require('nodemailer');
 const PORT = 4000;
 const bcrypt = require('bcrypt');
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
+const jwt = require('jsonwebtoken');
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -15,7 +19,7 @@ var passport = require('passport');
 var User = require('./models/staff.js');
 var CryptoJS = require("crypto-js");
 var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
-//var key = CryptoJS.enc.Hex.parse('bW5Ks7SIJu');
+var secret = require('./config/auth.js');
 
 let Trainee = require('./trainee.model');
 
@@ -56,11 +60,27 @@ traineeRoutes.route('/register').post(function(req,res){
 });
 
 // Endpoint to login
-traineeRoutes.route('/login').post(passport.authenticate('local'),
-  function(req, res) {
-    res.send({result: true, email: req.user.email});
-  }
-);
+/* POST login. */
+traineeRoutes.post('/login', function (req, res, next) {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Something is not right',
+                user   : user
+            });
+        }
+       req.login(user, {session: false}, (err) => {
+           if (err) {
+               res.send(err);
+           }
+           // generate a signed son web token with the contents of user object and return it in the response
+           //generating via id
+           const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+           console.log(token);
+           return res.json({result: true, role: user.role, token});
+        });
+    })(req, res);
+});
 
 // Endpoint to get current user
 traineeRoutes.route('/user').get(function(req, res){
@@ -96,6 +116,23 @@ passport.use(new LocalStrategy(
      });
    });
   }
+));
+
+passport.use(new JWTStrategy({
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey   : secret.secret
+},
+function (jwtPayload, cb) {
+
+  //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+  return UserModel.findOneById(jwtPayload.id)
+      .then(user => {
+          return cb(null, user);
+      })
+      .catch(err => {
+          return cb(err);
+      });
+}
 ));
 
 passport.serializeUser(function(user, done) {
@@ -196,7 +233,7 @@ traineeRoutes.route('/update-password/:id').post(function(req, res) {
 });
 
 
-traineeRoutes.route('/add').post(function(req, res) {
+traineeRoutes.route('/add', passport.authenticate('jwt', {session: false})).post(function(req, res) {
     let trainee = new Trainee(req.body);
     //var encryptedemail = CryptoJS.AES.encrypt(req.body.email, key, options);
     //trainee.trainee_email = encryptedemail.toString(); 

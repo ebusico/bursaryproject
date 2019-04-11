@@ -5,7 +5,10 @@ const bcrypt = require('bcrypt');
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, required: true }
+  role: { type: String, enum:['recruiter','admin','finance'], required: true },
+},
+{
+  timestamps:true
 });
 
 module.exports = mongoose.model('User', UserSchema);
