@@ -1,21 +1,29 @@
+var bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
 const traineeRoutes = express.Router();
+const authRoutes = express.Router();
+const apiRoutes = express.Router();
+
 const nodeMailer = require('nodemailer');
 const PORT = 4000;
 const bcrypt = require('bcrypt');
 const passportJWT = require("passport-jwt");
-const JWTStrategy   = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 
-const jwt = require('jsonwebtoken');
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJWT = passportJWT.ExtractJwt;
+var LocalStrategy = require('passport-local').Strategy;
+var jwt = require('jsonwebtoken');
+var AuthenticationController = require('./config/authentication');  
+var passportService = require('./config/passport');
+var passport = require ('passport');
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var passport = require('passport');
+
 var User = require('./models/staff.js');
 var CryptoJS = require("crypto-js");
 var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
@@ -27,8 +35,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
+app.use(cookieParser());
+/*
 // Express Session
 app.use(session({
     secret: 'secret',
@@ -39,12 +48,19 @@ app.use(session({
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
+*/
+//Auth variables
+var requireAuth = passport.authenticate('jwt', {session: false});
+var requireLogin = passport.authenticate('local', {session:false});
 
-traineeRoutes.route('/register').post(function(req,res){
+// Auth Routes 
+apiRoutes.use('/auth', authRoutes);
+
+authRoutes.route('/register').post(function(req,res){
   CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
   var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
   var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-
+	
   var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv, padding: CryptoJS.pad.NoPadding});
         //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
         var newUser = new User({
@@ -52,88 +68,36 @@ traineeRoutes.route('/register').post(function(req,res){
           password: req.body.password,
           role: req.body.role
         });
-
+		
         User.createUser(newUser, function(err, user){
-          if(err) throw err;
+          if(err){
+			  throw err;
+		  }
+		  const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+			console.log(token);
+			return res.json({result: true, role: user.role, token});
           res.send(user).end()
         });
 });
 
 // Endpoint to login
 /* POST login. */
-traineeRoutes.post('/login', function (req, res, next) {
-    passport.authenticate('local', {session: false}, (err, user, info) => {
-        if (err || !user) {
-            return res.status(400).json({
-                message: 'Something is not right',
-                user   : user
-            });
-        }
-       req.login(user, {session: false}, (err) => {
-           if (err) {
-               res.send(err);
-           }
-           // generate a signed son web token with the contents of user object and return it in the response
-           //generating via id
-           const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
-           console.log(token);
-           return res.json({result: true, role: user.role, token});
-        });
-    })(req, res);
+authRoutes.post('/login', requireLogin, AuthenticationController.login); 
+
+
+authRoutes.get('/protected', requireAuth, function(req, res){
+	res.send({ content: 'Success'});
 });
 
 // Endpoint to get current user
 traineeRoutes.route('/user').get(function(req, res){
   res.send(req.user);
 })
-
 // Endpoint to logout
 traineeRoutes.route('logout').get(function(req, res){
   req.logout();
   res.send(null)
 });
-
-var LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(
-  function(email, password, done) {
-    console.log(email);
-    console.log(password);
-    var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
-    var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
-
-    User.getUserByEmail(email, function(err, user){
-      if(err) throw err;
-      if(!user){
-        return done(null, false, {message: 'Unknown User'});
-      }
-      User.comparePassword(decryptPass, user.password, function(err, isMatch){
-        if(err) throw err;
-     	if(isMatch){
-     	  return done(null, user);
-     	} else {
-     	  return done(null, false, {message: 'Invalid password'});
-     	}
-     });
-   });
-  }
-));
-
-passport.use(new JWTStrategy({
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey   : secret.secret
-},
-function (jwtPayload, cb) {
-
-  //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-  return UserModel.findOneById(jwtPayload.id)
-      .then(user => {
-          return cb(null, user);
-      })
-      .catch(err => {
-          return cb(err);
-      });
-}
-));
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -141,9 +105,16 @@ passport.serializeUser(function(user, done) {
   
   passport.deserializeUser(function(id, done) {
     User.getUserById(id, function(err, user) {
+		if (err){
+			console.log(err);
+		}else{
       done(err, user);
+		}
     });
   });
+// Auth with Trainee routes
+
+apiRoutes.use('/trainee', traineeRoutes);
 
 mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
@@ -151,8 +122,10 @@ const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
+// RBAC control for all /trainee
+app.all('/trainee', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance']));
 
-traineeRoutes.route('/').get(function(req, res) {
+traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance'])).get(function(req, res) {
     Trainee.find(function(err, trainee) {
         if (err) {
             console.log(err);
@@ -173,7 +146,6 @@ traineeRoutes.route('/:id').get(function(req, res) {
          var sortPlainText = sortBytes.toString(CryptoJS.enc.Utf8);
          trainee.trainee_sort_code = sortPlainText;
         }
-         
          ///////////////////////////////////////////////////
          //var emailBytes = CryptoJS.AES.decrypt(trainee.trainee_email, key, options);
          //var emailPlainText = emailBytes.toString(CryptoJS.enc.Utf8);
@@ -233,7 +205,7 @@ traineeRoutes.route('/update-password/:id').post(function(req, res) {
 });
 
 
-traineeRoutes.route('/add', passport.authenticate('jwt', {session: false})).post(function(req, res) {
+traineeRoutes.route('/add', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter'])).post(function(req, res) {
     let trainee = new Trainee(req.body);
     //var encryptedemail = CryptoJS.AES.encrypt(req.body.email, key, options);
     //trainee.trainee_email = encryptedemail.toString(); 
@@ -304,7 +276,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
     });
 });
 
-app.use('/trainee', traineeRoutes);
+app.use('/trainee', apiRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
