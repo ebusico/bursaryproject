@@ -135,17 +135,18 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
     });
 });
 
+////////////////// possible issue here///////////////////////////////////////////////////////// data should not be decrypting here
 traineeRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Trainee.findById(id, function(err, trainee) {
-        if(trainee.trainee_account_no != null && trainee.trainee_sort_code != null){
-         var accountBytes  = CryptoJS.AES.decrypt(trainee.trainee_account_no, 'c9nMaacr2Y');
-         var plaintext = accountBytes.toString(CryptoJS.enc.Utf8);
-         trainee.trainee_account_no = plaintext;
-         var sortBytes  = CryptoJS.AES.decrypt(trainee.trainee_sort_code, 'c9nMaacr2Y');
-         var sortPlainText = sortBytes.toString(CryptoJS.enc.Utf8);
-         trainee.trainee_sort_code = sortPlainText;
-        }
+        //if(trainee.trainee_account_no != null && trainee.trainee_sort_code != null){
+         //var accountBytes  = CryptoJS.AES.decrypt(trainee.trainee_account_no, 'c9nMaacr2Y');
+         //var plaintext = accountBytes.toString(CryptoJS.enc.Utf8);
+         //trainee.trainee_account_no = plaintext;
+         //var sortBytes  = CryptoJS.AES.decrypt(trainee.trainee_sort_code, 'c9nMaacr2Y');
+         //var sortPlainText = sortBytes.toString(CryptoJS.enc.Utf8);
+         //trainee.trainee_sort_code = sortPlainText;
+        //}
          ///////////////////////////////////////////////////
          //var emailBytes = CryptoJS.AES.decrypt(trainee.trainee_email, key, options);
          //var emailPlainText = emailBytes.toString(CryptoJS.enc.Utf8);
@@ -154,6 +155,17 @@ traineeRoutes.route('/:id').get(function(req, res) {
     });
 });
 
+traineeRoutes.route('/delete/:id').get(function(req, res) {
+    Trainee.remove({_id: req.params.id}, function(err, trainee) {
+        if(!err){
+            res.json({'result':true});
+        }
+        else{
+            console.log(err);
+            res.json({'result': false});
+        }
+});
+});
 
 traineeRoutes.route('/update/:id').post(function(req, res) {
     Trainee.findById(req.params.id, function(err, trainee) {
