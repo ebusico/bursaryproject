@@ -1,25 +1,25 @@
 import { BehaviorSubject } from 'rxjs';
 
-import config from 'config';
-import { handleResponse } from '@/_helpers';
+import { handleResponse } from './handle-response';
 
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+const items = localStorage.getItem('currentUser');
+const currentUserSubject = new BehaviorSubject(JSON.parse(items));
 
-export const authenticationService = {
+export const authService = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue () { return currentUserSubject.value }
 };
 
-function login(username, password) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch( 'http://localhost:4000/trainee/auth/protected', requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

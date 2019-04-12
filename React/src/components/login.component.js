@@ -3,21 +3,26 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
-
+//import { authService } from "./modules/authService";
+import { BehaviorSubject } from 'rxjs';
 
 export default class Login extends Component {
     
     constructor(props) {
         super(props);
+		//redirects to home if already logged in
+/*		if (authService.currentUserValue){
+			this.props.history.push('/');
+		} */
         this.state = {
           uname: '',
           psw: '',
         };
       }
-
-    handleUsername = event => {
+	  
+	handleUsername = event => {
         this.setState({
-            uname: event.target.value
+            email: event.target.value
         });
     }
 
@@ -26,12 +31,12 @@ export default class Login extends Component {
             psw: event.target.value
         })
     }
-    
+	
     onSubmit = event => {
         event.preventDefault();
         CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
-
-        var encrypted = CryptoJS.AES.encrypt(this.state.uname, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
+		  
+        var encrypted = CryptoJS.AES.encrypt(this.state.email, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
         var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
         const user = {
             username: encrypted.toString(),
@@ -43,13 +48,14 @@ export default class Login extends Component {
 				
                 if(res.status === 200 ){
                     console.log('Successful, now redirecting');
+					
 					document.location.href = 'http://localhost:3000/';
                 }
 				else if(res.status === 204){
 					console.log('email and password do not match');
 					alert('Username or Password does not match')
                 }else{
-                    console.log('Email does not exist');
+                    console.log('Account does not exist');
 					alert("Email does not exist");
                 }
             })
@@ -59,14 +65,13 @@ export default class Login extends Component {
             });
     }
     
-    
     render() {
         return (
             <div className="Login">
                     <form onSubmit={this.onSubmit}>
 
                         <label className="uname"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Email" name="uname" onChange={this.handleUsername} required/>
+                        <input type="text" placeholder="Enter Email" name="email" onChange={this.handleUsername} required/>
 
                         <label className="psw"><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="psw" onChange={this.handlePassword} required/>

@@ -123,7 +123,7 @@ connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
 // RBAC control for all /trainee
-app.all('/trainee', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance']));
+//app.all('/trainee', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance']));
 
 traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance'])).get(function(req, res) {
     Trainee.find(function(err, trainee) {
@@ -276,7 +276,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
     });
 });
 
-app.use('/trainee', apiRoutes);
+app.use('/trainee', traineeRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
