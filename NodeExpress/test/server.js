@@ -138,3 +138,24 @@ describe('/POST Register', function () {
   });
 });
 });
+
+describe('delete user via id', () => {
+	var toBeDeleted = new Trainee();
+		toBeDeleted.trainee_fname = 'John';
+		toBeDeleted.trainee_lname = 'Adams';
+		toBeDeleted.trainee_email = 'testing@aol.co.uk';
+        toBeDeleted.save((err) => {
+            if (err) {
+                console.log(err);
+            }
+            done();
+        });
+	it('Should delete account',  (done) => {
+		
+		chai.request(server).get('/trainee/delete/'+ toBeDeleted._id).end((err, res) => {
+			res.should.have.status(200);
+			console.log('the dummy trainee data has now been deleted.');
+			done();
+		});
+	});
+})

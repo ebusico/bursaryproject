@@ -209,6 +209,19 @@ traineeRoutes.route('/add').post(function(req, res) {
         });
 });
 
+traineeRoutes.route('/delete/:id').get(function(req, res) {
+  let id = req.params.id;
+  Trainee.remove({_id: id}, function(err, trainee) {
+      if(!err){
+          res.json({'result':true});
+      }
+      else{
+          console.log(err);
+          res.json({'result': false});
+      }
+});
+});
+
 //traineeRoutes.route('/send-email').post(function(req, res) {
 //      let transporter = nodeMailer.createTransport({
 //          service: 'AOL',
