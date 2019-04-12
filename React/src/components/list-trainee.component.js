@@ -9,6 +9,9 @@ const Trainee = props => (
         <td>{props.trainee.trainee_fname}</td>
         <td>{props.trainee.trainee_lname}</td>
         <td>{props.trainee.trainee_email}</td>
+        <td>
+            <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+props.trainee._id).then((response) => window.location.reload())}>Delete</button>
+        </td>
     </tr>
 )
 
@@ -43,7 +46,6 @@ export default class ListTrainee extends Component {
         })
     }
     
-    
     render() {
         return (
             <div>
@@ -55,6 +57,7 @@ export default class ListTrainee extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

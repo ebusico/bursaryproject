@@ -70,7 +70,7 @@ export default class CreateTrainee extends Component {
         console.log(newTrainee)
         
         axios.post('http://localhost:4000/trainee/add', newTrainee)
-            .then( (response) => {axios.post('http://localhost:4000/trainee/send-email', newTrainee)}); 
+            .then( (response) => {axios.get('http://localhost:4000/trainee/send-email', newTrainee)}); 
         
 //        axios.post('http://localhost:4000/trainee/send-email', newTrainee)
 //            .then(res => console.log(res.data));
@@ -83,6 +83,7 @@ export default class CreateTrainee extends Component {
         })
         
         this.props.history.push('/');
+        window.location.reload();
     }
     
    render() {
