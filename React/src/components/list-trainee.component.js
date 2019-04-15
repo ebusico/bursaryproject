@@ -35,7 +35,6 @@ export default class ListTrainee extends Component {
     
     traineeList() {
         return this.state.trainees.map(function(currentTrainee, i){
-            console.log(currentTrainee);
             var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.trainee);
             currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);

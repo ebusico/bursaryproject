@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const crypto = require('crypto');
+const sequelize = require('sequelize');
+const Op = sequelize.Op
 
 const traineeRoutes = express.Router();
 const authRoutes = express.Router();
@@ -193,6 +196,23 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
+traineeRoutes.route('/reset/:token').get(function(req, res) {
+    Trainee.findOne({trainee_password_token: req.params.token, trainee_password_expires: {$gt: Date.now()}}).then((trainee) => {
+      console.log(Date.now());
+      console.log(Date.now() + 360000);
+      console.log(trainee.trainee_password_expires);
+      if (trainee == null) {
+        console.error('password reset link is invalid or has expired');
+        res.status(403).send('password reset link is invalid or has expired');
+      } else {
+        res.status(200).send({
+          trainee_id: trainee._id,
+          message: 'password reset link a-ok',
+        });
+      }
+    });
+  });
+
 traineeRoutes.route('/update-password/:id').post(function(req, res) {
     Trainee.findById(req.params.id, function(err, trainee) {
         if (!trainee)
@@ -234,12 +254,15 @@ traineeRoutes.route('/add', requireAuth, AuthenticationController.roleAuthorizat
 traineeRoutes.route('/send-email').post(function(req, res) {
     var email = CryptoJS.AES.decrypt(req.body.trainee_email, '3FJSei8zPx');
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
-        console.log(req.body.trainee_email)
         console.log(trainee)
         if (!trainee){
             res.status(404).send("Email is not found");
         }
         else{
+            const token = crypto.randomBytes(20).toString('hex');
+            trainee.trainee_password_token = token;
+            trainee.trainee_password_expires = Date.now() + 360000;
+            trainee.save().then(()=>console.log('token generated'));
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
                 auth: {
@@ -251,7 +274,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: email.toString(CryptoJS.enc.Utf8), // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'http://localhost:3000/changePassword/'+ trainee._id, // plain text body
+                text: 'http://localhost:3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {

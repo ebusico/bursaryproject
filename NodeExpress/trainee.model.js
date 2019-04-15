@@ -23,6 +23,13 @@ let Trainee = new Schema({
     trainee_approved:{
         type: Boolean,
         default: false
+    },
+    trainee_password_token:{
+        type: String
+    },
+    trainee_password_expires:{
+        type: String,
+        format: Date
     }
 });
 
