@@ -10,6 +10,7 @@ const Op = sequelize.Op
 const traineeRoutes = express.Router();
 const authRoutes = express.Router();
 const apiRoutes = express.Router();
+const adminRoutes = express.Router();
 
 const nodeMailer = require('nodemailer');
 const PORT = 4000;
@@ -59,29 +60,39 @@ var requireLogin = passport.authenticate('local', {session:false});
 // Auth Routes 
 apiRoutes.use('/auth', authRoutes);
 
-authRoutes.route('/register').post(function(req,res){
-  CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
-  var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-  var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-	
-  var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv, padding: CryptoJS.pad.NoPadding});
-        //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
-        var newUser = new User({
-          email: encrypted.toString(),
-          password: req.body.password,
-          role: req.body.role
-        });
-		
-        User.createUser(newUser, function(err, user){
-          if(err){
-			  throw err;
-		  }
-		  const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
-			console.log(token);
-			return res.json({result: true, role: user.role, token});
-          res.send(user).end()
-        });
-});
+adminRoutes.route('/addUser').post(function(req,res){
+    CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
+    var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+    var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+      
+    var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv});
+          //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
+          var newUser = new User({
+            email: encrypted.toString(),
+            password: req.body.password,
+            role: req.body.role
+          });
+          
+          if(encrypted.toString() === newUser.email){
+              console.log(true);
+          }else{
+              console.log(encrypted.toString());
+              console.log(newUser.email.toString());
+              console.log(false);
+          }
+          let c = CryptoJS.AES.decrypt(newUser.email, key, {iv: iv});
+          console.log(c.toString(CryptoJS.enc.Utf8));
+  
+          User.createUser(newUser, function(err, user){
+            if(err){
+                throw err;
+            }
+            const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+              console.log(token);
+              return res.json({result: true, role: user.role, token});
+            res.send(user).end()
+          });
+  });
 
 // Endpoint to login
 /* POST login. */
@@ -138,25 +149,24 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
     });
 });
 
-////////////////// possible issue here///////////////////////////////////////////////////////// data should not be decrypting here
+
 traineeRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Trainee.findById(id, function(err, trainee) {
-        //if(trainee.trainee_account_no != null && trainee.trainee_sort_code != null){
-         //var accountBytes  = CryptoJS.AES.decrypt(trainee.trainee_account_no, 'c9nMaacr2Y');
-         //var plaintext = accountBytes.toString(CryptoJS.enc.Utf8);
-         //trainee.trainee_account_no = plaintext;
-         //var sortBytes  = CryptoJS.AES.decrypt(trainee.trainee_sort_code, 'c9nMaacr2Y');
-         //var sortPlainText = sortBytes.toString(CryptoJS.enc.Utf8);
-         //trainee.trainee_sort_code = sortPlainText;
-        //}
-         ///////////////////////////////////////////////////
-         //var emailBytes = CryptoJS.AES.decrypt(trainee.trainee_email, key, options);
-         //var emailPlainText = emailBytes.toString(CryptoJS.enc.Utf8);
-         //console.log(emailPlainText);
          res.json(trainee);
     });
 });
+
+adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin'])).get(function(req, res) {
+    User.find(function(err, staff) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(staff);
+        }
+    });
+});
+
 
 traineeRoutes.route('/delete/:id').get(function(req, res) {
     Trainee.remove({_id: req.params.id}, function(err, trainee) {
@@ -175,17 +185,11 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
         if (!trainee)
             res.status(404).send("data is not found");
         else
-            
-            var encryptedAccountNo = CryptoJS.AES.encrypt(req.body.trainee_account_no, 'c9nMaacr2Y');
-            var encryptedAccNum = encryptedAccountNo.toString();
-            var encryptedSortNo = CryptoJS.AES.encrypt(req.body.trainee_sort_code, 'c9nMaacr2Y');
-            var encryptedSortNum = encryptedSortNo.toString();
             trainee.trainee_fname = req.body.trainee_fname;
             trainee.trainee_lname = req.body.trainee_lname;
             trainee.trainee_email = req.body.trainee_email;
-            //trainee.trainee_email = CryptoJS.AES.encrypt(req.body.trainee_email, key, options).toString();
-            trainee.trainee_account_no = encryptedAccNum;
-            trainee.trainee_sort_code = encryptedSortNum;
+            trainee.trainee_account_no = req.body.trainee_account_no;
+            trainee.trainee_sort_code = req.body.trainee_sort_code;
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
@@ -287,6 +291,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
 });
 
 app.use('/trainee', traineeRoutes);
+app.use('/admin', adminRoutes)
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

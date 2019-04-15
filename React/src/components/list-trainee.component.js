@@ -26,7 +26,16 @@ export default class ListTrainee extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/')
             .then(response => {
-                this.setState({ trainees: response.data });
+                var encrypted = response.data;
+                encrypted.map(function(currentTrainee, i){
+                    var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.trainee);
+                    currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);
+                    currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, codes.trainee);
+                    currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+                });
+                this.setState({trainees: encrypted});
             })
             .catch(function (error){
                 console.log(error);
@@ -35,12 +44,6 @@ export default class ListTrainee extends Component {
     
     traineeList() {
         return this.state.trainees.map(function(currentTrainee, i){
-            var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.trainee);
-            currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
-            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);
-            currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
-            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, codes.trainee);
-            currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
             return <Trainee trainee={currentTrainee} key={i} />;
         })
     }
