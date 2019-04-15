@@ -198,9 +198,7 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
 
 traineeRoutes.route('/reset/:token').get(function(req, res) {
     Trainee.findOne({trainee_password_token: req.params.token, trainee_password_expires: {$gt: Date.now()}}).then((trainee) => {
-      console.log(Date.now());
-      console.log(Date.now() + 360000);
-      console.log(trainee.trainee_password_expires);
+      console.log(Date.now())
       if (trainee == null) {
         console.error('password reset link is invalid or has expired');
         res.status(403).send('password reset link is invalid or has expired');
@@ -213,8 +211,8 @@ traineeRoutes.route('/reset/:token').get(function(req, res) {
     });
   });
 
-traineeRoutes.route('/update-password/:id').post(function(req, res) {
-    Trainee.findById(req.params.id, function(err, trainee) {
+traineeRoutes.route('/update-password/:token').post(function(req, res) {
+    Trainee.findOne({trainee_password_token: req.params.token}, function(err, trainee) {
         if (!trainee)
             res.status(404).send("data is not found");
         else
@@ -261,7 +259,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
         else{
             const token = crypto.randomBytes(20).toString('hex');
             trainee.trainee_password_token = token;
-            trainee.trainee_password_expires = Date.now() + 360000;
+            trainee.trainee_password_expires = Date.now() + 3600000;
             trainee.save().then(()=>console.log('token generated'));
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',

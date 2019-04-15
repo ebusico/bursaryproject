@@ -16,7 +16,7 @@ export default class ChangePassword extends Component {
             trainee_id:'',
             trainee_email: '',
             trainee_password: '',
-            error: false
+            error: true
         }
     }
     
@@ -91,7 +91,7 @@ export default class ChangePassword extends Component {
         if (error) {
             return (
                 <div>
-                    <h4>Problem resetting password. Please send another reset link.</h4>
+                    <h3>Problem resetting password. Link is invalid or expired</h3>
 
                 </div>
             );
@@ -131,40 +131,4 @@ export default class ChangePassword extends Component {
         )
 
   }
-    
-    render() {
-        return (
-            <div>
-                <h3 align="center">Update Password</h3>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Email: </label>
-                        <input type="text" 
-                               className="form-control"
-                               readOnly value={this.state.trainee_email}
-                        />
-                    </div>
-                    <div className="form-group"> 
-                        <label>New Password: </label>
-                        <input type="password"
-                               className="form-control"
-                               onChange={this.onChangeTraineePassword}
-                        />
-                    </div>
-					<div className="form-group">
-					   <label>Confirm Password: </label>
-					   <input type ="password"
-						      className="form-control"
-						      onChange={this.onChangeConfirmPassword}
-						/>
-					</div>
-					
-                    <br />
-                    <div className="form-group">
-                        <input type="submit" value="Update Password" className="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-        )
-    }
 }
