@@ -58,7 +58,7 @@ var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session:false});
 
 // Auth Routes 
-traineeRoutes.use('/auth', authRoutes);
+//traineeRoutes.use('/auth', authRoutes);
 
 adminRoutes.route('/addUser').post(function(req,res){
     CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
@@ -258,7 +258,9 @@ traineeRoutes.route('/add', requireAuth, AuthenticationController.roleAuthorizat
 
 
 traineeRoutes.route('/send-email').post(function(req, res) {
-    var email = CryptoJS.AES.decrypt(req.body.trainee_email, '3FJSei8zPx');
+    var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+    var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+    var email = CryptoJS.AES.decrypt(req.body.trainee_email, key, {iv:iv});
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         console.log(trainee)
         if (!trainee){
@@ -295,7 +297,8 @@ traineeRoutes.route('/send-email').post(function(req, res) {
 });
 
 app.use('/trainee', traineeRoutes);
-app.use('/admin', adminRoutes)
+app.use('/admin', adminRoutes);
+app.use('/auth', authRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

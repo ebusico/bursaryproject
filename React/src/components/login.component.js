@@ -42,14 +42,15 @@ export default class Login extends Component {
             username: encrypted.toString(),
             password: pass.toString()
         };
-        axios.post('http://localhost:4000/trainee/auth/login', user)
+        axios.post('http://localhost:4000/auth/login', user)
             .then(function(res){
-                console.log(res.status);
-				
                 if(res.status === 200 ){
-                    console.log('Successful, now redirecting');
-					
-					document.location.href = 'http://localhost:3000/';
+                    if(typeof res.data.user.role === "undefined"){
+                        document.location.href = 'http://localhost:3000/trainee-details/'+res.data.user._id
+                    }
+					else{
+                        document.location.href = 'http://localhost:3000/';
+                    }
                 }
 				else if(res.status === 204){
 					console.log('email and password do not match');

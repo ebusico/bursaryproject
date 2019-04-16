@@ -47,8 +47,8 @@ module.exports.createUser = function(newUser, callback){
     User.findById(id, callback);
   }
   
-  module.exports.comparePassword = function(candidatePassword, hash, callback){
-    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+  module.exports.comparePassword = function(userPassword, hash, callback){
+    bcrypt.compare(userPassword, hash, function(err, isMatch) {
       if(err) throw err;
       callback(null, isMatch);
     });

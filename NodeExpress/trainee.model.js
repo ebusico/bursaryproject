@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 let Trainee = new Schema({
     trainee_fname: {
@@ -40,5 +41,19 @@ let Trainee = new Schema({
         format: Date
     }
 });
-
 module.exports = mongoose.model('Trainee', Trainee);
+
+var test = module.exports = mongoose.model('Trainee', Trainee);
+
+module.exports.getTraineeByEmail = function(email, callback){
+    var query = {trainee_email: email};
+    test.findOne(query, callback);
+  }
+
+  
+module.exports.comparePassword = function(traineePassword, hash, callback){
+    bcrypt.compare(traineePassword, hash, function(err, isMatch) {
+      if(err) throw err;
+      callback(null, isMatch);
+    });
+  }

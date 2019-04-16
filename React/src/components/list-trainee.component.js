@@ -22,7 +22,7 @@ export default class ListTrainee extends Component {
             .then(response => {
                 var encrypted = response.data;
                 encrypted.map(function(currentTrainee, i){
-                    var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.trainee);
+                    var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.staff, {iv: codes.iv});
                     currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
                     bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);
                     currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);

@@ -44,7 +44,7 @@ export default class TraineeDetails extends Component {
                 }
                 var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
                 var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee).toString(CryptoJS.enc.Utf8);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee).toString(CryptoJS.enc.Utf8);
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv}).toString(CryptoJS.enc.Utf8);
                 this.setState({
                     trainee_fname: trainee_fname,
                     trainee_lname: trainee_lname,

@@ -57,7 +57,7 @@ export default class CreateTrainee extends Component {
         
         var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
         var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.trainee);
+        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
         var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
 
         var newTrainee = {

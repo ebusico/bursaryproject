@@ -39,7 +39,7 @@ export default class ChangePassword extends Component {
             })
         axios.get('http://localhost:4000/trainee/'+this.state.trainee_id)
             .then(response => {
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv});
                 var trainee_password  = CryptoJS.AES.decrypt(response.data.trainee_password, codes.trainee);
                 this.setState({
                     trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),

@@ -1,5 +1,6 @@
 var passport = require ('passport');
 var User = require('../models/staff.js');
+var Trainee = require('../trainee.model');
 var secret = require('./auth');
 
 var passportJWT = require("passport-jwt");
@@ -15,28 +16,50 @@ var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
 var localLogin = new LocalStrategy(function(email, password, done) {
     console.log(email);
     console.log(password);
-    var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
-	
-    var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
 
     User.getUserByEmail(email, function(err, user){
-      if(err){
-	  return done(err);
-	  }
+      // if(err){
+	  	// 	return done(err);
+	  	// }
       if(!user){
-        return done(null, false, {message: 'Login Failed. Please enter correct details'});
+				Trainee.getTraineeByEmail(email, function(err, trainee){
+					if(err){
+						return done(err);
+					}
+					else if(!trainee){
+						return done(null, false, {message: 'Login failed. Wrong Email/Password'});
+					}
+
+					var bytes  = CryptoJS.AES.decrypt(password, '3FJSei8zPx');
+					var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
+					Trainee.comparePassword(decryptPass, trainee.trainee_password, function(err, isMatch){
+						if(err){
+							return done(err);
+						}
+						else if(!isMatch){
+							console.log("trainee fail");
+							return done(null, false, {message: 'Login failed. Wrong Email/Password'});
+						}
+						else{
+							return done(null, trainee);
+						}
+					})
+				})
       }
-	  
+			else{
+			var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
+			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
       User.comparePassword(decryptPass, user.password, function(err, isMatch){
-        if(err){
-		return done(err);
-		}
-     	if(!isMatch){
-		return done(null, false, {message: 'Password is incorrect.'});
+      if(err){
+				return done(err);
+			}
+     	else if(!isMatch){
+				console.log("User fail");
+				return done(null, false, {message: 'Password is incorrect.'});
      	} else {
-		return done(null, user);
-		}
-     });
+				return done(null, user);
+			}
+     });}
    });
   });
   
