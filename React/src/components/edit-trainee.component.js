@@ -29,7 +29,7 @@ export default class EditTrainee extends Component {
             .then(response => {
                 var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
                 var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.trainee);
+                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv:codes.iv});
                 
                 if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
                     var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
@@ -85,7 +85,7 @@ export default class EditTrainee extends Component {
         e.preventDefault();
         var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
         var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.trainee);
+        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
         var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, codes.trainee);
         var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, codes.trainee);
         const obj = {

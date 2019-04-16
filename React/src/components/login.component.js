@@ -48,7 +48,9 @@ export default class Login extends Component {
                     if(typeof res.data.user.role === "undefined"){
                         document.location.href = 'http://localhost:3000/trainee-details/'+res.data.user._id
                     }
-					else{
+					else if(res.data.user.role === "admin"){
+                        document.location.href = 'http://localhost:3000/admin';
+                    }else{
                         document.location.href = 'http://localhost:3000/';
                     }
                 }
