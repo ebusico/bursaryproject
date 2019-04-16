@@ -94,6 +94,20 @@ adminRoutes.route('/addUser').post(function(req,res){
           });
   });
 
+  //endpoint for deleting a trainer user
+  adminRoutes.route('/delete/:id').get(function(req, res) {
+    User.remove({_id: req.params.id}, function(err, user) {
+        if(!err){
+            res.json({'result':true});
+        }
+        else{
+            console.log(err);
+            res.json({'result': false});
+        }
+});
+});
+
+
 // Endpoint to login
 /* POST login. */
 authRoutes.post('/login', requireLogin, AuthenticationController.login); 

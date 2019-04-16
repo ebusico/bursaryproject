@@ -4,17 +4,6 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 
-const Trainee = props => (
-    <tr>
-        <td>{props.trainee.trainee_fname}</td>
-        <td>{props.trainee.trainee_lname}</td>
-        <td>{props.trainee.trainee_email}</td>
-        <td>
-            <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+props.trainee._id).then((response) => window.location.reload())}>Delete</button>
-        </td>
-    </tr>
-)
-
 export default class ListTrainee extends Component {
     
     constructor(props) {
@@ -55,27 +44,6 @@ export default class ListTrainee extends Component {
     }
 
 
-    traineeList(search) {
-
-        let trainees = this.state.trainees;
-
-        // return this.state.trainees.map(function(currentTrainee, i){
-
-        
-            if (search.length > 0) {
-                this.state.trainees.filter(function (i) {
-                    return i.trainee_fname.toLowerCase().match(search)
-                    // if (i.trainee_fname.toLowerCase().match(search)){
-                    //     return <Trainee trainee={i} key={i} />; 
-                    // }
-                });
-            }
-
-            // return <Trainee trainee={currentTrainee} key={i} />;
-        // })
-    }
-    
-
     
 
     render() {
@@ -85,16 +53,18 @@ export default class ListTrainee extends Component {
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase();
         
-        if (search.length > 0) {
-            trainees = trainees.filter(function (i) {
-                return i.trainee_fname.toLowerCase().match(search)
-            });
+        if(search.length > 0){
+            trainees = trainees.filter(function(i){
+                if(i.trainee_fname.toLowerCase().match(search) ||
+                   i.trainee_lname.toLowerCase().match(search) ||
+                   i.trainee_email.toLowerCase().match(search)){
+                    return i;
+                }
+            })
         }
 
         return (
             <div>
-                
-                {/* Actual search function - Ernie */}
                 <input
                     type="text"
                     value={this.state.searchString}
@@ -112,17 +82,7 @@ export default class ListTrainee extends Component {
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
-                    </thead>
-
-
-                    {/* Commented this for now, show list of trainees with all details and delete button */}
-                    {/* <tbody>
-                        { this.traineeList(search) }
-                    </tbody> */}
-
-
-                    {/* Shows list of trainees that are from the database - Ernie */}
-                    
+                    </thead>               
                     <tbody>
                         {trainees.map(t => {
                             return (

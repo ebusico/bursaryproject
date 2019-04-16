@@ -2,26 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
-import TraineeList from "./list-trainee.component";
 
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
-
-const Staff = props => (
-    <tr>
-        <td>{props.staff.email}</td>
-        <td>{props.staff.role}</td>
-        <td>
-            <button>Delete</button>
-        </td>
-    </tr>
-)
 
 export default class ListUser extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {users: []}
+        this.state = {users: [], searchString:""};
+        this.onChangeSearch = this.onChangeSearch.bind(this);
     }
     
     componentDidMount() {
@@ -39,16 +27,32 @@ export default class ListUser extends Component {
             })
     }
 
-    
-    UserList() {
-        return this.state.users.map(function(currentUser, i){
-            return <Staff staff={currentUser} key={i} />;
+    onChangeSearch(e) {
+        this.setState({
+            searchString: e.target.value
         })
     }
+
     
     render() {
+        let users = this.state.users;
+        let search = this.state.searchString.trim().toLowerCase();
+
+        if(search.length > 0){
+            users = users.filter(function(i){
+                if(i.email.toLowerCase().match(search) || i.role.toLowerCase().match(search)){
+                    return i;
+                }
+            })
+        }
         return (
             <div>
+                <input
+                    type="text"
+                    value={this.state.searchString}
+                    onChange={this.onChangeSearch}
+                    placeholder="Find User.." 
+                />
                 <h3>User List</h3>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
@@ -59,7 +63,17 @@ export default class ListUser extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { this.UserList() }
+                        {users.map(user => {
+                            return (
+                                <tr>
+                                <td>{user.email}</td>
+                                <td>{user.role}</td>
+                                <td>
+                                    <button onClick={()=>axios.get('http://localhost:4000/admin/delete/'+user._id).then((response) => window.location.reload())}>Delete</button>
+                                </td>
+                            </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
