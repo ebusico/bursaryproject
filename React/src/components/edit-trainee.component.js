@@ -100,6 +100,7 @@ export default class EditTrainee extends Component {
             .then(res => console.log(res.data));
         
         this.props.history.push('/trainee-details/'+this.props.match.params.id);
+        window.location.reload();
     }
     
     render() {
