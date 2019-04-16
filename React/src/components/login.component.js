@@ -3,17 +3,18 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
-//import { authService } from "./modules/authService";
 import { BehaviorSubject } from 'rxjs';
+import { authService } from "./modules/authService";
+import decode from "jwt-decode";
 
 export default class Login extends Component {
     
     constructor(props) {
         super(props);
 		//redirects to home if already logged in
-/*		if (authService.currentUserValue){
+		if (authService.currentUserValue){
 			this.props.history.push('/');
-		} */
+		}
         this.state = {
           uname: '',
           psw: '',
@@ -40,16 +41,28 @@ export default class Login extends Component {
         var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
         const user = {
             username: encrypted.toString(),
-            password: pass.toString()
+            password: pass.toString(),
+			token: ''
         };
+		
+		const token = { 
+			token:''
+		};
+		const currentUser = authService.currentUserValue;
+		
         axios.post('http://localhost:4000/auth/login', user)
             .then(function(res){
                 if(res.status === 200 ){
                     if(typeof res.data.user.role === "undefined"){
                         document.location.href = 'http://localhost:3000/trainee-details/'+res.data.user._id
+						token.token = decode(res.data.token);
+						localStorage.setItem('currentUser', JSON.stringify(token));
                     }
 					else{
                         document.location.href = 'http://localhost:3000/';
+						//Get user token and decode user token here
+						token.token = decode(res.data.token);
+						localStorage.setItem('currentUser', JSON.stringify(token));
                     }
                 }
 				else if(res.status === 204){
