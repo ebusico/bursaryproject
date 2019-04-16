@@ -61,14 +61,9 @@ var requireLogin = passport.authenticate('local', {session:false});
 //traineeRoutes.use('/auth', authRoutes);
 
 adminRoutes.route('/addUser').post(function(req,res){
-    CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
-    var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-    var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
       
-    var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv});
-          //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
           var newUser = new User({
-            email: encrypted.toString(),
+            email: req.body.email,
             password: req.body.password,
             role: req.body.role
           });
@@ -158,6 +153,19 @@ traineeRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Trainee.findById(id, function(err, trainee) {
          res.json(trainee);
+    })
+    .catch(err => {
+        res.status(400).send("Trainee doesn't exist");
+    });
+})   
+
+adminRoutes.route('/staff/:id').get(function(req, res) {
+    let id = req.params.id;
+    User.findById(id, function(err, staff) {
+         res.json(staff);
+    })
+    .catch(err => {
+        res.status(400).send("Staff doesn't exist");
     });
 });
 
@@ -242,8 +250,45 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
     });
 });
 
+adminRoutes.route('/reset-staff/:token').get(function(req, res) {
+    User.findOne({password_token: req.params.token, password_expires: {$gt: Date.now()}}).then((staff) => {
+      console.log(Date.now())
+      if (staff == null) {
+        console.error('password reset link is invalid or has expired');
+        res.status(403).send('password reset link is invalid or has expired');
+      } else {
+        res.status(200).send({
+          staff_id: staff._id,
+          message: 'password reset link a-ok',
+        });
+      }
+    });
+  });
 
-traineeRoutes.route('/add', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter'])).post(function(req, res) {
+adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
+    User.findOne({password_token: req.params.token}, function(err, staff) {
+        if (!staff)
+            res.status(404).send("data is not found");
+        else
+            //bcrypt pass
+            var bytes  = CryptoJS.AES.decrypt(req.body.password, 'traineePassword');
+            var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
+            bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(decryptPass, salt, function(err, hash) {
+                  req.body.password = hash;
+                  staff.password = req.body.password;
+                  staff.save().then(staff => {
+                    res.json('Password updated!');
+                })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                });
+                });
+              });
+    });
+});
+
+traineeRoutes.route('/add').post(function(req, res) {
     let trainee = new Trainee(req.body);
     //var encryptedemail = CryptoJS.AES.encrypt(req.body.email, key, options);
     //trainee.trainee_email = encryptedemail.toString(); 
@@ -282,11 +327,52 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: email.toString(CryptoJS.enc.Utf8), // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'http://localhost:3000/changePassword/'+token // plain text body
+                text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://localhost:3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
+                    return console.log(error);
+                }
+                console.log('Message %s sent: %s', info.messageId, info.response);
+                res.status(200).json({'email': 'Email Sent'});
+            });
+        }
+    });
+});
+
+adminRoutes.route('/send-email-staff').post(function(req, res) {
+    var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+    var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+    var email = CryptoJS.AES.decrypt(req.body.email, key, {iv:iv});
+    console.log(email.toString(CryptoJS.enc.Utf8));
+    User.findOne({email: req.body.email}, function(err, staff) {
+        console.log(staff)
+        if (!staff){
+            res.status(404).send("Email is not found");
+        }
+        else{
+            const token = crypto.randomBytes(20).toString('hex');
+            staff.password_token = token;
+            staff.password_expires = Date.now() + 3600000;
+            staff.save().then(()=>console.log('token generated'));
+            var transporter = nodeMailer.createTransport({
+                service: 'AOL',
+                auth: {
+                    user: 'QABursary@aol.com',
+                    pass: 'Passw0rd123'
+                }
+            });
+            var mailOptions = {
+                from: 'QABursary@aol.com', // sender address
+                to: email.toString(CryptoJS.enc.Utf8), // list of receivers
+                subject: 'Password Reset', // Subject line
+                text: 'Please navigate to the following link to activate your staff account and set your password: http://localhost:3000/changePasswordStaff/'+token // plain text body
+            }            
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(mailOptions.text);
                     return console.log(error);
                 }
                 console.log('Message %s sent: %s', info.messageId, info.response);
@@ -302,4 +388,4 @@ app.use('/auth', authRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
-});
+})

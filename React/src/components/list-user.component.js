@@ -3,8 +3,7 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
-import { BrowserRouter } from 'react-router-dom'
-
+import { BrowserRouter, Link } from 'react-router-dom'
 
 export default class ListUser extends Component {
     
@@ -70,6 +69,7 @@ export default class ListUser extends Component {
                     placeholder="Find User.." 
                 />
                 <h3>User List</h3>
+				<Link to ={"/addUser"}>Add User</Link>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
