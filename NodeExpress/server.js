@@ -58,7 +58,7 @@ var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session:false});
 
 // Auth Routes 
-apiRoutes.use('/auth', authRoutes);
+traineeRoutes.use('/auth', authRoutes);
 
 adminRoutes.route('/addUser').post(function(req,res){
     CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
@@ -72,16 +72,6 @@ adminRoutes.route('/addUser').post(function(req,res){
             password: req.body.password,
             role: req.body.role
           });
-          
-          if(encrypted.toString() === newUser.email){
-              console.log(true);
-          }else{
-              console.log(encrypted.toString());
-              console.log(newUser.email.toString());
-              console.log(false);
-          }
-          let c = CryptoJS.AES.decrypt(newUser.email, key, {iv: iv});
-          console.log(c.toString(CryptoJS.enc.Utf8));
   
           User.createUser(newUser, function(err, user){
             if(err){

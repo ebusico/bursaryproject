@@ -36,7 +36,7 @@ export default class Login extends Component {
         event.preventDefault();
         CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
 		  
-        var encrypted = CryptoJS.AES.encrypt(this.state.email, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
+        var encrypted = CryptoJS.AES.encrypt(this.state.email, codes.staff, {iv: codes.iv});
         var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
         const user = {
             username: encrypted.toString(),
