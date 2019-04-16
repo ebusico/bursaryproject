@@ -2,10 +2,10 @@ import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 
-import ListUser from './components/list-user.component.js';
-import ListTrainee from './components/list-trainee.component.js';
+import ListUser from './list-user.component.js';
+import ListTrainee from './list-trainee.component.js';
 
-export default class Example extends React.Component {
+export default class TabList extends React.Component {
   constructor(props) {
     super(props);
 

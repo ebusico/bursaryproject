@@ -9,8 +9,8 @@ import ListTrainee from "./components/list-trainee.component";
 
 import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";
-import Login from "./components/login.component"
-import Tab from "./tab"
+import Login from "./components/login.component";
+import TabList from "./components/tab-list.component";
 
 class App extends Component {
   render() {
@@ -20,12 +20,12 @@ class App extends Component {
           <Nav/>
           <h2>QA Bursary</h2>
         </div>
+        <Route path='/' exact component={TabList} />
         <Route path="/edit/:id" component={EditTrainee} />
         <Route path="/create" component={CreateTrainee} />
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
         <Route path="/login" component={Login} />
-        <Tab />
       </Router>    
     );
   }

@@ -30,6 +30,14 @@ let Trainee = new Schema({
     trainee_password_expires:{
         type: String,
         format: Date
+    },
+    trainee_start_date:{
+        type: String,
+        format: Date
+    },
+    trainee_end_date:{
+        type: String,
+        format: Date
     }
 });
 
