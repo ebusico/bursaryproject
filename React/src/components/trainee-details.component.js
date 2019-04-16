@@ -83,29 +83,20 @@ render() {
         return (
             <div>
                 <h3>Trainee Details</h3>
-                <table onSubmit={this.onSubmit} className="table table-striped" style={{ marginTop: 20 }} >
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Account Number</th>
-                            <th>Account Sort-Code</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                <table onSubmit={this.onSubmit} className="table table-striped">
                     <tbody>
-                        <tr>
-                            <td>{this.state.trainee_fname}</td>
-                            <td>{this.state.trainee_lname}</td>
-                            <td>{this.state.trainee_email}</td>
-                            <td>{this.state.trainee_account_no}</td>
-                            <td>{this.state.trainee_sort_code}</td>
+                            <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
+                            <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
+                            <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
+                            <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
+                            <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
+                            <tr>
+                            <th>Actions</th>
                             <td>
                                 <form><input type="submit" value="Edit" className="btn btn-primary" /></form>
                                 <CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
                             </td>
-                        </tr>
+                            </tr>
                     </tbody>
                 </table>
             </div>

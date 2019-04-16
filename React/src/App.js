@@ -20,12 +20,13 @@ class App extends Component {
           <Nav/>
           <h2>QA Bursary</h2>
         </div>
-        <Route path='/' exact component={TabList} />
+        <Route path="/admin" component={TabList} />
         <Route path="/edit/:id" component={EditTrainee} />
         <Route path="/create" component={CreateTrainee} />
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
         <Route path="/login" component={Login} />
+        <Route path="/" exact component={ListTrainee} />
       </Router>    
     );
   }
