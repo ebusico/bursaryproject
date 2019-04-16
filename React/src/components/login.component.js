@@ -60,6 +60,8 @@ export default class Login extends Component {
                     }
 					else if(res.data.user.role === "admin"){
                         document.location.href = 'http://localhost:3000/admin';
+						token.token = decode(res.data.token);
+						localStorage.setItem('currentUser', JSON.stringify(token));
                     }else{
                         document.location.href = 'http://localhost:3000/';
 						//Get user token and decode user token here

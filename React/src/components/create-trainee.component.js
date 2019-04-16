@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js"
+import { codes } from "../secrets/secrets.js";
+import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
+
 
 export default class CreateTrainee extends Component {
     
@@ -18,7 +21,8 @@ export default class CreateTrainee extends Component {
             trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',
-            trainee_password: ''
+            trainee_password: '',
+			currentUser: authService.currentUserValue
         }
     }
     
@@ -84,6 +88,10 @@ export default class CreateTrainee extends Component {
     }
     
    render() {
+	   if(this.state.currentUser.token.role !== 'recruiter'){
+		   return (
+		   < AccessDenied />
+	   );} else{
         return (
             <div style={{marginLeft: 100, marginRight: 100}}>
                 <h3>Add Trainee</h3>
@@ -121,4 +129,5 @@ export default class CreateTrainee extends Component {
             </div>
         )
     }
+   }
 }

@@ -28,6 +28,9 @@ export default class Example extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+  login(){
+	  document.location.href = 'http://localhost:3000/login';
+  }
   logout(){
 	  authService.logout();
 	  if (!authService.currentUserValue){
@@ -40,7 +43,7 @@ export default class Example extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md">
-		<NavbarBrand href="/"><img src={logo} alt="QA logo" width="60px" /></NavbarBrand>
+		<NavbarBrand href="/login"><img src={logo} alt="QA logo" width="60px" /></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -63,7 +66,9 @@ export default class Example extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
+				<NavLink>
                 <NavItem onClick={this.login} href='/login' >Login</NavItem>
+				</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

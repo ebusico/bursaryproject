@@ -2,30 +2,45 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
+import { authService } from './modules/authService';
+import { BrowserRouter } from 'react-router-dom'
 
 
 export default class ListUser extends Component {
     
     constructor(props) {
+			//redirects to login if not logged in
+	if (!authService.currentUserValue){
+			document.location.href = 'http://localhost:3000/login';
+			//this.context.history.push('/login');
+		} 
         super(props);
-        this.state = {users: [], searchString:""};
+		
+        this.state = {
+			users: [], 
+			searchString:"",
+			currentUser: authService.currentUserValue
+			};
         this.onChangeSearch = this.onChangeSearch.bind(this);
     }
+	
     
     componentDidMount() {
         axios.get('http://localhost:4000/admin/')
             .then(response => {
+			if(this.state.currentUser.token.role === 'admin'){
                 var encrypted = response.data;
                 encrypted.map(function(currentUser, i){
                     var bytes = CryptoJS.AES.decrypt(currentUser.email, codes.staff ,{iv: codes.iv});
                     currentUser.email = bytes.toString(CryptoJS.enc.Utf8);
                 });
                 this.setState({users: encrypted});
-            })
+            }
+			})
             .catch(function (error){
                 console.log(error);
             })
-    }
+		}
 
     onChangeSearch(e) {
         this.setState({
@@ -46,6 +61,7 @@ export default class ListUser extends Component {
             })
         }
         return (
+		
             <div>
                 <input
                     type="text"

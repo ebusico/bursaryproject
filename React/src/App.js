@@ -11,11 +11,25 @@ import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";
 import Login from "./components/login.component";
 import TabList from "./components/tab-list.component";
+import {authService} from "./components/modules/authService";
+
 
 class App extends Component {
   render() {
+	  if (!authService.currentUserValue){
     return (
       <Router>    
+        <div className="App">
+          <Nav/>
+          <h2>QA Bursary</h2>
+        </div>
+		<Route path="/changePassword/:token" component={ChangePassword} />
+        <Route path="/login" component={Login} />
+      </Router>    
+    );
+  } else {
+	  return (
+	   <Router>    
         <div className="App">
           <Nav/>
           <h2>QA Bursary</h2>
@@ -25,11 +39,12 @@ class App extends Component {
         <Route path="/create" component={CreateTrainee} />
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
-        <Route path="/login" component={Login} />
+		<Route path="/login" component={Login} />
         <Route path="/" exact component={ListTrainee} />
-      </Router>    
-    );
+      </Router>  
+	  );
   }
+ }
 }
 
 export default App;

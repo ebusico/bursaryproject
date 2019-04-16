@@ -1,7 +1,9 @@
 import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
+import { authService } from './modules/authService';
 
+import AccessDenied from './modules/AccessDenied';
 import ListUser from './list-user.component.js';
 import ListTrainee from './list-trainee.component.js';
 
@@ -11,7 +13,8 @@ export default class TabList extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+	  currentUser: authService.currentUserValue
     };
   }
 
@@ -25,6 +28,7 @@ export default class TabList extends React.Component {
   }
 
   render() {
+		if(this.state.currentUser.token.role === 'admin') {
     return (
       <div>
         <Nav tabs>
@@ -55,5 +59,10 @@ export default class TabList extends React.Component {
         </TabContent>
       </div>
     );
+		}else{
+			return (
+			<AccessDenied/>
+		);
   }
+}
 }

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
+import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
 
 export default class ListTrainee extends Component {
     
@@ -11,7 +13,11 @@ export default class ListTrainee extends Component {
                  
        //Added searchString: "" - Ernie
 
-        this.state = {trainees: [], searchString: ""};
+        this.state = {
+			trainees: [], 
+			searchString: "",
+			currentUser: authService.currentUserValue
+			};
         
        //Added onChangeSearch - Ernie
         this.onChangeSearch = this.onChangeSearch.bind(this);
@@ -36,18 +42,13 @@ export default class ListTrainee extends Component {
             })
     }
 
-    // Added onChangeSearch(e) function. Needed for the search filter - Ernie
+    // Added onChangeSearch(e) function. Needed for the search filter
     onChangeSearch(e) {
         this.setState({
             searchString: e.target.value
         });
     }
-
-
-    
-
     render() {
-
         //Declared variables in order to read input from search function
         
         let trainees = this.state.trainees;
@@ -62,8 +63,8 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-
-        return (
+		if(this.state.currentUser.token.role === 'recruiter'){
+			return (
             <div>
                 <input
                     type="text"
@@ -92,8 +93,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_email}</td>
                                     <td> 
                                         <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
-                                        <button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
-                                    </td>
+								   </td>
                                 </tr>
                             );
                         })}
@@ -101,6 +101,60 @@ export default class ListTrainee extends Component {
 
                 </table>
             </div>
-        )
-    }
+        );
+			
+		}else{
+        return (
+            <div>
+                <input
+                    type="text"
+                    value={this.state.searchString}
+                    onChange={this.onChangeSearch}
+                    placeholder="Find trainee..."
+                />
+
+                <h3>Trainees List</h3>
+                <table className="table table-striped" style={{ marginTop: 20 }} >
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>               
+                    <tbody>
+                        {trainees.map(t => {
+							if (this.state.currentUser.token.role === 'admin'){
+                            return (
+                                <tr>
+                                    <td> {t.trainee_fname}</td>
+                                    <td> {t.trainee_lname}</td>
+                                    <td> {t.trainee_email}</td>
+                                    <td> 
+                                        <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
+								   </td>
+                                </tr>
+                            );
+							}
+							else if(this.state.currentUser.token.role === 'finance'){
+							return (
+                                <tr>
+                                    <td> {t.trainee_fname}</td>
+                                    <td> {t.trainee_lname}</td>
+                                    <td> {t.trainee_email}</td>
+                                    <td> 
+										<button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
+                                    </td>
+                                </tr>
+                            );
+							}
+                        })}
+                    </tbody>
+
+                </table>
+            </div>
+        );
+		}
+	}
 }

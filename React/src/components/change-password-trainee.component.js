@@ -80,8 +80,8 @@ export default class ChangePassword extends Component {
             console.log(obj);
             axios.post('http://localhost:4000/trainee/update-password/'+this.props.match.params.token, obj)
             .then(res => console.log(res.data));
-        
-            this.props.history.push('/trainee-details/'+this.state.trainee_id);
+			this.props.history.push('/login');
+            //this.props.history.push('/trainee-details/'+this.state.trainee_id);
        }
     }
     
