@@ -11,6 +11,8 @@ import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";
 import Login from "./components/login.component";
 import TabList from "./components/tab-list.component";
+import AddUser from "./components/create-user.component"
+import ChangePasswordStaff from './components/change-password-staff.component';
 
 class App extends Component {
   render() {
@@ -27,6 +29,8 @@ class App extends Component {
         <Route path="/trainee-details/:id" component={TraineeDetails} />
         <Route path="/login" component={Login} />
         <Route path="/" exact component={ListTrainee} />
+        <Route path="/addUser" component={AddUser} />
+        <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff}/>
       </Router>    
     );
   }

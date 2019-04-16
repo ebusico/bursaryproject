@@ -14,10 +14,17 @@ const UserSchema = new mongoose.Schema({
   },
   role: { 
   type: String, 
-  enum:['recruiter','admin','finance','trainee'],
+  enum:['recruiter','admin','finance'],
   default: 'admin',
   required: true
   },
+  password_token:{
+    type: String
+  },
+  password_expires:{
+    type: String,
+    format: Date
+  }
 },
 {
   timestamps:true
