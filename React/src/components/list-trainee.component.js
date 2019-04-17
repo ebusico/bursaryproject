@@ -91,9 +91,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
-                                    <td> 
-                                        <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
-								   </td>
+                                    <td> 				  </td>
                                 </tr>
                             );
                         })}

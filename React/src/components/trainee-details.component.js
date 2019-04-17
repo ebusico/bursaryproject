@@ -3,6 +3,7 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { CSVLink, CSVDownload } from "react-csv";
+import AccessDenied from './modules/AccessDenied';
 
 const csvData = [
     ["firstname", "lastname", "email"],
@@ -80,6 +81,7 @@ export default class TraineeDetails extends Component {
     }
 
 render() {
+	if(this.state.currentUser.token.role === 'finance') {
         return (
             <div>
                 <h3>Trainee Details</h3>
@@ -93,7 +95,6 @@ render() {
                             <tr>
                             <th>Actions</th>
                             <td>
-                                <form><input type="submit" value="Edit" className="btn btn-primary" /></form>
                                 <CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
                             </td>
                             </tr>
@@ -102,5 +103,29 @@ render() {
             </div>
 
         )
+	} else if(this.state.currentUser.token.role === 'undefined'||'null') {
+		return (
+		<div>
+                <h3>Trainee Details</h3>
+                <table onSubmit={this.onSubmit} className="table table-striped">
+                    <tbody>
+                            <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
+                            <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
+                            <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
+                            <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
+                            <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
+                            <tr>
+                            <th>Actions</th>
+                            <td>
+                                <form><input type="submit" value="Edit" className="btn btn-primary" /></form>
+                            </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+		)
+	} else { 
+		< AccessDenied />
     }
 }
+
