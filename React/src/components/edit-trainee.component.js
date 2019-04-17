@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
+import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
 
 export default class EditTrainee extends Component {
     
@@ -20,7 +22,8 @@ export default class EditTrainee extends Component {
             trainee_lname: '',
             trainee_email: '',
             trainee_account_no: '',
-            trainee_sort_code: ''
+            trainee_sort_code: '',
+			currentUser: authService.currentUserValue
         }
     }
     
@@ -104,6 +107,11 @@ export default class EditTrainee extends Component {
     }
     
     render() {
+		if(this.state.currentUser.token.role !== undefined){
+			return (
+			<AccessDenied/>
+		);
+		}else{
         return (
             <div>
                 <h3 align="center">Update Details</h3>
@@ -158,4 +166,5 @@ export default class EditTrainee extends Component {
             </div>
         )
     }
+  }
 }

@@ -10,9 +10,7 @@ export default class ListTrainee extends Component {
     
     constructor(props) {
         super(props);
-		if (authService.currentUserValue.token.role === 'admin'){
-		document.location.href = 'http://localhost:3000/admin';
-	}
+	
         this.state = {
 			trainees: [], 
 			searchString: "",

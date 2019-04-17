@@ -4,6 +4,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { CSVLink, CSVDownload } from "react-csv";
 import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
 
 const csvData = [
     ["firstname", "lastname", "email"],
@@ -16,7 +17,6 @@ export default class TraineeDetails extends Component {
     
     constructor(props) {
         super(props);
-
         this.state = {
 			id: '',
 			trainee_fname: '',
@@ -25,7 +25,8 @@ export default class TraineeDetails extends Component {
             trainee_account_no: '',
             trainee_sort_code: '',
             trainee_approved: false,
-            csv: []
+            csv: [],
+			currentUser: authService.currentUserValue
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -81,6 +82,7 @@ export default class TraineeDetails extends Component {
     }
 
 render() {
+
 	if(this.state.currentUser.token.role === 'finance') {
         return (
             <div>
@@ -103,7 +105,7 @@ render() {
             </div>
 
         )
-	} else if(this.state.currentUser.token.role === 'undefined'||'null') {
+	} else if(this.state.currentUser.token.role === undefined) {
 		return (
 		<div>
                 <h3>Trainee Details</h3>
@@ -123,9 +125,11 @@ render() {
                     </tbody>
                 </table>
             </div>
-		)
-	} else { 
+		);
+	}else{ 
+	return(
 		< AccessDenied />
+	);}
     }
 }
 

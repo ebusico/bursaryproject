@@ -3,6 +3,8 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
 
 export default class CreateUser extends Component {
     
@@ -17,7 +19,8 @@ export default class CreateUser extends Component {
             user_email: '',
             user_password: '',
             user_role: 'Role',
-            dropdownOpen: false
+            dropdownOpen: false,
+			currentUser: authService.currentUserValue
         }
     }
 
@@ -72,6 +75,11 @@ export default class CreateUser extends Component {
     }
     
    render() {
+	   if(this.state.currentUser.token.role !=='admin'){
+	   return (
+	   <AccessDenied/>
+	   );
+	  }else{
         return (
             <div style={{marginLeft: 100, marginRight: 100}}>
                 <h3>Add User</h3>
@@ -119,4 +127,5 @@ export default class CreateUser extends Component {
             </div>
         )
     }
+   }
 }

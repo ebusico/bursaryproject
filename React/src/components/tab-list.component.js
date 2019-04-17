@@ -5,7 +5,7 @@ import { authService } from './modules/authService';
 
 import AccessDenied from './modules/AccessDenied';
 import ListUser from './list-user.component.js';
-import ListTrainee from './list-trainee.component.js';
+import ListTrainee from './admin-list-trainee.component.js';
 
 export default class TabList extends React.Component {
   constructor(props) {

@@ -20,14 +20,20 @@ class App extends Component {
   render() {
 	  if (!authService.currentUserValue){
     return (
-      <Router>    
+       <Router>    
         <div className="App">
           <Nav/>
           <h2>QA Bursary</h2>
         </div>
-		<Route path="/changePassword/:token" component={ChangePassword} />
+        <Route path="/admin" component={Login} />
+        <Route path="/edit/:id" component={Login} />
+        <Route path="/create" component={Login} />
+        <Route path="/changePassword/:token" component={ChangePassword} />
+        <Route path="/trainee-details/:id" component={Login} />
+		<Route path="/login" component={Login} />
+        <Route path="/" exact component={Login} />
+		<Route path="/addUser" component={Login} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
-        <Route path="/login" component={Login} />
       </Router>    
     );
   } else {

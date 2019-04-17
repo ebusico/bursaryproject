@@ -4,6 +4,8 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
 import { BrowserRouter, Link } from 'react-router-dom'
+import AccessDenied from './modules/AccessDenied';
+
 
 export default class ListUser extends Component {
     
@@ -12,7 +14,7 @@ export default class ListUser extends Component {
 	if (!authService.currentUserValue){
 			document.location.href = 'http://localhost:3000/login';
 			//this.context.history.push('/login');
-		} 
+		}
         super(props);
 		
         this.state = {
@@ -59,8 +61,11 @@ export default class ListUser extends Component {
                 }
             })
         }
+	   if(this.state.currentUser.token.role !== 'admin'){
+		   return (
+		   < AccessDenied />
+	   );} else{
         return (
-		
             <div>
                 <input
                     type="text"
@@ -94,5 +99,6 @@ export default class ListUser extends Component {
                 </table>
             </div>
         )
+	   }
     }
 }

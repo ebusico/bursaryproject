@@ -11,6 +11,9 @@ import {
   NavLink,
 } from 'reactstrap';
 import { authService } from "./components/modules/authService";
+import axios from 'axios';
+import CryptoJS from "react-native-crypto-js";
+import { codes } from "./secrets/secrets.js";
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -19,7 +22,9 @@ export default class Example extends React.Component {
 	this.logout = this.logout.bind(this);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+	  currentUser: authService.currentUserValue,
+	  email: ''
     };
   }
   

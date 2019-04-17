@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
 import { BrowserRouter } from 'react-router-dom'
 
 
 export default class AccessDenied extends Component {
 
-
+componentDidMount(){
+	alert('Access Denied');
+	document.location.href = 'http://localhost:3000/';
+}
 render() {
         return (
 		<div id="access-denied-error">
-		<h1>Access Denied</h1>
 		</div>
-		
-		
 		);
-}
+	}
 }
