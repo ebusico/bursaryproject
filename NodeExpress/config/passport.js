@@ -30,7 +30,7 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 						return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 					}
 
-					var bytes  = CryptoJS.AES.decrypt(password, '3FJSei8zPx');
+					var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 					var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
 					Trainee.comparePassword(decryptPass, trainee.trainee_password, function(err, isMatch){
 						if(err){
@@ -49,6 +49,8 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 			else{
 			var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
+			console.log(user.password);
+			console.log(decryptPass);
       User.comparePassword(decryptPass, user.password, function(err, isMatch){
       if(err){
 				return done(err);

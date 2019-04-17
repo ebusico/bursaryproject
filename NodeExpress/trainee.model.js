@@ -4,16 +4,21 @@ const bcrypt = require('bcrypt');
 
 let Trainee = new Schema({
     trainee_fname: {
-        type: String
+        type: String,
+        required: true
     },
     trainee_lname: {
-        type: String
+        type: String,
+        required: true
     },
     trainee_email: {
-        type: String
+        type: String,
+        required: true, 
+        unique: true 
     },
     trainee_password: {
-        type: String
+        type: String,
+        required: true
     },
     trainee_account_no: {
         type: String

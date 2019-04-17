@@ -270,7 +270,7 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
-            var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, 'traineePassword');
+            var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx');
             var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(decryptPass, salt, function(err, hash) {
@@ -307,7 +307,7 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
-            var bytes  = CryptoJS.AES.decrypt(req.body.password, 'traineePassword');
+            var bytes  = CryptoJS.AES.decrypt(req.body.password, 'c9nMaacr2Y');
             var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(decryptPass, salt, function(err, hash) {

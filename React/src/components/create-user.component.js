@@ -96,9 +96,9 @@ export default class CreateUser extends Component {
                                 className="form-control"
                                 value={this.state.user_email}
                                 onChange={this.onChangeUserEmail}
-                                />
+                                required/>
                     </div>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>
                         {this.state.user_role}
                         </DropdownToggle>
