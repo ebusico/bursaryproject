@@ -50,7 +50,7 @@ class App extends Component {
         <Route path="/" exact component={ListTrainee} />
 		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
-        <div>
+        <div >
           <CookieBanner
           className="Banner"
           message= {codes.message}
@@ -58,6 +58,16 @@ class App extends Component {
           onAcceptPreferences = {() => {}}
           onAcceptStatistics = {() => {}}
           onAcceptMarketing = {() => {}}
+          styles={{
+            dialog: {    
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: 10,
+              backgroundColor: '#8c8c8c'
+            }
+          }}
           />
         </div>
       </Router>  
