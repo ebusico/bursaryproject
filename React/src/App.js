@@ -65,7 +65,7 @@ class App extends Component {
               left: 0,
               right: 0,
               padding: 10,
-              backgroundColor: '#8c8c8c'
+              backgroundColor: '#f2f2f2'
             }
           }}
           />
