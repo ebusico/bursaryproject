@@ -3,12 +3,10 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { CSVLink, CSVDownload } from "react-csv";
-<<<<<<< HEAD
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
-=======
 import moment from 'moment';
->>>>>>> 0fe4beb998a88970152866d9cfc11ea0bffc5d2a
+
 
 const csvData = [
     ["firstname", "lastname", "email"],
@@ -29,14 +27,11 @@ export default class TraineeDetails extends Component {
             trainee_account_no: '',
             trainee_sort_code: '',
             trainee_approved: false,
-<<<<<<< HEAD
             csv: [],
-			currentUser: authService.currentUserValue
-=======
+			currentUser: authService.currentUserValue,
             trainee_start_date: '',
             trainee_end_date: '',
             csv: []
->>>>>>> 0fe4beb998a88970152866d9cfc11ea0bffc5d2a
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
