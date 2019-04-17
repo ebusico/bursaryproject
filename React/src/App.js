@@ -18,6 +18,8 @@ import ChangePasswordStaff from './components/change-password-staff.component';
 import { CookieBanner } from '@palmabit/react-cookie-law';
 import {codes} from './secrets/secrets'
 
+import "./css/Login.css";
+
 
 class App extends Component {
   render() {
