@@ -27,6 +27,7 @@ class App extends Component {
         </div>
 		<Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+        <Route path="/" exact component={Login} />
         <Route path="/login" component={Login} />
       </Router>    
     );
