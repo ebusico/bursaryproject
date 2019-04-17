@@ -252,7 +252,6 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
 
 adminRoutes.route('/reset-staff/:token').get(function(req, res) {
     User.findOne({password_token: req.params.token, password_expires: {$gt: Date.now()}}).then((staff) => {
-      console.log(Date.now())
       if (staff == null) {
         console.error('password reset link is invalid or has expired');
         res.status(403).send('password reset link is invalid or has expired');
