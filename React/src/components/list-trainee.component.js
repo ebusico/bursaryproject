@@ -10,9 +10,6 @@ export default class ListTrainee extends Component {
     
     constructor(props) {
         super(props);
-		if (authService.currentUserValue.token.role === 'admin'){
-		document.location.href = 'http://localhost:3000/admin';
-	}
         this.state = {
 			trainees: [], 
 			searchString: "",
@@ -50,7 +47,6 @@ export default class ListTrainee extends Component {
     }
     render() {
         //Declared variables in order to read input from search function
-        
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase();
         

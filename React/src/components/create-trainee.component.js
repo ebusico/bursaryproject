@@ -78,7 +78,9 @@ export default class CreateTrainee extends Component {
                                 alert("Please fill all forms");
                              }
                              else{
-                                axios.post('http://localhost:4000/trainee/send-email', {trainee_email: email.toString()})
+                                axios.post('http://localhost:4000/trainee/send-email', {
+									trainee_email: email.toString()
+									})
                                 .then( (response) => console.log(response.data))
                              }
                 }   
