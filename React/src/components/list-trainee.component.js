@@ -10,6 +10,7 @@ export default class ListTrainee extends Component {
     
     constructor(props) {
         super(props);
+
         this.state = {
 			trainees: [], 
 			searchString: "",
