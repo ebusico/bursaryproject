@@ -81,9 +81,7 @@ class App extends Component {
          </div>
        </Router>  
      );
-
-  } 
-  else {
+  }else {
 	  return (
 	   <Router>    
         <div className="App">

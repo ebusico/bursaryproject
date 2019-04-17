@@ -10,7 +10,7 @@ export default class ListTrainee extends Component {
     
     constructor(props) {
         super(props);
-
+			
         this.state = {
 			trainees: [], 
 			searchString: "",
@@ -46,6 +46,7 @@ export default class ListTrainee extends Component {
             searchString: e.target.value
         });
     }
+	
     render() {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
@@ -60,7 +61,12 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-		if(this.state.currentUser.token.role === 'recruiter'){
+		if (this.state.currentUser.token.role === undefined){
+			return (
+			<AccessDenied/>
+			)
+		}
+		else if(this.state.currentUser.token.role === 'recruiter'){
 			return (
             <div>
                 <input
