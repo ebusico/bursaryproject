@@ -62,13 +62,26 @@ export default class CreateUser extends Component {
         };
         
         console.log(newUser)
-        
-        axios.post('http://localhost:4000/admin/addUser', newUser)
-         .then( (response) => {axios.post('http://localhost:4000/admin/send-email-staff', {email: email.toString()})
-                           .then( (response) => console.log(response.data))});        
-        
-        this.props.history.push('/admin');
-        window.location.reload();
+
+        if(newUser.role == "role"){
+            alert("You must select a role")
+        }
+        else{
+            axios.post('http://localhost:4000/admin/addUser', newUser)
+            .then( (response) => {console.log(response);
+                                if(response.status == 205){
+                                    console.log("dupe email");
+                                    alert("Email already in use");
+                                 }
+                                 else{
+                                    console.log("else");
+                                    axios.post('http://localhost:4000/admin/send-email-staff', {email: email.toString()})
+                                    .then( (response) => console.log(response.data));
+                                    this.props.history.push('/admin');
+                                    window.location.reload();
+                                 }
+            })
+        }
     }
     
    render() {
