@@ -12,7 +12,6 @@ export default class ListTrainee extends Component {
         super(props);
                  
        //Added searchString: "" - Ernie
-
         this.state = {
 			trainees: [], 
 			searchString: "",

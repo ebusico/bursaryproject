@@ -4,6 +4,10 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import {LinkedCalendar} from 'rb-datepicker';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+import moment from 'moment';
 
 
 export default class CreateTrainee extends Component {
@@ -15,6 +19,7 @@ export default class CreateTrainee extends Component {
         this.onChangeTraineeLname = this.onChangeTraineeLname.bind(this);
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineePassword = this.onChangeTraineePassword.bind(this);
+        this.onDatesChange = this.onDatesChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -22,7 +27,9 @@ export default class CreateTrainee extends Component {
             trainee_lname: '',
             trainee_email: '',
             trainee_password: '',
-			currentUser: authService.currentUserValue
+            trainee_start_date: '',
+            trainee_end_date: '',
+            currentUser: authService.currentUserValue
         }
     }
     
@@ -50,7 +57,13 @@ export default class CreateTrainee extends Component {
             trainee_password: e.target.value
         });
     }
-    
+
+    onDatesChange = ({ startDate, endDate }) => {
+        this.setState({
+            trainee_start_date: startDate.toDate(),
+            trainee_end_date: endDate.toDate()
+        });
+    }
     onSubmit(e) {
         e.preventDefault();
         
@@ -68,7 +81,9 @@ export default class CreateTrainee extends Component {
             trainee_fname: fname.toString(),
             trainee_lname: lname.toString(),
             trainee_email: email.toString(),
-            trainee_password: pass.toString()
+            trainee_password: pass.toString(),
+            trainee_start_date: this.state.trainee_start_date,
+            trainee_end_date: this.state.trainee_end_date
         };
         
         console.log(newTrainee)
@@ -128,6 +143,8 @@ export default class CreateTrainee extends Component {
                                 onChange={this.onChangeTraineeEmail}
                                 required/>
                     </div>
+
+                    <LinkedCalendar onDatesChange={this.onDatesChange} showDropdowns={false} />
 
                     <div className="form-group">
                         <input type="submit" value="Add Trainee" className="btn btn-primary" />

@@ -28,13 +28,54 @@ class App extends Component {
           <Nav/>
           <h2>QA Bursary</h2>
         </div>
-		<Route path="/changePassword/:token" component={ChangePassword} />
+		    <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/" exact component={Login} />
         <Route path="/login" component={Login} />
       </Router>    
     );
-  } else {
+  }
+  else if(authService.currentUserValue.token.role === 'admin'){
+    return (
+      <Router>    
+         <div className="App">
+           <Nav/>
+           <h2>QA Bursary</h2>
+         </div>
+         <Route path="/admin" component={TabList} />
+         <Route path="/edit/:id" component={EditTrainee} />
+         <Route path="/create" component={CreateTrainee} />
+         <Route path="/changePassword/:token" component={ChangePassword} />
+         <Route path="/trainee-details/:id" component={TraineeDetails} />
+         <Route path="/login" component={Login} />
+         <Route path="/" exact component={TabList} />
+         <Route path="/addUser" component={AddUser} />
+         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+         <div >
+           <CookieBanner
+           className="Banner"
+           message= {codes.message}
+           onAccept = {() => {}}
+           onAcceptPreferences = {() => {}}
+           onAcceptStatistics = {() => {}}
+           onAcceptMarketing = {() => {}}
+           styles={{
+             dialog: {    
+               position: 'fixed',
+               bottom: 0,
+               left: 0,
+               right: 0,
+               padding: 10,
+               backgroundColor: '#f2f2f2'
+             }
+           }}
+           />
+         </div>
+       </Router>  
+     );
+
+  } 
+  else {
 	  return (
 	   <Router>    
         <div className="App">
