@@ -3,12 +3,9 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { CSVLink, CSVDownload } from "react-csv";
-<<<<<<< HEAD
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
-=======
 import moment from 'moment';
->>>>>>> 0fe4beb998a88970152866d9cfc11ea0bffc5d2a
 
 const csvData = [
     ["firstname", "lastname", "email"],
@@ -29,14 +26,10 @@ export default class TraineeDetails extends Component {
             trainee_account_no: '',
             trainee_sort_code: '',
             trainee_approved: false,
-<<<<<<< HEAD
             csv: [],
-			currentUser: authService.currentUserValue
-=======
+			currentUser: authService.currentUserValue,
             trainee_start_date: '',
             trainee_end_date: '',
-            csv: []
->>>>>>> 0fe4beb998a88970152866d9cfc11ea0bffc5d2a
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -58,12 +51,14 @@ export default class TraineeDetails extends Component {
                 var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
                 var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee).toString(CryptoJS.enc.Utf8);
                 var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv}).toString(CryptoJS.enc.Utf8);
+                var trainee_start_date = CryptoJS.AES.decrypt(response.data.trainee_start_date, codes.trainee).toString(CryptoJS.enc.Utf8);
+                var trainee_end_date = CryptoJS.AES.decrypt(response.data.trainee_end_date, codes.trainee).toString(CryptoJS.enc.Utf8);
                 this.setState({
                     trainee_fname: trainee_fname,
                     trainee_lname: trainee_lname,
                     trainee_email: trainee_email,
-                    trainee_start_date: response.data.trainee_start_date,
-                    trainee_end_date: response.data.trainee_end_date,
+                    trainee_start_date: trainee_start_date,
+                    trainee_end_date: trainee_end_date,
                     csv: [["firstname", "lastname", "email"],[trainee_fname, trainee_lname, trainee_email]]
                 }) 
                 
