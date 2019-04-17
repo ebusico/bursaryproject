@@ -1,0 +1,49 @@
+@media all and (min-width: 500px) {
+    .Login {
+      width: 500px;
+      padding: 3% 0 0;
+      margin: auto;    
+    }
+  
+    .Login form {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      margin: 0 auto;
+      max-width: 800px;
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 450px;
+      margin: 0 auto 300px;
+      padding: 45px;
+      text-align: center;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .uname{
+        font-size: 20px;
+        font-family: "Roboto", sans-serif;
+    }
+
+    .psw{
+        font-size: 20px;
+        font-family: "Roboto", sans-serif;
+    }
+
+    .btn{
+        font-family: "Roboto", sans-serif;
+        text-transform: uppercase;
+        outline: 0;
+        width: 100%;
+        border: 0px;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 20px;
+        -webkit-transition: all 0.3 ease;
+        transition: all 0.3 ease;
+        cursor: pointer;
+        outline: none;
+        outline: 0;
+    }
+  }
