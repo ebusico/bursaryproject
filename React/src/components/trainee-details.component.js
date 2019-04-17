@@ -7,12 +7,6 @@ import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import moment from 'moment';
 
-const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-  ];
 
 export default class TraineeDetails extends Component {
     
@@ -37,8 +31,6 @@ export default class TraineeDetails extends Component {
     componentDidMount() {
         axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                console.log(response.data);
-                console.log(response.data.trainee_account_no);
                 console.log(Date(response.data.trainee_end_date));
                 if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
                     var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee).toString(CryptoJS.enc.Utf8);
@@ -68,24 +60,8 @@ export default class TraineeDetails extends Component {
             })
     }
 
-    csvGenerate(trainee) {
-        return ([
-            ["firstname", "lastname", "email"],
-            [trainee.trainee_fname, trainee.trainee_lname, trainee.trainee_email]
-          ]);
-    }
     onSubmit(e) {
-
-        const obj = {
-			trainee_fname: this.state.trainee_fname,
-            trainee_lname: this.state.trainee_lname,
-            trainee_email: this.state.trainee_email,
-            trainee_password: this.state.trainee_password,
-            trainee_account_no: this.state.trainee_account_no,
-            trainee_sort_code: this.state.trainee_sort_code,
-            trainee_approved: this.state.trainee_approved,
-        };
-        console.log(obj);
+        
         this.props.history.push('/edit/'+this.props.match.params.id);
     }
 
@@ -126,7 +102,6 @@ render() {
                             <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
 							<tr><th>Start Date</th><td>{moment(this.state.trainee_start_date).format('MMMM Do YYYY')}</td></tr>
                             <tr><th>End Date</th><td>{moment(this.state.trainee_end_date).format('MMMM Do YYYY')}</td></tr>
-        
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>

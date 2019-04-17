@@ -75,51 +75,49 @@ export default class CreateTrainee extends Component {
     
     onSubmit(e) {
         e.preventDefault();
-        
-        console.log(`Form submitted:`);
-        console.log(`Trainee Fname: ${this.state.trainee_fname}`);
-        console.log(`Trainee Lname: ${this.state.trainee_lname}`);
-        console.log(`Trainee Email: ${this.state.trainee_email}`);
-        
-        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
-        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
-        var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
-        var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
-        var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
 
-        var newTrainee = {
-            trainee_fname: fname.toString(),
-            trainee_lname: lname.toString(),
-            trainee_email: email.toString(),
-            trainee_password: pass.toString(),
-            trainee_start_date: startDate.toString(),
-            trainee_end_date: endDate.toString()
-        };
-        
-        console.log(newTrainee)
-        
-        axios.post('http://localhost:4000/trainee/add', newTrainee)
-        .then( (response) => {if(response.status == 400){
-                                alert("Please fill all forms");
-                             }
-                             else{
-                                axios.post('http://localhost:4000/trainee/send-email', {
-									trainee_email: email.toString()
-									})
-                                .then( (response) => console.log(response.data))
-                             }
-                }   
-        );        
-        this.setState({
-            trainee_fname: '',
-            trainee_lname: '',
-            trainee_email: '',
-            trainee_password: ''
-        })
-        
-        this.props.history.push('/');
-        window.location.reload();
+        if(this.state.trainee_start_date == '' || this.state.trainee_end_date == ''){
+            alert('Please select the bursary start/end dates');
+        }
+        else{
+            console.log(`Form submitted:`);
+            console.log(`Trainee Fname: ${this.state.trainee_fname}`);
+            console.log(`Trainee Lname: ${this.state.trainee_lname}`);
+            console.log(`Trainee Email: ${this.state.trainee_email}`);
+            
+            var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
+            var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
+            var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
+            var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
+            var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
+            var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
+
+            var newTrainee = {
+                trainee_fname: fname.toString(),
+                trainee_lname: lname.toString(),
+                trainee_email: email.toString(),
+                trainee_password: pass.toString(),
+                trainee_start_date: startDate.toString(),
+                trainee_end_date: endDate.toString()
+            };
+            
+            console.log(newTrainee)
+            
+            axios.post('http://localhost:4000/trainee/add', newTrainee)
+            .then( (response) => {if(response.status == 205){
+                                    alert("Email is already in use");
+                                }
+                                else{
+                                    axios.post('http://localhost:4000/trainee/send-email', {
+                                        trainee_email: email.toString()
+                                        })
+                                    .then( (response) => console.log(response.data));
+                                    this.props.history.push('/');
+                                    window.location.reload();
+                                }
+                    }   
+            );  
+        }      
     }
     
    render() {
