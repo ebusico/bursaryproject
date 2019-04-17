@@ -333,7 +333,7 @@ traineeRoutes.route('/add').post(function(req, res) {
             res.status(200).json({'trainee': 'Trainee added successfully'});
         })
         .catch(err => {
-            res.status(400).send('Adding new trainee failed');
+            res.status(205).send('Adding new trainee failed');
         });
 });
 
