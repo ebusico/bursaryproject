@@ -39,11 +39,11 @@ let Trainee = new Schema({
     },
     trainee_start_date:{
         type: String,
-        format: Date
+        required:true
     },
     trainee_end_date:{
         type: String,
-        format: Date
+        required: true
     }
 });
 module.exports = mongoose.model('Trainee', Trainee);

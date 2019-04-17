@@ -7,7 +7,8 @@ import { authService } from './modules/authService';
 import {LinkedCalendar} from 'rb-datepicker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
-import moment from 'moment';
+import {RangeDatePicker} from '@y0c/react-datepicker';
+import '@y0c/react-datepicker/assets/styles/calendar.scss';
 
 
 export default class CreateTrainee extends Component {
@@ -64,6 +65,14 @@ export default class CreateTrainee extends Component {
             trainee_end_date: endDate.toDate()
         });
     }
+    
+    onDatesChange = (startDate, endDate) => {
+        this.setState({
+            trainee_start_date: startDate,
+            trainee_end_date: endDate
+        });
+    };
+    
     onSubmit(e) {
         e.preventDefault();
         
@@ -76,14 +85,16 @@ export default class CreateTrainee extends Component {
         var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
         var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
         var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
+        var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
+        var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
 
         var newTrainee = {
             trainee_fname: fname.toString(),
             trainee_lname: lname.toString(),
             trainee_email: email.toString(),
             trainee_password: pass.toString(),
-            trainee_start_date: this.state.trainee_start_date,
-            trainee_end_date: this.state.trainee_end_date
+            trainee_start_date: startDate.toString(),
+            trainee_end_date: endDate.toString()
         };
         
         console.log(newTrainee)
@@ -146,7 +157,12 @@ export default class CreateTrainee extends Component {
                                 required/>
                     </div>
 
-                    <LinkedCalendar onDatesChange={this.onDatesChange} showDropdowns={false} />
+                    <div>
+                        <label> Bursary Start Date / End Date </label>
+                        <div style={{height: '100px'}}>
+                            <RangeDatePicker portal startText="Start" endText="End" onChange={this.onDatesChange}/>
+                        </div>
+                    </div>
 
                     <div className="form-group">
                         <input type="submit" value="Add Trainee" className="btn btn-primary" />
