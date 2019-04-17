@@ -15,6 +15,9 @@ import {authService} from "./components/modules/authService";
 import AddUser from "./components/create-user.component";
 import ChangePasswordStaff from './components/change-password-staff.component';
 
+import { CookieBanner } from '@palmabit/react-cookie-law';
+import {codes} from './secrets/secrets'
+
 
 class App extends Component {
   render() {
@@ -48,10 +51,30 @@ class App extends Component {
         <Route path="/create" component={CreateTrainee} />
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
-		<Route path="/login" component={Login} />
+		    <Route path="/login" component={Login} />
         <Route path="/" exact component={ListTrainee} />
-		<Route path="/addUser" component={AddUser} />
+		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+        <div >
+          <CookieBanner
+          className="Banner"
+          message= {codes.message}
+          onAccept = {() => {}}
+          onAcceptPreferences = {() => {}}
+          onAcceptStatistics = {() => {}}
+          onAcceptMarketing = {() => {}}
+          styles={{
+            dialog: {    
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: 10,
+              backgroundColor: '#f2f2f2'
+            }
+          }}
+          />
+        </div>
       </Router>  
 	  );
   }

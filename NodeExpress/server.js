@@ -62,22 +62,59 @@ var requireLogin = passport.authenticate('local', {session:false});
 
 adminRoutes.route('/addUser').post(function(req,res){
       
-          var newUser = new User({
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-          });
-  
-          User.createUser(newUser, function(err, user){
-            if(err){
-                throw err;
-            }
-            const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
-              console.log(token);
-              return res.json({result: true, role: user.role, token});
-            res.send(user).end()
-          });
-  });
+    var newUser = new User({
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role
+    });
+
+    User.createUser(newUser, function(err, user){
+      if(err){
+          console.log(err);
+          console.log('duplicate email');
+          res.status(205).send();
+      }
+      else{
+      const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+        console.log(token);
+        return res.json({result: true, role: user.role, token});
+      }
+    });
+});
+
+adminRoutes.route('/addUser/postman').post(function(req,res){
+CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
+var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+
+var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv});
+    //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
+    var newUser = new User({
+      email: encrypted.toString(),
+      password: req.body.password,
+      role: req.body.role
+    });
+    
+    if(encrypted.toString() === newUser.email){
+        console.log(true);
+    }else{
+        console.log(encrypted.toString());
+        console.log(newUser.email.toString());
+        console.log(false);
+    }
+    let c = CryptoJS.AES.decrypt(newUser.email, key, {iv: iv});
+    console.log(c.toString(CryptoJS.enc.Utf8));
+
+    User.createUser(newUser, function(err, user){
+      if(err){
+          throw err;
+      }
+      const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+        console.log(token);
+        return res.json({result: true, role: user.role, token});
+      res.send(user).end()
+    });
+});
 
   //endpoint for deleting a trainer user
   adminRoutes.route('/delete/:id').get(function(req, res) {
@@ -233,7 +270,7 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
-            var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, 'traineePassword');
+            var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx');
             var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(decryptPass, salt, function(err, hash) {
@@ -270,7 +307,7 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
-            var bytes  = CryptoJS.AES.decrypt(req.body.password, 'traineePassword');
+            var bytes  = CryptoJS.AES.decrypt(req.body.password, 'c9nMaacr2Y');
             var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(decryptPass, salt, function(err, hash) {

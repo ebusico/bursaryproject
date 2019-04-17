@@ -74,8 +74,15 @@ export default class CreateTrainee extends Component {
         console.log(newTrainee)
         
         axios.post('http://localhost:4000/trainee/add', newTrainee)
-        .then( (response) => {axios.post('http://localhost:4000/trainee/send-email', {trainee_email: email.toString()})
-                              .then( (response) => console.log(response.data))});        
+        .then( (response) => {if(response.status == 400){
+                                alert("Please fill all forms");
+                             }
+                             else{
+                                axios.post('http://localhost:4000/trainee/send-email', {trainee_email: email.toString()})
+                                .then( (response) => console.log(response.data))
+                             }
+                }   
+        );        
         this.setState({
             trainee_fname: '',
             trainee_lname: '',
@@ -102,7 +109,7 @@ export default class CreateTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_fname}
                                 onChange={this.onChangeTraineeFname}
-                                />
+                                required/>
                     </div>
                     <div className="form-group"> 
                         <label>Last Name: </label>
@@ -110,7 +117,7 @@ export default class CreateTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_lname}
                                 onChange={this.onChangeTraineeLname}
-                                />
+                                required/>
                     </div>
                     <div className="form-group">
                         <label>Email: </label>
@@ -119,7 +126,7 @@ export default class CreateTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_email}
                                 onChange={this.onChangeTraineeEmail}
-                                />
+                                required/>
                     </div>
 
                     <div className="form-group">
