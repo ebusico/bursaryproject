@@ -23,7 +23,7 @@ export default class ChangePasswordStaff extends Component {
     async componentDidMount() {
         await axios.get('http://localhost:4000/admin/reset-staff/'+this.props.match.params.token)
             .then(response => {
-                    console.log(response);
+                    console.log(response.data.message);
                     if (response.data.message === 'password reset link a-ok') {
                         this.setState({
                             id: response.data.staff_id,

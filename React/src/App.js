@@ -26,6 +26,7 @@ class App extends Component {
           <h2>QA Bursary</h2>
         </div>
 		<Route path="/changePassword/:token" component={ChangePassword} />
+        <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/login" component={Login} />
       </Router>    
     );
