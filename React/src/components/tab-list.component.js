@@ -5,7 +5,8 @@ import { authService } from './modules/authService';
 
 import AccessDenied from './modules/AccessDenied';
 import ListUser from './list-user.component.js';
-import ListTrainee from './list-trainee.component.js';
+import ListTrainee from './standalone-list-trainee.component.js';
+import '../css/tabs.css';
 
 export default class TabList extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class TabList extends React.Component {
   render() {
 		if(this.state.currentUser.token.role === 'admin') {
     return (
-      <div>
+      <div className="QATabs">
         <Nav tabs>
           <NavItem>
             <NavLink

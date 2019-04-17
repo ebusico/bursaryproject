@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
+import '../css/changePasswordTrainee.css';
 
 export default class ChangePasswordStaff extends Component {
     
@@ -97,9 +98,9 @@ export default class ChangePasswordStaff extends Component {
             );
         }
         return (
-            <div>
-                <h3 align="center">Update Password</h3>
-                <form onSubmit={this.onSubmit}>
+            <div className="changePassword">
+                <form className="changeForm" onSubmit={this.onSubmit}>
+                    <h3 align="center">Update Password</h3>
                     <div className="form-group">
                         <label>Email: </label>
                         <input type="text" 

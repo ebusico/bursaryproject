@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import {RangeDatePicker} from '@y0c/react-datepicker';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
+import '../css/add-trainee.css';
 
 
 export default class CreateTrainee extends Component {
@@ -126,9 +127,9 @@ export default class CreateTrainee extends Component {
 		   < AccessDenied />
 	   );} else{
         return (
-            <div style={{marginLeft: 100, marginRight: 100}}>
-                <h3>Add Trainee</h3>
-                <form onSubmit={this.onSubmit}>
+            <div className="createTrainee" style={{marginLeft: 100, marginRight: 100}}>
+                <form className="addForm" onSubmit={this.onSubmit}>
+                    <h3>Add Trainee</h3>
                     <div className="form-group"> 
                         <label>First Name: </label>
                         <input  type="text"

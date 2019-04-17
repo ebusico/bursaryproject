@@ -69,7 +69,6 @@ export default class ListTrainee extends Component {
 		}
 		else if(this.state.currentUser.token.role === 'recruiter'){
 			return (
-            <div className="bigBox">
             <div className="QAtable">
                 <div className="QASearchBar">
                     <input
@@ -105,12 +104,10 @@ export default class ListTrainee extends Component {
 
                 </table>
             </div>
-            </div>
         );
 			
 		}else{
         return (
-            <div className="bigBox">
             <div className="QAtable">
                 <div className="QASearchBar">
                     <input
@@ -160,7 +157,6 @@ export default class ListTrainee extends Component {
                     </tbody>
 
                 </table>
-            </div>
             </div>
         );
 		}

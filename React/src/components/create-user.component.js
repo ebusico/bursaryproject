@@ -5,6 +5,7 @@ import { codes } from "../secrets/secrets.js";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import '../css/add-user.css';
 
 export default class CreateUser extends Component {
     
@@ -94,9 +95,10 @@ export default class CreateUser extends Component {
 	   );
 	  }else{
         return (
-            <div style={{marginLeft: 100, marginRight: 100}}>
-                <h3>Add User</h3>
-                <form onSubmit={this.onSubmit}>
+            <div className="createUser" style={{marginLeft: 100, marginRight: 100}}>
+                
+                <form className="addForm" onSubmit={this.onSubmit}>
+                    <h3>Add User</h3>
                     <div className="form-group">
                         <label>Email: </label>
                         <input 
@@ -106,6 +108,7 @@ export default class CreateUser extends Component {
                                 onChange={this.onChangeUserEmail}
                                 required/>
                     </div>
+
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>
                         {this.state.user_role}
@@ -123,15 +126,8 @@ export default class CreateUser extends Component {
                         </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-                    {/* <div className="form-group">
-                        <label>Role: </label>
-                        <input 
-                                type="text" 
-                                className="form-control"
-                                value={this.state.user_role}
-                                onChange={this.onChangeUserRole}
-                                />
-                    </div> */}
+                    <br></br>
+
 
                     <div className="form-group">
                         <input type="submit" value="Add User" className="btn btn-primary" />

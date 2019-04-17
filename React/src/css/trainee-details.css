@@ -1,0 +1,17 @@
+.table.table.table-striped-details{
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width:80%;
+    border-radius: 4px; 
+}
+
+.details{
+    padding-top: 5%;
+}
+
+#detailstbody{
+    width: 80%;
+    padding-left: 100px;
+    padding-right: 100px;
+}

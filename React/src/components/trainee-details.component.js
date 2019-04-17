@@ -6,6 +6,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import moment from 'moment';
+import '../css/trainee-details.css';
 
 
 export default class TraineeDetails extends Component {
@@ -69,10 +70,10 @@ render() {
 
 	if(this.state.currentUser.token.role === 'finance') {
         return (
-            <div>
+            <div className="details">
+                <table onSubmit={this.onSubmit} className="table table-striped-details">
                 <h3>Trainee Details</h3>
-                <table onSubmit={this.onSubmit} className="table table-striped">
-                    <tbody>
+                    <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
                             <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>

@@ -5,6 +5,7 @@ import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
 import { BrowserRouter, Link } from 'react-router-dom'
 import AccessDenied from './modules/AccessDenied';
+import '../css/list-trainee.css';
 
 
 export default class ListUser extends Component {
@@ -66,21 +67,24 @@ export default class ListUser extends Component {
 		   < AccessDenied />
 	   );} else{
         return (
-            <div>
-                <input
-                    type="text"
-                    value={this.state.searchString}
-                    onChange={this.onChangeSearch}
-                    placeholder="Find User.." 
-                />
-                <h3>User List</h3>
-				<Link to ={"/addUser"}>Add User</Link>
+            <div className="QAtable">
+                <div className="QASearchBar">
+                    <input
+                        type="text"
+                        value={this.state.searchString}
+                        onChange={this.onChangeSearch}
+                        placeholder="Find User.." 
+                    />
+                    <div id="addUser">
+                        <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User</Link></button>
+                    </div>
+                </div>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Action</th>
+                            <th className="action">Action</th>
                         </tr>
                     </thead>
                     <tbody>

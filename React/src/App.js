@@ -26,7 +26,6 @@ class App extends Component {
        <Router>    
         <div className="App">
           <Nav/>
-          <h2>QA Bursary</h2>
         </div>
         <Route path="/admin" component={Login} />
         <Route path="/edit/:id" component={Login} />
@@ -46,7 +45,6 @@ class App extends Component {
       <Router>    
          <div className="App">
            <Nav/>
-           <h2>QA Bursary</h2>
          </div>
          <Route path="/admin" component={TabList} />
          <Route path="/edit/:id" component={EditTrainee} />
@@ -84,7 +82,6 @@ class App extends Component {
 	   <Router>    
         <div className="App">
           <Nav/>
-          <h2>QA Bursary</h2>
         </div>
         <Route path="/admin" component={TabList} />
         <Route path="/edit/:id" component={EditTrainee} />

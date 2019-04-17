@@ -4,6 +4,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import '../css/list-trainee.css';
 
 export default class EditTrainee extends Component {
     
@@ -113,8 +114,7 @@ export default class EditTrainee extends Component {
 		);
 		}else{
         return (
-            <div>
-                <h3 align="center">Update Details</h3>
+            <div className="QATable">
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
                         <label>First Name: </label>
