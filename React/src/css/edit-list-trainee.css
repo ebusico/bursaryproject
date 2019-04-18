@@ -1,0 +1,22 @@
+.edit-form{
+	background-color:white;
+	width:80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 4px;
+}
+
+.QATable{
+	margin-top: 5%;
+}
+
+.form-group{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.all-edit-box{
+	padding-top:5%;
+	padding-bottom:5%;
+}

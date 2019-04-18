@@ -94,10 +94,10 @@ render() {
         )
 	} else if(this.state.currentUser.token._id === this.props.match.params.id) {
 		return (
-		<div>
-                <h3>Trainee Details</h3>
-                <table onSubmit={this.onSubmit} className="table table-striped">
-                    <tbody>
+		<div className="details">
+                <table onSubmit={this.onSubmit} className="table table-striped-details">
+				<h3>Trainee Details</h3>
+                    <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
                             <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
