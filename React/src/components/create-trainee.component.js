@@ -156,7 +156,7 @@ export default class CreateTrainee extends Component {
                                 required/>
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label> Bursary Start Date / End Date </label>
                         <div style={{height: '100px'}}>
                             <RangeDatePicker portal startText="Start" endText="End" onChange={this.onDatesChange}/>

@@ -11,7 +11,8 @@ body {
 
 #root{
   background-color: grey;
-  min-height:1000px;
+  overflow: hidden;    
+  min-height: 650px;
 }
 
 code {

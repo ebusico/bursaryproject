@@ -107,9 +107,8 @@ export default class CreateUser extends Component {
                                 value={this.state.user_email}
                                 onChange={this.onChangeUserEmail}
                                 required/>
-                    </div>
-
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
+                        <br></br>
+                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>
                         {this.state.user_role}
                         </DropdownToggle>
@@ -125,8 +124,11 @@ export default class CreateUser extends Component {
                             </div>
                         </DropdownItem>
                         </DropdownMenu>
-                    </Dropdown>
+                        </Dropdown>
                     <br></br>
+                    </div>
+
+
 
 
                     <div className="form-group">
