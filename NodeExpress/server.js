@@ -166,7 +166,7 @@ passport.serializeUser(function(user, done) {
 
 apiRoutes.use('/trainee', traineeRoutes);
 
-mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true });
+mongoose.connect('mongodb://'+process.env.REACT_APP_AWS_IP+':27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
 
 connection.once('open', function() {
@@ -364,7 +364,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: email.toString(CryptoJS.enc.Utf8), // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://localhost:3000/changePassword/'+token // plain text body
+                text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {
@@ -404,7 +404,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 from: 'QABursary@aol.com', // sender address
                 to: email.toString(CryptoJS.enc.Utf8), // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'Please navigate to the following link to activate your staff account and set your password: http://localhost:3000/changePasswordStaff/'+token // plain text body
+                text: 'Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePasswordStaff/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {

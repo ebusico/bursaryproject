@@ -22,7 +22,7 @@ export default class ChangePassword extends Component {
     }
     
     async componentDidMount() {
-        await axios.get('http://localhost:4000/trainee/reset/'+this.props.match.params.token)
+        await axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/reset/'+this.props.match.params.token)
             .then(response => {
                     console.log(response);
                     if (response.data.message === 'password reset link a-ok') {
@@ -38,7 +38,7 @@ export default class ChangePassword extends Component {
                         error: true
                     });
             })
-        axios.get('http://localhost:4000/trainee/'+this.state.trainee_id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.state.trainee_id)
             .then(response => {
                 var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv});
                 var trainee_password  = CryptoJS.AES.decrypt(response.data.trainee_password, codes.trainee);
@@ -79,7 +79,7 @@ export default class ChangePassword extends Component {
                 trainee_password: pass.toString()
             };
             console.log(obj);
-            axios.post('http://localhost:4000/trainee/update-password/'+this.props.match.params.token, obj)
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update-password/'+this.props.match.params.token, obj)
             .then(res => console.log(res.data));
 			this.props.history.push('/login');
             //this.props.history.push('/trainee-details/'+this.state.trainee_id);

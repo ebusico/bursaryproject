@@ -106,12 +106,12 @@ export default class CreateTrainee extends Component {
             
             console.log(newTrainee)
             
-            axios.post('http://localhost:4000/trainee/add', newTrainee)
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/add', newTrainee)
             .then( (response) => {if(response.status == 205){
                                     alert("Email is already in use");
                                 }
                                 else{
-                                    axios.post('http://localhost:4000/trainee/send-email', {
+                                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {
                                         trainee_email: email.toString()
                                         })
                                     .then( (response) => console.log(response.data));

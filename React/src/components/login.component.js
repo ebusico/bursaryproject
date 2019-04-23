@@ -51,20 +51,20 @@ export default class Login extends Component {
         };
         const currentUser = authService.currentUserValue;
 
-        axios.post('http://localhost:4000/auth/login', user)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
             .then(function (res) {
                 if (res.status === 200) {
                     if (typeof res.data.user.role === "undefined") {
-                        document.location.href = 'http://localhost:3000/trainee-details/' + res.data.user._id
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/trainee-details/' + res.data.user._id
                         token.token = decode(res.data.token);
                         localStorage.setItem('currentUser', JSON.stringify(token));
                     }
                     else if (res.data.user.role === "admin") {
-                        document.location.href = 'http://localhost:3000/admin';
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/admin';
                         token.token = decode(res.data.token);
                         localStorage.setItem('currentUser', JSON.stringify(token));
                     } else {
-                        document.location.href = 'http://localhost:3000/';
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
                         //Get user token and decode user token here
                         token.token = decode(res.data.token);
                         localStorage.setItem('currentUser', JSON.stringify(token));

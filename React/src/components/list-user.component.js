@@ -13,7 +13,7 @@ export default class ListUser extends Component {
     constructor(props) {
 			//redirects to login if not logged in
 	if (!authService.currentUserValue){
-			document.location.href = 'http://localhost:3000/login';
+			document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/login';
 			//this.context.history.push('/login');
 		}
         super(props);
@@ -28,7 +28,7 @@ export default class ListUser extends Component {
 	
     
     componentDidMount() {
-        axios.get('http://localhost:4000/admin/')
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/')
             .then(response => {
 			if(this.state.currentUser.token.role === 'admin'){
                 var encrypted = response.data;
@@ -94,7 +94,7 @@ export default class ListUser extends Component {
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>
-                                    <button onClick={()=>axios.get('http://localhost:4000/admin/delete/'+user._id).then((response) => window.location.reload())}>Delete</button>
+                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/delete/'+user._id).then((response) => window.location.reload())}>Delete</button>
                                 </td>
                             </tr>
                             )

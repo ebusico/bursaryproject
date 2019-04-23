@@ -34,12 +34,12 @@ export default class Example extends React.Component {
     });
   }
   login(){
-	  document.location.href = 'http://localhost:3000/login';
+	  document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/login';
   }
   logout(){
 	  authService.logout();
 	  if (!authService.currentUserValue){
-		document.location.href = 'http://localhost:3000/login';
+		document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/login';
 		} 
 
   }

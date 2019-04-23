@@ -10,7 +10,7 @@ componentDidMount(){
 			document.location.href = '/trainee-details/'+authService.currentUserValue.token._id;
 	}else{
 	alert('Access Denied');
-	document.location.href = 'http://localhost:3000/';
+	document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
 	}
 }
 

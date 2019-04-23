@@ -23,7 +23,7 @@ export default class ListTrainee extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:4000/trainee/')
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
             .then(response => {
                 var encrypted = response.data;
                 encrypted.map(function(currentTrainee, i){
@@ -136,7 +136,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
                                     <td> 
-                                        <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
+                                        <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
 								   </td>
                                 </tr>
                             );

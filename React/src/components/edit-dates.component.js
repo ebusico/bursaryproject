@@ -33,7 +33,7 @@ export default class EditDates extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:4000/trainee/'+this.props.match.params.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
                 var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
@@ -115,7 +115,7 @@ export default class EditDates extends Component {
             trainee_sort_code: sortCode.toString()
         };
         console.log(obj);
-        axios.post('http://localhost:4000/trainee/update/'+this.props.match.params.id, obj)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
         this.props.history.push('/trainee-details/'+this.props.match.params.id);

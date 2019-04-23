@@ -22,7 +22,7 @@ export default class ChangePasswordStaff extends Component {
     }
     
     async componentDidMount() {
-        await axios.get('http://localhost:4000/admin/reset-staff/'+this.props.match.params.token)
+        await axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/reset-staff/'+this.props.match.params.token)
             .then(response => {
                     console.log(response.data.message);
                     if (response.data.message === 'password reset link a-ok') {
@@ -38,7 +38,7 @@ export default class ChangePasswordStaff extends Component {
                         error: true
                     });
             })
-        axios.get('http://localhost:4000/admin/staff/'+this.state.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/staff/'+this.state.id)
             .then(response => {
                 var email  = CryptoJS.AES.decrypt(response.data.email, codes.staff, {iv: codes.iv});
                 var password  = CryptoJS.AES.decrypt(response.data.password, codes.staffPass);
@@ -79,7 +79,7 @@ export default class ChangePasswordStaff extends Component {
                 password: pass.toString()
             };
             console.log(obj);
-            axios.post('http://localhost:4000/admin/update-password-staff/'+this.props.match.params.token, obj)
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/update-password-staff/'+this.props.match.params.token, obj)
             .then(res => console.log(res.data));
         
             this.props.history.push('/');
