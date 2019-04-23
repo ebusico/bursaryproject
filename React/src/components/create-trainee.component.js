@@ -4,10 +4,9 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
-import {LinkedCalendar} from 'rb-datepicker';
+import DatePicker from 'react-datepicker';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-daterangepicker/daterangepicker.css';
-import {RangeDatePicker} from '@y0c/react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import '../css/add-trainee.css';
 
@@ -21,8 +20,9 @@ export default class CreateTrainee extends Component {
         this.onChangeTraineeLname = this.onChangeTraineeLname.bind(this);
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineePassword = this.onChangeTraineePassword.bind(this);
-        this.onDatesChange = this.onDatesChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeStartDate = this.onChangeStartDate.bind(this);
+        this.onChangeEndDate = this.onChangeEndDate.bind(this);
 
         this.state = {
             trainee_fname: '',
@@ -60,19 +60,21 @@ export default class CreateTrainee extends Component {
         });
     }
 
-    onDatesChange = ({ startDate, endDate }) => {
+    onChangeStartDate = (startDate) =>{
         this.setState({
-            trainee_start_date: startDate.toDate(),
-            trainee_end_date: endDate.toDate()
-        });
+            trainee_start_date: startDate
+        })
+
+        console.log(startDate);
+        console.log(this.state.trainee_start_date);
     }
-    
-    onDatesChange = (startDate, endDate) => {
+
+    onChangeEndDate = (endDate) =>{
         this.setState({
-            trainee_start_date: startDate,
             trainee_end_date: endDate
-        });
-    };
+        })
+        console.log(this.state.endDate);
+    }
     
     onSubmit(e) {
         e.preventDefault();
@@ -157,9 +159,27 @@ export default class CreateTrainee extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label> Bursary Start Date / End Date </label>
-                        <div style={{height: '100px'}}>
-                            <RangeDatePicker portal startText="Start" endText="End" onChange={this.onDatesChange}/>
+                        <label> Bursary Start Date</label>
+                        <div style={{height: '50px'}}>
+                            <DatePicker
+                                selected={this.state.trainee_start_date}
+                                selectsStart
+                                startDate={this.state.trainee_start_date}
+                                endDate={this.state.trainee_end_date}
+                                onChange={this.onChangeStartDate}
+                                dateFormat="dd/MM/yyyy"
+                            />
+                        </div>
+                        <label> Bursary End Date </label>
+                        <div style={{height: '50px'}}>
+                            <DatePicker
+                                selected={this.state.trainee_end_date}
+                                selectsEnd
+                                startDate={this.state.trainee_start_date}
+                                endDate={this.state.trainee_end_date}
+                                onChange={this.onChangeEndDate}
+                                dateFormat="dd/MM/yyyy"
+                            />
                         </div>
                     </div>
 
