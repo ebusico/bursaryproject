@@ -18,6 +18,7 @@
     "rb-datepicker": "0.0.5",
     "react": "^16.8.6",
     "react-csv": "^1.1.1",
+    "react-datepicker": "^2.4.0",
     "react-dom": "^16.8.6",
     "react-native-crypto-js": "^1.0.0",
     "react-router-dom": "^5.0.0",
