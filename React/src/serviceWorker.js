@@ -10,8 +10,8 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-const is'+process.env.REACT_APP_AWS_IP+' = Boolean(
-  window.location.hostname === ''+process.env.REACT_APP_AWS_IP+'' ||
+const is localhost = Boolean(
+  window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 '+process.env.REACT_APP_AWS_IP+' address.
     window.location.hostname === '[::1]' ||
     // 127.0.0.1/8 is considered '+process.env.REACT_APP_AWS_IP+' for IPv4.
