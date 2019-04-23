@@ -20,6 +20,9 @@ let Trainee = new Schema({
         type: String,
         required: true
     },
+	trainee_bank_name: {
+		type: String
+	},
     trainee_account_no: {
         type: String
     },    

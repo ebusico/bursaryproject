@@ -237,6 +237,7 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
             trainee.trainee_fname = req.body.trainee_fname;
             trainee.trainee_lname = req.body.trainee_lname;
             trainee.trainee_email = req.body.trainee_email;
+			trainee.trainee_bank_name = req.body.trainee_bank_name;
             trainee.trainee_account_no = req.body.trainee_account_no;
             trainee.trainee_sort_code = req.body.trainee_sort_code;
 

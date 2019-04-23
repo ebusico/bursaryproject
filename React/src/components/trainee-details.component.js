@@ -18,6 +18,7 @@ export default class TraineeDetails extends Component {
 			trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',
+			trainee_bank_name: '', 
             trainee_account_no: '',
             trainee_sort_code: '',
             trainee_approved: false,
@@ -36,9 +37,11 @@ export default class TraineeDetails extends Component {
                 if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
                     var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee).toString(CryptoJS.enc.Utf8);
                     var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee).toString(CryptoJS.enc.Utf8);
-                    this.setState({
+                    var trainee_bank_name = CryptoJS.AES.decrypt(response.data.trainee_bank_name, codes.trainee).toString(CryptoJS.enc.Utf8);
+					this.setState({
                         trainee_account_no: trainee_account_no,
                         trainee_sort_code: trainee_sort_code,
+						trainee_bank_name: trainee_bank_name,
                     }) 
                 }
                 var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
@@ -79,6 +82,7 @@ render() {
                             <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
                             <tr><th>Start Date</th><td>{moment(this.state.trainee_start_date).format('MMMM Do YYYY')}</td></tr>
                             <tr><th>End Date</th><td>{moment(this.state.trainee_end_date).format('MMMM Do YYYY')}</td></tr>
+							<tr><th>Bank Name</th><td>{this.state.trainee_bank_name}</td></tr>
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
@@ -103,6 +107,7 @@ render() {
                             <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
 							<tr><th>Start Date</th><td>{moment(this.state.trainee_start_date).format('MMMM Do YYYY')}</td></tr>
                             <tr><th>End Date</th><td>{moment(this.state.trainee_end_date).format('MMMM Do YYYY')}</td></tr>
+							<tr><th>Bank Name</th><td>{this.state.trainee_bank_name}</td></tr>
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
