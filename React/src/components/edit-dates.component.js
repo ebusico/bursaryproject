@@ -7,7 +7,7 @@ import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
 import { DropdownList } from 'react-widgets'
 
-export default class EditTrainee extends Component {
+export default class EditDates extends Component {
     
     constructor(props) {
         super(props);
@@ -180,7 +180,7 @@ export default class EditTrainee extends Component {
 						<option value="First Trust Bank">First Trust Bank</option>
 						<option value="Halifax">Halifax</option>
 						<option value="HSBC">HSBC</option>
-						<option value="Intelligent Finance">Intelligent Finance</option>
+						<option value="Intelligent Finanace">Intelligent Finanace</option>
 						<option value="Lloyds">Lloyds</option>
 						<option value="M&S Bank">M&S Bank</option>
 						<option value="Metro Bank">Metro Bank</option>
