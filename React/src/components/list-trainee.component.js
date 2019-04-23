@@ -51,13 +51,14 @@ export default class ListTrainee extends Component {
     render() {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
-        let search = this.state.searchString.trim().toLowerCase();
+        let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         
         if(search.length > 0){
             trainees = trainees.filter(function(i){
                 if(i.trainee_fname.toLowerCase().match(search) ||
                    i.trainee_lname.toLowerCase().match(search) ||
-                   i.trainee_email.toLowerCase().match(search)){
+                   i.trainee_email.toLowerCase().match(search) ||
+                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
                     return i;
                 }
             })
