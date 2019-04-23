@@ -34,8 +34,8 @@ export function register(config) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
-      if (is'+process.env.REACT_APP_AWS_IP+') {
-        // This is running on '+process.env.REACT_APP_AWS_IP+'. Let's check if a service worker still exists or not.
+      if (isLocalhost) {
+        // This is running on localhost. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
 
         // Add some additional logging to '+process.env.REACT_APP_AWS_IP+', pointing developers to the
