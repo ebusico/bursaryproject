@@ -250,6 +250,26 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
+traineeRoutes.route('/editDates/:id').post(function(req, res) {
+    console.log(req);
+    Trainee.findById(req.params.id, function(err, trainee) {
+        if (!trainee){
+            res.status(404).send("data is not found");
+        }
+        else {
+            trainee.trainee_start_date = req.body.trainee_start_date;
+            trainee.trainee_end_date = req.body.trainee_end_date;
+
+            trainee.save().then(trainee => {
+                res.json('Trainee updated!');
+            })
+            .catch(err => {
+                res.status(400).send("Update not possible");
+            });
+        }
+    });
+});
+
 traineeRoutes.route('/reset/:token').get(function(req, res) {
     Trainee.findOne({trainee_password_token: req.params.token, trainee_password_expires: {$gt: Date.now()}}).then((trainee) => {
       console.log(Date.now())

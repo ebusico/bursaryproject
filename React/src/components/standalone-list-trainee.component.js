@@ -137,6 +137,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_email}</td>
                                     <td> 
                                         <button onClick={()=>axios.get('http://localhost:4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
+                                        <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>
 								   </td>
                                 </tr>
                             );

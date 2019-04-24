@@ -14,6 +14,7 @@ import TabList from "./components/tab-list.component";
 import {authService} from "./components/modules/authService";
 import AddUser from "./components/create-user.component";
 import ChangePasswordStaff from './components/change-password-staff.component';
+import EditDates from './components/edit-dates.component';
 
 import { CookieBanner } from '@palmabit/react-cookie-law';
 import {codes} from './secrets/secrets'
@@ -39,6 +40,7 @@ class App extends Component {
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/" exact component={Login} />
 		<Route path="/addUser" component={Login} />
+    <Route path="/editDates/:id" component={Login} />
       </Router>    
     );
   }
@@ -57,6 +59,7 @@ class App extends Component {
          <Route path="/" exact component={TabList} />
          <Route path="/addUser" component={AddUser} />
          <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+         <Route path="/editDates/:id" component={EditDates} />
          <div >
            <CookieBanner
            className="Banner"
@@ -79,7 +82,7 @@ class App extends Component {
          </div>
        </Router>  
      );
-  }else {
+  }else if(authService.currentUserValue.token.role === 'recruiter'){
 	  return (
 	   <Router>    
         <div className="App">
@@ -94,6 +97,7 @@ class App extends Component {
         <Route path="/" exact component={ListTrainee} />
 		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+        <Route path="/editDates/:id" component={EditDates} />
         <div >
           <CookieBanner
           className="Banner"
@@ -116,6 +120,44 @@ class App extends Component {
         </div>
       </Router>  
 	  );
+  } else{
+    return (
+      <Router>    
+         <div className="App">
+           <Nav/>
+         </div>
+         <Route path="/admin" component={TabList} />
+         <Route path="/edit/:id" component={EditTrainee} />
+         <Route path="/create" component={CreateTrainee} />
+         <Route path="/changePassword/:token" component={ChangePassword} />
+         <Route path="/trainee-details/:id" component={TraineeDetails} />
+         <Route path="/login" component={Login} />
+         <Route path="/" exact component={ListTrainee} />
+         <Route path="/addUser" component={AddUser} />
+         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
+         <Route path="/editDates/:id" component={Login} />
+         <div >
+           <CookieBanner
+           className="Banner"
+           message= {codes.message}
+           onAccept = {() => {}}
+           onAcceptPreferences = {() => {}}
+           onAcceptStatistics = {() => {}}
+           onAcceptMarketing = {() => {}}
+           styles={{
+             dialog: {    
+               position: 'fixed',
+               bottom: 0,
+               left: 0,
+               right: 0,
+               padding: 10,
+               backgroundColor: '#f2f2f2'
+             }
+           }}
+           />
+         </div>
+       </Router>  
+     );
   }
  }
 }
