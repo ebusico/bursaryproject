@@ -365,6 +365,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
     var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
     var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
     var email = CryptoJS.AES.decrypt(req.body.trainee_email, key, {iv:iv});
+    console.log("got email:" + email.toString(CryptoJS.enc.Utf8));
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         console.log(trainee)
         if (!trainee){

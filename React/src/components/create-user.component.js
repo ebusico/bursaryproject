@@ -80,9 +80,10 @@ export default class CreateUser extends Component {
                                  else{
                                     console.log("else");
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: email.toString()})
-                                    .then( (response) => console.log(response.data));
-                                    this.props.history.push('/admin');
-                                    window.location.reload();
+                                    .then( (response) => {console.log(response.data)
+									                      this.props.history.push('/admin');
+														  window.location.reload();
+														 });
                                  }
             })
         }
