@@ -20,3 +20,12 @@
 	padding-top:5%;
 	padding-bottom:5%;
 }
+
+#bursaryDates{
+    height: 1%;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+} 

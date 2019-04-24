@@ -90,6 +90,7 @@ export default class ListTrainee extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
+                            <th>Action</th>
                         </tr>
                     </thead>               
                     <tbody>
@@ -99,6 +100,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
+                                    <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> </td>
                                 </tr>
                             );
                         })}
@@ -139,7 +141,9 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
+                                    <td>
                                     <td> 
+                                        <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> </td>
                                         <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
 								   </td>
                                 </tr>
