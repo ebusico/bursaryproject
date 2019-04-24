@@ -57,7 +57,8 @@ export default class ListTrainee extends Component {
             trainees = trainees.filter(function(i){
                 if(i.trainee_fname.toLowerCase().match(search) ||
                    i.trainee_lname.toLowerCase().match(search) ||
-                   i.trainee_email.toLowerCase().match(search)){
+                   i.trainee_email.toLowerCase().match(search) ||
+                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
                     return i;
                 }
             })
