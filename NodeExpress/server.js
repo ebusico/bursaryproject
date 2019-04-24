@@ -35,6 +35,8 @@ var secret = require('./config/auth.js');
 
 let Trainee = require('./trainee.model');
 
+require('dotenv').config()
+
 app.use(cors());
 app.use(bodyParser.json());
 
