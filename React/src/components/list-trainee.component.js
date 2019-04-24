@@ -6,6 +6,7 @@ import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/list-trainee-recruiter.css';
+import { CSVLink, CSVDownload } from "react-csv";
 
 export default class ListTrainee extends Component {
     
@@ -34,7 +35,10 @@ export default class ListTrainee extends Component {
                     bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, codes.trainee);
                     currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
                 });
-                this.setState({trainees: encrypted});
+                this.setState({
+					trainees: encrypted,
+					csv: [["firstname", "lastname", "email"],[encrypted.trainee_fname, encrypted.trainee_lname, encrypted.trainee_email]]
+					});
             })
             .catch(function (error){
                 console.log(error);
@@ -51,14 +55,13 @@ export default class ListTrainee extends Component {
     render() {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
-        let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
-        
+        let search = this.state.searchString.trim().toLowerCase();
+		
         if(search.length > 0){
             trainees = trainees.filter(function(i){
                 if(i.trainee_fname.toLowerCase().match(search) ||
                    i.trainee_lname.toLowerCase().match(search) ||
-                   i.trainee_email.toLowerCase().match(search) ||
-                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
+                   i.trainee_email.toLowerCase().match(search)){
                     return i;
                 }
             })
@@ -152,6 +155,9 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
                                     <td> 
+									{ this.state.csv.length ? 
+										<CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
+										: null }
 										<button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
                                     </td>
                                 </tr>
