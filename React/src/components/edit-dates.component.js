@@ -101,7 +101,7 @@ export default class EditDates extends Component {
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
         
-        this.props.history.push('/editDates/'+this.props.match.params.id);
+        this.props.history.push('/');
         window.location.reload();
     }
 
