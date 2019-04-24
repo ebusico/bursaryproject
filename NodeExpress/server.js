@@ -166,7 +166,7 @@ passport.serializeUser(function(user, done) {
 
 apiRoutes.use('/trainee', traineeRoutes);
 
-mongoose.connect('mongodb://'+process.env.REACT_APP_AWS_IP+':27017/trainees', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
 
 connection.once('open', function() {
