@@ -80,9 +80,9 @@ export default class ChangePassword extends Component {
             };
             console.log(obj);
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update-password/'+this.props.match.params.token, obj)
-            .then(res => console.log(res.data));
-			this.props.history.push('/login');
-            //this.props.history.push('/trainee-details/'+this.state.trainee_id);
+            .then(res => {console.log(res.data);
+                          this.props.history.push('/login');
+                         });
        }
     }
     
