@@ -185,7 +185,7 @@ export default class EditTrainee extends Component {
                         <label>Bank Name: </label> 
 						&nbsp;
 					<select id="bankNames" name="trainee_bank" value={this.state.trainee_bank_name} onChange={this.onChangeTraineeBank}>
-						<option selected value=""></option>
+						<option selected value="">Please Select from the Dropdown</option>
 						<option value=" ">Other</option>
 						<option value="Abbey National">Abbey National</option>
 						<option value="AL Rayan Bank">ALRayanBank</option>
