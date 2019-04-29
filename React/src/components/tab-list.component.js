@@ -6,6 +6,7 @@ import { authService } from './modules/authService';
 import AccessDenied from './modules/AccessDenied';
 import ListUser from './list-user.component.js';
 import ListTrainee from './standalone-list-trainee.component.js';
+import ExportDates from './exportDates..component.js';
 import '../css/tabs.css';
 
 export default class TabList extends React.Component {
@@ -49,6 +50,14 @@ export default class TabList extends React.Component {
               Users
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Report Download
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -56,6 +65,9 @@ export default class TabList extends React.Component {
           </TabPane>
           <TabPane tabId="2">
           <ListUser />
+          </TabPane>
+          <TabPane tabId="3">
+          <ExportDates />
           </TabPane>
         </TabContent>
       </div>

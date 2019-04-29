@@ -46,7 +46,7 @@ export default class TabList extends React.Component {
               className={classnames({ active: this.state.activeTab === '2' })}
               onClick={() => { this.toggle('2'); }}
             >
-              Export Dates
+              Report Download
             </NavLink>
           </NavItem>
         </Nav>
