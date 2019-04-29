@@ -18,6 +18,7 @@ export default class EditTrainee extends Component {
         this.onChangeTraineeAccount = this.onChangeTraineeAccount.bind(this);
         this.onChangeTraineeSort = this.onChangeTraineeSort.bind(this);
 		this.onChangeTraineeBank = this.onChangeTraineeBank.bind(this);
+		this.onChangeTraineeBankOther = this.onChangeTraineeBankOther.bind(this);
 		
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -28,6 +29,7 @@ export default class EditTrainee extends Component {
 			trainee_bank_name: '',
             trainee_account_no: '',
             trainee_sort_code: '',
+			show_other_input_field: false,
 			currentUser: authService.currentUserValue
         }
     }
@@ -44,6 +46,7 @@ export default class EditTrainee extends Component {
                     var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
                     var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);
                     this.setState({
+						show_other_input_field: true,
 						trainee_bank_name: trainee_bank_name.toString(CryptoJS.enc.Utf8),
                         trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
                         trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
@@ -78,12 +81,27 @@ export default class EditTrainee extends Component {
             trainee_email: e.target.value
         });
     }
-	
-	onChangeTraineeBank(e){
-		this.setState({
+	onChangeTraineeBankOther(e){
+		this.setState ({
 			trainee_bank_name:e.target.value
 		});
 	}
+	
+	onChangeTraineeBank(e){
+		if(document.getElementById("bankNames").value == ' '){
+			this.setState({
+				show_other_input_field:true,
+				trainee_bank_name:e.target.value
+			});
+		}else {
+			this.setState({
+				trainee_bank_name:e.target.value,
+				show_other_input_field: false
+			});
+	}
+}
+	showOtherInput(e){
+}
 
     onChangeTraineeAccount(e) {
         this.setState({
@@ -124,6 +142,8 @@ export default class EditTrainee extends Component {
     }
 
     render() {
+		const {show_other_input_field} = this.state;
+		
 		if(this.state.currentUser.token.role !== undefined){
 			return (
 			<AccessDenied/>
@@ -163,7 +183,10 @@ export default class EditTrainee extends Component {
                     </div>
 					 <div className="form-group"> 
                         <label>Bank Name: </label> 
-					<select value={this.state.trainee_bank_name} onChange={this.onChangeTraineeBank}>
+						&nbsp;
+					<select id="bankNames" name="trainee_bank" value={this.state.trainee_bank_name} onChange={this.onChangeTraineeBank}>
+						<option selected value=""></option>
+						<option value=" ">Other</option>
 						<option value="Abbey National">Abbey National</option>
 						<option value="AL Rayan Bank">ALRayanBank</option>
 						<option value="Alliance & Leicester">Alliance & leicester</option>
@@ -204,7 +227,18 @@ export default class EditTrainee extends Component {
 						<option value="Yorkshire Banking Society">Yorkshire Banking Society</option>
 						<option value="Triodos Bank">Triodos Bank</option>				
 				</select>
-                    </div>
+					&emsp; &emsp;
+						
+						&nbsp;
+						{show_other_input_field ? <label>Other Bank:</label>: ""}
+						{show_other_input_field ?
+						<input  type="text"
+									placeholder="Please specfiy your Bank Name"
+									className="form-control-bank"
+									value={this.state.trainee_bank_name}
+									onChange={this.onChangeTraineeBankOther}
+						/> : ""}
+					</div>
                     <div className="form-group"> 
                         <label>Account Number: </label>
                         <input  type="text"
