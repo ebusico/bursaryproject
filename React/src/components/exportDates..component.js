@@ -64,6 +64,7 @@ export default class ListTrainee extends Component {
         let trainees = this.state.trainees;
         let search = this.state.searchString;
         let output = this.state.csv;
+        output = [["firstname", "lastname", "email"]];
         console.log(this.state.searchString);
         
         if(search.length > 0){
