@@ -3,9 +3,31 @@ const bcrypt = require('bcrypt');
 
 
 const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, required: true }
+  email: { 
+  type: String, 
+  required: true, 
+  unique: true 
+  },
+  password: { 
+  type: String, 
+  required: true 
+  },
+  role: { 
+  type: String, 
+  enum:['recruiter','admin','finance'],
+  default: 'admin',
+  required: true
+  },
+  password_token:{
+    type: String
+  },
+  password_expires:{
+    type: String,
+    format: Date
+  }
+},
+{
+  timestamps:true
 });
 
 module.exports = mongoose.model('User', UserSchema);
@@ -32,8 +54,8 @@ module.exports.createUser = function(newUser, callback){
     User.findById(id, callback);
   }
   
-  module.exports.comparePassword = function(candidatePassword, hash, callback){
-    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
+  module.exports.comparePassword = function(userPassword, hash, callback){
+    bcrypt.compare(userPassword, hash, function(err, isMatch) {
       if(err) throw err;
       callback(null, isMatch);
     });

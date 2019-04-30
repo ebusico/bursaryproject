@@ -1,0 +1,32 @@
+
+ul.nav.nav-tabs {
+    border-bottom: 0px solid #dee2e6;
+    padding-left: 10%;
+}
+.QASearchBar{
+    padding-top:15px;
+    padding-left:10px;
+}
+
+.QATabs{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin: 0 auto;
+}
+
+.nav-link{
+    background-color: aliceblue;
+}
+
+.nav{
+    width:80%;
+}
+
+
+
+
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: aliceblue;
+}

@@ -1,0 +1,36 @@
+
+.QAtable{
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 4px;
+    width:80%;
+}
+
+#addUser{
+    float:right;
+    padding-right: 60px;
+}
+
+.link{
+    color: white;
+    text-decoration: none;
+}
+.link:hover {
+    color:white;
+    text-decoration: none;
+}
+
+.qabtn{
+    background-color: #337ab7;
+    border-radius: 4px;
+    text-decoration: none;
+    border:none;
+}
+
+.action{
+    width:150px;
+}
+
+.bigBox{
+    margin-top: 5%;
+}

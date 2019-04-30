@@ -38,7 +38,7 @@ export function register(config) {
         // This is running on localhost. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
 
-        // Add some additional logging to localhost, pointing developers to the
+        // Add some additional logging to '+process.env.REACT_APP_AWS_IP+', pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
@@ -47,7 +47,7 @@ export function register(config) {
           );
         });
       } else {
-        // Is not localhost. Just register service worker
+        // Is not '+process.env.REACT_APP_AWS_IP+'. Just register service worker
         registerValidSW(swUrl, config);
       }
     });

@@ -3,21 +3,28 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
+import { BehaviorSubject } from 'rxjs';
+import { authService } from "./modules/authService";
+import decode from "jwt-decode";
 
 
 export default class Login extends Component {
-    
+
     constructor(props) {
         super(props);
+        //redirects to home if already logged in
+        if (authService.currentUserValue) {
+            this.props.history.push('/');
+        }
         this.state = {
-          uname: '',
-          psw: '',
+            uname: '',
+            psw: '',
         };
-      }
+    }
 
     handleUsername = event => {
         this.setState({
-            uname: event.target.value
+            email: event.target.value
         });
     }
 
@@ -26,29 +33,49 @@ export default class Login extends Component {
             psw: event.target.value
         })
     }
-    
+
     onSubmit = event => {
         event.preventDefault();
-        CryptoJS.pad.NoPadding = {pad: function(){}, unpad: function(){}};
+        CryptoJS.pad.NoPadding = { pad: function () { }, unpad: function () { } };
 
-        var encrypted = CryptoJS.AES.encrypt(this.state.uname, codes.staff, {iv: codes.iv, padding: CryptoJS.pad.NoPadding});
-        console.log(encrypted.toString());
+        var encrypted = CryptoJS.AES.encrypt(this.state.email, codes.staff, { iv: codes.iv });
         var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
-        console.log(pass);
         const user = {
             username: encrypted.toString(),
-            password: pass.toString()
+            password: pass.toString(),
+            token: ''
         };
-        axios.post('http://localhost:4000/trainee/login', user)
-            .then(function(res){
-                console.log(res);
-                console.log(res.data);
-                if(res.data.result === true ){
-                    console.log('Successful, now redirecting');
-                    document.location.href = 'http://localhost:3000/';
+
+        const token = {
+            token: ''
+        };
+        const currentUser = authService.currentUserValue;
+
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
+            .then(function (res) {
+                if (res.status === 200) {
+                    if (typeof res.data.user.role === "undefined") {
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/trainee-details/' + res.data.user._id
+                        token.token = decode(res.data.token);
+                        localStorage.setItem('currentUser', JSON.stringify(token));
+                    }
+                    else if (res.data.user.role === "admin") {
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/admin';
+                        token.token = decode(res.data.token);
+                        localStorage.setItem('currentUser', JSON.stringify(token));
+                    } else {
+                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
+                        //Get user token and decode user token here
+                        token.token = decode(res.data.token);
+                        localStorage.setItem('currentUser', JSON.stringify(token));
+                    }
                 }
-                else{
-                    console.log('Unsuccessful Login attempt');
+                else if (res.status === 204) {
+                    console.log('email and password do not match');
+                    alert('Username or Password does not match')
+                } else {
+                    console.log('Account does not exist');
+                    alert("Email does not exist");
                 }
             })
             .catch(error => {
@@ -56,23 +83,22 @@ export default class Login extends Component {
                 console.log(error.response)
             });
     }
-    
-    
+
     render() {
         return (
             <div className="Login">
-                    <form onSubmit={this.onSubmit}>
+                <form className="form" onSubmit={this.onSubmit}>
+                    {/* <p className="h5 text-center mb-4" >Sign in</p> */}
+                    <label className="uname" bsSize="large"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" onChange={this.handleUsername} required />
+                    <br/>
+                    <label className="psw" bsSize="large"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" onChange={this.handlePassword} required />
+                    <br />
+                    <br/>
+                    <input type="submit" className="btn" value="Login"/>
+                </form>
 
-                        <label className="uname"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Email" name="uname" onChange={this.handleUsername} required/>
-
-                        <label className="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" onChange={this.handlePassword} required/>
-                        
-
-                        <input type="submit" value="Login"/>
-                    </form>
-                    
             </div>
         )
     }
