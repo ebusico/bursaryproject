@@ -18,7 +18,7 @@ export default class ListTrainee extends Component {
 			
         this.state = {
 			trainees: [], 
-			searchString: "",
+			searchString: '',
             currentUser: authService.currentUserValue,
             selectedDate: '',
             csv: ''
@@ -64,10 +64,7 @@ export default class ListTrainee extends Component {
 
     // Added onChangeSearch(e) function. Needed for the search filter
     onChangeSearch= (e) =>{
-        if(e === null ){
-            alert('Date cannot be empty')
-        }
-        else{
+        if(e != null){
             this.setState({
                 searchString: e.toString(),
                 selectedDate: e
@@ -115,6 +112,7 @@ export default class ListTrainee extends Component {
                         onChange={this.onChangeSearch}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Specify Start Date to filter"
+                        strictParsing
                     />
                     <div id="addUser">
                         <button className="qabtn"><CSVLink className="link" data={output} filename='monthly-intake.csv'>Download CSV </CSVLink></button>
