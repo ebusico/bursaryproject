@@ -5,9 +5,14 @@ import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
-import { DropdownList } from 'react-widgets'
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+
+import {
+    formatDate,
+  } from 'react-day-picker/moment';
 
 export default class EditDates extends Component {
     
@@ -143,25 +148,33 @@ export default class EditDates extends Component {
                     <div id="bursaryDates">
                     <label> Bursary Start Date : </label>
                     <br></br>
-                            <DatePicker
-                                selected={this.state.trainee_start_date}
-                                selectsStart
-                                startDate={this.state.trainee_start_date}
-                                endDate={this.state.trainee_end_date}
-                                onChange={this.onChangeStartDate}
-                                dateFormat="dd/MM/yyyy"
-                            />
+                        <DayPickerInput
+                            value={this.state.trainee_start_date}
+                            format="DD/MM/YYYY"
+                            formatDate={formatDate}
+                            onDayChange={this.onChangeStartDate}
+                            dayPickerProps={{
+                                selectedDays: this.state.trainee_start_date,
+                                disabledDays: {
+                                daysOfWeek: [0, 6],
+                                },
+                            }}
+                        />
                     </div>
                     <div id="bursaryDates">
                         <label> Bursary End Date : </label>
                         <br></br>
-                            <DatePicker
-                                selected={this.state.trainee_end_date}
-                                selectsEnd
-                                startDate={this.state.trainee_start_date}
-                                endDate={this.state.trainee_end_date}
-                                onChange={this.onChangeEndDate}
-                                dateFormat="dd/MM/yyyy"
+                            <DayPickerInput
+                                value={this.state.trainee_end_date}
+                                format="DD/MM/YYYY"
+                                formatDate={formatDate}
+                                onDayChange={this.onChangeEndDate}
+                                dayPickerProps={{
+                                    selectedDays: this.state.trainee_end_date,
+                                    disabledDays: {
+                                    daysOfWeek: [0, 6],
+                                    },
+                                }}
                             />
                     </div>
                     <br />

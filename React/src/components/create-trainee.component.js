@@ -10,6 +10,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import '../css/add-trainee.css';
 
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+import MomentLocaleUtils, {
+    formatDate,
+    parseDate,
+  } from 'react-day-picker/moment';
 
 export default class CreateTrainee extends Component {
     
@@ -159,27 +165,37 @@ export default class CreateTrainee extends Component {
                                 required/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group" >
                         <label> Bursary Start Date</label>
                         <div style={{height: '50px'}}>
-                            <DatePicker
-                                selected={this.state.trainee_start_date}
-                                selectsStart
-                                startDate={this.state.trainee_start_date}
-                                endDate={this.state.trainee_end_date}
-                                onChange={this.onChangeStartDate}
-                                dateFormat="dd/MM/yyyy"
-                            />
+                        <DayPickerInput
+                            placeholder="DD/MM/YYYY"
+                            format="DD/MM/YYYY"
+                            formatDate={formatDate}
+                            value={this.state.trainee_start_date}
+                            onDayChange={this.onChangeStartDate}
+                            dayPickerProps={{
+                                selectedDays: this.state.trainee_start_date,
+                                disabledDays: {
+                                daysOfWeek: [0, 6],
+                                },
+                            }} 
+                        />
                         </div>
                         <label> Bursary End Date </label>
                         <div style={{height: '50px'}}>
-                            <DatePicker
-                                selected={this.state.trainee_end_date}
-                                selectsEnd
-                                startDate={this.state.trainee_start_date}
-                                endDate={this.state.trainee_end_date}
-                                onChange={this.onChangeEndDate}
-                                dateFormat="dd/MM/yyyy"
+                            <DayPickerInput
+                                placeholder="DD/MM/YYYY"
+                                format="DD/MM/YYYY"
+                                formatDate={formatDate}
+                                value={this.state.trainee_end_date}
+                                onDayChange={this.onChangeEndDate}
+                                dayPickerProps={{
+                                    selectedDays: this.state.trainee_end_date,
+                                    disabledDays: {
+                                    daysOfWeek: [0, 6],
+                                    },
+                                }}
                             />
                         </div>
                     </div>

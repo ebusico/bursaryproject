@@ -6,10 +6,13 @@ import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/list-trainee-recruiter.css';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { CSVLink } from "react-csv";
 import moment from 'moment';
+
+import DayPicker, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 export default class ListTrainee extends Component {
     
@@ -18,14 +21,17 @@ export default class ListTrainee extends Component {
 			
         this.state = {
 			trainees: [], 
-			searchString: null,
+            selectedDays: [],
+            splitDays:[],
             currentUser: authService.currentUserValue,
-            selectedDate: '',
-            csv: ''
+            csv: '',
+            modal: false
 			};
         
        //Added onChangeSearch - Ernie
         this.onChangeSearch = this.onChangeSearch.bind(this);
+        this.handleDayClick = this.handleDayClick.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
     
     componentDidMount() {
@@ -69,11 +75,33 @@ export default class ListTrainee extends Component {
                 selectedDate: e
             });
     }
+    toggle() {
+        this.setState(prevState => ({
+          modal: !prevState.modal
+        }));
+      }
+
+    handleDayClick(day, { selected }) {
+        const { selectedDays } = this.state;
+        const { splitDays } = this.state;
+        if (selected) {
+          const selectedIndex = selectedDays.findIndex(selectedDay =>
+            DateUtils.isSameDay(selectedDay, day)
+          );
+          selectedDays.splice(selectedIndex, 1);
+           splitDays.splice(selectedIndex, 1);
+        } else {
+          selectedDays.push(day);
+           splitDays.push(day.toString().split(" ", 4).toString());
+        }
+        this.setState({ selectedDays });
+      }
 	
     render() {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
-        let search = this.state.searchString;
+        let search = this.state.selectedDays;
+        let splitDays = this.state.splitDays;
         let output = this.state.csv;
         let role = this.state.currentUser.token.role
         if(role === 'finance'){
@@ -82,12 +110,12 @@ export default class ListTrainee extends Component {
             output = [["First Name", "Last Name", "Email", "Start-Date", "End-Date"]];
         }
         
-        if(search != null){
+        console.log(search.length);
+        if(search.length > 0){
+            console.log(search);
+            console.log(this.state.splitDays);
             trainees = trainees.filter(function(i){
-                if(search == null){
-                    return i;
-                }
-                else if(i.trainee_start_date.split(" ", 4).toString() === search.toString().split(" ", 4).toString()){
+                if(splitDays.includes(i.trainee_start_date.split(" ", 4).toString())){
                     if(role === 'finance'){
                         var obj =  [i.trainee_fname, i.trainee_lname, i.trainee_email, i.trainee_bank_name, i.trainee_account_no, i.trainee_sort_code, moment(i.trainee_start_date).format('MMMM Do YYYY'), moment(i.trainee_end_date).format('MMMM Do YYYY')];
                         output.push(obj);
@@ -106,15 +134,25 @@ export default class ListTrainee extends Component {
         return (
             <div className="QAtable">
                 <div className="QASearchBar">
-                    <DatePicker
+                    {/* <DatePicker
                         selected={this.state.selectedDate}
                         onChange={this.onChangeSearch}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Specify Start Date to filter"
                         strictParsing
                         disabledKeyboardNavigation
-                    />
+                    /> */}
+                    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
+                        <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
+                        <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
+                            <DayPicker
+                                selectedDays={this.state.selectedDays}
+                                onDayClick={this.handleDayClick}
+                            />
+                        </ModalBody>
+                    </Modal>
                     <div id="addUser">
+                        <button className="qabtn" onClick={this.toggle}>Select Dates</button>
                         <button className="qabtn"><CSVLink className="link" data={output} filename='monthly-intake.csv'>Download CSV </CSVLink></button>
                     </div>
                 </div>

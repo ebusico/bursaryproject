@@ -8,7 +8,7 @@
 
 #addUser{
     float:right;
-    padding-right: 60px;
+    padding: 5px;
 }
 
 .link{
@@ -25,6 +25,12 @@
     border-radius: 4px;
     text-decoration: none;
     border:none;
+    color: white;
+    margin-right: 10px;
+}
+
+.modal-content{
+    width: -70%;
 }
 
 .action{
