@@ -1,3 +1,17 @@
+.forgotBtn{
+  margin-top:3%;
+  background-color:#FFFFFF;
+  border: none;
+  font-size:14px;
+}
+.forgotBtn:hover{
+  background-color: #F0F8FF;
+}
+
+.btn:hover {
+  background-color: #F0F8FF;
+}
+
 @media all and (min-width: 500px) {
     .Login {
       width: 500px;

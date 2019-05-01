@@ -17,8 +17,8 @@ import AddUser from "./components/create-user.component";
 import ChangePasswordStaff from './components/change-password-staff.component';
 import EditDates from './components/edit-dates.component';
 import { CookieBanner } from '@palmabit/react-cookie-law';
-import {codes} from './secrets/secrets'
-
+import {codes} from './secrets/secrets';
+import ForgotPass from "./components/forgot-password.component";
 import "./css/Login.css";
 
 
@@ -36,11 +36,11 @@ class App extends Component {
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={Login} />
 		<Route path="/login" component={Login} />
-		<Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/" exact component={Login} />
 		<Route path="/addUser" component={Login} />
     <Route path="/editDates/:id" component={Login} />
+    <Route path="/forgotPassword" component={ForgotPass} />
       </Router>    
     );
   }

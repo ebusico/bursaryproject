@@ -198,6 +198,24 @@ traineeRoutes.route('/:id').get(function(req, res) {
     });
 })   
 
+traineeRoutes.route('/getByEmail').post(function(req,res) {
+    Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+        res.json(trainee);
+    })
+    .catch(err => {
+        res.status(205).send("Trainee doesn't exist");
+    })
+})
+
+adminRoutes.route('/getByEmail').post(function(req,res) {
+    User.findOne({email: req.body.staff_email}, function(err, user) {
+        res.json(user);
+    })
+    .catch(err => {
+        res.status(205).send("User doesn't exist");
+    })
+})
+
 adminRoutes.route('/staff/:id').get(function(req, res) {
     let id = req.params.id;
     User.findById(id, function(err, staff) {

@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import { authService } from "./modules/authService";
 import decode from "jwt-decode";
 
-
 export default class Login extends Component {
 
     constructor(props) {
@@ -33,6 +32,10 @@ export default class Login extends Component {
             psw: event.target.value
         })
     }
+	
+	forgotPassword (){
+		document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/forgotPassword';
+	}
 
     onSubmit = event => {
         event.preventDefault();
@@ -97,8 +100,8 @@ export default class Login extends Component {
                     <br />
                     <br/>
                     <input type="submit" className="btn" value="Login"/>
+					<button className="forgotBtn" onClick={this.forgotPassword}>FORGOT PASSWORD?</button> 
                 </form>
-
             </div>
         )
     }
