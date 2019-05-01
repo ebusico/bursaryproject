@@ -112,6 +112,7 @@ export default class ListTrainee extends Component {
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Specify Start Date to filter"
                         strictParsing
+                        disabledKeyboardNavigation
                     />
                     <div id="addUser">
                         <button className="qabtn"><CSVLink className="link" data={output} filename='monthly-intake.csv'>Download CSV </CSVLink></button>
