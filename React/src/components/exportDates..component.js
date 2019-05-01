@@ -18,7 +18,7 @@ export default class ListTrainee extends Component {
 			
         this.state = {
 			trainees: [], 
-			searchString: '',
+			searchString: null,
             currentUser: authService.currentUserValue,
             selectedDate: '',
             csv: ''
@@ -64,12 +64,10 @@ export default class ListTrainee extends Component {
 
     // Added onChangeSearch(e) function. Needed for the search filter
     onChangeSearch= (e) =>{
-        if(e != null){
             this.setState({
-                searchString: e.toString(),
+                searchString: e,
                 selectedDate: e
             });
-        }
     }
 	
     render() {
@@ -84,11 +82,12 @@ export default class ListTrainee extends Component {
             output = [["First Name", "Last Name", "Email", "Start-Date", "End-Date"]];
         }
         
-        console.log(this.state.searchString);
-        
-        if(search.length > 0){
+        if(search != null){
             trainees = trainees.filter(function(i){
-                if(i.trainee_start_date.split(" ", 4).toString() === search.split(" ", 4).toString()){
+                if(search == null){
+                    return i;
+                }
+                else if(i.trainee_start_date.split(" ", 4).toString() === search.toString().split(" ", 4).toString()){
                     if(role === 'finance'){
                         var obj =  [i.trainee_fname, i.trainee_lname, i.trainee_email, i.trainee_bank_name, i.trainee_account_no, i.trainee_sort_code, moment(i.trainee_start_date).format('MMMM Do YYYY'), moment(i.trainee_end_date).format('MMMM Do YYYY')];
                         output.push(obj);
