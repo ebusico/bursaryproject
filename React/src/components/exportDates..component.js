@@ -88,8 +88,8 @@ export default class ListTrainee extends Component {
           const selectedIndex = selectedDays.findIndex(selectedDay =>
             DateUtils.isSameDay(selectedDay, day)
           );
-          selectedDays.splice(selectedIndex, 1);
-           splitDays.splice(selectedIndex, 1);
+        selectedDays.splice(selectedIndex, 1);
+        splitDays.splice(selectedIndex, 1);
         } else {
           selectedDays.push(day);
            splitDays.push(day.toString().split(" ", 4).toString());
@@ -106,12 +106,28 @@ export default class ListTrainee extends Component {
         let role = this.state.currentUser.token.role
         if(role === 'finance'){
             output = [["First Name", "Last Name", "Email", "Bank Name", "Account Number", "Sort Number","Start-Date", "End-Date"]];
-        }else{
+            trainees.map( t => {
+                    var obj = [t.trainee_fname, t.trainee_lname, t.trainee_email, t.trainee_bank_name, t.trainee_account_no, t.trainee_sort_code, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY')];
+                    output.push(obj);
+                }
+            )
+        }else if(role === 'admin'){
             output = [["First Name", "Last Name", "Email", "Start-Date", "End-Date"]];
+            trainees.map( t => {
+                    var obj = [t.trainee_fname, t.trainee_lname, t.trainee_email, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY')];
+                    output.push(obj);
+                }
+            )
         }
         
         console.log(search.length);
         if(search.length > 0){
+            if(role === 'finance'){
+                 output = [["First Name", "Last Name", "Email", "Bank Name", "Account Number", "Sort Number","Start-Date", "End-Date"]];
+            }
+            else if(role === 'admin'){
+                 output = [["First Name", "Last Name", "Email", "Start-Date", "End-Date"]];
+            }
             console.log(search);
             console.log(this.state.splitDays);
             trainees = trainees.filter(function(i){
@@ -153,7 +169,7 @@ export default class ListTrainee extends Component {
                     </Modal>
                     <div id="addUser">
                         <button className="qabtn" onClick={this.toggle}>Select Dates</button>
-                        <button className="qabtn"><CSVLink className="link" data={output} filename='monthly-intake.csv'>Download CSV </CSVLink></button>
+                        <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV </CSVLink></button>
                     </div>
                 </div>
 
