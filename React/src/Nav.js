@@ -14,6 +14,7 @@ import { authService } from "./components/modules/authService";
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "./secrets/secrets.js";
+import './css/navigation.css';
 
 export default class Example extends React.Component {
   constructor(props) {
@@ -24,7 +25,11 @@ export default class Example extends React.Component {
     this.state = {
       isOpen: false,
 	  currentUser: authService.currentUserValue,
-	  email: ''
+	  token:'',
+	  id:'',
+	  staff_email: '',
+	  trainee_fname: '',
+      trainee_lname: ''
     };
   }
   
@@ -33,6 +38,39 @@ export default class Example extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+  
+  //Display user
+  componentDidMount() {
+	  // if not logged in no name will be displaed
+	  if(!authService.currentUserValue){
+		  return null
+	  }else{
+		axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.state.currentUser.token._id)
+			.then(response => { if (response.data == null){
+					axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/staff/'+this.state.currentUser.token._id)
+						.then(response => {
+							var email = CryptoJS.AES.decrypt(response.data.email, codes.staff,{iv: codes.iv}).toString(CryptoJS.enc.Utf8);
+							
+							this.setState({
+								staff_email:email
+							})
+									  
+						})
+			}else{
+				var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
+				var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee).toString(CryptoJS.enc.Utf8);
+				this.setState ({
+					trainee_fname:trainee_fname,
+					trainee_lname: trainee_lname
+				})
+			}
+			})
+			.catch(function (error) {
+                console.log(error);
+				})
+		}
+	}
+  
   login(){
 	  document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/login';
   }
@@ -44,6 +82,7 @@ export default class Example extends React.Component {
 
   }
   render() {
+	
     if (authService.currentUserValue){
     return (
       <div>
@@ -52,6 +91,7 @@ export default class Example extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+			<NavItem className="display_name">Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_email}</NavItem>
               <NavItem>
 			  <NavLink>
 				<NavItem onClick={this.logout} href='/login'>Logout</NavItem>

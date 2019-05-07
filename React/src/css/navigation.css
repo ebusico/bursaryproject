@@ -1,0 +1,13 @@
+.display_name{
+	margin-top:8px;
+	margin-right:5px; 
+}
+
+.nav-item{
+	color:black;
+}
+
+.nav-link:hover {
+	background-color:aliceblue;
+	cursor: default;
+}
