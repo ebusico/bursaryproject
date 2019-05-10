@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
-import { BehaviorSubject } from 'rxjs';
+
 import { authService } from "./modules/authService";
 import decode from "jwt-decode";
 
@@ -52,7 +52,6 @@ export default class Login extends Component {
         const token = {
             token: ''
         };
-        const currentUser = authService.currentUserValue;
 
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
             .then(function (res) {

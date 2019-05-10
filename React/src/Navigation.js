@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Redirect } from 'react-router-dom'
+
 import {
   Collapse,
   Navbar,
@@ -16,7 +16,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "./secrets/secrets.js";
 import './css/navigation.css';
 
-export default class Example extends React.Component {
+export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
 	

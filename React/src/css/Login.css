@@ -23,12 +23,11 @@
       display: flex;
       flex: 1;
       flex-direction: column;
-      margin: 0 auto;
       max-width: 800px;
       position: relative;
       z-index: 1;
       background: #FFFFFF;
-      max-width: 450px;
+      min-width: 450px;
       margin: 0 auto 300px;
       padding: 45px;
       text-align: center;
@@ -57,7 +56,5 @@
         -webkit-transition: all 0.3 ease;
         transition: all 0.3 ease;
         cursor: pointer;
-        outline: none;
-        outline: 0;
     }
   }

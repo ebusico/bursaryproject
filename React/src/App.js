@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Nav from './Nav.js'
+import Nav from './Navigation.js'
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import CreateTrainee from "./components/create-trainee.component";

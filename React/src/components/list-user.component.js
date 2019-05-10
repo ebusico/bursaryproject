@@ -3,7 +3,7 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AccessDenied from './modules/AccessDenied';
 import '../css/list-trainee.css';
 

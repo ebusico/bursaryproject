@@ -4,7 +4,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
-import DatePicker from 'react-datepicker';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
@@ -14,7 +14,6 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import MomentLocaleUtils, {
     formatDate,
-    parseDate,
   } from 'react-day-picker/moment';
 
 export default class CreateTrainee extends Component {
@@ -85,7 +84,7 @@ export default class CreateTrainee extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        if(this.state.trainee_start_date == '' || this.state.trainee_end_date == ''){
+        if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alert('Please select the bursary start/end dates');
         }
         else{
