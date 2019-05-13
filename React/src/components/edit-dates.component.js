@@ -5,7 +5,7 @@ import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
-import { DropdownList } from 'react-widgets'
+
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 

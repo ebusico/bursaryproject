@@ -5,11 +5,11 @@ import 'babel-polyfill';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import axios from "axios";
 
-const token = {
-	role: 'admin'
-}
-
-it('the component is rendered onto the app', () => {
+describe ("createTrainee", () => {
+	
+it('the component is rendered onto the app', (done) => {
     const createTrainee = renderer.create(<CreateTrainee/>);
+	expect(CreateTrainee.prototype.token).toHaveBeenCalled();
   });
+});
   

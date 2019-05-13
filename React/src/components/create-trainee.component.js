@@ -125,6 +125,7 @@ export default class CreateTrainee extends Component {
     }
     
    render() {
+
 	   if(this.state.currentUser.token.role !== 'recruiter'){
 		   return (
 		   < AccessDenied />

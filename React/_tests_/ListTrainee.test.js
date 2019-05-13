@@ -10,9 +10,9 @@ jest.mock("axios");
 
 describe ('show trainee list', () => {
 	it('the component is rendered onto the app', () => {
-			const getSpy = jest.spyOn(axios, 'get');
-			const ListTrainee = renderer.create(<ListTrainee/>); 
-			expect(getSpy).toBeCalled();
+			const spy = jest.spyOn(axios, 'get');
+			const instance = renderer.create(<ListTrainee/>); 
+			expect(spy).toBeCalled();
 	});
  });
 
