@@ -42,8 +42,8 @@ describe('trainee/', () => {
 let addUser = {
 	'trainee_email': 'testing@aol.co.uk',
 	'trainee_password': 'password123',
-	'trainee_start_date': '',
-	'trainee_end_date': '',
+	'trainee_start_date': '21-01-2019',
+	'trainee_end_date': '25-04-2019',
 	'trainee_fname': 'John',
 	'trainee_lname': 'Adams',
 };
@@ -62,14 +62,19 @@ let updateUser = {
 };
 	
 describe('/add trainee', () => {
-	it('Should add a trainee account',  (done) => {
-		chai.request('http://localhost:4000').post('/trainee/add').send(addUser).end((err, res) => {
-			if (res !== 200){
-				throw new Error(`Expected 200 but got ${res}.`);
-			} else{
-			console.log('Account has been created');
-			done();
-			}
+	it('Should add a trainee',  (done) => {
+		chai.request('http://localhost:4000').post('/trainee/add').set('content-type', 'application/json').send(addUser).end((err, res) => {
+				console.log(res.status);
+			 if (res.status == '200'){
+			 	console.log('Account has been created');
+			 	done();
+			 }
+			 else if(res.status == '205'){
+			 	console.log('email already in use or unable to save correctly');
+			 }
+			 else{
+			 	throw new Error(`Expected 200 but got ${res}. error is ${err}`);
+			 }
 		});
 	});
 });
