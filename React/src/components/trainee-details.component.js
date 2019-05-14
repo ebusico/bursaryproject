@@ -55,7 +55,7 @@ export default class TraineeDetails extends Component {
                     trainee_email: trainee_email,
                     trainee_start_date: trainee_start_date,
                     trainee_end_date: trainee_end_date,
-                    csv: [["firstname", "lastname", "email"],[trainee_fname, trainee_lname, trainee_email]]
+                    csv: [["First Name", "Last Name", "Email", "Bank Name", "Account Number", "Sort Number","Start-Date", "End-Date"],[trainee_fname, trainee_lname, trainee_email, trainee_bank_name, trainee_account_no, trainee_sort_code, moment(trainee_start_date).format('MMMM Do YYYY'), moment(trainee_end_date).format('MMMM Do YYYY')]]
                 }) 
                 
             })
