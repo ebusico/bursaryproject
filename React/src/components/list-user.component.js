@@ -76,8 +76,10 @@ export default class ListUser extends Component {
                         placeholder="Find User.." 
                     />
                     <div id="addUser">
+					<Router>
                         <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User</Link></button>
-                    </div>
+                    </Router>
+					</div>
                 </div>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>

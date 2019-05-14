@@ -63,12 +63,12 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-		if (this.state.currentUser.token.role === undefined){
-			return (
-			<AccessDenied/>
-			)
-		}
-		else if(this.state.currentUser.token.role === 'recruiter'){
+		//if (this.state.currentUser.token.role === undefined){
+		//	return (
+		//	<AccessDenied/>
+		//	)
+		//}
+		//else if(this.state.currentUser.token.role === 'recruiter'){
 			return (
             <div className="QAtable">
                 <div className="QASearchBar">
@@ -107,7 +107,7 @@ export default class ListTrainee extends Component {
             </div>
         );
 			
-		}else{
+	/*	}else{
         return (
             <div className="QAtable">
                 <div className="QASearchBar">
@@ -161,6 +161,6 @@ export default class ListTrainee extends Component {
                 </table>
             </div>
         );
-		}
+		}*/
 	}
 }

@@ -80,8 +80,10 @@ export default class ListTrainee extends Component {
                         placeholder="Find trainee..."
                     />
                     <div id="addUser">
+					<Router> 
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
-                    </div>
+					</Router> 
+				   </div>
                 </div>
 
                 <table className="table table-striped" style={{ marginTop: 20 }} >

@@ -126,10 +126,10 @@ export default class CreateTrainee extends Component {
     
    render() {
 
-	   if(this.state.currentUser.token.role !== 'recruiter'){
-		   return (
-		   < AccessDenied />
-	   );} else{
+	   //if(this.state.currentUser.token.role !== 'recruiter'){
+		 //  return (
+		  // < AccessDenied />
+	  // );} else{
         return (
             <div className="createTrainee" style={{marginLeft: 100, marginRight: 100}}>
                 <form className="addForm" onSubmit={this.onSubmit}>
@@ -191,6 +191,6 @@ export default class CreateTrainee extends Component {
                 </form>
             </div>
         )
-    }
+    //}
    }
 }

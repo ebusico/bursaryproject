@@ -7,10 +7,7 @@ import {setupTest} from './setupTest';
 describe('AccessDenied',()=> {
 	
 	it('Should call componentDidMount', () => {
-		const spy = jest.spyOn(AccessDenied.prototype,'componentDidMount');
-
 		const instance = renderer.create(<AccessDenied />);
-		expect(spy).toHaveBeenCalled();
 	});
 
 });

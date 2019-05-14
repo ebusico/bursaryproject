@@ -29,7 +29,7 @@ export default class TabList extends React.Component {
   }
 
   render() {
-		if(this.state.currentUser.token.role === 'finance') {
+		//if(this.state.currentUser.token.role === 'finance') {
     return (
       <div className="QATabs">
         <Nav tabs>
@@ -60,10 +60,10 @@ export default class TabList extends React.Component {
         </TabContent>
       </div>
     );
-		}else{
-			return (
-			<AccessDenied/>
-		);
-  }
+		//}else{
+		//	return (
+		//	<AccessDenied/>
+		//);
+ // }
 }
 }

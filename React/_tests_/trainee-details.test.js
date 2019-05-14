@@ -16,11 +16,6 @@ it("the component has been rendered successfully onto the app", (done) => {
 			done();
 		});
 
-it('render Access Denied if not the correct role', (done) => {
-
-	const denied = renderer.create(<AccessDenied/>);
-	done();
-	});
 	
 });
 
