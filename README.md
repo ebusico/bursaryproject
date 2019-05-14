@@ -1,4 +1,4 @@
-# Skeleton App V2
+# Bursary App V1
 
 As a prerequiste Node.js needs to be installed
 
