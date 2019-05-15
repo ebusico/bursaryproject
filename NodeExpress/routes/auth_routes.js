@@ -4,6 +4,14 @@ var authRoutes = express.Router();
 var passport = require ('passport');
 var AuthenticationController = require('../config/authentication');
 
+const passportJWT = require("passport-jwt");
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJWT = passportJWT.ExtractJwt;
+var LocalStrategy = require('passport-local').Strategy;
+var jwt = require('jsonwebtoken');
+var AuthenticationController = require('../config/authentication');  
+var passportService = require('../config/passport');
+
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session:false});
 

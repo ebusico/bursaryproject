@@ -38,22 +38,25 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 							return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 						}
 						else{
+							console.log("logged in")
 							return done(null, trainee);
 						}
 					})
 				})
       }
-			else{
+	else{
 			var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
-      User.comparePassword(decryptPass, user.password, function(err, isMatch){
-      if(err){
+      		User.comparePassword(decryptPass, user.password, function(err, isMatch){
+      		if(err){
+				console.log(err)
 				return done(err);
 			}
-     	else if(!isMatch){
+     		else if(!isMatch){
 				console.log("User fail");
 				return done(null, false, {message: 'Password is incorrect.'});
-     	} else {
+			}
+			else {
 				return done(null, user);
 			}
      });}
