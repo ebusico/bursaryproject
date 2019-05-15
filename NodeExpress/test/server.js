@@ -93,22 +93,22 @@ describe('/add trainee', () => {
 			 }
 		});
 	});
-});
 
-describe('set userId', () => {
-	chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
-		let i = 0;
-		 while(i < res.body.length){
-		 	if(res.body[i].trainee_email == addUser.trainee_email){
-				 console.log("email : "+ res.body[i].trainee_email);
-				 console.log("id : "+res.body[i]._id);
-				 userId = res.body[i]._id;
-				 break;
+	it('getting userId to be used in later functions', () =>{
+		chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
+			let i = 0;
+			 while(i < res.body.length){
+				 if(res.body[i].trainee_email == addUser.trainee_email){
+					 console.log("email : "+ res.body[i].trainee_email);
+					 console.log("id : "+res.body[i]._id);
+					 userId = res.body[i]._id;
+					 break;
+				 }
+				i++;
 			 }
-			i++;
-		 }
-		})
-})
+			})
+	})
+});
 
 describe('/send-email-staff', () => {
 	it ('Should send an email', (done) => {
@@ -150,7 +150,10 @@ describe('/trainee:id', () => {
 });
 describe('/update-password', () => {
 	it('should update the trainee password', (done) => {
-		chai.request('http://localhost:4000').post('/trainee/update-password/'+userId).send(newPassword).end((err, res) => {
+		var psw  = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString();
+		psw ={'trainee_password': psw};
+		chai.request('http://localhost:4000').post('/trainee/update-password/'+userId).send(psw).end((err, res) => {
+			console.log(res);
 			res.status.should.be.equal(200);
 			console.log('trainee password has changed');
 			done();
@@ -178,8 +181,8 @@ describe ('Create account and remove after test', () =>{
 		});
 		
 describe('/POST Register', function () {
-	it('Should Register user account', function (done) {
-		chai.request('http://localhost:4000').post('/addUser/postman').send(register_details).end((err, res) => {
+	it('Should Register user account', (done) => {
+		chai.request('http://localhost:4000').post('/admin/addUser/postman').set('content-type', 'application/json').send(register_details).end((err, res) => {
 			res.status.should.be.equal(200);
 			console.log('Account has been Registered');
 			done();
@@ -199,7 +202,7 @@ describe('/POST Register', function () {
 
 describe('get staff list', () => {
 	it('Should show Staff list', (done) => {
-		chai.request('http://localhost:4000').post('/admin/staff/:id').end((err, res) => {
+		chai.request('http://localhost:4000').get('/admin/').end((err, res) => {
 			res.status.should.be.equal(200);
 			console.log('Staff list shows');
 			done();
@@ -207,37 +210,20 @@ describe('get staff list', () => {
 	});
 });
 
-describe('delete user via id', () => {
+describe('delete user via id', function() {
 	it('Should delete account',  (done) => {
-		let delId;
 
-	// 	chai.request('http://localhost:4000').post('/trainee/add').set('content-type', 'application/json').send(deleteUser).end((err, res) => {
-	// 		console.log(res.status);
-	// 	 if (res.status == '200'){
-	// 		 console.log('Account has been created');
-	// 	 }
-	// 	 else{
-	// 		 console.log((`Expected 200 but got ${res}. error is ${err}`));
-	// 	 }
-	// });
-	
-	chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
-		let i = 0;
-		 while(i < res.body.length){
-		 	if(res.body[i].trainee_email == deleteUser.trainee_email){
-				 console.log("email : "+ res.body[i].trainee_email);
-				 console.log("id : "+res.body[i]._id);
-				 delId = res.body[i]._id;
-				 break;
-			 }
-			i++;
-		 }
-		})
+		this.timeout(300000);
 
-		chai.request('http://localhost:4000').get('/trainee/delete/'+ delId).end((err, res) => {
-			res.should.have.status(200);
-			console.log('the dummy trainee data has now been deleted.');
-			done();
+		setTimeout(function () {
+			expect(userId != undefined);
+			console.log("id to delete is : "+ userId);
+
+			chai.request('http://localhost:4000').get('/trainee/delete/'+ userId).end((err, res) => {
+				console.log('result is : '+ res.body.result);
+				res.should.have.status(200);
+				done();
+			});
 		});
+		}, 300000);
 	});
-})
