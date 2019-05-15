@@ -58,3 +58,16 @@
         cursor: pointer;
     }
   }
+
+  title {
+    visibility: hidden;
+    position: relative;
+}
+
+title:after {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "New title";
+}
