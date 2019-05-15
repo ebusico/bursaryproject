@@ -12,7 +12,7 @@
   background-color: #F0F8FF;
 }
 
-@media all and (min-width: 500px) {
+@media all {
     .Login {
       width: 500px;
       padding: 3% 0 0;
