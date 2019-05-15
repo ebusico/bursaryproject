@@ -33,10 +33,10 @@ describe('trainee/', () => {
 			res.should.have.status(200);
 			res.body.should.be.a('array');
 			done();
-
 		});
 	});
 });
+
 
 // MOCK DATA
 let addUser = {
@@ -48,8 +48,21 @@ let addUser = {
 	'trainee_lname': 'Adams',
 };
 
+let deleteUser = {
+	'trainee_email': 'delete@aol.co.uk',
+	'trainee_password': 'password123',
+	'trainee_start_date': '21-01-2019',
+	'trainee_end_date': '25-04-2019',
+	'trainee_fname': 'DeleteJohn',
+	'trainee_lname': 'Adams',
+};
+
 let adminUser = {
 	
+}
+
+let newPassword = {
+	'trainee_password': 'password' 
 }
 
 let updateUser = {
@@ -60,6 +73,8 @@ let updateUser = {
 	'trainee_account_no': '19982350',
 	'trainee_sort_code': '090921',
 };
+
+var userId;
 	
 describe('/add trainee', () => {
 	it('Should add a trainee',  (done) => {
@@ -70,7 +85,8 @@ describe('/add trainee', () => {
 			 	done();
 			 }
 			 else if(res.status == '205'){
-			 	console.log('email already in use or unable to save correctly');
+				 console.log('email already in use or unable to save correctly');
+				 throw new Error('Expected 200 but got 205 meaning email in use or save issue');
 			 }
 			 else{
 			 	throw new Error(`Expected 200 but got ${res}. error is ${err}`);
@@ -78,6 +94,21 @@ describe('/add trainee', () => {
 		});
 	});
 });
+
+describe('set userId', () => {
+	chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
+		let i = 0;
+		 while(i < res.body.length){
+		 	if(res.body[i].trainee_email == addUser.trainee_email){
+				 console.log("email : "+ res.body[i].trainee_email);
+				 console.log("id : "+res.body[i]._id);
+				 userId = res.body[i]._id;
+				 break;
+			 }
+			i++;
+		 }
+		})
+})
 
 describe('/send-email-staff', () => {
 	it ('Should send an email', (done) => {
@@ -91,8 +122,7 @@ describe('/send-email-staff', () => {
 	
 describe('/send-email', () => {
 	it ('Should send an email', (done) => {
-		let email = "TestingEmail@aol.com";
-		chai.request('http://localhost:4000').post('/admin/send-email-staff').send(email).end((err, res) => {
+		chai.request('http://localhost:4000').post('/trainee/send-email').send(addUser.trainee_email).end((err, res) => {
 			console.log('Email has been sent');
 			done();
 		});
@@ -101,9 +131,7 @@ describe('/send-email', () => {
 
 describe('/update:id', () => {
 	it('Should update user account',  (done) => {
-		var id = '5cae04f9f631d12a18c6b3e4';
-		
-		chai.request('http://localhost:4000').post('/trainee/update/${id}').send(updateUser).end((err, res) => {
+		chai.request('http://localhost:4000').post('/trainee/update/'+userId).send(updateUser).end((err, res) => {
 			res.status.should.be.equal(200);
 			console.log('Account has been updated');
 			done();
@@ -114,18 +142,15 @@ describe('/update:id', () => {
 
 describe('/trainee:id', () => {
 	it('Should return details of "John"', (done) => {
-		var id = '5cae04f9f631d12a18c6b3e4';
-		chai.request('http://localhost:4000').get('/trainee/update/${id}').end((err, res) => {
+		chai.request('http://localhost:4000').get('/trainee/'+userId).end((err, res) => {
 			res.should.have.status(200);
-			res.body.should.be.a('array');
 			done();
 		});
 	});
 });
 describe('/update-password', () => {
 	it('should update the trainee password', (done) => {
-		var id = '5cae04f9f631d12a18c6b3e4';
-		chai.request('http://localhost:4000').post('/admin/update-password/${id}').send().end((err, res) => {
+		chai.request('http://localhost:4000').post('/trainee/update-password/'+userId).send(newPassword).end((err, res) => {
 			res.status.should.be.equal(200);
 			console.log('trainee password has changed');
 			done();
@@ -183,18 +208,33 @@ describe('get staff list', () => {
 });
 
 describe('delete user via id', () => {
-	var toBeDeleted = new Trainee();
-		toBeDeleted.trainee_fname = 'John';
-		toBeDeleted.trainee_lname = 'Adams';
-		toBeDeleted.trainee_email = 'testing@aol.co.uk';
-        toBeDeleted.save((err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
 	it('Should delete account',  (done) => {
-		
-		chai.request('http://localhost:4000').get('/trainee/delete/'+ toBeDeleted._id).end((err, res) => {
+		let delId;
+
+	// 	chai.request('http://localhost:4000').post('/trainee/add').set('content-type', 'application/json').send(deleteUser).end((err, res) => {
+	// 		console.log(res.status);
+	// 	 if (res.status == '200'){
+	// 		 console.log('Account has been created');
+	// 	 }
+	// 	 else{
+	// 		 console.log((`Expected 200 but got ${res}. error is ${err}`));
+	// 	 }
+	// });
+	
+	chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
+		let i = 0;
+		 while(i < res.body.length){
+		 	if(res.body[i].trainee_email == deleteUser.trainee_email){
+				 console.log("email : "+ res.body[i].trainee_email);
+				 console.log("id : "+res.body[i]._id);
+				 delId = res.body[i]._id;
+				 break;
+			 }
+			i++;
+		 }
+		})
+
+		chai.request('http://localhost:4000').get('/trainee/delete/'+ delId).end((err, res) => {
 			res.should.have.status(200);
 			console.log('the dummy trainee data has now been deleted.');
 			done();
