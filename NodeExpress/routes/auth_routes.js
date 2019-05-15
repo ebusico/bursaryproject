@@ -2,7 +2,7 @@ var express = require('express');
 var authRoutes = express.Router();
 
 var passport = require ('passport');
-var AuthenticationController = require('./config/authentication');
+var AuthenticationController = require('../config/authentication');
 
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session:false});
