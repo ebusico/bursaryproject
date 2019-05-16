@@ -77,7 +77,7 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-        if(this.state.currentUser.token.role === 'finance' || this.state.currentUser.token.role === 'admin'){
+       // if(this.state.currentUser.token.role === 'finance' || this.state.currentUser.token.role === 'admin'){
         return (
             <div className="bigBox">
             <div className="QAtable">
@@ -117,11 +117,11 @@ export default class ListTrainee extends Component {
             </div>
             </div>
         );
-        }
-        else{
+        /*}else{
 			return (
 			<AccessDenied/>
 			)
         }
+		*/
 	}
 }

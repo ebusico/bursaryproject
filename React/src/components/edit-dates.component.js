@@ -107,7 +107,7 @@ export default class EditDates extends Component {
 
 
     render() {
-		if(this.state.currentUser.token.role === 'admin' || this.state.currentUser.token.role === 'recruiter'){
+		//*if(this.state.currentUser.token.role === 'admin' || this.state.currentUser.token.role === 'recruiter'){
         return (
             <div className="QATable">
                 <form className="edit-form" onSubmit={this.onSubmit}>
@@ -172,11 +172,10 @@ export default class EditDates extends Component {
 				</form>
             </div>
         )
-    }
-    else {
+    /*}else {
         return (
         <AccessDenied/>
     );
-    }
+    }*/
   }
 }

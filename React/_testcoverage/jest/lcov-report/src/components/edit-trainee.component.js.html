@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25.53% </span>
+        <span class="strong">28.89% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>12/47</span>
+        <span class='fraction'>13/45</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>2/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">13.33% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/15</span>
+        <span class='fraction'>3/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25.53% </span>
+        <span class="strong">28.89% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/47</span>
+        <span class='fraction'>13/45</span>
       </div>
     </div>
     <p class="quiet">
@@ -312,8 +312,7 @@
 <a name='L264'></a><a href='#L264'>264</a>
 <a name='L265'></a><a href='#L265'>265</a>
 <a name='L266'></a><a href='#L266'>266</a>
-<a name='L267'></a><a href='#L267'>267</a>
-<a name='L268'></a><a href='#L268'>268</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L267'></a><a href='#L267'>267</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -349,7 +348,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -458,13 +457,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -615,8 +613,8 @@ export default class EditTrainee extends Component {
         }
     }
     
-<span class="fstat-no" title="function not covered" >    co</span>mponentDidMount() {
-<span class="cstat-no" title="statement not covered" >        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)</span>
+    componentDidMount() {
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; {
                 var trainee_fname  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);</span>
                 var trainee_lname  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);</span>
@@ -724,13 +722,13 @@ export default class EditTrainee extends Component {
 &nbsp;
     render() {
 		const {show_other_input_field} = this.state;
-		
+		/*
 		if(this.state.currentUser.token.role !== undefined){
-<span class="cstat-no" title="statement not covered" >			return (</span>
+			return (
 			&lt;AccessDenied/&gt;
 		);
-		}else{
-<span class="cstat-no" title="statement not covered" >        return (</span>
+		}else{*/
+        return (
             &lt;div className="QATable"&gt;
                 &lt;form className="edit-form" onSubmit={this.onSubmit}&gt;
                     &lt;div className="all-edit-box"&gt;
@@ -811,9 +809,9 @@ export default class EditTrainee extends Component {
 					&amp;emsp; &amp;emsp;
 						
 						&amp;nbsp;
-						{show_other_input_field ? &lt;label&gt;Other Bank:&lt;/label&gt;: ""}
+						{show_other_input_field ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;label&gt;Other Bank:&lt;/label&gt;:</span> ""}
 						{show_other_input_field ?
-						&lt;input  type="text"
+<span class="branch-0 cbranch-no" title="branch not covered" >						&lt;input  type="text"</span>
 									placeholder="Please specfiy your Bank Name"
 									className="form-control-bank"
 									value={this.state.trainee_bank_name}
@@ -846,14 +844,13 @@ export default class EditTrainee extends Component {
             &lt;/div&gt;
         )
     }
-  }
-}</pre></td></tr>
+  }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue May 14 2019 16:03:11 GMT+0100 (British Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 16 2019 15:24:34 GMT+0100 (British Summer Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

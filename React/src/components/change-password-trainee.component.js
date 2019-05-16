@@ -111,7 +111,7 @@ export default class ChangePassword extends Component {
                     </div>
                     <div className="form-group"> 
                         <label>New Password: </label>
-                        <input type="password"
+                        <input id='cdPassword' type="password" name="trainee_password"
                                className="form-control"
                                onChange={this.onChangeTraineePassword}
                         />

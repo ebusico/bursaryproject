@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
@@ -63,12 +63,13 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-		if (this.state.currentUser.token.role === undefined){
+		/*if (this.state.currentUser.token.role === undefined){
 			return (
 			<AccessDenied/>
 			)
 		}
 		else if(this.state.currentUser.token.role === 'recruiter'){
+			*/
 			return (
             <div className="bigBox">
             <div className="QAtable">
@@ -80,9 +81,7 @@ export default class ListTrainee extends Component {
                         placeholder="Find trainee..."
                     />
                     <div id="addUser">
-					<Router> 
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
-					</Router> 
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>	
 				   </div>
                 </div>
 
@@ -98,7 +97,7 @@ export default class ListTrainee extends Component {
                     <tbody>
                         {trainees.map(t => {
                             return (
-                                <tr>
+                                <tr className='trainees'>
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
@@ -114,7 +113,9 @@ export default class ListTrainee extends Component {
             </div>
             </div>
         );
-			
+		}
+	}
+		/*	
 		}else{
         return (
             <div className="bigBox">
@@ -174,4 +175,4 @@ export default class ListTrainee extends Component {
         );
 		}
 	}
-}
+}*/

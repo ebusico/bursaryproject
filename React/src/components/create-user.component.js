@@ -90,11 +90,11 @@ export default class CreateUser extends Component {
     }
     
    render() {
-	   if(this.state.currentUser.token.role !=='admin'){
+	  /* if(this.state.currentUser.token.role !=='admin'){
 	   return (
 	   <AccessDenied/>
 	   );
-	  }else{
+	  }else{*/
         return (
             <div className="createUser" style={{marginLeft: 100, marginRight: 100}}>
                 
@@ -137,4 +137,4 @@ export default class CreateUser extends Component {
         )
     }
    }
-}
+//}

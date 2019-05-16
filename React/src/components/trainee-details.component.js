@@ -71,7 +71,7 @@ export default class TraineeDetails extends Component {
 
 render() {
 
-	if(this.state.currentUser.token.role === 'finance') {
+	//if(this.state.currentUser.token.role === 'finance') {
         return (
             <div className="details">
                 <table onSubmit={this.onSubmit} className="table table-striped-details">
@@ -96,7 +96,9 @@ render() {
             </div>
 
         )
-	} else if(this.state.currentUser.token._id === this.props.match.params.id) {
+	}
+}
+	/*} else if(this.state.currentUser.token._id === this.props.match.params.id) {
 		return (
 		<div className="details">
                 <table onSubmit={this.onSubmit} className="table table-striped-details">
@@ -120,10 +122,10 @@ render() {
                 </table>
             </div>
 		);
-	}else{ 
+	/*}else{ 
 	return(
 		< AccessDenied />
-	);}
-    }
-}
-
+	);
+	}
+   }
+*/

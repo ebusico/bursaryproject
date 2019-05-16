@@ -12,65 +12,64 @@ import regeneratorRuntime from "regenerator-runtime";
 import 'babel-polyfill';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 
-configure({adapter: new Adapter()});
-
-it('the Login is rendered onto the app', () => {
-    const createTrainee = renderer.create(<Login/>);
-  });
-
-it("it shows the expected text when clicked", () => {
-    var rendered = TestUtils.renderIntoDocument(<Login/>);
-    var form = TestUtils.findRenderedDOMComponentWithTag(rendered, 'form');
-    TestUtils.Simulate.submit(form, {uname:"recruiter@mail.com", psw:"password"});
-
-});
-
-// it('calls login validation and returns result along with email', () => {
-//   //setup
-//   Mockaxios.post.mockImplementationOnce(() => Promise.resolve({
-//     data: {
-//       result: true, email: "recruiter@mail.com"
-//     }
-//   }));
-
-//   //work
+configure({
+	adapter: new Adapter(),
+	disableLifecycleMethods: true
+	});
 
 
-//   //test
-//   expect(mockAxios.post).toHaveBeenCalledTimes(1);
-// })
+describe('Login Component', () => {
+	const mockValues = {
+		email: 'recruiter@mail.com',
+		psw: 'password',
+		onSubmit: jest.fn(),
+	};
+	it("should render the login component", () => {
+		const instance = renderer.create(<Login/>); 
+	})
+	it(" should show the login form", () => {
+		var rendered = TestUtils.renderIntoDocument(<Login/>);
+		var form = TestUtils.findRenderedDOMComponentWithTag(rendered, 'form');
+		TestUtils.Simulate.submit(form, {uname:"recruiter@mail.com", psw:"password"});
+	});
+	
+	it('should call the onSubmit funtion when clicked on', () => {
+      const callback = jest.fn();
+	  const wrapper = shallow(<Login/>);
+	  	
+	  wrapper.find('#password').simulate('change', {target: {name:'psw', value:'password'}})
+	  wrapper.find('#email').simulate('change', {target: {name:'email', value:'recruiter@mail.com'}})
 
-
-
-describe('Login', () => {
-    it('returns result of true along with email when called with correct details', async() => {
+	  wrapper.instance().onSubmit({ preventDefault: () => {} });
+    });
+	
+	it('returns result of false along with email when called with wrong details', async() => {
         var mock = new MockAdapter(axios);
-        const data = {result: true, email: 'recruiter@gmail.com'};
+		const wrapper = shallow(<Login/>);
+        const data = {result: false, email: 'Qatesting@qa.com', psw:'password'};
         mock.onPost('http://localhost:4000/trainee/login').reply(data);
     }, 1000);
 	
-	it('renders a email input', () => {
-		expect(shallow(<Login/>).find('#email').length).toEqual(1)
+	
+	
+	it('returns result of true along with email when called with correct details', async() => {
+        var mock = new MockAdapter(axios);
+        const data = {result: true, email: 'recruiter@gmail.com', psw:'password'};
+        mock.onGet('http://localhost:4000/trainee/login').reply(data);
+    }, 1000);
+	
+	it('should respond to change event for email', () => {
+		const wrapper = shallow(<Login/>)
+		wrapper.find('#email').simulate('change', {target: {name:'email', value:'recruiter@mail.com'}})
+		expect(wrapper.state('email')).toEqual('recruiter@mail.com')
 	})
-});
+	
+	it('should respond to change event for password', () => {
+		const wrapper = shallow(<Login/>)
+		wrapper.find('#password').simulate('change', {target: {name:'psw', value:'password'}})
+		expect(wrapper.state('psw')).toEqual('password')
+	})
+	
+	
+})
 
-describe("handleChangeUsername", () => {
-    it("changes the username value of the state", () => {
-      const component = renderer.create(<Login />);
-      const instance = component.getInstance();
-      expect(instance.state.uname).toBe("");
-      var form = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'email');
-      expect(form[0]).toBe("");
-      instance.handleUsername;
-      console.log(instance.state);
-    });
-    /*
-	it("it shows the expected text when clicked", () => {
-       const component = renderer.create(<Login />);
-       const rootInstance = component.root;
-       const button = rootInstance.findByType("submit");
-       button.props.onClick();
-       expect(button.props.children).toBe("PROCEED TO CHECKOUT");
-     });
-	*/
-  });

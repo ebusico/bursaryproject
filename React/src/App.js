@@ -24,7 +24,7 @@ import "./css/Login.css";
 
 class App extends Component {
   render() {
-	  if (!authService.currentUserValue){
+	/*  if (!authService.currentUserValue){
     return (
        <Router>    
         <div className="App">
@@ -44,7 +44,9 @@ class App extends Component {
       </Router>    
     );
   }
+  
   else if(authService.currentUserValue.token.role === 'admin'){
+	  */
     return (
       <Router>    
          <div className="App">
@@ -82,6 +84,7 @@ class App extends Component {
          </div>
        </Router>  
      );
+	 /*
   }else if(authService.currentUserValue.token.role === 'recruiter'){
 	  return (
 	   <Router>    
@@ -158,8 +161,10 @@ class App extends Component {
          </div>
        </Router>  
      );
-  }
+  } 
+  */
  }
 }
+
 
 export default App;

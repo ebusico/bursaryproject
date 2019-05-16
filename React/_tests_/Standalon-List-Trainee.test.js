@@ -1,5 +1,5 @@
 import React from 'react';
-import ListTrainee from '../src/components/list-trainee.component';
+import ListTrainee from '../src/components/standalone-list-trainee.component';
 import renderer from 'react-test-renderer';
 var assert = require('assert');
 import axios from 'axios';
@@ -15,7 +15,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({
 	adapter: new Adapter(),
-	disableLifecycleMethods: false
+	disableLifecycleMethods: true
 	});
 
 describe ('show trainee list', () => {

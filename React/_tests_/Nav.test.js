@@ -2,6 +2,24 @@ import React from 'react';
 import Nav from '../src/Nav.js';
 import renderer from 'react-test-renderer';
 
-it('the navbar is rendered onto the app', () => {
-   const nav = renderer.create(<Nav/>);
-  });
+import { shallow, mount, render, configure  } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import MockAdapter from 'axios-mock-adapter';
+
+import regeneratorRuntime from "regenerator-runtime";
+import 'babel-polyfill';
+import {BrowserRouter as Router, Route} from "react-router-dom";
+
+configure({
+	adapter: new Adapter(),
+	disableLifecycleMethods: true
+	});
+
+
+describe('NavBar Component', () => {
+	
+	it('the navbar is rendered onto the app', () => {
+		const nav = renderer.create(<Nav/>);
+	});
+	
+});

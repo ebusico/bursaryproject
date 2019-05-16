@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">29.41% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>9/36</span>
+        <span class='fraction'>10/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/4</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">25% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">29.41% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/36</span>
+        <span class='fraction'>10/34</span>
       </div>
     </div>
     <p class="quiet">
@@ -226,8 +226,7 @@
 <a name='L178'></a><a href='#L178'>178</a>
 <a name='L179'></a><a href='#L179'>179</a>
 <a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L181'></a><a href='#L181'>181</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -262,7 +261,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -331,13 +330,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -403,7 +402,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,8 +440,8 @@ export default class EditDates extends Component {
         }
     }
     
-<span class="fstat-no" title="function not covered" >    co</span>mponentDidMount() {
-<span class="cstat-no" title="statement not covered" >        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)</span>
+    componentDidMount() {
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; {
 <span class="cstat-no" title="statement not covered" >                console.log(response);</span>
                 var trainee_fname  = <span class="cstat-no" title="statement not covered" >CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);</span>
@@ -517,8 +515,8 @@ export default class EditDates extends Component {
 &nbsp;
 &nbsp;
     render() {
-		if(this.state.currentUser.token.role === 'admin' || <span class="branch-1 cbranch-no" title="branch not covered" >this.state.currentUser.token.role === 'recruiter')</span>{
-<span class="cstat-no" title="statement not covered" >        return (</span>
+		//*if(this.state.currentUser.token.role === 'admin' || this.state.currentUser.token.role === 'recruiter'){
+        return (
             &lt;div className="QATable"&gt;
                 &lt;form className="edit-form" onSubmit={this.onSubmit}&gt;
                     &lt;div className="all-edit-box"&gt;
@@ -582,12 +580,11 @@ export default class EditDates extends Component {
 				&lt;/form&gt;
             &lt;/div&gt;
         )
-    }
-    else {
-<span class="cstat-no" title="statement not covered" >        return (</span>
+    /*}else {
+        return (
         &lt;AccessDenied/&gt;
     );
-    }
+    }*/
   }
 }</pre></td></tr>
 </table></pre>
@@ -595,7 +592,7 @@ export default class EditDates extends Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue May 14 2019 16:03:11 GMT+0100 (British Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 16 2019 15:24:34 GMT+0100 (British Summer Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

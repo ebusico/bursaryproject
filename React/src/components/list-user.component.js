@@ -62,10 +62,10 @@ export default class ListUser extends Component {
                 }
             })
         }
-	   if(this.state.currentUser.token.role !== 'admin'){
+	   /*if(this.state.currentUser.token.role !== 'admin'){
 		   return (
 		   < AccessDenied />
-	   );} else{
+	   );} else{*/
         return (
             <div className="QAtable">
                 <div className="QASearchBar">
@@ -76,9 +76,7 @@ export default class ListUser extends Component {
                         placeholder="Find User.." 
                     />
                     <div id="addUser">
-					<Router>
                         <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User</Link></button>
-                    </Router>
 					</div>
                 </div>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
@@ -107,4 +105,4 @@ export default class ListUser extends Component {
         )
 	   }
     }
-}
+//}

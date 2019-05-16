@@ -142,12 +142,12 @@ export default class EditTrainee extends Component {
 
     render() {
 		const {show_other_input_field} = this.state;
-		
+		/*
 		if(this.state.currentUser.token.role !== undefined){
 			return (
 			<AccessDenied/>
 		);
-		}else{
+		}else{*/
         return (
             <div className="QATable">
                 <form className="edit-form" onSubmit={this.onSubmit}>
@@ -265,4 +265,3 @@ export default class EditTrainee extends Component {
         )
     }
   }
-}
