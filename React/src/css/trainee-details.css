@@ -4,23 +4,10 @@
     margin-right: auto;
     width:80%;
     border-radius: 4px; 
-    padding-top: 100px;
 }
 
 .details{
-    box-sizing: border-box;
-    padding:40px;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    max-width: 800px;
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    min-width: 450px;
-    margin: 0 auto 300px;
-    text-align: left;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    padding-top: 5%;
 }
 
 #detailstbody{
@@ -30,5 +17,5 @@
 }
 
 .form-control-other{
-    width: 40%;
+	width: 40%;
 }
