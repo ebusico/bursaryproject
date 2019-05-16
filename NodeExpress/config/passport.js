@@ -1,6 +1,6 @@
 var passport = require ('passport');
 var User = require('../models/staff.js');
-var Trainee = require('../trainee.model');
+var Trainee = require('../models/trainee.model');
 var secret = require('./auth');
 
 var passportJWT = require("passport-jwt");
@@ -14,9 +14,6 @@ var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
 //Looking for email got encrypted code instead
 
 var localLogin = new LocalStrategy(function(email, password, done) {
-    console.log(email);
-    console.log(password);
-
     User.getUserByEmail(email, function(err, user){
       // if(err){
 	  	// 	return done(err);
@@ -41,24 +38,25 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 							return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 						}
 						else{
+							console.log("logged in")
 							return done(null, trainee);
 						}
 					})
 				})
       }
-			else{
+	else{
 			var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
-			console.log(user.password);
-			console.log(decryptPass);
-      User.comparePassword(decryptPass, user.password, function(err, isMatch){
-      if(err){
+      		User.comparePassword(decryptPass, user.password, function(err, isMatch){
+      		if(err){
+				console.log(err)
 				return done(err);
 			}
-     	else if(!isMatch){
+     		else if(!isMatch){
 				console.log("User fail");
 				return done(null, false, {message: 'Password is incorrect.'});
-     	} else {
+			}
+			else {
 				return done(null, user);
 			}
      });}
