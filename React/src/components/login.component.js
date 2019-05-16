@@ -6,6 +6,7 @@ import { codes } from "../secrets/secrets.js";
 
 import { authService } from "./modules/authService";
 import decode from "jwt-decode";
+import {Button} from 'reactstrap';
 
 export default class Login extends Component {
 
@@ -98,7 +99,10 @@ export default class Login extends Component {
                     <input type="password" placeholder="Enter Password" name="psw" onChange={this.handlePassword} required />
                     <br />
                     <br/>
-                    <input type="submit" className="btn" value="Login"/>
+                    {/* <input type="submit" className="btn" value="Login"/> */}
+                    <Button type="submit" className="btn" value="Login">
+                  Login
+                    </Button>
 					<button className="forgotBtn" onClick={this.forgotPassword}>FORGOT PASSWORD?</button> 
                 </form>
             </div>

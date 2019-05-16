@@ -86,7 +86,7 @@ render() {
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
-                            <th>Actions</th>
+                       
                             <td>
                                 <CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
                             </td>
@@ -111,7 +111,7 @@ render() {
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
-                            <th>Actions</th>
+                        
                             <td>
                                 <form><input type="submit" value="Edit" className="btn btn-primary" /></form>
                             </td>
