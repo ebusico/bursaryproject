@@ -53,12 +53,19 @@ export default class Navigation extends React.Component {
           if (response.data == null) {
             axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
               .then(response => {
-                var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
+                if(response.data == null){
+                  authService.logout();
+                  if (!authService.currentUserValue) {
+                    document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+                  }
+                }
+                else{
+                  var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
 
-                this.setState({
-                  staff_email: email
-                })
-
+                  this.setState({
+                    staff_email: email
+                  })
+                }
               })
           } else {
             var trainee_fname = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
