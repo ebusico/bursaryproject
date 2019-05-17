@@ -76,7 +76,7 @@ describe ('show trainee list', () => {
 			trainee_lname: 'Doe' 			
 		}
 		mock.onGet('http://localhost:4000/trainee/')
-		.reply(200, mockData);
+		.reply(404, mockData);
 		});
 });
 

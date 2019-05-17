@@ -70,6 +70,5 @@ describe('Login Component', () => {
 		expect(wrapper.state('psw')).toEqual('password')
 	})
 	
-	
 })
 

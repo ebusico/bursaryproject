@@ -34,25 +34,19 @@ describe('/trainee-details', () => {
 		const _id = '12312'
 		mock.onGet('http://localhost:4000/trainee/'+_id).reply(200, {
 			data:{
-			trainee_fname:'John'
+			result: true,
+			trainee_fname: 'John',
+            trainee_lname: 'Smith',
+            trainee_email: 'JohnSmith@aol.com',
+			trainee_bank_name:'Bank of Banks',
+            trainee_account_no: '123456768',
+            trainee_sort_code: '123445'
 			}
-		});
+		  });
 		let response = TraineeDetails;
 		
 		setTimeout(() => {
 			expect(response.trainee_fname[0]).to.be.equal('John');
 		}, 0)
 	});
-		
-	it('should setState of trainee information', () => {
-		const traineeDetails = shallow(<TraineeDetails/>).instance();
-		traineeDetails.prototype.setState = jest.fn();
-		this.state ={
-			trainee_fname:''
-		}
-		trainee_fname.setState({ error: true })
-		
-		expect(traineeDetails.setState).toHaveBeenCalled();
-		expect(traineeDetails.find('#detailstbody').length).toBe(1);
-	})
 });

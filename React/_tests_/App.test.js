@@ -10,7 +10,10 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import { shallow, mount, render, configure  } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-configure({adapter: new Adapter()});
+configure({
+	adapter: new Adapter(),
+	disableLifecycleMethods: true
+	});
 
 describe ('show trainee list', () => {
 	it('renders without crashing', () => { 

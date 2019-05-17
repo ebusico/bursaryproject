@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1558016674269" clover="3.2.0">
-  <project timestamp="1558016674269" name="All files">
+<coverage generated="1558021727717" clover="3.2.0">
+  <project timestamp="1558021727717" name="All files">
     <metrics statements="425" coveredstatements="147" conditionals="88" coveredconditionals="12" methods="153" coveredmethods="48" elements="666" coveredelements="207" complexity="0" loc="425" ncloc="425" packages="5" files="21" classes="21"/>
     <package name="_tests_">
       <metrics statements="10" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -199,15 +199,15 @@
       </file>
       <file name="edit-dates.component.js" path="C:\Users\QAKrisDuff\Documents\Github\QA\bursaryproject\React\src\components\edit-dates.component.js">
         <metrics statements="34" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="12" coveredmethods="3"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
@@ -232,20 +232,20 @@
         <line num="102" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
         <line num="104" count="0" type="stmt"/>
-        <line num="111" count="1" type="stmt"/>
+        <line num="111" count="5" type="stmt"/>
       </file>
       <file name="edit-trainee.component.js" path="C:\Users\QAKrisDuff\Documents\Github\QA\bursaryproject\React\src\components\edit-trainee.component.js">
         <metrics statements="45" coveredstatements="13" conditionals="10" coveredconditionals="2" methods="15" coveredmethods="3"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
@@ -279,8 +279,8 @@
         <line num="137" count="0" type="stmt"/>
         <line num="138" count="0" type="stmt"/>
         <line num="139" count="0" type="stmt"/>
-        <line num="144" count="1" type="stmt"/>
-        <line num="151" count="1" type="stmt"/>
+        <line num="144" count="2" type="stmt"/>
+        <line num="151" count="2" type="stmt"/>
       </file>
       <file name="exportDates..component.js" path="C:\Users\QAKrisDuff\Documents\Github\QA\bursaryproject\React\src\components\exportDates..component.js">
         <metrics statements="33" coveredstatements="11" conditionals="4" coveredconditionals="1" methods="9" coveredmethods="3"/>
@@ -459,9 +459,9 @@
       </file>
       <file name="trainee-details.component.js" path="C:\Users\QAKrisDuff\Documents\Github\QA\bursaryproject\React\src\components\trainee-details.component.js">
         <metrics statements="19" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="3"/>
-        <line num="15" count="3" type="stmt"/>
-        <line num="16" count="3" type="stmt"/>
-        <line num="30" count="3" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="37" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -477,7 +477,7 @@
         <line num="52" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
-        <line num="75" count="3" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.components.modules">
@@ -493,7 +493,7 @@
         <line num="3" count="14" type="stmt"/>
         <line num="4" count="14" type="stmt"/>
         <line num="6" count="14" type="stmt"/>
-        <line num="9" count="49" type="stmt"/>
+        <line num="9" count="52" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
       </file>
