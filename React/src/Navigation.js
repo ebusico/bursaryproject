@@ -16,6 +16,7 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "./secrets/secrets.js";
 import './css/navigation.css';
+import SideBar from './components/sideBar.js';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -96,7 +97,9 @@ export default class Navigation extends React.Component {
 
     if (authService.currentUserValue) {
       return (
-        <div>
+         <div id='bar'>
+	  	<SideBar pageWrapId={"navigation-bar"} outerContainerId={"bar"} />
+		<div id="navigation-bar">
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/login"><img src={logo} alt="QA logo" width="60px" /></NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
@@ -111,13 +114,15 @@ export default class Navigation extends React.Component {
               </Nav>
             </Collapse>
           </Navbar>
-        </div>
+		 </div>
+		</div>
       );
     } else if (!authService.currentUserValue) {
       return (
-        <div>
+        <div id="navigation-bar">
           <Navbar color="light" light expand="md">
-            <NavbarBrand href="/"><img src={logo} width="60px" /></NavbarBrand>
+            <NavbarBrand href="/"><img src={logo} width="60px" />
+			</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
