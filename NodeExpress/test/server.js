@@ -2,6 +2,10 @@
 
 let user = require('../models/staff.js');
 var CryptoJS = require("crypto-js");
+var existingemail = "sZjrgWgK7vj49jcWVAw8e8KskrOOIcbKFvKYboWdUuY="; //set the email of an existing trainee here
+var existingStaffEmail = "4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA="; //set the email of an existing user here
+var existingId = "5cc9dc038faf56a0a3b16e38"; //set the id of an existing trainee here
+var staffExistingId = ""; //set the id of an existing staff user here
 
 var expect = require('chai').expect,
 	request = require('supertest'),
@@ -14,7 +18,6 @@ var chaiHttp = require('chai-http');
 var assert = require('assert'),
 	http = require('http');
 	
-let Trainee = require('../trainee.model');
 chai.use(chaiHttp);
 
 // BEFORE TESTING
@@ -31,7 +34,6 @@ describe('trainee/', () => {
 	it('Should get a staus of 200', (done) => {
 		chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
 			res.should.have.status(200);
-			res.body.should.be.a('array');
 			done();
 		});
 	});
@@ -79,7 +81,6 @@ var userId;
 describe('/add trainee', () => {
 	it('Should add a trainee',  (done) => {
 		chai.request('http://localhost:4000').post('/trainee/add').set('content-type', 'application/json').send(addUser).end((err, res) => {
-				console.log(res.status);
 			 if (res.status == '200'){
 			 	console.log('Account has been created');
 			 	done();
@@ -108,13 +109,23 @@ describe('/add trainee', () => {
 			 }
 			})
 	})
+
+	it('should update the trainee password', () => {
+		var psw  = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString();
+		psw ={'trainee_password': psw};
+		chai.request('http://localhost:4000').post('/trainee/update-password/'+existingId).send(psw).end((err, res) => {
+			res.status.should.be.equal(200);
+			console.log('trainee password has changed');
+			done();
+		});
+	});
 });
 
 describe('/send-email-staff', () => {
 	it ('Should send an email', (done) => {
-		let email = "StaffEmail@aol.com";
-		chai.request('http://localhost:4000').post('/admin/send-email').send(email).end((err, res) => {
-			console.log('Email has been sent');
+		chai.request('http://localhost:4000').post('/admin/send-email-staff').send({'email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
+			console.log('STAFFFFFFFFFFFF');
+			res.status.should.be.equal(200);
 			done();
 		});
 	});
@@ -122,9 +133,14 @@ describe('/send-email-staff', () => {
 	
 describe('/send-email', () => {
 	it ('Should send an email', (done) => {
-		chai.request('http://localhost:4000').post('/trainee/send-email').send(addUser.trainee_email).end((err, res) => {
-			console.log('Email has been sent');
-			done();
+		chai.request('http://localhost:4000').post('/trainee/send-email').send({trainee_email: existingemail}).end((err, res) => {
+			if(res.body.email === "Email Sent"){
+				done();
+			}
+			else{
+				throw new Error("Expected email sent but got something else, add console.log(res), to see full res");
+			}
+			
 		});
 	});
 	});
@@ -148,18 +164,6 @@ describe('/trainee:id', () => {
 		});
 	});
 });
-describe('/update-password', () => {
-	it('should update the trainee password', (done) => {
-		var psw  = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString();
-		psw ={'trainee_password': psw};
-		chai.request('http://localhost:4000').post('/trainee/update-password/'+userId).send(psw).end((err, res) => {
-			console.log(res);
-			res.status.should.be.equal(200);
-			console.log('trainee password has changed');
-			done();
-		});
-	});
-});
 
 // Register Test and Failed Login Test
 
@@ -173,10 +177,26 @@ let register_details = {
 	'role': 'admin',
 };
 describe ('Create account and remove after test', () =>{
-		beforeEach((done) => {
-			user.remove({}, (err) => {
-				console.log(err);
+	before((done) => {
+		user.remove({'email': 'L2wFtkap90n3hfiqZlqbIhUHxvVk1z8Q5QBTyT0m+vA='}, function (err){
+			if(err){
+				console.log(handleError(err));
+				throw new Error("encountered error");
+			}
+			else{
 				done();
+			}
+		})
+	});
+		after((done) => {
+			user.remove({'email': 'L2wFtkap90n3hfiqZlqbIhUHxvVk1z8Q5QBTyT0m+vA='}, function (err){
+				if(err){
+					console.log(handleError(err));
+					throw new Error("encountered error");
+				}
+				else{
+					done();
+				}
 			})
 		});
 		
@@ -227,3 +247,40 @@ describe('delete user via id', function() {
 		});
 		}, 300000);
 	});
+
+describe('/admin/getByEmail', function() {
+	it('it should get staff user via email', (done) => {
+		//'4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='
+		chai.request('http://localhost:4000').post('/admin/getByEmail').send({'staff_email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
+			if(res.body != null){
+				console.log('shouldve returned user details');
+				console.log(res);
+				done();
+			}
+			else{
+				console.log('failed m8888');
+				throw new Error(res);
+
+			}
+			
+		})
+	})
+})
+
+// describe('/auth/protected', function() {
+// 	it('', (done) => {
+// 		chai.request('http://localhost:4000').post('/auth/protected').send({'staff_email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
+// 			if(res.body != null){
+// 				console.log('shouldve returned user details');
+// 				console.log(res);
+// 				done();
+// 			}
+// 			else{
+// 				console.log('failed m8888');
+// 				throw new Error(res);
+
+// 			}
+			
+// 		})
+// 	})
+// })
