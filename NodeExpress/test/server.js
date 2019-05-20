@@ -5,7 +5,7 @@ var CryptoJS = require("crypto-js");
 var existingemail = "sZjrgWgK7vj49jcWVAw8e8KskrOOIcbKFvKYboWdUuY="; //set the email of an existing trainee here
 var existingStaffEmail = "4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA="; //set the email of an existing user here
 var existingId = "5cc9dc038faf56a0a3b16e38"; //set the id of an existing trainee here
-var staffExistingId = ""; //set the id of an existing staff user here
+var staffExistingId = "5cdd6dbf4b17158d999ed680"; //set the id of an existing staff user here
 
 var expect = require('chai').expect,
 	request = require('supertest'),
@@ -110,37 +110,106 @@ describe('/add trainee', () => {
 			})
 	})
 
-	it('should update the trainee password', () => {
-		var psw  = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString();
-		psw ={'trainee_password': psw};
-		chai.request('http://localhost:4000').post('/trainee/update-password/'+existingId).send(psw).end((err, res) => {
-			res.status.should.be.equal(200);
-			console.log('trainee password has changed');
-			done();
-		});
-	});
+	// it('should update the trainee password', (done) => {
+	// 	var psw  = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString();
+	// 	psw ={'trainee_password': psw};
+	// 	console.log("id for trainee password is: " + existingId);
+	// 	chai.request('http://localhost:4000').post('/trainee/update-password/'+existingId).send(psw).end((err, res) => {
+	// 		res.status.should.be.equal(404);
+	// 		console.log('trainee password has changed');
+	// 		done();
+	// 	});
+	// });
 });
 
 describe('/send-email-staff', () => {
-	it ('Should send an email', (done) => {
-		chai.request('http://localhost:4000').post('/admin/send-email-staff').send({'email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
-			console.log('STAFFFFFFFFFFFF');
-			res.status.should.be.equal(200);
-			done();
+	var passwordtkn = "";
+	beforeEach(() => {
+		it('Should email staff',  () => {
+				chai.request('http://localhost:4000').post('/admin/send-email-staff').send({'email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
+					if(res.status == '200'){
+						console.log("status for STAFFFFFF ISSSS : " + res.status);
+						return res.status;
+					}
+					else{
+						throw new Error('The status was not as expected');
+					}
+				});
+			});
+	});
+
+	context('getting token and updating',function(){
+		it('getting staff details', function() {
+			chai.request('http://localhost:4000').get('/admin/staff/'+staffExistingId).end((err, res) => {
+					passwordtkn = res.body.password_token;
+					chai.request('http://localhost:4000').post('/admin/update-password-staff/'+passwordtkn).send({'password': CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString()}).end((err, res) => {
+						if(res.body === 'Password updated!'){
+							console.log("password has been updated");
+						}
+						else{
+							throw new Error('Unexpected or incorrect result');
+						}
+					});
+			})
 		});
 	});
+
+	context('getting token and resetting password',function(){
+		it('getting staff details', function() {
+			chai.request('http://localhost:4000').get('/admin/staff/'+staffExistingId).end((err, res) => {
+					passwordtkn = res.body.password_token;
+					chai.request('http://localhost:4000').get('/admin/reset-staff/'+passwordtkn).end((err, res) => {
+						res.status.should.be.equal(403);
+						console.log('response should be 403 as it has been used above');
+					});
+			})
+		});
+	});
+
 	});
 	
 describe('/send-email', () => {
-	it ('Should send an email', (done) => {
-		chai.request('http://localhost:4000').post('/trainee/send-email').send({trainee_email: existingemail}).end((err, res) => {
-			if(res.body.email === "Email Sent"){
-				done();
-			}
-			else{
-				throw new Error("Expected email sent but got something else, add console.log(res), to see full res");
-			}
-			
+	var passwordtkn = '';
+	before(() => {
+		it ('Should send an email', () => {
+			chai.request('http://localhost:4000').post('/trainee/send-email').send({trainee_email: existingemail}).end((err, res) => {
+				if(res.body.email === "Email Sent"){
+					return 'successful';
+				}
+				else{
+					throw new Error("Expected email sent but got something else, add console.log(res), to see full res");
+				}
+				
+			});
+		});
+	})
+
+	context('getting token and updating trainee', () => {
+		it('getting staff details', function() {
+			chai.request('http://localhost:4000').get('/trainee/'+existingId).end((err, res) => {
+					passwordtkn = res.body.trainee_password_token;
+					newPassword.trainee_password = CryptoJS.AES.encrypt(newPassword.trainee_password, '3FJSei8zPx').toString()
+					chai.request('http://localhost:4000').post('/trainee/update-password/'+passwordtkn).send(newPassword).end((err, res) => {
+						if(res.body === 'Password updated!'){
+							console.log("password has been updated for trainee");
+						}
+						else{
+							throw new Error('Unexpected or incorrect result trainee');
+						}
+					});
+			})
+		});
+	})
+
+	context('getting token and resetting password',function(){
+		it('getting trainee details', function() {
+			chai.request('http://localhost:4000').get('/trainee/'+existingId).end((err, res) => {
+					passwordtkn = res.body.password_token;
+					chai.request('http://localhost:4000').get('/trainee/reset/'+passwordtkn).end((err, res) => {
+						res.status.should.be.equal(403);
+						console.log('response should be 403 as it has been used above');
+					});
+			})
 		});
 	});
 	});
@@ -254,11 +323,9 @@ describe('/admin/getByEmail', function() {
 		chai.request('http://localhost:4000').post('/admin/getByEmail').send({'staff_email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
 			if(res.body != null){
 				console.log('shouldve returned user details');
-				console.log(res);
 				done();
 			}
 			else{
-				console.log('failed m8888');
 				throw new Error(res);
 
 			}
@@ -266,21 +333,3 @@ describe('/admin/getByEmail', function() {
 		})
 	})
 })
-
-// describe('/auth/protected', function() {
-// 	it('', (done) => {
-// 		chai.request('http://localhost:4000').post('/auth/protected').send({'staff_email': '4QWRatu2iG4jAL95IVDX3wxnEt9ruGQHMb91T/poKtA='}).end((err, res) => {
-// 			if(res.body != null){
-// 				console.log('shouldve returned user details');
-// 				console.log(res);
-// 				done();
-// 			}
-// 			else{
-// 				console.log('failed m8888');
-// 				throw new Error(res);
-
-// 			}
-			
-// 		})
-// 	})
-// })
