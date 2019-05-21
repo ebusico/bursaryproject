@@ -28,6 +28,7 @@ export default class CreateTrainee extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeStartDate = this.onChangeStartDate.bind(this);
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
+        this.onClickBursary = this.onClickBursary.bind(this);
 
         this.state = {
             trainee_fname: '',
@@ -36,8 +37,29 @@ export default class CreateTrainee extends Component {
             trainee_password: '',
             trainee_start_date: '',
             trainee_end_date: '',
-            currentUser: authService.currentUserValue
+            currentUser: authService.currentUserValue,
+            recruiterEmail: '',
+            bursary: ''
         }
+    }
+    
+    componentDidMount(){
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+        .then(response => {
+          if(response.data == null){
+            authService.logout();
+            if (!authService.currentUserValue) {
+              document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+            }
+          }
+          else{
+            var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
+
+            this.setState({
+              recruiterEmail: email
+            })
+          }
+        });
     }
     
     onChangeTraineeFname(e) {
@@ -80,7 +102,20 @@ export default class CreateTrainee extends Component {
         })
         console.log(this.state.endDate);
     }
-    
+
+    onClickBursary(e) {
+        if(document.getElementById("bursaryValue").checked === true){
+            this.setState({
+                bursary: "true"
+            });
+        }
+        else{
+            this.setState({
+                bursary: "false"
+            });
+        }
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -92,6 +127,7 @@ export default class CreateTrainee extends Component {
             console.log(`Trainee Fname: ${this.state.trainee_fname}`);
             console.log(`Trainee Lname: ${this.state.trainee_lname}`);
             console.log(`Trainee Email: ${this.state.trainee_email}`);
+            console.log(this.state.bursary);
             
             var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
             var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
@@ -99,6 +135,9 @@ export default class CreateTrainee extends Component {
             var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
             var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
             var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
+            var recruiterEmail = CryptoJS.AES.encrypt(this.state.recruiterEmail, codes.trainee);
+            var setStatus = CryptoJS.AES.encrypt('Incomplete', codes.trainee);
+            var setBursary = CryptoJS.AES.encrypt(this.state.bursary, codes.trainee);
 
             var newTrainee = {
                 trainee_fname: fname.toString(),
@@ -106,10 +145,13 @@ export default class CreateTrainee extends Component {
                 trainee_email: email.toString(),
                 trainee_password: pass.toString(),
                 trainee_start_date: startDate.toString(),
-                trainee_end_date: endDate.toString()
+                trainee_end_date: endDate.toString(),
+                added_By: recruiterEmail.toString(),
+                status: setStatus.toString(),
+                bursary: setBursary.toString()
             };
-            
-            console.log(newTrainee)
+
+            console.log(newTrainee);
             
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/add', newTrainee)
             .then( (response) => {if(response.status == 205){
@@ -162,6 +204,11 @@ export default class CreateTrainee extends Component {
                                 value={this.state.trainee_email}
                                 onChange={this.onChangeTraineeEmail}
                                 required/>
+                    </div>
+
+                    <div className="form-group">
+                        <label> Bursary: </label>
+                        <input type="checkbox" id="bursaryValue" onClick={this.onClickBursary}/>
                     </div>
 
                     <div className="form-group" >

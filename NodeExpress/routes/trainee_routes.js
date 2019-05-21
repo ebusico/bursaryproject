@@ -180,6 +180,10 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
         else
             //bcrypt pass
             //var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx');
+            var status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            if(status === 'Incomplete'){
+                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
+            }
             var decryptPass = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 			
             bcrypt.genSalt(10, function(err, salt) {
