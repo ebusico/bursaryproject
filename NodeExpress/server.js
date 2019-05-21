@@ -1,3 +1,6 @@
+const morgan = require('morgan');
+var winston = require('./config/winston'),
+	expressWinston = require('express-winston');
 var bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
@@ -20,7 +23,8 @@ mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true }
 const connection = mongoose.connection;
 
 connection.once('open', function() {
-    console.log("MongoDB database connection established successfully");
+	console.log("MongoDB database connection established successfully");
+	winston.log('info', "MongoDB database connection established successfully");
 })
 
 app.use('/trainee', require('./routes/trainee_routes'));
@@ -28,5 +32,6 @@ app.use('/admin', require('./routes/admin_routes'));
 app.use('/auth', require('./routes/auth_routes'));
 
 app.listen(PORT, function() {
-    console.log("Server is running on Port: " + PORT);
+	console.log("Server is running on Port: " + PORT);
+    winston.log('info', "Server is running on Port: " + PORT);
 })

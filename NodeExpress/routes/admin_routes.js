@@ -4,6 +4,7 @@ var adminRoutes = express.Router();
 const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
 const bcrypt = require('bcrypt');
+const winston = require('../config/winston');
 
 var jwt = require('jsonwebtoken');
 var AuthenticationController = require('../config/authentication');  
@@ -19,7 +20,7 @@ let User = require('../models/staff');
 adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin'])).get(function(req, res) {
     User.find(function(err, staff) {
         if (err) {
-            console.log(err);
+           console.log(err);
         } else {
             res.json(staff);
         }

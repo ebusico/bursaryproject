@@ -2,6 +2,7 @@ var passport = require ('passport');
 var User = require('../models/staff.js');
 var Trainee = require('../models/trainee.model');
 var secret = require('./auth');
+var winston = require('./winston');
 
 var passportJWT = require("passport-jwt");
 var JwtStrategy = require('passport-jwt').Strategy;
@@ -24,6 +25,8 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 						return done(err);
 					}
 					else if(!trainee){
+						console.log('login failed incorrect email');
+						winston.error('login failed incorrect email');
 						return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 					}
 
@@ -34,11 +37,13 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 							return done(err);
 						}
 						else if(!isMatch){
-							console.log("trainee fail");
+							console.log('trainee: ' + trainee._id + ' entered wrong password');
+							winston.error('trainee: ' + trainee._id + ' entered wrong password');
 							return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 						}
 						else{
-							console.log("logged in")
+							console.log('trainee: ' + trainee._id + ' logged in');
+							winston.info('trainee: ' + trainee._id + ' logged in');
 							return done(null, trainee);
 						}
 					})
@@ -49,15 +54,19 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
       		User.comparePassword(decryptPass, user.password, function(err, isMatch){
       		if(err){
-				console.log(err)
+				console.log(err);
+				winston.error(err);
 				return done(err);
 			}
      		else if(!isMatch){
-				console.log("User fail");
-				return done(null, false, {message: 'Password is incorrect.'});
+				console.log('user: ' + user._id + ' entered wrong password');
+				winston.error('user: ' + user._id + ' entered wrong password');
+			return done(null, false, {message: 'Password is incorrect.'});
 			}
 			else {
-				return done(null, user);
+				console.log('user: '+ user._id + " logged in");
+				winston.info('user: '+ user._id + " logged in");
+			return done(null, user);
 			}
      });}
    });

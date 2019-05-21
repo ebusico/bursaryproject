@@ -1,0 +1,137 @@
+20-05-2019 15:15:09 info [server.js]: Server is running on Port: 4000
+20-05-2019 15:15:10 info [server.js]: MongoDB database connection established successfully
+20-05-2019 15:22:42 info [server.js]: Server is running on Port: 4000
+20-05-2019 15:22:43 info [server.js]: MongoDB database connection established successfully
+20-05-2019 15:26:12 info [server.js]: Server is running on Port: 4000
+20-05-2019 15:26:13 info [server.js]: MongoDB database connection established successfully
+20-05-2019 15:34:34 info [server.js]: Server is running on Port: 4000
+20-05-2019 15:34:35 info [server.js]: MongoDB database connection established successfully
+21-05-2019 10:59:38 info [server.js]: Server is running on Port: 4000
+21-05-2019 10:59:39 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:07:17 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:07:18 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:08:36 info [server.js]: 5cd146d705704625e8c810d8
+21-05-2019 11:10:13 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:10:14 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:10:23 info [server.js]: 5cd146d705704625e8c810d8has logged in
+21-05-2019 11:11:57 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:11:58 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:12:29 info [server.js]: User id = 5cd146d705704625e8c810d8 logged in
+21-05-2019 11:21:12 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:21:13 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:21:22 info [server.js]: User 5cd146d705704625e8c810d8 logged in
+21-05-2019 11:23:24 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:23:25 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:26:34 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:26:35 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:27:11 info [server.js]: User 5cd146d705704625e8c810d8 logged in
+21-05-2019 11:27:42 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:27:43 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:32:24 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:32:25 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:33:01 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:33:02 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:37:11 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:37:12 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:37:37 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:37:38 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:39:05 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:39:06 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:43:16 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:43:17 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:43:43 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:43:44 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:44:12 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:44:13 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:50:23 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:50:24 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:50:41 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:50:42 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:51:42 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:51:43 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:52:24 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:52:25 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:52:38 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 11:54:22 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:54:23 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:54:47 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 11:55:55 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:55:56 info [server.js]: MongoDB database connection established successfully
+21-05-2019 11:57:59 info [server.js]: Server is running on Port: 4000
+21-05-2019 11:58:00 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:01:00 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:01:01 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:01:24 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:01:59 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:02:00 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:06:05 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:06:06 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:06:30 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:06:31 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:13:54 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:13:55 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:14:51 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:14:52 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:16:01 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:16:02 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:16:50 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:16:51 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:18:23 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:18:24 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:18:27 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:19:17 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:19:18 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:19:26 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:20:26 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:20:27 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:21:33 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:21:34 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:21:43 info [server.js]: User 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:23:52 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:23:53 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:25:20 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:25:21 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:26:16 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:26:17 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:26:39 info [server.js]: user: 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:28:18 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:28:19 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:28:33 info [server.js]: 5cd150f705704625e8c810d9entered wrong password
+21-05-2019 12:28:43 info [server.js]: user: 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:31:19 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:31:20 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:34:05 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:34:06 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:36:15 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:36:16 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:36:30 error [server.js]: trainee: 5cb73b80fd3fe0322c070e60 entered wrong password
+21-05-2019 12:39:53 info [server.js]: user: 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:41:06 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:41:07 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:41:42 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:41:43 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:42:14 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:42:15 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:42:57 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:42:58 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:43:04 info [server.js]: user: 5cd150f705704625e8c810d9 logged in
+21-05-2019 12:43:30 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:43:31 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:46:07 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:46:08 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:46:34 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:46:35 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:48:44 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:48:45 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:50:27 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:50:28 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:50:55 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:50:56 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:52:40 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:52:41 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:53:29 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:53:30 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:54:03 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:54:04 info [server.js]: MongoDB database connection established successfully
+21-05-2019 12:54:20 info [server.js]: Server is running on Port: 4000
+21-05-2019 12:54:22 info [server.js]: MongoDB database connection established successfully

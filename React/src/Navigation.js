@@ -16,7 +16,7 @@ import axios from 'axios';
 import CryptoJS from "react-native-crypto-js";
 import { codes } from "./secrets/secrets.js";
 import './css/navigation.css';
-import SideBar from './components/sideBar.js';
+import SideBar from './components/sideBar.component.js';
 
 export default class Navigation extends React.Component {
   constructor(props) {
