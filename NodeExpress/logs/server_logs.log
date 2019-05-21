@@ -1,2 +1,7 @@
 21-05-2019 17:14:59 info [server.js]: Server is running on Port: 4000
 21-05-2019 17:14:59 info [server.js]: MongoDB database connection established successfully
+21-05-2019 17:18:31 info [server.js]: get data for trainee: 5ce41b293bfe1a4810bff5aa
+21-05-2019 17:18:33 info [server.js]: get data for trainee: 5ce41b293bfe1a4810bff5aa
+21-05-2019 17:18:40 info [server.js]: get data for trainee: 5ce41b293bfe1a4810bff5aa
+21-05-2019 17:18:40 info [server.js]: get data for trainee: 5ce41b293bfe1a4810bff5aa
+21-05-2019 17:18:41 info [server.js]: get data for trainee: 5ce41b293bfe1a4810bff5aa
