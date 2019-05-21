@@ -17,7 +17,6 @@ export default class EditTrainee extends Component {
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineeAccount = this.onChangeTraineeAccount.bind(this);
         this.onChangeTraineeSort = this.onChangeTraineeSort.bind(this);
-		this.onChangeTraineeBank = this.onChangeTraineeBank.bind(this);
 		this.onChangeTraineeBankOther = this.onChangeTraineeBankOther.bind(this);
 		
         this.onSubmit = this.onSubmit.bind(this);
@@ -29,7 +28,9 @@ export default class EditTrainee extends Component {
 			trainee_bank_name: '',
             trainee_account_no: '',
             trainee_sort_code: '',
-			show_other_input_field: false,
+            similar_codes: [],
+            show_matching_bank: false,
+            show_non_matching_bank: false,
 			currentUser: authService.currentUserValue
         }
     }
@@ -46,7 +47,6 @@ export default class EditTrainee extends Component {
                     var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
                     var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);
                     this.setState({
-						show_other_input_field: true,
 						trainee_bank_name: trainee_bank_name.toString(CryptoJS.enc.Utf8),
                         trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
                         trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
@@ -87,20 +87,7 @@ export default class EditTrainee extends Component {
 		});
 	}
 	
-	onChangeTraineeBank(e){
-		if(document.getElementById("bankNames").value == ' '){
-			this.setState({
-				show_other_input_field:true,
-				trainee_bank_name:e.target.value
-			});
-		}else {
-			this.setState({
-				trainee_bank_name:e.target.value,
-				show_other_input_field: false
-			});
-	}
-}
-	showOtherInput(e){
+	showMatchingBank(e){
 }
 
     onChangeTraineeAccount(e) {
@@ -112,7 +99,37 @@ export default class EditTrainee extends Component {
     onChangeTraineeSort(e) {
         this.setState({
             trainee_sort_code: e.target.value
-        });
+        })
+        if(e.target.value.length > 5){
+            let sortcode = e.target.value;
+            if(sortcode.charAt(0) == 0){
+                sortcode = sortcode.slice(1);
+                console.log(sortcode);
+            }
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/findBank', {sort_code: sortcode})
+            .then(res => {
+                if(res.data.Match == true){
+                    console.log(res.data.BankName)
+                    this.setState({
+                        trainee_bank_name: res.data.BankName,
+                        show_matching_bank: true
+                    })
+                }
+                else{
+                    this.setState({
+                        trainee_bank_name: "",
+                        show_non_matching_bank: true,
+                        similar_codes: res.data.OtherCodes
+                    })
+                }
+            });
+        }
+        else{
+            this.setState({
+                show_matching_bank: false,
+                show_non_matching_bank: false
+            })
+        }
     }
     
     onSubmit(e) {
@@ -142,7 +159,8 @@ export default class EditTrainee extends Component {
     }
 
     render() {
-		const {show_other_input_field} = this.state;
+        const {show_matching_bank} = this.state;
+        const {show_non_matching_bank} = this.state;
 		
 		if(this.state.currentUser.token.role !== undefined){
 			return (
@@ -181,64 +199,6 @@ export default class EditTrainee extends Component {
                                 disabled
                                 />
                     </div>
-					 <div className="form-group"> 
-                        <label>Bank Name: </label> 
-						&nbsp;
-					<select id="bankNames" name="trainee_bank" value={this.state.trainee_bank_name} onChange={this.onChangeTraineeBank}>
-						<option selected value="">Please Select from the Dropdown</option>
-						<option value=" ">Other</option>
-						<option value="Abbey National">Abbey National</option>
-						<option value="AL Rayan Bank">ALRayanBank</option>
-						<option value="Alliance & Leicester">Alliance & leicester</option>
-						<option value="Allied Irish Bank">Allied Irish Bank</option>
-						<option value="Allied Irish Bank (AIB)">Allied Irish Bank (AIB)</option>
-						<option value="Bank of China">Bank of China</option>
-						<option value="Bank of Ireland">Bank of Ireland</option>
-						<option value="Bank of Scotland">Bank of Scotland</option>
-						<option value="Barclays">Barclays</option>
-						<option value="Bradford & Bingley">Bradford & Bingley</option>
-						<option value="CardOneBanking">CardOneBanking</option>
-						<option value="Citibank">Citibank</option>
-						<option value="Co-Operative Bank">Co-Operative Bank</option>
-						<option value="Clockwise Credit Union">Clockwise Credit Union</option>
-						<option value="Cumberland Building Society">Cumberland Building Society</option>
-						<option value="Danske Bank">Danske Bank</option>
-						<option value="First Direct">First Direct</option>
-						<option value="First Trust Bank">First Trust Bank</option>
-						<option value="Halifax">Halifax</option>
-						<option value="HSBC">HSBC</option>
-						<option value="Intelligent Finance">Intelligent Finance</option>
-						<option value="Lloyds">Lloyds</option>
-						<option value="M&S Bank">M&S Bank</option>
-						<option value="Metro Bank">Metro Bank</option>
-						<option value="Nationwide">Nationwide</option>
-						<option value="NatWest">NatWest</option>
-						<option value="Santander">Santander</option>
-						<option value="Royal Bank of Scotland">Royal Bank of Scotland</option>
-						<option value="Tesco Bank">Tesco Bank</option>
-						<option value="St James Place Bank">St James Place Bank</option>
-						<option value="Secure Trust">Secure Trust</option>
-						<option value="Smile">Smile</option>
-						<option value="Thinkmoney">Thinkmoney</option>
-						<option value="TSB">TSB</option>
-						<option value="Virgin Money Plc">Virgin Money Plc</option>
-						<option value="Woolwich">Woolwich</option>
-						<option value="Yorkshire Bank">Yorkshire Bank</option>
-						<option value="Yorkshire Banking Society">Yorkshire Banking Society</option>
-						<option value="Triodos Bank">Triodos Bank</option>				
-				</select>
-					&emsp; &emsp;
-						
-						&nbsp;
-						{show_other_input_field ? <label>Other Bank:</label>: ""}
-						{show_other_input_field ?
-						<input  type="text"
-									placeholder="Please specfiy your Bank Name"
-									className="form-control-bank"
-									value={this.state.trainee_bank_name}
-									onChange={this.onChangeTraineeBankOther}
-						/> : ""}
-					</div>
                     <div className="form-group"> 
                         <label>Account Number: </label>
                         <input  type="text"
@@ -256,6 +216,34 @@ export default class EditTrainee extends Component {
                                 onChange={this.onChangeTraineeSort}
                                 />
                     </div>
+                    {show_matching_bank ?
+                        <div className="form-group"> 
+                            <label>Bank: </label>
+                            <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_bank_name}
+                                onChange={this.onChangeTraineeBankOther}
+                                disabled
+                                />
+                        </div>
+                    : ""}
+                    {show_non_matching_bank ?
+                        <div className="form-group">
+                            <div>Sort code not found, similar sort codes shown below:</div>
+                            {this.state.similar_codes.map((code, index) => (
+                                <div key={index}>- {code}</div>
+                            ))}
+                            <div>Please make sure the sort code you entered is correct, and then enter your bank name</div>
+                            <br/>
+                            <label>Bank Name: </label>
+                            <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_bank_name}
+                                onChange={this.onChangeTraineeBankOther}
+                                />
+                        </div>
+                    : ""}
+
                     <br />
                     <div className="form-group">
                         <input type="submit" value="Update" className="btn btn-primary" />
