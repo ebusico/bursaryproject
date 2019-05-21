@@ -1,5 +1,5 @@
-const logger = require('morgan');
-var winston = require('./config/winston'),
+const morgan = require('morgan');
+var winston  = require('./config/winston'),
 	expressWinston = require('express-winston');
 var bodyParser = require('body-parser');
 const express = require('express');
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(logger('dev'));
+
 
 mongoose.connect('mongodb://34.245.236.104:27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;

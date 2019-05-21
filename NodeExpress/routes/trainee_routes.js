@@ -2,6 +2,8 @@ var express = require('express');
 var traineeRoutes = express.Router();
 var async = require("async");
 
+const winston = require('../config/winston');
+
 const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
 const bcrypt = require('bcrypt');
@@ -22,8 +24,10 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
     Trainee.find(function(err, trainee) {
         if (err) {
             console.log(err);
+			winston.error(err);
         } else {
             res.json(trainee);
+			winston.info('database collected all trainees successfully')
         }
     });
 });
@@ -33,9 +37,11 @@ traineeRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Trainee.findById(id, function(err, trainee) {
          res.json(trainee);
+		 winston.info('get data for trainee: '+ id);
     })
     .catch(err => {
         console.log(err);
+		winston.error(err)
         res.status(400).send("Trainee doesn't exist");
     });
 }) 
@@ -44,20 +50,30 @@ traineeRoutes.route('/:id').get(function(req, res) {
 traineeRoutes.route('/getByEmail').post(function(req,res) {
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         res.json(trainee);
+		winston.info('found email: ' + trainee);
     })
     .catch(err => {
         res.status(205).send("Trainee doesn't exist");
+		winston.error(err);
     })
 })
 //adds new trainee to database
 traineeRoutes.route('/add').post(function(req, res) {
+	let id = req.params._id;
     let trainee = new Trainee(req.body);
     trainee.save()
         .then(trainee => {
+			console.log(id + ' has created trainee ' + trainee._id);
+			console.log('An email is being sent to ' + trainee._id);
+			winston.info(id + ' has created trainee ' + trainee._id);
+			winston.info('An email is being sent to ' + trainee._id);
             res.status(200).json({'trainee': 'Trainee added successfully'});
+			
         })
         .catch(err => {
             res.status(205).send('Adding new trainee failed');
+			console.log(err);
+			winston.error(err);
         });
 });
 
@@ -89,9 +105,11 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
-            })
+				winston.info(trainee_id + 'has made changes to there details')
+				})
             .catch(err => {
                 res.status(400).send("Update not possible");
+				winston.error('Trainee tried to update there details but got ' + err)
             });
     });
 });
@@ -109,9 +127,11 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
+				winston.info('trainee: '+ trainee_id + 'has had there start & end dates changed');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
+				winston.error(err)
             });
         }
     });
@@ -123,8 +143,10 @@ traineeRoutes.route('/reset/:token').get(function(req, res) {
       console.log(Date.now())
       if (trainee == null) {
         console.error('password reset link is invalid or has expired');
+		winston.error('password reset link was invalid for the trainee')
         res.status(403).send('password reset link is invalid or has expired');
       } else {
+		  winston.info(trainee_id + ' recevied reset link at status 200')
         res.status(200).send({
           trainee_id: trainee._id,
           message: 'password reset link a-ok',
@@ -139,8 +161,10 @@ traineeRoutes.route('/send-email').post(function(req, res) {
     var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
     var email = CryptoJS.AES.decrypt(req.body.trainee_email, key, {iv:iv});
     console.log("got email:" + email.toString(CryptoJS.enc.Utf8));
+	winston.info('an email will be sent to the trainee: ' + trainee_id);
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
-        console.log(trainee)
+        console.log(trainee);
+		winston.info(trainee);
         if (!trainee){
             res.status(404).send("Email is not found");
         }
@@ -148,7 +172,10 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             const token = crypto.randomBytes(20).toString('hex');
             trainee.trainee_password_token = token;
             trainee.trainee_password_expires = Date.now() + 3600000;
-            trainee.save().then(()=>console.log('token generated'));
+            trainee.save().then(()=>
+			console.log('email token has been generated'),
+			winston.info('Email has been sent to ' + trainee)
+			);
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
                 auth: {
@@ -168,6 +195,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                     return console.log(error);
                 }
                 console.log('Message %s sent: %s', info.messageId, info.response);
+				winston.info('Message %s sent: %s', info.messageId, info.response);
                 res.status(200).json({'email': 'Email Sent'});
             });
         }
@@ -194,9 +222,11 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
                   trainee.trainee_password = req.body.trainee_password;
                   trainee.save().then(trainee => {
                     res.json('Password updated!');
+					winston.info(trainee_id + 'has updated thier password');
                 })
                 .catch(err => {
                     res.status(400).send("Update not possible");
+					winston.error('trainee could not update thier password' + err);
                 });
                 });
               });

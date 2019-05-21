@@ -1,10 +1,14 @@
 const appRoot = require('app-root-path');
+const morgan = require('morgan');
 const { createLogger, format, transports } = require('winston');
 const path = require('path');
 
 //Set up winston logger
 const logger = createLogger({
 	level: 'info',
+	handleExceptions: true,
+	maxsize:5242880, //5MB
+	maxFiles: 5,
 	format: format.combine(
 		format.json(),
 		format.label({ label: path.basename(process.mainModule.filename) }),
@@ -28,6 +32,7 @@ logger.stream = {
 		logger.info(message);
 	},
 };
+
 
 module.exports = logger;
 

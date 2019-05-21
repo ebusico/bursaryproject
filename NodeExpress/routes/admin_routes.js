@@ -21,8 +21,10 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
     User.find(function(err, staff) {
         if (err) {
            console.log(err);
+		   winston.error(err);
         } else {
             res.json(staff);
+			winston.info('Rendered all staff users successfully')
         }
     });
 });
@@ -32,9 +34,12 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
     let id = req.params.id;
     User.findById(id, function(err, staff) {
          res.json(staff);
+		 winston.info('Rendered staff' + id )
     })
     .catch(err => {
         res.status(400).send("Staff doesn't exist");
+		console.log('staff doesnt exist');
+		winston.error('tried to get staff member but does not exist ' + err)
     });
 });
 
