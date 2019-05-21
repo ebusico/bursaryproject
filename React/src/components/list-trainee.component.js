@@ -15,11 +15,14 @@ export default class ListTrainee extends Component {
         this.state = {
 			trainees: [], 
 			searchString: "",
-			currentUser: authService.currentUserValue
+            currentUser: authService.currentUserValue,
+            recruiterEmail: '',
+            filter: ''
 			};
         
        //Added onChangeSearch - Ernie
         this.onChangeSearch = this.onChangeSearch.bind(this);
+        this.onChangeFilter = this.onChangeFilter.bind(this);
     }
     
     componentDidMount() {
@@ -45,6 +48,23 @@ export default class ListTrainee extends Component {
             .catch(function (error){
                 console.log(error);
             })
+
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+            .then(response => {
+              if(response.data == null){
+                authService.logout();
+                if (!authService.currentUserValue) {
+                  document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+                }
+              }
+              else{
+                var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
+    
+                this.setState({
+                  recruiterEmail: email
+                })
+              }
+            });
     }
 
     // Added onChangeSearch(e) function. Needed for the search filter
@@ -53,11 +73,19 @@ export default class ListTrainee extends Component {
             searchString: e.target.value
         });
     }
+
+    onChangeFilter(e){
+        this.setState({
+            filter: e.target.value
+        })
+    }
 	
     render() {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
+        let filter = this.state.filter;
+        let email = this.state.recruiterEmail;
         
         if(search.length > 0){
             trainees = trainees.filter(function(i){
@@ -71,7 +99,17 @@ export default class ListTrainee extends Component {
                     return i;
                 }
             })
+        }else if(filter != ''){
+            if(filter === 'MyTrainees'){
+                    trainees = trainees.filter(function(i){
+                        if(i.added_By === email){
+                            console.log('matches');
+                            return i;
+                        }
+                    })
+            }
         }
+
 		if (this.state.currentUser.token.role === undefined){
 			return (
 			<AccessDenied/>
@@ -79,6 +117,7 @@ export default class ListTrainee extends Component {
 		}
 		else if(this.state.currentUser.token.role === 'recruiter'){
 			return (
+            <div className="bigBox">
             <div className="QAtable">
                 <div className="QASearchBar">
                     <input
@@ -87,6 +126,10 @@ export default class ListTrainee extends Component {
                         onChange={this.onChangeSearch}
                         placeholder="Find trainee..."
                     />
+                    <select className="filter" onChange={this.onChangeFilter}>
+                        <option>Select a filter</option>
+                        <option value='MyTrainees'>My Trainees</option>
+                    </select>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
                     </div>
@@ -123,6 +166,7 @@ export default class ListTrainee extends Component {
                     </tbody>
 
                 </table>
+            </div>
             </div>
         );
 			

@@ -96,6 +96,10 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
         if (!trainee)
             res.status(404).send("data is not found");
         else
+            var status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            if(status === 'Incomplete'){
+                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
+            }
             trainee.trainee_fname = req.body.trainee_fname;
             trainee.trainee_lname = req.body.trainee_lname;
             trainee.trainee_email = req.body.trainee_email;
@@ -210,10 +214,6 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
         else
             //bcrypt pass
             //var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx');
-            var status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-            if(status === 'Incomplete'){
-                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
-            }
             var decryptPass = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 			
             bcrypt.genSalt(10, function(err, salt) {
@@ -242,15 +242,21 @@ traineeRoutes.route('/findBank').post(function(req,res) {
                 sortcode = sortcode.slice(0, -1) + i;
                 SortCodeCollection.findOne({SortCode: sortcode}, function(err, bank) {
                     if(bank != null){
-                        console.log(bank.BankName);
-                        console.log(bank.SortCode);
-                        similar_sortcodes.push(bank.SortCode);
-                        console.log(similar_sortcodes);
+                        if(bank.SortCode.length > 5){
+                            similar_sortcodes.push(bank.SortCode);
+                        }
+                        else{
+                            formatted_code= "0" + bank.SortCode;
+                            similar_sortcodes.push(formatted_code);
+                        }
                     }
                     callback(err);
                 })
               }, function(err) {
                 console.log(similar_sortcodes);
+                if(similar_sortcodes.length === 0){
+                    similar_sortcodes.push("No similar sort codes found")
+                }
                 res.json({Match: false, OtherCodes: similar_sortcodes});
               });
         }
@@ -262,5 +268,18 @@ traineeRoutes.route('/findBank').post(function(req,res) {
         res.status(400).send("Error: " + err);
     })
 })
+
+//adds new Bank/Sortcode to database
+traineeRoutes.route('/addBank').post(function(req, res) {
+    let bank = new SortCodeCollection(req.body);
+    bank.save()
+        .then(trainee => {
+            res.status(200).json({'bank': 'Sortcode added successfully'});
+        })
+        .catch(err => {
+            res.status(205).send('Adding new Sortcode failed');
+        });
+});
+
 
 module.exports = traineeRoutes;

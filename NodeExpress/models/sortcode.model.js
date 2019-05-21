@@ -11,8 +11,7 @@ const SortCodeSchema = new mongoose.Schema({
     required: true
   },
   Branch: { 
-    type: String, 
-    required: true
+    type: String
     },
 })
 
