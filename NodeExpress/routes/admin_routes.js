@@ -24,7 +24,7 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
 		   winston.error(err);
         } else {
             res.json(staff);
-			winston.info('Rendered all staff users successfully')
+			winston.info('All staff users were collected successfully')
         }
     });
 });
@@ -47,9 +47,11 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
 adminRoutes.route('/getByEmail').post(function(req,res) {
     User.findOne({email: req.body.staff_email}, function(err, user) {
         res.json(user);
+		winston.info('CollecteD a single user by email');
     })
     .catch(err => {
         res.status(205).send("User doesn't exist");
+		winston.error(err);
     })
 })
 
@@ -69,7 +71,7 @@ adminRoutes.route('/addUser', requireAuth).post(function(req,res){
       }
       else{
       const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
-        console.log(token);
+        winston.info('Created a '+ user.role + ' user ' + user._id);
 		console.log(' created '+ user.role + ' ' + user._id );
         return res.json({result: true, role: user.role, token});
       }
@@ -119,18 +121,21 @@ adminRoutes.route('/delete/:id').get(function(req, res) {
             }
             else{
                 console.log(err);
+				winston.error(err);
                 res.json({'result': false});
             }
     });
-    });   
+  });   
 
 //checks if user password reset token is valid
 adminRoutes.route('/reset-staff/:token').get(function(req, res) {
         User.findOne({password_token: req.params.token, password_expires: {$gt: Date.now()}}).then((staff) => {
           if (staff == null) {
             console.error('password reset link is invalid or has expired');
+			winston.error('user password reset link is invalid or has expired');
             res.status(403).send('password reset link is invalid or has expired');
           } else {
+			  winston.info('user password rest link recevied status 200');
             res.status(200).send({
               staff_id: staff._id,
               message: 'password reset link a-ok',
@@ -145,16 +150,23 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
         var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
         var email = CryptoJS.AES.decrypt(req.body.email, key, {iv:iv});
         console.log(email.toString(CryptoJS.enc.Utf8));
+		winston.info('password reset email has been sent to' + email.toString(CryptoJS.enc.Utf8) );
         User.findOne({email: req.body.email}, function(err, staff) {
-            console.log(staff)
+            console.log(staff);
+			winston.info(staff);
             if (!staff){
                 res.status(404).send("Email is not found");
+				winston.error('Staff email was not found' + err);
             }
             else{
                 const token = crypto.randomBytes(20).toString('hex');
                 staff.password_token = token;
                 staff.password_expires = Date.now() + 3600000;
-                staff.save().then(()=>console.log('token generated'));
+                staff.save().then(()=>
+				console.log('email token generated');
+				winston.info(user_id + ' has had a reset email sent to them');
+				
+				);
                 var transporter = nodeMailer.createTransport({
                     service: 'AOL',
                     auth: {
@@ -172,9 +184,11 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         console.log(mailOptions.text);
+						winston.error(error);
                         return console.log(error);
                     }
                     console.log('Message %s sent: %s', info.messageId, info.response);
+					winston.info('Message %s sent: %s', info.messageId, info.response);
                     res.status(200).json({'email': 'Email Sent'});
                 });
             }
@@ -195,9 +209,11 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
                       req.body.password = hash;
                       staff.password = req.body.password;
                       staff.save().then(staff => {
+						  winston.info(user_id + 'has updated thier password')
                         res.json('Password updated!');
                     })
                     .catch(err => {
+						winston.error(err);
                         res.status(400).send("Update not possible");
                     });
                     });
