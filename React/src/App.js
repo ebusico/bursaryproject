@@ -88,13 +88,13 @@ class App extends Component {
         <div className="App">
           <Nav/>
         </div>
-        <Route path="/admin" component={TabList} />
+        <Route path="/admin" component={ListTrainee} />
         <Route path="/edit/:id" component={EditTrainee} />
         <Route path="/create" component={CreateTrainee} />
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
 		    <Route path="/login" component={Login} />
-        <Route path="/" exact component={TabList} />
+        <Route path="/" exact component={ListTrainee} />
 		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/editDates/:id" component={EditDates} />
