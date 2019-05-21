@@ -33,7 +33,7 @@ export default class CreateUser extends Component {
 
     onChangeUserEmail(e) {
         this.setState({
-            user_email: e.target.value
+            user_email: e.target.value.toLowerCase()
         });
     }
     

@@ -24,7 +24,7 @@ export default class Login extends Component {
 
     handleUsername = event => {
         this.setState({
-            email: event.target.value
+            email: event.target.value.toLowerCase()
         });
     }
 
