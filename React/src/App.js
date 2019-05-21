@@ -94,7 +94,7 @@ class App extends Component {
         <Route path="/changePassword/:token" component={ChangePassword} />
         <Route path="/trainee-details/:id" component={TraineeDetails} />
 		    <Route path="/login" component={Login} />
-        <Route path="/" exact component={ListTrainee} />
+        <Route path="/" exact component={TabList} />
 		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/editDates/:id" component={EditDates} />

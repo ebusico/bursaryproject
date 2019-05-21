@@ -62,6 +62,9 @@ export default class ListTrainee extends Component {
         if(search.length > 0){
             trainees = trainees.filter(function(i){
                 if(i.trainee_fname.toLowerCase().match(search) ||
+                   i.status.toLowerCase().match(search)        ||
+                   i.added_By.toLowerCase().match(search)      ||
+                   i.bursary.toLowerCase().match(search)       ||
                    i.trainee_lname.toLowerCase().match(search) ||
                    i.trainee_email.toLowerCase().match(search) ||
                    (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
@@ -76,7 +79,6 @@ export default class ListTrainee extends Component {
 		}
 		else if(this.state.currentUser.token.role === 'recruiter'){
 			return (
-            <div className="bigBox">
             <div className="QAtable">
                 <div className="QASearchBar">
                     <input
@@ -121,7 +123,6 @@ export default class ListTrainee extends Component {
                     </tbody>
 
                 </table>
-            </div>
             </div>
         );
 			

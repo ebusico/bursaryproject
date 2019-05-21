@@ -1,5 +1,6 @@
 var express = require('express');
 var traineeRoutes = express.Router();
+var async = require("async");
 
 const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
@@ -12,6 +13,7 @@ var CryptoJS = require("crypto-js");
 var requireAuth = passport.authenticate('jwt', {session: false});
 
 let Trainee = require('../models/trainee.model');
+let SortCodeCollection = require('../models/sortcode.model');
 
 require('dotenv').config()
 
@@ -200,5 +202,35 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
               });
     });
 });
+
+traineeRoutes.route('/findBank').post(function(req,res) {
+    sortcode = req.body.sort_code;
+    SortCodeCollection.findOne({SortCode: sortcode}, function(err, bank) {
+        if(bank === null){
+            similar_sortcodes = [];
+            async.each([0,1,2,3,4,5,6,7,8,9], function(i, callback) {
+                sortcode = sortcode.slice(0, -1) + i;
+                SortCodeCollection.findOne({SortCode: sortcode}, function(err, bank) {
+                    if(bank != null){
+                        console.log(bank.BankName);
+                        console.log(bank.SortCode);
+                        similar_sortcodes.push(bank.SortCode);
+                        console.log(similar_sortcodes);
+                    }
+                    callback(err);
+                })
+              }, function(err) {
+                console.log(similar_sortcodes);
+                res.json({Match: false, OtherCodes: similar_sortcodes});
+              });
+        }
+        else{
+            res.json({Match: true, BankName: bank.BankName});
+        }
+    })
+    .catch(err => {
+        res.status(400).send("Error: " + err);
+    })
+})
 
 module.exports = traineeRoutes;

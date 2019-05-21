@@ -4,6 +4,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import moment from 'moment';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -39,7 +40,7 @@ export default class CreateTrainee extends Component {
             trainee_end_date: '',
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
-            bursary: 'false'
+            bursary: 'False'
         }
     }
 
@@ -106,12 +107,12 @@ export default class CreateTrainee extends Component {
     onClickBursary(e) {
         if(document.getElementById("bursaryValue").checked){
             this.setState({
-                bursary: "true"
+                bursary: "True"
             });
         }
         else{
             this.setState({
-                bursary: "false"
+                bursary: "False"
             });
         }
     }
@@ -121,6 +122,9 @@ export default class CreateTrainee extends Component {
 
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alert('Please select the bursary start/end dates');
+        }
+        else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
+            alert('The end date is before the start date, please resolve this before creating the trainee');
         }
         else{
             console.log(`Form submitted:`);
