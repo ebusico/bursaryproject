@@ -144,6 +144,9 @@ export default class ListTrainee extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
+                            <th>Status</th>
+                            <th>Recruited By</th>
+                            <th>Bursary</th>
                             <th>Action</th>
                         </tr>
                     </thead>               
@@ -155,6 +158,9 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
+                                    <td> {t.status}</td>
+                                    <td> {t.added_By}</td>
+                                    <td> {t.bursary}</td>
                                     <td>
                                     <td> 
                                         <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> </td>
@@ -169,6 +175,9 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
+                                    <td> {t.status}</td>
+                                    <td> {t.added_By}</td>
+                                    <td> {t.bursary}</td>
                                     <td> 
 										<button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
                                     </td>
