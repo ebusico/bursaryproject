@@ -105,9 +105,9 @@ export default class ListTrainee extends Component {
         let output = this.state.csv;
         let role = this.state.currentUser.token.role
         if(role === 'finance'){
-            output = [["First Name", "Last Name", "Email", "Bank Name", "Account Number", "Sort Number","Start-Date", "End-Date"]];
+			output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place","Append","Data to Copy to Notepad"]];
             trainees.map( t => {
-                    var obj = [t.trainee_fname, t.trainee_lname, t.trainee_email, t.trainee_bank_name, t.trainee_account_no, t.trainee_sort_code, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY')];
+                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,"1000","2","00",t.trainee_sort_code+','+t.trainee_fname+' '+t.trainee_lname+','+t.trainee_account_no+','+"1000"+".00"+','+"BURSARY"+','+"99"];
                     output.push(obj);
                 }
             )

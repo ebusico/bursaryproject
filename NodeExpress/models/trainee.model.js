@@ -47,7 +47,22 @@ let Trainee = new Schema({
     trainee_end_date:{
         type: String,
         required: true
+    },
+    added_By:{
+        type: String,
+        required: true
+    },
+    status:{
+        type: String,
+        // enum:['Incomplete', 'Active', 'Inactive'],
+        // default: 'Incomplete',
+        required: true
+    },
+    bursary:{
+        type: String,
+        required: true
     }
+
 });
 module.exports = mongoose.model('Trainee', Trainee);
 
