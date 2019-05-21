@@ -78,7 +78,7 @@ export default class CreateTrainee extends Component {
 
     onChangeTraineeEmail(e) {
         this.setState({
-            trainee_email: e.target.value
+            trainee_email: e.target.value.toLowerCase()
         });
     }
     
