@@ -11,11 +11,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var jwt = require('jsonwebtoken');
 var AuthenticationController = require('../config/authentication');  
 var passportService = require('../config/passport');
-var winston = require('../config/winston');
 
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireLogin = passport.authenticate('local', {session:false});
-
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -25,7 +23,6 @@ passport.serializeUser(function(user, done) {
     User.getUserById(id, function(err, user) {
 		if (err){
 			console.log(err);
-			winston.error(err);
 		}else{
       done(err, user);
 		}

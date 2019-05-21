@@ -49,8 +49,7 @@ adminRoutes.route('/getByEmail').post(function(req,res) {
 })
 
 //adds new user to database
-adminRoutes.route('/addUser').post(function(req,res){
-      
+adminRoutes.route('/addUser', requireAuth).post(function(req,res){
     var newUser = new User({
       email: req.body.email,
       password: req.body.password,
@@ -60,12 +59,13 @@ adminRoutes.route('/addUser').post(function(req,res){
     User.createUser(newUser, function(err, user){
       if(err){
           console.log(err);
-          console.log('duplicate email');
+          console.log( current_user + ' duplicate email');
           res.status(205).send();
       }
       else{
       const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
         console.log(token);
+		console.log(' created '+ user.role + ' ' + user._id );
         return res.json({result: true, role: user.role, token});
       }
     });
