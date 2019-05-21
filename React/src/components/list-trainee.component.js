@@ -37,6 +37,8 @@ export default class ListTrainee extends Component {
                     currentTrainee.status = bytes.toString(CryptoJS.enc.Utf8);
                     bytes = CryptoJS.AES.decrypt(currentTrainee.added_By, codes.trainee);
                     currentTrainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, codes.trainee);
+                    currentTrainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
                 });
                 this.setState({trainees: encrypted});
             })
@@ -96,6 +98,7 @@ export default class ListTrainee extends Component {
                             <th>Email</th>
                             <th>Status</th>
                             <th>Recruited By</th>
+                            <th>Bursary</th>
                             <th>Action</th>
                         </tr>
                     </thead>               
@@ -108,6 +111,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_email}</td>
                                     <td> {t.status}</td>
                                     <td> {t.added_By}</td>
+                                    <td> {t.bursary}</td>
                                     <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> 
                                     <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
                                     </td>

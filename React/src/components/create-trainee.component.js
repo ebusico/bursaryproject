@@ -39,10 +39,10 @@ export default class CreateTrainee extends Component {
             trainee_end_date: '',
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
-            bursary: ''
+            bursary: 'false'
         }
     }
-    
+
     componentDidMount(){
         axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
         .then(response => {
@@ -104,7 +104,7 @@ export default class CreateTrainee extends Component {
     }
 
     onClickBursary(e) {
-        if(document.getElementById("bursaryValue").checked === true){
+        if(document.getElementById("bursaryValue").checked){
             this.setState({
                 bursary: "true"
             });
