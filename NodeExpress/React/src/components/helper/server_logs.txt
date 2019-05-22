@@ -1,6 +1,0 @@
-22-05-2019 14:22:46 info [server.js]: Server is running on Port: 4000
-22-05-2019 14:22:47 info [server.js]: MongoDB database connection established successfully
-22-05-2019 14:24:38 info [server.js]: Server is running on Port: 4000
-22-05-2019 14:24:39 info [server.js]: MongoDB database connection established successfully
-22-05-2019 14:24:56 info [server.js]: Server is running on Port: 4000
-22-05-2019 14:24:57 info [server.js]: MongoDB database connection established successfully

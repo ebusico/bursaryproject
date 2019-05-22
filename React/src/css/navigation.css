@@ -6,6 +6,9 @@
 .nav-item{
 	color:black;
 }
+.sidebar_btn{
+	cursor: grab;
+}
 #navigation-bar{
 	position:relative;
 	width:100%;
