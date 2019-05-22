@@ -1,10 +1,18 @@
 .system_wrapper{
 	margin: 0 auto;
-    background-color: white;
+    background-color: #f8f9fa;
     border-radius: 4px;
     width:80%;
-	height:500px;
+	height:800px;
 	margin-top: 5%;
+}
+.system_body iframe{
+	width:95%;
+	height:700px;
+	padding:1%;
+	margin-left:3%;
+	background-color:aliceBlue;
+	margin-top:5%;
 }
 
 .system_body{

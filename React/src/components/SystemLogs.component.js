@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fileReader from 'react-file-reader'; 
 import { render } from 'react-dom';
-
+import logs from './helper/server_logs.txt';
 import { authService } from './modules/authService';
 import '../css/system_logs.css';
 
@@ -10,7 +10,7 @@ export default class SystemLogs extends Component {
 				super(props);
 					
 				this.state = {
-					logs:'',
+					logs:logs,
 					currentUser: authService.currentUserValue,
 					};
 					console.log(this.state.logs);
@@ -19,13 +19,10 @@ export default class SystemLogs extends Component {
 	render() {
 		return(
 			<div className="system_wrapper">
-			<h5> hello server</h5>
-				<div id="systemBodyLogs" className="system_body">
-					<iframe src={this.state.logs} frameBorder="0" height="400" width="50%" />
+				<div className="system_body">
+					<iframe src={this.state.logs} frameBorder="0"/>
 				</div>
 			</div>
-			
 			)
 		}
-			
 }

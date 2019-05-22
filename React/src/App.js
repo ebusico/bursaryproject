@@ -31,6 +31,7 @@ class App extends Component {
         <div className="App">
           <Nav/>
         </div>
+		<Route path="/system_logs" component={Login} />
         <Route path="/admin" component={Login} />
         <Route path="/edit/:id" component={Login} />
         <Route path="/create" component={Login} />
@@ -90,6 +91,7 @@ class App extends Component {
         <div className="App">
           <Nav/>
         </div>
+		<Route path="/system_logs" component={ListTrainee} />
         <Route path="/admin" component={ListTrainee} />
         <Route path="/edit/:id" component={EditTrainee} />
         <Route path="/create" component={CreateTrainee} />
@@ -128,6 +130,7 @@ class App extends Component {
          <div className="App">
            <Nav/>
          </div>
+		 <Route path="/system_logs" component={TabList} />
          <Route path="/admin" component={TabList} />
          <Route path="/edit/:id" component={EditTrainee} />
          <Route path="/create" component={CreateTrainee} />
