@@ -75,8 +75,9 @@ render() {
         return (
             <div className="details">
                 <div className="detailsDiv">
+                <div className="heading">
+                <h2>Trainee Details</h2>
                 <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
-                <h2><u>Trainee Details</u></h2>
                 <br></br>
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
@@ -96,6 +97,7 @@ render() {
                     </tbody>
                 </table>
                 </div>
+                </div>
             </div>
 
         )
@@ -103,8 +105,10 @@ render() {
 		return (
 		<div className="details">
             <div className="detailsDiv">
+                <div className="heading">
+                <h2>Your Details</h2>
                 <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
-				<h2><u>Trainee Details</u></h2>
+                <br></br>
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
@@ -124,6 +128,7 @@ render() {
                             </tr>
                     </tbody>
                 </table>
+                </div>
                 </div>
             </div>
 		);

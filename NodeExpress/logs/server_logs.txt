@@ -481,3 +481,215 @@
 22-05-2019 15:56:52 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
 22-05-2019 15:56:52 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
 22-05-2019 15:56:52 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 15:59:07 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 15:59:07 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 15:59:07 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:00:17 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:00:17 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:00:17 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:02:27 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:02:27 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:02:27 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:05:06 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:05:06 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:05:06 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:05:48 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:05:48 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:05:48 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:09:20 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:09:20 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:09:20 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:11:09 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:11:09 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:11:09 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:12:41 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:12:41 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:12:41 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:13:12 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:13:12 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:13:12 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:17:25 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:17:25 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:17:25 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:19:05 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:19:05 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:19:05 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:19:57 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:19:57 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:19:57 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:23:26 info [server.js]: user: 5cdd21191bbdf41590fcd029 logged in
+22-05-2019 16:23:27 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:23:27 info [server.js]: database collected all trainees successfully
+22-05-2019 16:23:27 info [server.js]: database collected all trainees successfully
+22-05-2019 16:23:27 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:23:29 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:23:29 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:23:29 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:26:25 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:26:25 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:26:25 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:26:37 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:26:37 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:26:37 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:26:52 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:26:52 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:26:52 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:27:02 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:27:02 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:27:02 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:27:19 info [server.js]: trainee: 5ce5304e7c547a2b8cd56f46 logged in
+22-05-2019 16:27:19 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:27:19 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:27:59 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:27:59 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:07 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:07 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:11 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:11 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:34 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:28:34 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:29:09 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:29:09 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:34:16 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:34:16 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:35:56 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:35:56 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:36:21 info [server.js]: user: 5cdd21191bbdf41590fcd029 logged in
+22-05-2019 16:36:21 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:36:21 info [server.js]: database collected all trainees successfully
+22-05-2019 16:36:21 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:36:22 info [server.js]: database collected all trainees successfully
+22-05-2019 16:36:23 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:36:23 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:36:23 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:36:59 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:36:59 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:36:59 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:37:06 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:37:06 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:37:06 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:37:32 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:37:32 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:37:33 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:37:58 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:37:58 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:37:58 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:38:11 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:38:11 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:38:11 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:38:35 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 16:38:36 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:38:36 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:38:40 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:38:40 info [server.js]: database collected all trainees successfully
+22-05-2019 16:38:40 info [server.js]: database collected all trainees successfully
+22-05-2019 16:38:40 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:43:05 error [server.js]: login failed incorrect email
+22-05-2019 16:43:11 error [server.js]: login failed incorrect email
+22-05-2019 16:43:27 info [server.js]: user: 5cdd21331bbdf41590fcd02a logged in
+22-05-2019 16:43:28 info [server.js]: get data for trainee: 5cdd21331bbdf41590fcd02a
+22-05-2019 16:43:28 info [server.js]: database collected all trainees successfully
+22-05-2019 16:43:28 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:43:28 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:08 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:28 info [server.js]:  has created trainee 
+22-05-2019 16:44:28 info [server.js]: An email is being sent to 
+22-05-2019 16:44:28 info [server.js]: an email will be sent to the trainee:
+22-05-2019 16:44:29 info [server.js]: { trainee_approved: false,
+  _id: 5ce56e5b0cdbc9f378342a13,
+  trainee_fname: 'U2FsdGVkX1+lgByVuqRHyR0VvO7bOrH++cHrCj0rcwk=',
+  trainee_lname: 'U2FsdGVkX1/CWTm6g1er90sLNoUfiWX6JLPyRKPsdEI=',
+  trainee_email: '/Pydw6IVwi3FF0zm0hzv47p7KQ2AXBtvinf53Dog450=',
+  trainee_password: 'U2FsdGVkX1/jeN3OEaQe66dY1hds06MbBBus7S7stSI=',
+  trainee_start_date:
+   'U2FsdGVkX19I4O90AEgWsnInREj/chnBfEXi0p45XGitWF0hQ2rSz0Wd+Hbn/HdLDiBIY3Db0mm92zvefG/EQdTUVG9yTKk1mT8+V19bnAk=',
+  trainee_end_date:
+   'U2FsdGVkX1/6COVlTgfTaEO5E738cNXWE8JoHBX4D/3G8PVPdhD0BoL80z/HkfN8kpkEpvj/CbluDmiMVrGIt1pdH8v0qCaaZnkutPqLf10=',
+  added_By:
+   'U2FsdGVkX18aerVc/ikdVKFok7V3/VcL21vDqL6of/bzTuly8HrW1Z+toFSA6GRX',
+  status: 'U2FsdGVkX1/0c7YgfTM87t/oDoNYFKV8503Oof6xohc=',
+  bursary: 'U2FsdGVkX18Seos2GapY7ZdGIVXemYG50JExj9VwonM=',
+  __v: 0 }
+22-05-2019 16:44:29 info [server.js]: Email has been sent to { trainee_approved: false,
+  _id: 5ce56e5b0cdbc9f378342a13,
+  trainee_fname: 'U2FsdGVkX1+lgByVuqRHyR0VvO7bOrH++cHrCj0rcwk=',
+  trainee_lname: 'U2FsdGVkX1/CWTm6g1er90sLNoUfiWX6JLPyRKPsdEI=',
+  trainee_email: '/Pydw6IVwi3FF0zm0hzv47p7KQ2AXBtvinf53Dog450=',
+  trainee_password: 'U2FsdGVkX1/jeN3OEaQe66dY1hds06MbBBus7S7stSI=',
+  trainee_start_date:
+   'U2FsdGVkX19I4O90AEgWsnInREj/chnBfEXi0p45XGitWF0hQ2rSz0Wd+Hbn/HdLDiBIY3Db0mm92zvefG/EQdTUVG9yTKk1mT8+V19bnAk=',
+  trainee_end_date:
+   'U2FsdGVkX1/6COVlTgfTaEO5E738cNXWE8JoHBX4D/3G8PVPdhD0BoL80z/HkfN8kpkEpvj/CbluDmiMVrGIt1pdH8v0qCaaZnkutPqLf10=',
+  added_By:
+   'U2FsdGVkX18aerVc/ikdVKFok7V3/VcL21vDqL6of/bzTuly8HrW1Z+toFSA6GRX',
+  status: 'U2FsdGVkX1/0c7YgfTM87t/oDoNYFKV8503Oof6xohc=',
+  bursary: 'U2FsdGVkX18Seos2GapY7ZdGIVXemYG50JExj9VwonM=',
+  __v: 0,
+  trainee_password_token: '21db24df29b4a0ca8f4432b56df8121f1a3a9663',
+  trainee_password_expires: '1558543469174' }
+22-05-2019 16:44:31 info [server.js]: Message %s sent: %s
+22-05-2019 16:44:31 info [server.js]: database collected all trainees successfully
+22-05-2019 16:44:31 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:32 info [server.js]: get data for trainee: 5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:32 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:32 info [server.js]: database collected all trainees successfully
+22-05-2019 16:44:32 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:35 info [server.js]: get data for trainee: 5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:35 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:44:35 info [server.js]: Rendered staff5cdd21331bbdf41590fcd02a
+22-05-2019 16:44:43 info [server.js]: user: 5cdd21191bbdf41590fcd029 logged in
+22-05-2019 16:44:43 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:44:43 info [server.js]: database collected all trainees successfully
+22-05-2019 16:44:43 info [server.js]: database collected all trainees successfully
+22-05-2019 16:44:43 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:44:46 info [server.js]: get data for trainee: 5cdd21191bbdf41590fcd029
+22-05-2019 16:44:46 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:44:46 info [server.js]: Rendered staff5cdd21191bbdf41590fcd029
+22-05-2019 16:45:20 info [server.js]: trainee: 5ce56e5b0cdbc9f378342a13 logged in
+22-05-2019 16:45:20 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:45:21 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:46:34 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:46:34 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:50:20 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:50:20 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:52:03 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:52:13 info [server.js]: 5ce56e5b0cdbc9f378342a13has made changes to there details
+22-05-2019 16:52:13 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:52:39 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:52:39 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:55:53 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:55:53 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:58:21 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:58:21 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:58:32 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:58:32 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:59:48 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 16:59:48 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:00:43 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:00:43 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:00:50 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:00:50 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:01:09 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:01:09 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:01:17 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:01:17 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:12 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:12 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:19 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:19 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:21 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:04:21 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:05:31 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:05:32 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:06:17 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:06:17 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:06:36 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:06:36 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:07:56 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:07:56 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:09:20 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:09:20 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:09:37 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:09:37 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:10:12 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
+22-05-2019 17:10:12 info [server.js]: get data for trainee: 5ce56e5b0cdbc9f378342a13
