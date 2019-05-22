@@ -17,7 +17,8 @@ export default class ListTrainee extends Component {
 			searchString: "",
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
-            filter: ''
+            filter: '',
+
 			};
         
        //Added onChangeSearch - Ernie
@@ -88,17 +89,34 @@ export default class ListTrainee extends Component {
         let email = this.state.recruiterEmail;
         
         if(search.length > 0){
-            trainees = trainees.filter(function(i){
-                if(i.trainee_fname.toLowerCase().match(search) ||
-                   i.status.toLowerCase().match(search)        ||
-                   i.added_By.toLowerCase().match(search)      ||
-                   i.bursary.toLowerCase().match(search)       ||
-                   i.trainee_lname.toLowerCase().match(search) ||
-                   i.trainee_email.toLowerCase().match(search) ||
-                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
-                    return i;
-                }
-            })
+            if(filter === 'MyTrainees'){
+                trainees = trainees.filter(function(i){
+                    if(i.added_By === email){
+                        if(i.trainee_fname.toLowerCase().match(search) ||
+                        i.status.toLowerCase().match(search)        ||
+                        i.added_By.toLowerCase().match(search)      ||
+                        i.bursary.toLowerCase().match(search)       ||
+                        i.trainee_lname.toLowerCase().match(search) ||
+                        i.trainee_email.toLowerCase().match(search) ||
+                        (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
+                         return i;
+                     }
+                    }
+                })
+            }
+            else{
+                trainees = trainees.filter(function(i){
+                    if(i.trainee_fname.toLowerCase().match(search) ||
+                       i.status.toLowerCase().match(search)        ||
+                       i.added_By.toLowerCase().match(search)      ||
+                       i.bursary.toLowerCase().match(search)       ||
+                       i.trainee_lname.toLowerCase().match(search) ||
+                       i.trainee_email.toLowerCase().match(search) ||
+                       (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
+                        return i;
+                    }
+                })
+            }
         }else if(filter != ''){
             if(filter === 'MyTrainees'){
                     trainees = trainees.filter(function(i){
@@ -127,7 +145,7 @@ export default class ListTrainee extends Component {
                         placeholder="Find trainee..."
                     />
                     <select className="filter" onChange={this.onChangeFilter}>
-                        <option>Select a filter</option>
+                        <option value=''>Select a filter</option>
                         <option value='MyTrainees'>My Trainees</option>
                     </select>
                     <div id="addUser">

@@ -4,11 +4,9 @@ import classnames from 'classnames';
 import { authService } from './modules/authService';
 
 import AccessDenied from './modules/AccessDenied';
-import ListMyTrainees from './myTrainees.component.js';
 import ListUser from './list-user.component.js';
 import ExportDates from './exportDates..component.js';
 import ListTrainee from './standalone-list-trainee.component.js';
-import ListTraineeRec from './list-trainee.component.js';
 import '../css/tabs.css';
 
 export default class TabList extends React.Component {
@@ -75,38 +73,7 @@ export default class TabList extends React.Component {
       </div>
     );
     }
-    else if(this.state.currentUser.token.role === "recruiter"){
-      return (
-        <div className="QATabs">
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '1' })}
-                onClick={() => { this.toggle('1'); }}
-              >
-                Trainees
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === '2' })}
-                onClick={() => { this.toggle('2'); }}
-              >
-                My Trainees
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="1">
-            <ListTraineeRec />
-            </TabPane>
-            <TabPane tabId="2">
-            <ListMyTrainees />
-            </TabPane>
-          </TabContent>
-        </div>
-      );
-    }else{
+    else{
 			return (
 			<AccessDenied/>
 		);
