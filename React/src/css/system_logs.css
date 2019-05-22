@@ -2,19 +2,23 @@
 	margin: 0 auto;
     background-color: #f8f9fa;
     border-radius: 4px;
-    width:80%;
-	height:800px;
+    width:50%;
+	height:750px;
 	margin-top: 5%;
 }
 .system_body iframe{
-	width:95%;
-	height:700px;
+	width:90%;
+	height:650px;
 	padding:1%;
-	margin-left:3%;
+	margin-left:5%;
 	background-color:aliceBlue;
-	margin-top:5%;
+	margin-top:2%;
 }
 
-.system_body{
-	
+.system_wrapper button,textareabutton{
+	margin-top:2%;
+	float:right;
+	margin-right:2%;
+	background-color:#5a6268;
+	color:white;
 }
