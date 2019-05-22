@@ -163,10 +163,8 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 staff.password_token = token;
                 staff.password_expires = Date.now() + 3600000;
                 staff.save().then(()=>
-				console.log('email token generated');
-				winston.info(user_id + ' has had a reset email sent to them');
-				
-				);
+				console.log('email token generated'),
+				winston.info(user_id + ' has had a reset email sent to them'));
                 var transporter = nodeMailer.createTransport({
                     service: 'AOL',
                     auth: {

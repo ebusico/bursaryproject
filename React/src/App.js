@@ -7,6 +7,7 @@ import CreateTrainee from "./components/create-trainee.component";
 import EditTrainee from "./components/edit-trainee.component";
 import ListTrainee from "./components/list-trainee.component";
 import TabFinance from "./components/tab-finance.component";
+import SystemLogs from "./components/SystemLogs.component";
 
 import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";
@@ -50,6 +51,7 @@ class App extends Component {
          <div className="App">
            <Nav/>
          </div>
+		 <Route path="/system_logs" component={SystemLogs} />
          <Route path="/admin" component={TabList} />
          <Route path="/edit/:id" component={EditTrainee} />
          <Route path="/create" component={CreateTrainee} />

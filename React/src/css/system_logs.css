@@ -1,0 +1,12 @@
+.system_wrapper{
+	margin: 0 auto;
+    background-color: white;
+    border-radius: 4px;
+    width:80%;
+	height:500px;
+	margin-top: 5%;
+}
+
+.system_body{
+	width:95%;
+}
