@@ -1,5 +1,5 @@
 .trainee_table{
-    border-top: 0.5px solid black;
+    border-top: 0.5px solid grey;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
@@ -23,7 +23,6 @@ tr:nth-child(even) {
     border-radius: 4px;
 }
 .details{
-    padding-top: 5%;
     padding-bottom: 5%;
 }
 

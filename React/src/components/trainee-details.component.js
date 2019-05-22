@@ -76,7 +76,7 @@ render() {
             <div className="details">
                 <div className="detailsDiv">
                 <div className="heading">
-                <h2>Trainee Details</h2>
+                <h1>Trainee Details</h1>
                 <br></br>
                 <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
@@ -106,7 +106,7 @@ render() {
 		<div className="details">
             <div className="detailsDiv">
                 <div className="heading">
-                <h2>Your Details</h2>
+                <h1>Your Details</h1>
                 <br></br>
                 <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
