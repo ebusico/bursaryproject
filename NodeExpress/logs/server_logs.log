@@ -103,3 +103,258 @@
 22-05-2019 10:39:53 info [server.js]: trainee: 5ce4081278bacb1bbc050525 logged in
 22-05-2019 10:39:53 info [server.js]: get data for trainee: 5ce4081278bacb1bbc050525
 22-05-2019 10:39:54 info [server.js]: get data for trainee: 5ce4081278bacb1bbc050525
+22-05-2019 10:41:52 info [server.js]: Server is running on Port: 4000
+22-05-2019 10:41:53 info [server.js]: MongoDB database connection established successfully
+22-05-2019 10:43:07 info [server.js]: user: 5ce3dac171efd081c10e03d0 logged in
+22-05-2019 10:43:15 info [server.js]: user: 5ce2a952176d88a750f84341 logged in
+22-05-2019 10:43:15 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:43:16 info [server.js]: database collected all trainees successfully
+22-05-2019 10:43:16 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:43:16 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:45:04 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:45:04 info [server.js]: database collected all trainees successfully
+22-05-2019 10:45:04 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:45:05 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:34 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:49:34 info [server.js]: database collected all trainees successfully
+22-05-2019 10:49:34 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:34 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:48 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:49:48 info [server.js]: database collected all trainees successfully
+22-05-2019 10:49:48 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:49 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:56 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:49:56 info [server.js]: database collected all trainees successfully
+22-05-2019 10:49:56 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:49:56 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:52:57 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:52:57 info [server.js]: database collected all trainees successfully
+22-05-2019 10:52:57 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:52:57 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:53:02 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:53:02 info [server.js]: database collected all trainees successfully
+22-05-2019 10:53:02 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:53:02 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:53:19 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:53:19 info [server.js]: database collected all trainees successfully
+22-05-2019 10:53:19 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:53:19 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:54:08 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:54:08 info [server.js]: database collected all trainees successfully
+22-05-2019 10:54:08 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:54:08 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:54:21 info [server.js]: user: 5ce2bc130303c1d45c8ce5e2 logged in
+22-05-2019 10:54:21 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 10:54:21 info [server.js]: database collected all trainees successfully
+22-05-2019 10:54:21 info [server.js]: All staff users were collected successfully
+22-05-2019 10:54:21 info [server.js]: database collected all trainees successfully
+22-05-2019 10:54:21 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 10:54:55 error [server.js]: login failed incorrect email
+22-05-2019 10:54:58 info [server.js]: user: 5ce3dac171efd081c10e03d0 logged in
+22-05-2019 10:54:58 info [server.js]: database collected all trainees successfully
+22-05-2019 10:54:58 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 10:54:58 info [server.js]: database collected all trainees successfully
+22-05-2019 10:54:58 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 10:57:47 error [server.js]: user: 5ce2a952176d88a750f84341 entered wrong password
+22-05-2019 10:57:50 info [server.js]: user: 5ce2a952176d88a750f84341 logged in
+22-05-2019 10:57:51 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:57:51 info [server.js]: database collected all trainees successfully
+22-05-2019 10:57:51 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:57:51 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:59:39 info [server.js]: user: 5ce2bc130303c1d45c8ce5e2 logged in
+22-05-2019 10:59:40 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 10:59:40 info [server.js]: database collected all trainees successfully
+22-05-2019 10:59:40 info [server.js]: All staff users were collected successfully
+22-05-2019 10:59:40 info [server.js]: database collected all trainees successfully
+22-05-2019 10:59:40 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:00:09 info [server.js]: user: 5ce3dac171efd081c10e03d0 logged in
+22-05-2019 11:00:10 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:00:10 info [server.js]: database collected all trainees successfully
+22-05-2019 11:00:10 info [server.js]: database collected all trainees successfully
+22-05-2019 11:00:10 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:02:14 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:02:14 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:14 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:14 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:02:46 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:02:46 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:46 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:46 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:02:53 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:02:53 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:53 info [server.js]: database collected all trainees successfully
+22-05-2019 11:02:53 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:03:45 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:03:45 info [server.js]: database collected all trainees successfully
+22-05-2019 11:03:45 info [server.js]: database collected all trainees successfully
+22-05-2019 11:03:45 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:03:47 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:03:47 info [server.js]: database collected all trainees successfully
+22-05-2019 11:03:47 info [server.js]: database collected all trainees successfully
+22-05-2019 11:03:47 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:04:22 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:04:22 info [server.js]: database collected all trainees successfully
+22-05-2019 11:04:22 info [server.js]: database collected all trainees successfully
+22-05-2019 11:04:22 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:04:31 info [server.js]: user: 5ce2bc130303c1d45c8ce5e2 logged in
+22-05-2019 11:04:31 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:04:31 info [server.js]: database collected all trainees successfully
+22-05-2019 11:04:31 info [server.js]: All staff users were collected successfully
+22-05-2019 11:04:31 info [server.js]: database collected all trainees successfully
+22-05-2019 11:04:32 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:19:54 error [server.js]: user: 5ce2bc130303c1d45c8ce5e2 entered wrong password
+22-05-2019 11:19:57 info [server.js]: user: 5ce2bc130303c1d45c8ce5e2 logged in
+22-05-2019 11:19:58 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:19:58 info [server.js]: database collected all trainees successfully
+22-05-2019 11:19:58 info [server.js]: All staff users were collected successfully
+22-05-2019 11:19:58 info [server.js]: database collected all trainees successfully
+22-05-2019 11:19:58 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:21:09 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:21:09 info [server.js]: database collected all trainees successfully
+22-05-2019 11:21:09 info [server.js]: All staff users were collected successfully
+22-05-2019 11:21:09 info [server.js]: database collected all trainees successfully
+22-05-2019 11:21:09 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:23:44 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:23:44 info [server.js]: database collected all trainees successfully
+22-05-2019 11:23:44 info [server.js]: All staff users were collected successfully
+22-05-2019 11:23:44 info [server.js]: database collected all trainees successfully
+22-05-2019 11:23:44 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:01 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:01 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:01 info [server.js]: All staff users were collected successfully
+22-05-2019 11:24:01 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:02 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:06 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:06 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:06 info [server.js]: All staff users were collected successfully
+22-05-2019 11:24:06 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:06 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:14 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:14 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:14 info [server.js]: All staff users were collected successfully
+22-05-2019 11:24:14 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:14 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:40 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:24:40 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:40 info [server.js]: All staff users were collected successfully
+22-05-2019 11:24:40 info [server.js]: database collected all trainees successfully
+22-05-2019 11:24:40 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:00 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:00 info [server.js]: All staff users were collected successfully
+22-05-2019 11:25:00 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:00 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:00 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:04 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:04 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:04 info [server.js]: All staff users were collected successfully
+22-05-2019 11:25:04 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:04 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:19 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:19 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:19 info [server.js]: All staff users were collected successfully
+22-05-2019 11:25:19 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:19 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:30 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:30 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:30 info [server.js]: All staff users were collected successfully
+22-05-2019 11:25:30 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:30 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:51 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:25:51 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:51 info [server.js]: All staff users were collected successfully
+22-05-2019 11:25:51 info [server.js]: database collected all trainees successfully
+22-05-2019 11:25:51 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:26:08 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:26:08 info [server.js]: database collected all trainees successfully
+22-05-2019 11:26:08 info [server.js]: All staff users were collected successfully
+22-05-2019 11:26:08 info [server.js]: database collected all trainees successfully
+22-05-2019 11:26:08 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:27:20 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:27:20 info [server.js]: database collected all trainees successfully
+22-05-2019 11:27:20 info [server.js]: All staff users were collected successfully
+22-05-2019 11:27:20 info [server.js]: database collected all trainees successfully
+22-05-2019 11:27:20 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:28:00 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:28:00 info [server.js]: database collected all trainees successfully
+22-05-2019 11:28:00 info [server.js]: All staff users were collected successfully
+22-05-2019 11:28:00 info [server.js]: database collected all trainees successfully
+22-05-2019 11:28:00 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:40:48 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:40:48 info [server.js]: database collected all trainees successfully
+22-05-2019 11:40:48 info [server.js]: All staff users were collected successfully
+22-05-2019 11:40:48 info [server.js]: database collected all trainees successfully
+22-05-2019 11:40:48 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:43:13 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:43:13 info [server.js]: database collected all trainees successfully
+22-05-2019 11:43:13 info [server.js]: All staff users were collected successfully
+22-05-2019 11:43:13 info [server.js]: database collected all trainees successfully
+22-05-2019 11:43:13 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:44:26 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:44:26 info [server.js]: database collected all trainees successfully
+22-05-2019 11:44:26 info [server.js]: All staff users were collected successfully
+22-05-2019 11:44:26 info [server.js]: database collected all trainees successfully
+22-05-2019 11:44:27 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:45:45 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:45:45 info [server.js]: database collected all trainees successfully
+22-05-2019 11:45:45 info [server.js]: All staff users were collected successfully
+22-05-2019 11:45:45 info [server.js]: database collected all trainees successfully
+22-05-2019 11:45:45 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:45:55 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:45:55 info [server.js]: database collected all trainees successfully
+22-05-2019 11:45:55 info [server.js]: All staff users were collected successfully
+22-05-2019 11:45:55 info [server.js]: database collected all trainees successfully
+22-05-2019 11:45:55 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:46:37 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:46:37 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:37 info [server.js]: All staff users were collected successfully
+22-05-2019 11:46:37 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:37 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:46:51 info [server.js]: user: 5ce3dac171efd081c10e03d0 logged in
+22-05-2019 11:46:51 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:46:51 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:51 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:51 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:46:59 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:46:59 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:59 info [server.js]: database collected all trainees successfully
+22-05-2019 11:46:59 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:53:13 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:13 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:53:13 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:13 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:53:21 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:53:21 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:21 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:21 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:53:31 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:53:31 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:31 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:31 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:53:33 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:53:33 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:33 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:33 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:53:42 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:53:42 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:42 info [server.js]: database collected all trainees successfully
+22-05-2019 11:53:42 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:54:17 info [server.js]: get data for trainee: 5ce3dac171efd081c10e03d0
+22-05-2019 11:54:17 info [server.js]: database collected all trainees successfully
+22-05-2019 11:54:17 info [server.js]: database collected all trainees successfully
+22-05-2019 11:54:17 info [server.js]: Rendered staff5ce3dac171efd081c10e03d0
+22-05-2019 11:54:36 info [server.js]: user: 5ce2bc130303c1d45c8ce5e2 logged in
+22-05-2019 11:54:37 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:54:37 info [server.js]: database collected all trainees successfully
+22-05-2019 11:54:37 info [server.js]: All staff users were collected successfully
+22-05-2019 11:54:37 info [server.js]: database collected all trainees successfully
+22-05-2019 11:54:37 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:55:18 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:55:18 info [server.js]: database collected all trainees successfully
+22-05-2019 11:55:18 info [server.js]: All staff users were collected successfully
+22-05-2019 11:55:18 info [server.js]: database collected all trainees successfully
+22-05-2019 11:55:18 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:55:23 info [server.js]: database collected all trainees successfully
+22-05-2019 11:55:23 info [server.js]: get data for trainee: 5ce2bc130303c1d45c8ce5e2
+22-05-2019 11:55:23 info [server.js]: All staff users were collected successfully
+22-05-2019 11:55:23 info [server.js]: database collected all trainees successfully
+22-05-2019 11:55:23 info [server.js]: Rendered staff5ce2bc130303c1d45c8ce5e2
