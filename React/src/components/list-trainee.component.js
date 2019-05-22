@@ -29,6 +29,7 @@ export default class ListTrainee extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
             .then(response => {
+                console.log(response.data)
                 var encrypted = response.data;
                 encrypted.map(function(currentTrainee, i){
                     var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.staff, {iv: codes.iv});

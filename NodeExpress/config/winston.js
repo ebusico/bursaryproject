@@ -7,8 +7,8 @@ const path = require('path');
 const logger = createLogger({
 	level: 'info',
 	handleExceptions: true,
-	maxsize:5242880, //5MB
-	maxFiles: 5,
+	//maxsize:5242880, //5MB
+	//maxFiles: 5,
 	format: format.combine(
 		format.json(),
 		format.label({ label: path.basename(process.mainModule.filename) }),
@@ -20,8 +20,9 @@ const logger = createLogger({
 	),
 	transports: [
 	new transports.File({ filename: 'logs/server_logs.txt', level: 'info' }),
-	//new transports.File({ filename: 'logs/error.log', level: 'error' })
+	new transports.File({ filename: '../../bursaryproject/React/src/components/helper/server_logs.txt', level: 'info' })
 	],
+	
 	exitonError: false, // Will not exit on handled exceptions
 });
 
