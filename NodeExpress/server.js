@@ -19,8 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-mongoose.connect('mongodb://34.245.236.104:27017/trainees', { useNewUrlParser: true });
+//34.245.236.104
+mongoose.connect('mongodb://localhost:27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
 
 connection.once('open', function() {

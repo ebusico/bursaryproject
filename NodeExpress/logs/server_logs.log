@@ -94,3 +94,12 @@
 22-05-2019 10:32:28 info [server.js]: Rendered staff5cdd20bfa5e5d77783ff94cd
 22-05-2019 10:32:33 info [server.js]: get data for trainee: 5cdd20bfa5e5d77783ff94cd
 22-05-2019 10:32:33 info [server.js]: Rendered staff5cdd20bfa5e5d77783ff94cd
+22-05-2019 10:36:22 info [server.js]: Server is running on Port: 4000
+22-05-2019 10:36:22 info [server.js]: MongoDB database connection established successfully
+22-05-2019 10:37:59 info [server.js]: get data for trainee: 5ce2a952176d88a750f84341
+22-05-2019 10:37:59 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:37:59 info [server.js]: database collected all trainees successfully
+22-05-2019 10:38:00 info [server.js]: Rendered staff5ce2a952176d88a750f84341
+22-05-2019 10:39:53 info [server.js]: trainee: 5ce4081278bacb1bbc050525 logged in
+22-05-2019 10:39:53 info [server.js]: get data for trainee: 5ce4081278bacb1bbc050525
+22-05-2019 10:39:54 info [server.js]: get data for trainee: 5ce4081278bacb1bbc050525
