@@ -77,8 +77,8 @@ render() {
                 <div className="detailsDiv">
                 <div className="heading">
                 <h2>Trainee Details</h2>
-                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                 <br></br>
+                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
@@ -107,8 +107,8 @@ render() {
             <div className="detailsDiv">
                 <div className="heading">
                 <h2>Your Details</h2>
-                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                 <br></br>
+                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
@@ -122,7 +122,6 @@ render() {
                                 <th></th>
                         
                             <td>
-                                <br></br>
                                 <form><input type="submit" value="Edit" className="edit-btn" /></form>
                             </td>
                             </tr>

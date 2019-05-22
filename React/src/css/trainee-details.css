@@ -1,4 +1,5 @@
 .trainee_table{
+    border-top: 0.5px solid black;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
@@ -13,7 +14,7 @@ tr:nth-child(even) {
 }
 
 .heading{
-    padding-top: 5%;
+    padding-top: 2%;
     background-color: white;
     width:90%;
     margin-left: auto;
