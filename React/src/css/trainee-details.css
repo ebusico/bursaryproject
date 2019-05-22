@@ -1,21 +1,56 @@
-.table.table.table-striped-details{
+.trainee_table{
+    border-top: 0.5px solid grey;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
-    width:80%;
+    height:80%;
+    width:100%;
     border-radius: 4px; 
+    text-align: left;
 }
 
+.trainee_table tr:nth-child(odd) {
+    background-color: aliceblue;
+}
+
+.heading{
+    padding-top: 2%;
+    background-color: white;
+    width:90%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 4px;
+}
 .details{
-    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 #detailstbody{
     width: 80%;
     padding-left: 100px;
     padding-right: 100px;
+    border-top:0px;
 }
 
 .form-control-other{
 	width: 40%;
+}
+
+.detailsDiv{
+    margin: auto;
+    height:90%;
+    width: 70%;
+    background-color: transparent;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    font-size: 25px; 
+}
+
+.edit-btn{
+    border:1px solid transparent;
+    background-color: grey;
+    color: white;
+    border-radius: 0.25rem;
+    width: 30%;
 }

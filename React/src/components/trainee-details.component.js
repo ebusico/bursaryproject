@@ -74,8 +74,11 @@ render() {
 	if(this.state.currentUser.token.role === 'finance') {
         return (
             <div className="details">
-                <table onSubmit={this.onSubmit} className="table table-striped-details">
-                <h3>Trainee Details</h3>
+                <div className="detailsDiv">
+                <div className="heading">
+                <h1>Trainee Details</h1>
+                <br></br>
+                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
@@ -86,21 +89,26 @@ render() {
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
-                       
+                            <th></th>
                             <td>
                                 <CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
                             </td>
                             </tr>
                     </tbody>
                 </table>
+                </div>
+                </div>
             </div>
 
         )
 	} else if(this.state.currentUser.token._id === this.props.match.params.id) {
 		return (
 		<div className="details">
-                <table onSubmit={this.onSubmit} className="table table-striped-details">
-				<h3>Trainee Details</h3>
+            <div className="detailsDiv">
+                <div className="heading">
+                <h1>Your Details</h1>
+                <br></br>
+                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">
                             <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
                             <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
@@ -111,13 +119,16 @@ render() {
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
+                                <th></th>
                         
                             <td>
-                                <form><input type="submit" value="Edit" className="btn btn-primary" /></form>
+                                <form><input type="submit" value="Edit" className="edit-btn" /></form>
                             </td>
                             </tr>
                     </tbody>
                 </table>
+                </div>
+                </div>
             </div>
 		);
 	}else{ 
