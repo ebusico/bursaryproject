@@ -181,9 +181,9 @@ export default class CreateTrainee extends Component {
 		   < AccessDenied />
 	   );} else{
         return (
-            <div className="createTrainee" style={{marginLeft: 100, marginRight: 100}}>
-                <form className="addForm" onSubmit={this.onSubmit}>
-                    <h3>Add Trainee</h3>
+            <div className="createTrainee" style={{marginLeft: 200, marginRight: 200}}>
+                <form className="createTraineeForm" onSubmit={this.onSubmit}>
+                    <h3 className="title">Add Trainee</h3>
                     <div className="form-group"> 
                         <label>First Name: </label>
                         <input  type="text"

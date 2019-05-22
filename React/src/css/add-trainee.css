@@ -2,11 +2,12 @@
     background-color: white;
     margin-top:5%;
     border-radius: 4px;
+    
 }
 
-.addForm{
+.createTraineeForm{
     height: 80%;
-    width: 80%;
+    width: 100%;
     margin-right: auto;
     margin-left: auto;
     padding-top: 5%;
@@ -15,4 +16,8 @@
 
 .DayPickerInput-Overlay {
     top: -332px;
+}
+
+.title{
+    margin-left: 5%;
 }
