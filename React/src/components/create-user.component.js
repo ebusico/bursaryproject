@@ -33,7 +33,7 @@ export default class CreateUser extends Component {
 
     onChangeUserEmail(e) {
         this.setState({
-            user_email: e.target.value.toLowerCase()
+            user_email: e.target.value
         });
     }
     
@@ -56,7 +56,7 @@ export default class CreateUser extends Component {
         console.log(`User Email: ${this.state.user_email}`);
         console.log(`User role: ${this.state.user_role}`)
         
-        var email = CryptoJS.AES.encrypt(this.state.user_email, codes.staff, {iv: codes.iv});
+        var email = CryptoJS.AES.encrypt(this.state.user_email.toLowerCase(), codes.staff, {iv: codes.iv});
         var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.staffPass);
 
         var newUser = {

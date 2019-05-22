@@ -78,7 +78,7 @@ export default class CreateTrainee extends Component {
 
     onChangeTraineeEmail(e) {
         this.setState({
-            trainee_email: e.target.value.toLowerCase()
+            trainee_email: e.target.value
         });
     }
     
@@ -135,7 +135,7 @@ export default class CreateTrainee extends Component {
             
             var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
             var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-            var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
+            var email = CryptoJS.AES.encrypt(this.state.trainee_email.toLowerCase(), codes.staff, {iv: codes.iv});
             var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
             var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
             var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
