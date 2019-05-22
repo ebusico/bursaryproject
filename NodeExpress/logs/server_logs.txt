@@ -77,3 +77,10 @@
 22-05-2019 12:50:10 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
 22-05-2019 12:50:10 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
 22-05-2019 12:50:12 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:50:51 info [server.js]: Server is running on Port: 4000
+22-05-2019 12:50:51 info [server.js]: MongoDB database connection established successfully
+22-05-2019 12:50:58 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:50:58 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:51:04 info [server.js]: 5ce5304e7c547a2b8cd56f46has made changes to there details
+22-05-2019 12:51:04 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:51:06 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
