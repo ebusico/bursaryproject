@@ -63,10 +63,10 @@ traineeRoutes.route('/add').post(function(req, res) {
     let trainee = new Trainee(req.body);
     trainee.save()
         .then(trainee => {
-			console.log(id + ' has created trainee ' + trainee._id);
-			console.log('An email is being sent to ' + trainee._id);
-			winston.info(id + ' has created trainee ' + trainee._id);
-			winston.info('An email is being sent to ' + trainee._id);
+			console.log(id + ' has created trainee ');
+			console.log('An email is being sent to ' );
+			winston.info(' has created trainee ' );
+			winston.info('An email is being sent to ' );
             res.status(200).json({'trainee': 'Trainee added successfully'});
 			
         })
@@ -109,7 +109,7 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
-				winston.info(trainee_id + 'has made changes to there details')
+				winston.info(trainee._id + 'has made changes to there details')
 				})
             .catch(err => {
                 res.status(400).send("Update not possible");
@@ -131,7 +131,7 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
-				winston.info('trainee: '+ trainee_id + 'has had there start & end dates changed');
+				winston.info('trainee: '+ trainee._id + 'has had there start & end dates changed');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
@@ -150,7 +150,7 @@ traineeRoutes.route('/reset/:token').get(function(req, res) {
 		winston.error('password reset link was invalid for the trainee')
         res.status(403).send('password reset link is invalid or has expired');
       } else {
-		  winston.info(trainee_id + ' recevied reset link at status 200')
+		  winston.info(trainee._id + ' recevied reset link at status 200')
         res.status(200).send({
           trainee_id: trainee._id,
           message: 'password reset link a-ok',
@@ -165,7 +165,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
     var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
     var email = CryptoJS.AES.decrypt(req.body.trainee_email, key, {iv:iv});
     console.log("got email:" + email.toString(CryptoJS.enc.Utf8));
-	winston.info('an email will be sent to the trainee: ' + trainee_id);
+	winston.info('an email will be sent to the trainee:');
     Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
         console.log(trainee);
 		winston.info(trainee);
@@ -222,7 +222,7 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
                   trainee.trainee_password = req.body.trainee_password;
                   trainee.save().then(trainee => {
                     res.json('Password updated!');
-					winston.info(trainee_id + 'has updated thier password');
+					winston.info(trainee._id + 'has updated thier password');
                 })
                 .catch(err => {
                     res.status(400).send("Update not possible");

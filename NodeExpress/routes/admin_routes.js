@@ -66,7 +66,7 @@ adminRoutes.route('/addUser', requireAuth).post(function(req,res){
     User.createUser(newUser, function(err, user){
       if(err){
           console.log(err);
-          console.log( current_user + ' duplicate email');
+          console.log('duplicate email');
           res.status(205).send();
       }
       else{
@@ -164,7 +164,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 staff.password_expires = Date.now() + 3600000;
                 staff.save().then(()=>
 				console.log('email token generated'),
-				winston.info(user_id + ' has had a reset email sent to them'));
+				winston.info('user has had a reset email sent to them'));
                 var transporter = nodeMailer.createTransport({
                     service: 'AOL',
                     auth: {
@@ -207,7 +207,7 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
                       req.body.password = hash;
                       staff.password = req.body.password;
                       staff.save().then(staff => {
-						  winston.info(user_id + 'has updated thier password')
+						  winston.info('user has updated thier password')
                         res.json('Password updated!');
                     })
                     .catch(err => {

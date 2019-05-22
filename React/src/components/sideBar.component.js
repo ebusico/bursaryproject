@@ -11,7 +11,7 @@ export default class sideBar extends React.Component {
     // Pass on our props
      <Menu>
         <a id="HelperGuide" target="_new" className="menu-item" href="https://docs.google.com/document/d/1AXQ9NMtyfb5IkY0sDhafANRjIISliqCThlpj8kq99LA/edit">User Guide</a>
-	    <a id="SystemLogs"  className="menu-item" href="/server_logs">System Logs</a>
+	    <a onClick={() => { document.location.href = "/system_logs"; }}>System Logs</a>
 	 </Menu>
   );
 };

@@ -19,7 +19,7 @@ const logger = createLogger({
 		info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`)
 	),
 	transports: [
-	new transports.File({ filename: 'logs/server_logs.log', level: 'info' }),
+	new transports.File({ filename: 'logs/server_logs.txt', level: 'info' }),
 	//new transports.File({ filename: 'logs/error.log', level: 'error' })
 	],
 	exitonError: false, // Will not exit on handled exceptions
