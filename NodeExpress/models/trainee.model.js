@@ -54,7 +54,7 @@ let Trainee = new Schema({
     },
     status:{
         type: String,
-        // enum:['Incomplete', 'Active', 'Inactive'],
+        // enum:['Incomplete', 'Active', 'Suspended'],
         // default: 'Incomplete',
         required: true
     },

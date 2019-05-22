@@ -1,21 +1,43 @@
-.table.table.table-striped-details{
-    background-color: white;
-    margin-left: auto;
+.trainee_table{
+    background-color: transparent;
+    margin-left: 17%;
     margin-right: auto;
-    width:80%;
+    height:80%;
+    width:90%;
     border-radius: 4px; 
 }
 
 .details{
     padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 #detailstbody{
     width: 80%;
     padding-left: 100px;
     padding-right: 100px;
+    border-top:0px;
 }
 
 .form-control-other{
 	width: 40%;
+}
+
+.detailsDiv{
+    margin: auto;
+    height:90%;
+    width: 70%;
+    background-color: white;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    border-radius: 4px;
+    font-size: 25px; 
+}
+
+.edit-btn{
+    border:1px solid transparent;
+    background-color: grey;
+    color: white;
+    border-radius: 0.25rem;
+    width: 30%;
 }
