@@ -17,7 +17,8 @@ export default class EditTrainee extends Component {
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
         this.onChangeTraineeAccount = this.onChangeTraineeAccount.bind(this);
         this.onChangeTraineeSort = this.onChangeTraineeSort.bind(this);
-		this.onChangeTraineeBankOther = this.onChangeTraineeBankOther.bind(this);
+        this.onChangeTraineeBankName = this.onChangeTraineeBankName.bind(this);
+        this.onChangeTraineeBankBranch = this.onChangeTraineeBankBranch.bind(this);
 		
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -25,7 +26,8 @@ export default class EditTrainee extends Component {
             trainee_fname: '',
             trainee_lname: '',
             trainee_email: '',
-			trainee_bank_name: '',
+            trainee_bank_name: '',
+            trainee_bank_branch: '',
             trainee_account_no: '',
             trainee_sort_code: '',
             similar_codes: [],
@@ -81,9 +83,16 @@ export default class EditTrainee extends Component {
             trainee_email: e.target.value
         });
     }
-	onChangeTraineeBankOther(e){
+
+	onChangeTraineeBankName(e){
 		this.setState ({
 			trainee_bank_name:e.target.value
+		});
+    }
+    
+    onChangeTraineeBankBranch(e){
+		this.setState ({
+			trainee_bank_branch:e.target.value
 		});
 	}
 	
@@ -112,12 +121,14 @@ export default class EditTrainee extends Component {
                     console.log(res.data.BankName)
                     this.setState({
                         trainee_bank_name: res.data.BankName,
+                        trainee_bank_branch: res.data.Branch,
                         show_matching_bank: true
                     })
                 }
                 else{
                     this.setState({
-                        trainee_bank_name: "",
+                        trainee_bank_name: '',
+                        trainee_bank_branch: '',
                         show_non_matching_bank: true,
                         similar_codes: res.data.OtherCodes
                     })
@@ -126,6 +137,8 @@ export default class EditTrainee extends Component {
         }
         else{
             this.setState({
+                trainee_bank_name: '',
+                trainee_bank_branch: '',
                 show_matching_bank: false,
                 show_non_matching_bank: false
             })
@@ -140,8 +153,16 @@ export default class EditTrainee extends Component {
         var bankName = CryptoJS.AES.encrypt(this.state.trainee_bank_name, codes.trainee);
 		var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, codes.trainee);
         var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, codes.trainee);
+        var formatted_sort_code = '';
+
+        if(this.state.trainee_sort_code.charAt(0) == 0){
+            formatted_sort_code = this.state.trainee_sort_code.slice(1);
+        }
+        else{
+            formatted_sort_code =this.state.trainee_sort_code;
+        }
 		
-        const obj = {
+        const updated_trainee = {
             trainee_fname: fname.toString(),
             trainee_lname: lname.toString(),
             trainee_email: email.toString(),
@@ -149,13 +170,31 @@ export default class EditTrainee extends Component {
             trainee_account_no: accountNo.toString(),
             trainee_sort_code: sortCode.toString()
         };
-        console.log(obj);
-        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, obj)
+
+        const new_bank = {
+            SortCode: formatted_sort_code,
+            BankName: this.state.trainee_bank_name.toUpperCase,
+            Branch: this.state.trainee_bank_branch.toUpperCase
+        }
+        if(this.state.show_non_matching_bank == true){
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
+            .then(res => {
+                console.log(res.data);
+                console.log(new_bank);
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/addBank/', new_bank)
+                .then(res => {
+                    console.log(res.data);
+                    this.props.history.push('/trainee-details/'+this.props.match.params.id);
+                });
+            });
+        }
+        else{
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
             .then(res => {
                 console.log(res.data);
                 this.props.history.push('/trainee-details/'+this.props.match.params.id);
-                window.location.reload();
             });
+        }
     }
 
     render() {
@@ -203,8 +242,11 @@ export default class EditTrainee extends Component {
                         <label>Account Number: </label>
                         <input  type="text"
                                 className="form-control"
+                                placeholder= "eg. 12345678"
                                 value={this.state.trainee_account_no}
                                 onChange={this.onChangeTraineeAccount}
+                                maxLength="8"
+                                required minLength = {8}
                                 />
                     </div>
                     <div className="form-group">
@@ -212,35 +254,58 @@ export default class EditTrainee extends Component {
                         <input 
                                 type="text" 
                                 className="form-control"
+                                placeholder= "eg. 987654"
                                 value={this.state.trainee_sort_code}
                                 onChange={this.onChangeTraineeSort}
+                                maxLength="6"
+                                required minLength = {6}
                                 />
                     </div>
                     {show_matching_bank ?
+                        <div>
                         <div className="form-group"> 
-                            <label>Bank: </label>
+                            <label>Bank Name: </label>
                             <input  type="text"
                                 className="form-control"
                                 value={this.state.trainee_bank_name}
-                                onChange={this.onChangeTraineeBankOther}
                                 disabled
-                                />
+                                />                              
+                        </div>
+                        <div className="form-group"> 
+                            <label>Bank Address: </label>                               
+                            <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_bank_branch}
+                                disabled
+                                />                                
+                        </div>
                         </div>
                     : ""}
                     {show_non_matching_bank ?
-                        <div className="form-group">
+                        <div className="form-group" >
                             <div>Sort code not found, similar sort codes shown below:</div>
                             {this.state.similar_codes.map((code, index) => (
                                 <div key={index}>- {code}</div>
                             ))}
-                            <div>Please make sure the sort code you entered is correct, and then enter your bank name</div>
+                            <div>Please make sure the sort code you entered is correct, and then enter your bank details:</div>
                             <br/>
                             <label>Bank Name: </label>
                             <input  type="text"
                                 className="form-control"
                                 value={this.state.trainee_bank_name}
-                                onChange={this.onChangeTraineeBankOther}
+                                onChange={this.onChangeTraineeBankName}
+                                placeholder= "eg. HALIFAX"
+                                required
                                 />
+                            <br/>
+                            <label>Bank Address: </label>
+                            <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_bank_branch}
+                                onChange={this.onChangeTraineeBankBranch}
+                                placeholder= "eg. OXFORD ROAD, LONDON"
+                                required
+                                />                                
                         </div>
                     : ""}
 

@@ -1,0 +1,79 @@
+22-05-2019 12:45:24 info [server.js]: Server is running on Port: 4000
+22-05-2019 12:45:25 info [server.js]: MongoDB database connection established successfully
+22-05-2019 12:46:18 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:46:18 info [server.js]: Rendered staff5ce5304e7c547a2b8cd56f46
+22-05-2019 12:46:24 info [server.js]: user: 5cb836c7949b8207f03de9c4 logged in
+22-05-2019 12:46:24 info [server.js]: get data for trainee: 5cb836c7949b8207f03de9c4
+22-05-2019 12:46:24 info [server.js]: database collected all trainees successfully
+22-05-2019 12:46:25 info [server.js]: All staff users were collected successfully
+22-05-2019 12:46:25 info [server.js]: database collected all trainees successfully
+22-05-2019 12:46:25 info [server.js]: Rendered staff5cb836c7949b8207f03de9c4
+22-05-2019 12:46:36 info [server.js]: user: 5cb5b973b1fa3c0a707fe25f logged in
+22-05-2019 12:46:36 info [server.js]: get data for trainee: 5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:46:36 info [server.js]: database collected all trainees successfully
+22-05-2019 12:46:36 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:46:36 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:46:40 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:46:59 error [server.js]: E11000 duplicate key error collection: trainees.trainees index: trainee_email_1 dup key: { : "/Pydw6IVwi3FF0zm0hzv47p7KQ2AXBtvinf53Dog450=" }
+22-05-2019 12:47:19 info [server.js]:  has created trainee 
+22-05-2019 12:47:19 info [server.js]: An email is being sent to 
+22-05-2019 12:47:19 info [server.js]: an email will be sent to the trainee:
+22-05-2019 12:47:19 info [server.js]: { trainee_approved: false,
+  _id: 5ce536c7bd1b000234c25ed5,
+  trainee_fname: 'U2FsdGVkX18FLvm1XGV/QOPWQLGnMsbY000xkwLTT6w=',
+  trainee_lname: 'U2FsdGVkX18Ze4qAtn5h5m3NdQR/0NoOjlGDtR3ZQvQ=',
+  trainee_email: '/Pydw6IVwi3FF0zm0hzv47p7KQ2AXBtvinf53Dog450=',
+  trainee_password: 'U2FsdGVkX191uyI8pW5+GmQuCKKeGnPUBGLLffWD5XQ=',
+  trainee_start_date:
+   'U2FsdGVkX1+l/xzqhpARDBEQt6EbeEefPSMbJ3zmM4q1rnkeOZBvUzs1proMFawbh+lQeHnzb6jmEHRlt6DeuLqkYmGS5cwfiT1MPSCpfHU=',
+  trainee_end_date:
+   'U2FsdGVkX1+NY9lcV0DiuWdbTtF0QjyxgiE6421K62mHstv8wX+82zJi3C//f31y7Fm8ClZYM1ZR6ch8auHqNKqW51JCjDASsQdg7Vlpgi4=',
+  added_By:
+   'U2FsdGVkX1+ud9jopErkupM6ZcWXRmQrF13pxjbG8Bv/CQGqeEH6FF1S36QcOjyT',
+  status: 'U2FsdGVkX19hpVDXNHtX49JNXJmyfclsK0dvONbpmZ4=',
+  bursary: 'U2FsdGVkX19rH5p9RVmqNL+aRGZisYjANXLIXAaaJXw=',
+  __v: 0 }
+22-05-2019 12:47:19 info [server.js]: Email has been sent to { trainee_approved: false,
+  _id: 5ce536c7bd1b000234c25ed5,
+  trainee_fname: 'U2FsdGVkX18FLvm1XGV/QOPWQLGnMsbY000xkwLTT6w=',
+  trainee_lname: 'U2FsdGVkX18Ze4qAtn5h5m3NdQR/0NoOjlGDtR3ZQvQ=',
+  trainee_email: '/Pydw6IVwi3FF0zm0hzv47p7KQ2AXBtvinf53Dog450=',
+  trainee_password: 'U2FsdGVkX191uyI8pW5+GmQuCKKeGnPUBGLLffWD5XQ=',
+  trainee_start_date:
+   'U2FsdGVkX1+l/xzqhpARDBEQt6EbeEefPSMbJ3zmM4q1rnkeOZBvUzs1proMFawbh+lQeHnzb6jmEHRlt6DeuLqkYmGS5cwfiT1MPSCpfHU=',
+  trainee_end_date:
+   'U2FsdGVkX1+NY9lcV0DiuWdbTtF0QjyxgiE6421K62mHstv8wX+82zJi3C//f31y7Fm8ClZYM1ZR6ch8auHqNKqW51JCjDASsQdg7Vlpgi4=',
+  added_By:
+   'U2FsdGVkX1+ud9jopErkupM6ZcWXRmQrF13pxjbG8Bv/CQGqeEH6FF1S36QcOjyT',
+  status: 'U2FsdGVkX19hpVDXNHtX49JNXJmyfclsK0dvONbpmZ4=',
+  bursary: 'U2FsdGVkX19rH5p9RVmqNL+aRGZisYjANXLIXAaaJXw=',
+  __v: 0,
+  trainee_password_token: '1ccf10e60a686bbdb5654010d95358ba26f89998',
+  trainee_password_expires: '1558529239850' }
+22-05-2019 12:47:22 info [server.js]: Message %s sent: %s
+22-05-2019 12:47:22 info [server.js]: database collected all trainees successfully
+22-05-2019 12:47:22 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:22 info [server.js]: get data for trainee: 5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:22 info [server.js]: database collected all trainees successfully
+22-05-2019 12:47:22 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:22 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:37 info [server.js]: get data for trainee: 5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:37 info [server.js]: 5ce536c7bd1b000234c25ed5 recevied reset link at status 200
+22-05-2019 12:47:37 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:37 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:47:42 info [server.js]: 5ce536c7bd1b000234c25ed5has updated thier password
+22-05-2019 12:47:42 info [server.js]: database collected all trainees successfully
+22-05-2019 12:47:42 info [server.js]: Rendered staff5cb5b973b1fa3c0a707fe25f
+22-05-2019 12:47:54 info [server.js]: trainee: 5ce536c7bd1b000234c25ed5 logged in
+22-05-2019 12:47:55 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:47:55 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:47:56 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:49:59 info [server.js]: Server is running on Port: 4000
+22-05-2019 12:49:59 info [server.js]: MongoDB database connection established successfully
+22-05-2019 12:50:05 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:50:05 info [server.js]: get data for trainee: 5ce536c7bd1b000234c25ed5
+22-05-2019 12:50:05 info [server.js]: Rendered staff5ce536c7bd1b000234c25ed5
+22-05-2019 12:50:10 info [server.js]: trainee: 5ce5304e7c547a2b8cd56f46 logged in
+22-05-2019 12:50:10 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:50:10 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46
+22-05-2019 12:50:12 info [server.js]: get data for trainee: 5ce5304e7c547a2b8cd56f46

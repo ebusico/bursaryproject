@@ -261,7 +261,7 @@ traineeRoutes.route('/findBank').post(function(req,res) {
               });
         }
         else{
-            res.json({Match: true, BankName: bank.BankName});
+            res.json({Match: true, BankName: bank.BankName, Branch: bank.Branch});
         }
     })
     .catch(err => {
