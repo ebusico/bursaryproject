@@ -58,6 +58,7 @@ export default class ListTrainee extends Component {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
+        let deleteToggle = 'Delete';
         
         if(search.length > 0){
             trainees = trainees.filter(function(i){
@@ -143,7 +144,13 @@ export default class ListTrainee extends Component {
                         </thead>               
                         <tbody>
                             {trainees.map(t => {
-                                if (this.state.currentUser.token.role === 'admin'){
+                                if(t.status === "Suspended"){
+                                    console.log("reactivate")
+                                    deleteToggle = "Reactivate";
+                                }
+                                else{
+                                    deleteToggle = "Delete";
+                                }
                                 return (
                                     <tr>
                                         <td> {t.trainee_fname}</td>
@@ -153,12 +160,11 @@ export default class ListTrainee extends Component {
                                         <td> {t.added_By}</td>
                                         <td> {t.bursary}</td>
                                         <td> 
-                                            <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>
-                                            <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
+                                            <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
+                                            <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>{deleteToggle}</button>
                                        </td>
                                     </tr>
                                 );
-                                }
                             })}
                         </tbody>
     

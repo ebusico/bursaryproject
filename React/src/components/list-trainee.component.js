@@ -168,12 +168,6 @@ export default class ListTrainee extends Component {
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
-                            if(t.status === "Suspended"){
-                                deleteToggle = "Reactivate";
-                            }
-                            else{
-                                deleteToggle = "Delete";
-                            }
                             return (
                                 <tr>
                                     <td> {t.trainee_fname}</td>
@@ -183,7 +177,7 @@ export default class ListTrainee extends Component {
                                     <td> {t.added_By}</td>
                                     <td> {t.bursary}</td>
                                     <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
-                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>{deleteToggle}</button>
+                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload())}>Delete</button>
                                     </td>
                                 </tr>
                             );
@@ -195,72 +189,6 @@ export default class ListTrainee extends Component {
             </div>
         );
 			
-		}else{
-        return (
-            <div className="bigBox">
-            <div className="QAtable">
-                <div className="QASearchBar">
-                    <input
-                        type="text"
-                        value={this.state.searchString}
-                        onChange={this.onChangeSearch}
-                        placeholder="Find trainee..."
-                    />
-                </div>
-
-                <table className="table table-striped" style={{ marginTop: 20 }} >
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Recruited By</th>
-                            <th>Bursary</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>               
-                    <tbody>
-                        {trainees.map(t => {
-							if (this.state.currentUser.token.role === 'admin'){
-                            return (
-                                <tr>
-                                    <td> {t.trainee_fname}</td>
-                                    <td> {t.trainee_lname}</td>
-                                    <td> {t.trainee_email}</td>
-                                    <td> {t.status}</td>
-                                    <td> {t.added_By}</td>
-                                    <td> {t.bursary}</td>
-                                    <td>
-                                    <td> 
-                                        <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> </td>
-                                        <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
-								   </td>
-                                </tr>
-                            );
-							}
-							else if(this.state.currentUser.token.role === 'finance'){
-							return (
-                                <tr>
-                                    <td> {t.trainee_fname}</td>
-                                    <td> {t.trainee_lname}</td>
-                                    <td> {t.trainee_email}</td>
-                                    <td> {t.status}</td>
-                                    <td> {t.added_By}</td>
-                                    <td> {t.bursary}</td>
-                                    <td> 
-										<button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
-                                    </td>
-                                </tr>
-                            );
-							}
-                        })}
-                    </tbody>
-
-                </table>
-            </div>
-            </div>
-        );
 		}
 	}
 }
