@@ -58,7 +58,7 @@ export default class ListTrainee extends Component {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
-        let deleteToggle = 'Delete';
+        let deleteToggle = '';
         
         if(search.length > 0){
             trainees = trainees.filter(function(i){
@@ -152,7 +152,7 @@ export default class ListTrainee extends Component {
                                     deleteToggle = "Reactivate";
                                 }
                                 else{
-                                    deleteToggle = "Delete";
+                                    deleteToggle = "Suspend";
                                 }
                                 return (
                                     <tr>
