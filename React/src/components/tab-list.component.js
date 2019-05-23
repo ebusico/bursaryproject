@@ -36,6 +36,7 @@ export default class TabList extends React.Component {
       this.setState({
         activeTab: tab
       });
+      localStorage.setItem('tab', tab);
     }
   }
 
