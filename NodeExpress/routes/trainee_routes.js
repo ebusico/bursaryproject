@@ -63,10 +63,10 @@ traineeRoutes.route('/add').post(function(req, res) {
     let trainee = new Trainee(req.body);
     trainee.save()
         .then(trainee => {
-			console.log(id + ' has created trainee ');
-			console.log('An email is being sent to ' );
-			winston.info(' has created trainee ' );
-			winston.info('An email is being sent to ' );
+			console.log(trainee.added_By + ' Recruitor has created a new trainee: '+ trainee._id);
+			console.log('An email is being sent to ' + trainee._id );
+			winston.info('Recruitor has created a new trainee: '+ trainee._id );
+			winston.info('An email is being sent to ' + trainee._id );
             res.status(200).json({'trainee': 'Trainee added successfully'});
 			
         })

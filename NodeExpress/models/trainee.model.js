@@ -48,6 +48,12 @@ let Trainee = new Schema({
         type: String,
         required: true
     },
+	trainee_bench_start_date:{
+		type: String
+	},
+	trainee_bench_end_date:{
+		type: String
+	},
     added_By:{
         type: String,
         required: true
@@ -61,7 +67,10 @@ let Trainee = new Schema({
     bursary:{
         type: String,
         required: true
-    }
+    },
+	trainee_days_worked:{
+		type: String
+	}
 
 });
 module.exports = mongoose.model('Trainee', Trainee);
