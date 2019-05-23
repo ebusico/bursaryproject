@@ -5,6 +5,7 @@ import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
 import { Link } from 'react-router-dom'
 import AccessDenied from './modules/AccessDenied';
+import Collapse from 'react-bootstrap/Collapse'
 import '../css/list-trainee.css';
 
 
@@ -12,7 +13,7 @@ export default class ListUser extends Component {
     
     constructor(props) {
 			//redirects to login if not logged in
-	if (!authService.currentUserValue){
+	    if (!authService.currentUserValue){
 			document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/login';
 			//this.context.history.push('/login');
 		}
@@ -21,9 +22,17 @@ export default class ListUser extends Component {
         this.state = {
 			users: [], 
 			searchString:"",
-			currentUser: authService.currentUserValue
-			};
+            currentUser: authService.currentUserValue,
+            open: false,
+            filter: {
+                role: 'All',
+                suspended: false
+            }
+        };
+            
         this.onChangeSearch = this.onChangeSearch.bind(this);
+        this.onChangeRoleFilter = this.onChangeRoleFilter.bind(this);
+        this.onChangeSuspendedFilter = this.onChangeSuspendedFilter.bind(this);
     }
 	
     
@@ -52,10 +61,31 @@ export default class ListUser extends Component {
         })
     }
 
+    onChangeRoleFilter(e){
+        var newVal = e.target.value;
+        var newFilter = this.state.filter
+        newFilter.role = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+    onChangeSuspendedFilter(e){
+        var newVal = !this.state.filter.suspended
+        console.log(newVal)
+        var newFilter = this.state.filter
+        newFilter.suspended = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
     
     render() {
         let users = this.state.users;
         let search = this.state.searchString.trim().toLowerCase();
+        let filter = this.state.filter;
+        const {open} = this.state;
 
         if(search.length > 0){
             users = users.filter(function(i){
@@ -64,6 +94,24 @@ export default class ListUser extends Component {
                 }
             })
         }
+
+        if(filter.role != 'All'){
+            users = users.filter(function(user){
+                if(user.role == filter.role.toLowerCase()){
+                    return user;
+                }
+
+            })
+        }
+
+        if(filter.suspended === false){
+            users = users.filter(function(user){
+                if(user.status !== 'Suspended'){
+                    return user;
+                }
+            })
+        }
+
 	   if(this.state.currentUser.token.role !== 'admin'){
 		   return (
 		   < AccessDenied />
@@ -77,9 +125,31 @@ export default class ListUser extends Component {
                         onChange={this.onChangeSearch}
                         placeholder="Find User.." 
                     />
+                    <button
+                    onClick={() => this.setState({ open: !open })}
+                    aria-controls="example-collapse-text"
+                    aria-expanded={open}
+                    className="filter-btn"
+                    >
+                    Filters
+                    </button>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User</Link></button>
                     </div>
+                    <Collapse in={this.state.open}>
+                    <p>
+                        <br></br>
+                        <label>Role</label> &nbsp;
+                        <select onChange={this.onChangeRoleFilter}>
+                            <option value="All">All</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Recruiter">Recruiter</option>
+                            <option value="Finance">Finance</option>
+                        </select>&nbsp;&nbsp;
+                        <label>Show Suspended</label> &nbsp;
+                        <input type="checkbox" value="Suspended" onClick={this.onChangeSuspendedFilter}/> &nbsp;&nbsp;
+                    </p>
+                    </Collapse>
                 </div>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>

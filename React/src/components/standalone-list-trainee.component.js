@@ -175,6 +175,7 @@ export default class ListTrainee extends Component {
                 }
             })
         }
+
 		if (this.state.currentUser.token.role === undefined){
 			return (
 			<AccessDenied/>
