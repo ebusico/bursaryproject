@@ -201,18 +201,20 @@ export default class ListTrainee extends Component {
                     <tbody>
                         {trainees.map(t => {
 							if(this.state.currentUser.token.role === 'finance'){
-							return (
-                                <tr>
-                                    <td> {t.trainee_fname}</td>
-                                    <td> {t.trainee_lname}</td>
-                                    <td> {t.trainee_email}</td>
-                                    <td> {t.status}</td>
-                                    <td> {t.bursary}</td>
-                                    <td> 
-										<button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
-                                    </td>
-                                </tr>
-                            );
+                                if(t.status != "Suspended"){
+                                    return (
+                                        <tr>
+                                            <td> {t.trainee_fname}</td>
+                                            <td> {t.trainee_lname}</td>
+                                            <td> {t.trainee_email}</td>
+                                            <td> {t.status}</td>
+                                            <td> {t.bursary}</td>
+                                            <td> 
+                                                <button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                }
 							}
                         })}
                     </tbody>
