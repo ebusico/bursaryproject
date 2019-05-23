@@ -20,7 +20,7 @@ const logger = createLogger({
 	),
 	transports: [
 	new transports.File({ filename: 'logs/server_logs.txt', level: 'info' }),
-	new transports.File({ filename: '../../bursaryproject/React/src/components/helper/server_logs.txt', level: 'info' })
+	new transports.File({ filename: '../React/src/components/helper/server_logs.txt', level: 'info' })
 	],
 	
 	exitonError: false, // Will not exit on handled exceptions
