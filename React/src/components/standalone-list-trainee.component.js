@@ -22,6 +22,7 @@ export default class ListTrainee extends Component {
                 myTrainees: false,
                 status: 'All',
                 bursary: 'All',
+                suspended: false
             },
             open: false
 			};
@@ -31,6 +32,7 @@ export default class ListTrainee extends Component {
         this.onChangeBursaryFilter = this.onChangeBursaryFilter.bind(this);
         this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
         this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
+        this.onChangeSuspendedFilter = this.onChangeSuspendedFilter.bind(this);
     }
     
     componentDidMount() {
@@ -86,6 +88,16 @@ export default class ListTrainee extends Component {
         console.log(newVal)
         var newFilter = this.state.filter
         newFilter.myTrainees = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+    onChangeSuspendedFilter(e){
+        var newVal = !this.state.filter.suspended
+        console.log(newVal)
+        var newFilter = this.state.filter
+        newFilter.suspended = newVal
         this.setState({
             filter : newFilter
         })
@@ -151,6 +163,14 @@ export default class ListTrainee extends Component {
         if(filter.myTrainees === true){
             trainees = trainees.filter(function(trainee){
                 if(trainee.added_By === email){
+                    return trainee;
+                }
+            })
+        }
+
+        if(filter.suspended === false){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.status !== 'Suspended'){
                     return trainee;
                 }
             })
@@ -231,7 +251,6 @@ export default class ListTrainee extends Component {
                             <option value="All">All</option>
                             <option value="Incomplete">Incomplete</option>
                             <option value="Active">Active</option>
-                            <option value="Suspended">Suspended</option>
                         </select>&nbsp;&nbsp;
                         <label>Bursary</label> &nbsp;
                         <select onChange={this.onChangeBursaryFilter}>
@@ -239,6 +258,8 @@ export default class ListTrainee extends Component {
                             <option value="True">True</option>
                             <option value="False">False</option>
                         </select>&nbsp;&nbsp;
+                        <label>Show Suspended</label> &nbsp;
+                        <input type="checkbox" value="Suspended" onClick={this.onChangeSuspendedFilter}/> &nbsp;&nbsp;
                     </p>
                     </Collapse>
                     </div>
@@ -265,22 +286,22 @@ export default class ListTrainee extends Component {
                                     deleteToggle = "Suspend";
                                 }
                                 return (
-                                    <tr>
-                                        <td> {t.trainee_fname}</td>
-                                        <td> {t.trainee_lname}</td>
-                                        <td> {t.trainee_email}</td>
-                                        <td> {t.status}</td>
-                                        <td> {t.added_By}</td>
-                                        <td> {t.bursary}</td>
-                                        <td> 
-                                            <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
-                                            <button onClick={() => { 
-                                                            if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this item?'))
-                                                            axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
-                                                            {deleteToggle}
-                                            </button>
-                                       </td>
-                                    </tr>
+                                        <tr>
+                                            <td> {t.trainee_fname}</td>
+                                            <td> {t.trainee_lname}</td>
+                                            <td> {t.trainee_email}</td>
+                                            <td> {t.status}</td>
+                                            <td> {t.added_By}</td>
+                                            <td> {t.bursary}</td>
+                                            <td> 
+                                                <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
+                                                <button onClick={() => { 
+                                                                if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this item?'))
+                                                                axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
+                                                                {deleteToggle}
+                                                </button>
+                                           </td>
+                                        </tr>
                                 );
                             })}
                         </tbody>
