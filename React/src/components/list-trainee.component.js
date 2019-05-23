@@ -17,8 +17,7 @@ export default class ListTrainee extends Component {
 			searchString: "",
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
-            filter: '',
-
+            filter: ''
 			};
         
        //Added onChangeSearch - Ernie
@@ -88,6 +87,7 @@ export default class ListTrainee extends Component {
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         let filter = this.state.filter;
         let email = this.state.recruiterEmail;
+        let deleteToggle = '';
         
         if(search.length > 0){
             if(filter === 'MyTrainees'){
@@ -168,6 +168,12 @@ export default class ListTrainee extends Component {
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
+                            if(t.status === "Suspended"){
+                                deleteToggle = "Reactivate";
+                            }
+                            else{
+                                deleteToggle = "Delete";
+                            }
                             return (
                                 <tr>
                                     <td> {t.trainee_fname}</td>
@@ -176,8 +182,8 @@ export default class ListTrainee extends Component {
                                     <td> {t.status}</td>
                                     <td> {t.added_By}</td>
                                     <td> {t.bursary}</td>
-                                    <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> 
-                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>Delete</button>
+                                    <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
+                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>{deleteToggle}</button>
                                     </td>
                                 </tr>
                             );
