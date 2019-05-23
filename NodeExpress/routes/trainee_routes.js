@@ -205,7 +205,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             trainee.trainee_password_expires = Date.now() + 3600000;
             trainee.save().then(()=>
 			console.log('email token has been generated'),
-			winston.info('Email has been sent to ' + trainee)
+			winston.info('Email has been sent to ' + trainee._id)
 			);
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
