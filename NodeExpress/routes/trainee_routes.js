@@ -79,15 +79,41 @@ traineeRoutes.route('/add').post(function(req, res) {
 
 //deletes a trainee by id
 traineeRoutes.route('/delete/:id').get(function(req, res) {
-    Trainee.remove({_id: req.params.id}, function(err, trainee) {
-        if(!err){
-            res.json({'result':true});
+    Trainee.findById(req.params.id, function(err, trainee) {
+        if(!trainee){
+            res.status(404).send("trainee is not found")
         }
         else{
-            console.log(err);
-            res.json({'result': false});
+            var status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            if(status === "Suspended"){
+                if(trainee.trainee_bank_name != null){
+                    trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
+                }
+                else{
+                    trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx');                  
+                }
+                trainee.save().then(trainee => {
+                    res.json('Trainee reactivated');
+                    winston.info(trainee._id + 'has been reactivated')
+                    })
+                .catch(err => {
+                    res.status(400).send("Reactivation not possible");
+                    winston.error('Trainee:'+trainee._id+'could not be sreactivated. Error: ' + err)
+                });
+            }
+            else{
+                trainee.status = CryptoJS.AES.encrypt('Suspended', '3FJSei8zPx');
+                trainee.save().then(trainee => {
+                    res.json('Trainee deleted');
+                    winston.info(trainee._id + 'has been suspended')
+                    })
+                .catch(err => {
+                    res.status(400).send("Delete not possible");
+                    winston.error('Trainee:'+trainee._id+'could not be suspended. Error: ' + err)
+                });
+            }
         }
-});
+    });
 });
 
 //gets trainee by id and updates values of that trainee
