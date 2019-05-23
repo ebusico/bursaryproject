@@ -128,6 +128,9 @@ export default class ListTrainee extends Component {
                             onChange={this.onChangeSearch}
                             placeholder="Find trainee..."
                         />
+                    <div id="addUser">
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
+                    </div>
                     </div>
     
                     <table className="table table-striped" style={{ marginTop: 20 }} >
