@@ -7,6 +7,12 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// Remove the X-Powered-By headers.
+app.use(function (req, res, next) {  
+  res.header("X-powered-by", "Blood, sweat, and tears.");
+  next();
+});
+
 const PORT = 4000;
 
 var cookieParser = require('cookie-parser');
@@ -18,7 +24,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 //34.245.236.104
 mongoose.connect('mongodb://'+process.env.REACT_APP_DATABASE_IP+':27017/trainees', { useNewUrlParser: true });
 const connection = mongoose.connection;
