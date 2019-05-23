@@ -9,7 +9,7 @@
     text-align: left;
 }
 
-.trainee_table tr:nth-child(odd) {
+.trainee_table tr:nth-child(even) {
     background-color: aliceblue;
 }
 

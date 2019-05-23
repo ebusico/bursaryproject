@@ -168,19 +168,21 @@ export default class ListTrainee extends Component {
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
-                            return (
-                                <tr>
-                                    <td> {t.trainee_fname}</td>
-                                    <td> {t.trainee_lname}</td>
-                                    <td> {t.trainee_email}</td>
-                                    <td> {t.status}</td>
-                                    <td> {t.added_By}</td>
-                                    <td> {t.bursary}</td>
-                                    <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
-                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload())}>Delete</button>
-                                    </td>
-                                </tr>
-                            );
+                            if(t.status != "Suspended"){
+                                return (
+                                    <tr>
+                                        <td> {t.trainee_fname}</td>
+                                        <td> {t.trainee_lname}</td>
+                                        <td> {t.trainee_email}</td>
+                                        <td> {t.status}</td>
+                                        <td> {t.added_By}</td>
+                                        <td> {t.bursary}</td>
+                                        <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
+                                        <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload())}>Delete</button>
+                                        </td>
+                                    </tr>
+                                );
+                            }
                         })}
                     </tbody>
 
