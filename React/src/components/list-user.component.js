@@ -33,8 +33,10 @@ export default class ListUser extends Component {
 			if(this.state.currentUser.token.role === 'admin'){
                 var encrypted = response.data;
                 encrypted.map(function(currentUser, i){
-                    var bytes = CryptoJS.AES.decrypt(currentUser.email, codes.staff ,{iv: codes.iv});
-                    currentUser.email = bytes.toString(CryptoJS.enc.Utf8);
+                    var email = CryptoJS.AES.decrypt(currentUser.email, codes.staff ,{iv: codes.iv});
+                    var status = CryptoJS.AES.decrypt(currentUser.status, codes.staff ,{iv: codes.iv});
+                    currentUser.email = email.toString(CryptoJS.enc.Utf8);
+                    currentUser.status = status.toString(CryptoJS.enc.Utf8);;
                 });
                 this.setState({users: encrypted});
             }
@@ -84,17 +86,33 @@ export default class ListUser extends Component {
                         <tr>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th className="action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map(user => {
+                            let deleteToggle = '';
+                            let deleteRoute = '';  
+                            if(user.status === "Suspended"){
+                                deleteToggle = "Reactivate";
+                                deleteRoute = "reactivate";
+                            }
+                            else{
+                                deleteToggle = "Suspend";
+                                deleteRoute = "delete";
+                            }                          
                             return (
                                 <tr>
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
+                                <td>{user.status}</td>
                                 <td>
-                                    <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/delete/'+user._id).then((response) => window.location.reload())}>Delete</button>
+                                    <button onClick={() => { 
+                                                    if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
+                                                    axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
+                                                    {deleteToggle}
+                                    </button>
                                 </td>
                             </tr>
                             )

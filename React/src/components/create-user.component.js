@@ -58,11 +58,14 @@ export default class CreateUser extends Component {
         
         var email = CryptoJS.AES.encrypt(this.state.user_email.toLowerCase(), codes.staff, {iv: codes.iv});
         var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.staffPass);
+        var setStatus = CryptoJS.AES.encrypt('Incomplete', codes.staff, {iv: codes.iv});
+        // var setStatus = "Active";
 
         var newUser = {
             email: email.toString(),
             password: pass.toString(),
-            role: this.state.user_role.toLowerCase()
+            role: this.state.user_role.toLowerCase(),
+            status: setStatus.toString()
         };
         
         console.log(newUser)

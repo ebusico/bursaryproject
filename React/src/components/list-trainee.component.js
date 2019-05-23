@@ -233,7 +233,7 @@ export default class ListTrainee extends Component {
                                         <td> {t.bursary}</td>
                                         <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
                                         <button onClick={() => { 
-                                                            if (window.confirm('Are you sure you wish to delete this item?'))
+                                                            if (window.confirm('Are you sure you wish to delete this trainee?'))
                                                             axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
                                                             Delete
                                         </button>

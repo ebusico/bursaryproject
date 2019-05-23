@@ -279,11 +279,14 @@ export default class ListTrainee extends Component {
                         <tbody>
                             {trainees.map(t => {
                                 let deleteToggle = '';
+                                let deleteRoute = '';
                                 if(t.status === "Suspended"){
                                     deleteToggle = "Reactivate";
+                                    deleteRoute = "reactivate";
                                 }
                                 else{
                                     deleteToggle = "Suspend";
+                                    deleteRoute = "delete";
                                 }
                                 return (
                                         <tr>
@@ -296,8 +299,8 @@ export default class ListTrainee extends Component {
                                             <td> 
                                                 <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
                                                 <button onClick={() => { 
-                                                                if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this item?'))
-                                                                axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
+                                                                if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
+                                                                axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+deleteRoute+'/'+t._id).then(() => window.location.reload()) } }>
                                                                 {deleteToggle}
                                                 </button>
                                            </td>
