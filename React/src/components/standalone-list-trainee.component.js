@@ -113,7 +113,6 @@ export default class ListTrainee extends Component {
         //Declared variables in order to read input from search function
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
-        let deleteToggle = '';
         let filter = this.state.filter;
         let email = this.state.staffEmail;
         const {open} = this.state;
@@ -258,8 +257,8 @@ export default class ListTrainee extends Component {
                         </thead>               
                         <tbody>
                             {trainees.map(t => {
+                                let deleteToggle = '';
                                 if(t.status === "Suspended"){
-                                    console.log("reactivate")
                                     deleteToggle = "Reactivate";
                                 }
                                 else{
@@ -275,7 +274,11 @@ export default class ListTrainee extends Component {
                                         <td> {t.bursary}</td>
                                         <td> 
                                             <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
-                                            <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then((response) => window.location.reload())}>{deleteToggle}</button>
+                                            <button onClick={() => { 
+                                                            if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this item?'))
+                                                            axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
+                                                            {deleteToggle}
+                                            </button>
                                        </td>
                                     </tr>
                                 );
