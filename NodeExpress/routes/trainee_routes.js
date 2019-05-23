@@ -61,11 +61,12 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
 traineeRoutes.route('/add').post(function(req, res) {
 	let id = req.params._id;
     let trainee = new Trainee(req.body);
+	var added_By = CryptoJS.AES.decrypt(trainee.added_By, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
     trainee.save()
         .then(trainee => {
-			console.log(trainee.added_By + ' Recruitor has created a new trainee: '+ trainee._id);
+			console.log('Recruitor: ' + added_By + ' has created a new trainee: '+ trainee._id);
 			console.log('An email is being sent to ' + trainee._id );
-			winston.info('Recruitor has created a new trainee: '+ trainee._id );
+			winston.info('Recruitor: ' + added_By + ' has created a new trainee: '+ trainee._id);
 			winston.info('An email is being sent to ' + trainee._id );
             res.status(200).json({'trainee': 'Trainee added successfully'});
 			
@@ -94,22 +95,22 @@ traineeRoutes.route('/delete/:id').get(function(req, res) {
                 }
                 trainee.save().then(trainee => {
                     res.json('Trainee reactivated');
-                    winston.info(trainee._id + 'has been reactivated')
+                    winston.info(trainee._id + ' has been reactivated')
                     })
                 .catch(err => {
                     res.status(400).send("Reactivation not possible");
-                    winston.error('Trainee:'+trainee._id+'could not be sreactivated. Error: ' + err)
+                    winston.error('Trainee:'+trainee._id+' could not be sreactivated. Error: ' + err)
                 });
             }
             else{
                 trainee.status = CryptoJS.AES.encrypt('Suspended', '3FJSei8zPx');
                 trainee.save().then(trainee => {
                     res.json('Trainee deleted');
-                    winston.info(trainee._id + 'has been suspended')
+                    winston.info(trainee._id + ' has been suspended')
                     })
                 .catch(err => {
                     res.status(400).send("Delete not possible");
-                    winston.error('Trainee:'+trainee._id+'could not be suspended. Error: ' + err)
+                    winston.error('Trainee:'+trainee._id+' could not be suspended. Error: ' + err)
                 });
             }
         }
