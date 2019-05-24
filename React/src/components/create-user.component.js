@@ -127,6 +127,11 @@ export default class CreateUser extends Component {
                                 Finance
                             </div>
                         </DropdownItem>
+                        <DropdownItem>
+                            <div onClick={this.changeUserRole}>
+                                Admin
+                            </div>
+                        </DropdownItem>
                         </DropdownMenu>
                         </Dropdown>
                     <br></br>
