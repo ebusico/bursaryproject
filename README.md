@@ -40,7 +40,7 @@ node server.js
 ## Start React App
 - Open <Local_Git_Folder>/REACT/.env
 
-- Edit Rthe EACT_APP_AWS_IP value with the IP address of your deployment server(localhost for local deployment)
+- Edit the REACT_APP_AWS_IP value with the IP address of your deployment server(localhost for local deployment)
 
 - Navigate to <Local_Git_Folder>/React and and run:
 ```
