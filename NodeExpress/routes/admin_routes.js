@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const winston = require('../config/winston');
+const server_logs = require('../logs/server_logs');
 
 var jwt = require('jsonwebtoken');
 var AuthenticationController = require('../config/authentication');  
@@ -42,7 +43,11 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
 		winston.error('tried to get staff member but does not exist ' + err)
     });
 });
-
+// Get logs 
+adminRoutes.route('/getServerLogs').post(function)(req, res){
+	let logs = server_logs;
+	
+}
 //gets single user by email
 adminRoutes.route('/getByEmail').post(function(req,res) {
     User.findOne({email: req.body.staff_email}, function(err, user) {

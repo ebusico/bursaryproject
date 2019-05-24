@@ -5,7 +5,7 @@ import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import moment from 'moment';
-
+import momentBusinessDays from 'moment-business-days';
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
@@ -21,7 +21,6 @@ export default class CreateTrainee extends Component {
     
     constructor(props) {
         super(props);
-        
         this.onChangeTraineeFname = this.onChangeTraineeFname.bind(this);
         this.onChangeTraineeLname = this.onChangeTraineeLname.bind(this);
         this.onChangeTraineeEmail = this.onChangeTraineeEmail.bind(this);
@@ -29,6 +28,8 @@ export default class CreateTrainee extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeStartDate = this.onChangeStartDate.bind(this);
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
+        this.onChangeBenchStartDate = this.onChangeBenchStartDate.bind(this);
+        this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
         this.onClickBursary = this.onClickBursary.bind(this);
 
         this.state = {
@@ -38,11 +39,15 @@ export default class CreateTrainee extends Component {
             trainee_password: '',
             trainee_start_date: '',
             trainee_end_date: '',
+			trainee_bench_start_date: '',
+			trainee_bench_end_date: '',
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
+			trainee_days_worked:'',
             bursary: 'False'
         }
     }
+	
 
     componentDidMount(){
         axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
@@ -74,7 +79,7 @@ export default class CreateTrainee extends Component {
             trainee_lname: e.target.value
         });
     }
-
+	
 
     onChangeTraineeEmail(e) {
         this.setState({
@@ -87,19 +92,35 @@ export default class CreateTrainee extends Component {
             trainee_password: e.target.value
         });
     }
+	
+	onChangeBenchStartDate(benchStartDate) {
+		this.setState({
+			trainee_bench_start_date: benchStartDate,
+			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(84)._d ,
+		})
+	}
+	
+	onChangeBenchEndDate(benchEndDate) {
+		this.setState({
+			trainee_bench_end_date: benchEndDate
+		})	
+	}
 
     onChangeStartDate = (startDate) =>{
         this.setState({
-            trainee_start_date: startDate
+            trainee_start_date: startDate,
+			trainee_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(84)._d ,
+			trainee_bench_start_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(85)._d ,
+			trainee_bench_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(168)._d ,
         })
-
         console.log(startDate);
         console.log(this.state.trainee_start_date);
     }
 
     onChangeEndDate = (endDate) =>{
         this.setState({
-            trainee_end_date: endDate
+            trainee_end_date: endDate,
+			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(84)._d,
         })
         console.log(this.state.endDate);
     }
@@ -139,7 +160,9 @@ export default class CreateTrainee extends Component {
             var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
             var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
             var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
-            var recruiterEmail = CryptoJS.AES.encrypt(this.state.recruiterEmail, codes.trainee);
+            var benchStartDate = CryptoJS.AES.encrypt(this.state.trainee_bench_start_date.toString(), codes.trainee);
+			var benchEndDate = CryptoJS.AES.encrypt(this.state.trainee_bench_end_date.toString(), codes.trainee);
+			var recruiterEmail = CryptoJS.AES.encrypt(this.state.recruiterEmail, codes.trainee);
             var setStatus = CryptoJS.AES.encrypt('Incomplete', codes.trainee);
             var setBursary = CryptoJS.AES.encrypt(this.state.bursary, codes.trainee);
 
@@ -152,7 +175,9 @@ export default class CreateTrainee extends Component {
                 trainee_end_date: endDate.toString(),
                 added_By: recruiterEmail.toString(),
                 status: setStatus.toString(),
-                bursary: setBursary.toString()
+                bursary: setBursary.toString(),
+				trainee_bench_end_date: benchEndDate.toString(),
+				trainee_bench_start_date: benchStartDate.toString(),
             };
 
             console.log(newTrainee);
@@ -225,6 +250,7 @@ export default class CreateTrainee extends Component {
                             value={this.state.trainee_start_date}
                             onDayChange={this.onChangeStartDate}
                             dayPickerProps={{
+								month:this.trainee_start_date,
                                 selectedDays: this.state.trainee_start_date,
                                 disabledDays: {
                                 daysOfWeek: [0, 6],
@@ -241,7 +267,42 @@ export default class CreateTrainee extends Component {
                                 value={this.state.trainee_end_date}
                                 onDayChange={this.onChangeEndDate}
                                 dayPickerProps={{
+									month:this.state.trainee_end_date,
                                     selectedDays: this.state.trainee_end_date,
+                                    disabledDays: {
+                                    daysOfWeek: [0, 6],
+                                    },
+                                }}
+                            />
+                        </div>
+						<label> Bench Start Date </label>
+						<div style={{height: '50px'}}>
+                            <DayPickerInput
+                                placeholder="DD/MM/YYYY"
+                                format="DD/MM/YYYY"
+                                formatDate={formatDate}
+                                value={this.state.trainee_bench_start_date}
+                                onDayChange={this.onChangeBenchStartDate}
+                                dayPickerProps={{
+									month:this.state.trainee_bench_start_date,
+                                    selectedDays: this.state.trainee_bench_start_date,
+                                    disabledDays: {
+                                    daysOfWeek: [0, 6],
+                                    },
+                                }}
+                            />
+                        </div>
+						<label> Bench End Date </label>
+						<div style={{height: '50px'}}>
+                            <DayPickerInput
+                                placeholder="DD/MM/YYYY"
+                                format="DD/MM/YYYY"
+                                formatDate={formatDate}
+                                value={this.state.trainee_bench_end_date}
+                                onDayChange={this.onChangeBenchEndDate}
+                                dayPickerProps={{
+									month:this.state.trainee_bench_end_date,
+                                    selectedDays: this.state.trainee_bench_end_date,
                                     disabledDays: {
                                     daysOfWeek: [0, 6],
                                     },
