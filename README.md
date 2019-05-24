@@ -16,35 +16,18 @@ use trainees
 
 ## Start Express/Node App
 
-- Open <Local_Git_Folder>/NodeExpress/server.js
+- Open <Local_Git_Folder>/NodeExpress/.env
 
-- Edit the "/send-email" route by replacing "<Service>" with you email provider, "<Sender Email>" with your email and "<Sender Password>" with your email password.
+- Edit REACT_APP_AWS_IP and REACT_APP_DATABASE_IP values with the IP addresses of your deployment server(localhost for local deployment)
 
-Example:
+Note: if you are connecting to a local mongo database you will need to add an admin account so you can login to the app. You can add one by sending a POST request to localhost:4000/admin/addUser/postman (you can use Postman to do this) with the followinf JSON body:
 ```
-traineeRoutes.route('/send-email').post(function(req, res) {
-      let transporter = nodeMailer.createTransport({
-          service: 'GMail',
-          auth: {
-              user: 'example@gmail.com',
-              pass: 'password'
-          }
-      });
-      let mailOptions = {
-          from: 'example@gmail.com', // sender address
-          to: req.body.trainee_email, // list of receivers
-          subject: 'test', // Subject line
-          text: 'test', // plain text body
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              return console.log(error);
-          }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-          res.status(200).json({'email': 'Email Sent'});
-      });
-});
+    {
+        "role": "admin",
+        "email": "adamadmin@qa.com",
+        "password": "adam",
+        "status" : "Active"
+    }
 
 ```
 
@@ -55,6 +38,9 @@ node server.js
 ```
 
 ## Start React App
+- Open <Local_Git_Folder>/REACT/.env
+
+- Edit Rthe EACT_APP_AWS_IP value with the IP address of your deployment server(localhost for local deployment)
 
 - Navigate to <Local_Git_Folder>/React and and run:
 ```
@@ -63,7 +49,3 @@ npm start
 ```
 
 Navigate to localhost:3000 to test deployment.
-
-## Troubleshooting
-
-If the email fails to authenticate, it may be neccessary to allow "less secure apps" to access the chosen email address. Please refer to your email provider for details on how to do so.
