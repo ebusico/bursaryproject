@@ -82,27 +82,9 @@ traineeRoutes.route('/add').post(function(req, res) {
 traineeRoutes.route('/delete/:id').get(function(req, res) {
     Trainee.findById(req.params.id, function(err, trainee) {
         if(!trainee){
-            res.status(404).send("trainee is not found")
+            res.status(404).send("trainee is not found");
         }
         else{
-            var status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-            if(status === "Suspended"){
-                if(trainee.trainee_bank_name != null){
-                    trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
-                }
-                else{
-                    trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx');                  
-                }
-                trainee.save().then(trainee => {
-                    res.json('Trainee reactivated');
-                    winston.info(trainee._id + ' has been reactivated')
-                    })
-                .catch(err => {
-                    res.status(400).send("Reactivation not possible");
-                    winston.error('Trainee:'+trainee._id+' could not be sreactivated. Error: ' + err)
-                });
-            }
-            else{
                 trainee.status = CryptoJS.AES.encrypt('Suspended', '3FJSei8zPx');
                 trainee.save().then(trainee => {
                     res.json('Trainee deleted');
@@ -113,9 +95,34 @@ traineeRoutes.route('/delete/:id').get(function(req, res) {
                     winston.error('Trainee:'+trainee._id+' could not be suspended. Error: ' + err)
                 });
             }
-        }
-    });
+    });        
 });
+
+//reactivates a deleted a trainee by id
+traineeRoutes.route('/reactivate/:id').get(function(req,res){
+    Trainee.findById(req.params.id, function(err, trainee) {
+        if(!trainee ){
+            res.status(404).send("trainee is not found");
+        }
+        else{
+            if(trainee.trainee_bank_name != null){
+                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
+            }
+            else{
+                trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx');                  
+            }
+            trainee.save().then(trainee => {
+                res.json('Trainee reactivated');
+                winston.info(trainee._id + ' has been reactivated')
+            })
+            .catch(err => {
+                res.status(400).send("Reactivation not possible");
+                 winston.error('Trainee:'+trainee._id+' could not be reactivated. Error: ' + err)
+            });
+        }
+
+    })
+})
 
 //gets trainee by id and updates values of that trainee
 traineeRoutes.route('/update/:id').post(function(req, res) {

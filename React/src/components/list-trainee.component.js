@@ -5,6 +5,7 @@ import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import Collapse from 'react-bootstrap/Collapse'
 import '../css/list-trainee-recruiter.css';
 
 export default class ListTrainee extends Component {
@@ -17,12 +18,19 @@ export default class ListTrainee extends Component {
 			searchString: "",
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
-            filter: ''
+            filter: {
+                myTrainees: false,
+                status: 'All',
+                bursary: 'All',
+            },
+            open: false
 			};
         
        //Added onChangeSearch - Ernie
         this.onChangeSearch = this.onChangeSearch.bind(this);
-        this.onChangeFilter = this.onChangeFilter.bind(this);
+        this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
+        this.onChangeBursaryFilter = this.onChangeBursaryFilter.bind(this);
+        this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
     }
     
     componentDidMount() {
@@ -75,9 +83,31 @@ export default class ListTrainee extends Component {
         });
     }
 
-    onChangeFilter(e){
+    onChangeMyTraineeFilter(e){
+        var newVal = !this.state.filter.myTrainees
+        console.log(newVal)
+        var newFilter = this.state.filter
+        newFilter.myTrainees = newVal
         this.setState({
-            filter: e.target.value
+            filter : newFilter
+        })
+    }
+
+    onChangeStatusFilter(e){
+        var newVal = e.target.value;
+        var newFilter = this.state.filter
+        newFilter.status = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+    onChangeBursaryFilter(e){
+        var newVal = e.target.value;
+        var newFilter = this.state.filter
+        newFilter.bursary = newVal
+        this.setState({
+            filter : newFilter
         })
     }
 	
@@ -88,45 +118,46 @@ export default class ListTrainee extends Component {
         let filter = this.state.filter;
         let email = this.state.recruiterEmail;
         let deleteToggle = '';
+        const {open} = this.state;
+
         
         if(search.length > 0){
-            if(filter === 'MyTrainees'){
-                trainees = trainees.filter(function(i){
-                    if(i.added_By === email){
-                        if(i.trainee_fname.toLowerCase().match(search) ||
-                        i.status.toLowerCase().match(search)        ||
-                        i.added_By.toLowerCase().match(search)      ||
-                        i.bursary.toLowerCase().match(search)       ||
-                        i.trainee_lname.toLowerCase().match(search) ||
-                        i.trainee_email.toLowerCase().match(search) ||
-                        (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
-                         return i;
-                     }
-                    }
-                })
-            }
-            else{
-                trainees = trainees.filter(function(i){
-                    if(i.trainee_fname.toLowerCase().match(search) ||
-                       i.status.toLowerCase().match(search)        ||
-                       i.added_By.toLowerCase().match(search)      ||
-                       i.bursary.toLowerCase().match(search)       ||
-                       i.trainee_lname.toLowerCase().match(search) ||
-                       i.trainee_email.toLowerCase().match(search) ||
-                       (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
-                        return i;
-                    }
-                })
-            }
-        }else if(filter != ''){
-            if(filter === 'MyTrainees'){
-                    trainees = trainees.filter(function(i){
-                        if(i.added_By === email){
-                            console.log('matches');
-                            return i;
-                        }
-                    })
-            }
+            trainees = trainees.filter(function(i){
+                if(i.trainee_fname.toLowerCase().match(search) ||
+                   i.status.toLowerCase().match(search)        ||
+                   i.added_By.toLowerCase().match(search)      ||
+                   i.bursary.toLowerCase().match(search)       ||
+                   i.trainee_lname.toLowerCase().match(search) ||
+                   i.trainee_email.toLowerCase().match(search) ||
+                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(search)){
+                    return i;
+                }
+            })
+        }
+        if(filter.status != 'All'){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.status == filter.status){
+                    return trainee;
+                }
+
+            })
+        }
+
+        if(filter.bursary != 'All'){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.bursary == filter.bursary){
+                    return trainee;
+                }
+
+            })
+        }
+
+        if(filter.myTrainees === true){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.added_By === email){
+                    return trainee;
+                }
+            })
         }
 
 		if (this.state.currentUser.token.role === undefined){
@@ -145,13 +176,36 @@ export default class ListTrainee extends Component {
                         onChange={this.onChangeSearch}
                         placeholder="Find trainee..."
                     />
-                    <select className="filter" onChange={this.onChangeFilter}>
-                        <option value=''>Select a filter</option>
-                        <option value='MyTrainees'>My Trainees</option>
-                    </select>
+                    <button
+                    onClick={() => this.setState({ open: !open })}
+                    aria-controls="example-collapse-text"
+                    aria-expanded={open}
+                    className="filter-btn"
+                    >
+                    Filters
+                    </button>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
                     </div>
+                    <Collapse in={this.state.open}>
+                    <p>
+                        <br></br>
+                        <label>My Trainees</label> &nbsp;
+                        <input type="checkbox" value="MyTrainees" onClick={this.onChangeMyTraineeFilter}/> &nbsp;&nbsp;
+                        <label>Status</label> &nbsp;
+                        <select onChange={this.onChangeStatusFilter}>
+                            <option value="All">All</option>
+                            <option value="Incomplete">Incomplete</option>
+                            <option value="Active">Active</option>
+                        </select>&nbsp;&nbsp;
+                        <label>Bursary</label> &nbsp;
+                        <select onChange={this.onChangeBursaryFilter}>
+                            <option>All</option>
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select>&nbsp;&nbsp;
+                    </p>
+                    </Collapse>
                 </div>
 
                 <table className="table table-striped" style={{ marginTop: 20 }} >
@@ -178,7 +232,11 @@ export default class ListTrainee extends Component {
                                         <td> {t.added_By}</td>
                                         <td> {t.bursary}</td>
                                         <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
-                                        <button onClick={()=>axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload())}>Delete</button>
+                                        <button onClick={() => { 
+                                                            if (window.confirm('Are you sure you wish to delete this trainee?'))
+                                                            axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
+                                                            Delete
+                                        </button>
                                         </td>
                                     </tr>
                                 );

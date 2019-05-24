@@ -65,9 +65,9 @@ adminRoutes.route('/addUser', requireAuth).post(function(req,res){
     var newUser = new User({
       email: req.body.email,
       password: req.body.password,
-      role: req.body.role
+      role: req.body.role,
+      status: req.body.status
     });
-
     User.createUser(newUser, function(err, user){
       if(err){
           console.log(err);
@@ -90,9 +90,11 @@ adminRoutes.route('/addUser/postman').post(function(req,res){
     var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
     
     var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv});
+    var status =  CryptoJS.AES.encrypt(req.body.status, key, {iv: iv});
         //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
         var newUser = new User({
           email: encrypted.toString(),
+          status: status.toString(),
           password: req.body.password,
           role: req.body.role
         });
@@ -114,23 +116,53 @@ adminRoutes.route('/addUser/postman').post(function(req,res){
           const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
             console.log(token);
             return res.json({result: true, role: user.role, token});
-          res.send(user).end()
+         res.send(user).end()
         });
     });
 
 //deletes user by id
 adminRoutes.route('/delete/:id').get(function(req, res) {
-        User.remove({_id: req.params.id}, function(err, user) {
-            if(!err){
-                res.json({'result':true});
-            }
-            else{
-                console.log(err);
-				winston.error(err);
-                res.json({'result': false});
-            }
+    User.findById(req.params.id, function(err, user) {
+        if(!user){
+            res.status(404).send("user is not found");
+        }
+        else{
+            var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+            var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+            user.status =  CryptoJS.AES.encrypt("Suspended", key, {iv: iv});
+            user.save().then(user => {
+                res.json('User deleted');
+                winston.info(user._id + ' has been suspended')
+            })
+            .catch(err => {
+                res.status(400).send("Delete not possible");
+                winston.error('User:'+user._id+' could not be suspended. Error: ' + err)
+            });
+        }
     });
   });   
+
+adminRoutes.route('/reactivate/:id').get(function(req, res) {
+    User.findById(req.params.id, function(err, user) {
+        if(!user ){
+            res.status(404).send("user is not found");
+        }
+        else{
+            var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+            var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+            user.status =  CryptoJS.AES.encrypt("Active", key, {iv: iv});
+            user.save().then(user => {
+                res.json('User reactivated');
+                winston.info(user._id + ' has been reactivated')
+            })
+            .catch(err => {
+                res.status(400).send("Reactivation not possible");
+                 winston.error('User:'+user._id+' could not be reactivated. Error: ' + err)
+            });
+        }
+
+    })
+})
 
 //checks if user password reset token is valid
 adminRoutes.route('/reset-staff/:token').get(function(req, res) {
@@ -204,15 +236,17 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
             if (!staff)
                 res.status(404).send("data is not found");
             else
-                //bcrypt pass
-                //var bytes  = CryptoJS.AES.decrypt(req.body.password, 'c9nMaacr2Y');
+                var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+                var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
                 var decryptPass = CryptoJS.AES.decrypt(req.body.password, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
+                var active =  CryptoJS.AES.encrypt("Active", key, {iv: iv});
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(decryptPass, salt, function(err, hash) {
                       req.body.password = hash;
+                      staff.status = active
                       staff.password = req.body.password;
                       staff.save().then(staff => {
-						  winston.info('user has updated thier password')
+						winston.info('user has updated thier password')
                         res.json('Password updated!');
                     })
                     .catch(err => {

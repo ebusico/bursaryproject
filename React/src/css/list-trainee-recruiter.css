@@ -44,3 +44,11 @@
 .filter{
     margin: 0.35%;
 }
+.filter-btn{
+    border:1px solid transparent;
+    background-color: grey;
+    color: white;
+    border-radius: 0.25rem;
+    width: 5%;
+    margin-left: 0.3%;
+}

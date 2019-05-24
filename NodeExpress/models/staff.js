@@ -18,6 +18,12 @@ const UserSchema = new mongoose.Schema({
   default: 'admin',
   required: true
   },
+  status:{
+    type: String,
+    // enum:['Incomplete', 'Active', 'Suspended'],
+    // default: 'Incomplete',
+    required: true
+  },
   password_token:{
     type: String
   },

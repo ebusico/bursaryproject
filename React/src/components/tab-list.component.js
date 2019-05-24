@@ -20,12 +20,23 @@ export default class TabList extends React.Component {
     };
   }
 
+  componentDidMount(){
+    let tab = localStorage.getItem('tab'); 
+    if(tab != null){
+      this.setState(()=>({
+          activeTab: tab
+      })
+      );
+    }
+  }
+  
+
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
       });
-      
+      localStorage.setItem('tab', tab);
     }
   }
 
