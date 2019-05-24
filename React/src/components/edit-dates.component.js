@@ -128,18 +128,6 @@ export default class EditDates extends Component {
         });
     }
     
-    onChangeStartDate = (startDate) =>{
-        this.setState({
-            trainee_start_date: startDate
-        })
-    }
-
-    onChangeEndDate = (endDate) =>{
-        this.setState({
-            trainee_end_date: endDate
-        })
-    }
-    
     onSubmit(e) {
         e.preventDefault();
         var start = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
