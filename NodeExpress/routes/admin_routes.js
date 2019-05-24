@@ -106,12 +106,14 @@ adminRoutes.route('/addUser/postman').post(function(req,res){
     
         User.createUser(newUser, function(err, user){
           if(err){
-              throw err;
-          }
-          const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
+            console.log(err);
+            console.log('duplicate email');
+            res.status(205).send();
+          }else{
+            const token = jwt.sign(user._id.toJSON(), secret.secret); //user need to be JSONed or causes an error
             console.log(token);
             return res.json({result: true, role: user.role, token});
-         res.send(user).end()
+          }
         });
     });
 

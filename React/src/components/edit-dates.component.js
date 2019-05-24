@@ -45,7 +45,7 @@ export default class EditDates extends Component {
 	onChangeBenchStartDate(benchStartDate) {
 		this.setState({
 			trainee_bench_start_date: benchStartDate,
-			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(84)._d ,
+			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 		})
 	}
 	
@@ -58,9 +58,7 @@ export default class EditDates extends Component {
     onChangeStartDate = (startDate) =>{
         this.setState({
             trainee_start_date: startDate,
-			trainee_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(84)._d ,
-			trainee_bench_start_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(85)._d ,
-			trainee_bench_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(168)._d ,
+			trainee_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(60)._d 
         })
         console.log(startDate);
         console.log(this.state.trainee_start_date);
@@ -69,8 +67,7 @@ export default class EditDates extends Component {
      onChangeEndDate = (endDate) =>{
         this.setState({
             trainee_end_date: endDate,
-			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(84)._d,
-			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(168)._d ,
+			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(1)._d
         })
     }
 	
@@ -99,11 +96,13 @@ export default class EditDates extends Component {
                     trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
                     trainee_start_date: new Date (trainee_start_date.toString(CryptoJS.enc.Utf8)),
                     trainee_end_date: new Date (trainee_end_date.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_end_date: new Date (benchStartDate.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_start_date: new Date(benchEndDate.toString(CryptoJS.enc.Utf8)),
+					trainee_bench_start_date: new Date (benchStartDate.toString(CryptoJS.enc.Utf8)),
+					trainee_bench_end_date: new Date(benchEndDate.toString(CryptoJS.enc.Utf8)),
                 })
                 console.log(this.state.trainee_start_date);
-                console.log(this.state.trainee_end_date);   
+                console.log(this.state.trainee_end_date);
+                console.log(this.state.trainee_bench_start_date);
+                console.log(this.state.trainee_bench_end_date);   
             })
             .catch(function (error) {
                 console.log(error);

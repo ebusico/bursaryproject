@@ -45,7 +45,7 @@ export default class ListUser extends Component {
                     var email = CryptoJS.AES.decrypt(currentUser.email, codes.staff ,{iv: codes.iv});
                     var status = CryptoJS.AES.decrypt(currentUser.status, codes.staff ,{iv: codes.iv});
                     currentUser.email = email.toString(CryptoJS.enc.Utf8);
-                    currentUser.status = status.toString(CryptoJS.enc.Utf8);;
+                    currentUser.status = status.toString(CryptoJS.enc.Utf8);
                 });
                 this.setState({users: encrypted});
             }

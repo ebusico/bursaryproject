@@ -13,16 +13,18 @@ function generateToken(user){
 function setUserInfo(request){
 	return {
 	_id: request._id,
-	role: request.role
+	role: request.role,
+	status: request.status
 };
 }
 
 exports.login = function(req, res, next){
 	var userInfo = setUserInfo(req.user);
+	console.log(userInfo)
 	res.status(200).json({
 			   token: 'JWT' + generateToken(userInfo),
 			   user: userInfo
-		   });
+	});
 }
 
 //Authentication 

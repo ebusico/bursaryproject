@@ -96,7 +96,7 @@ export default class CreateTrainee extends Component {
 	onChangeBenchStartDate(benchStartDate) {
 		this.setState({
 			trainee_bench_start_date: benchStartDate,
-			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(84)._d ,
+			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 		})
 	}
 	
@@ -109,9 +109,9 @@ export default class CreateTrainee extends Component {
     onChangeStartDate = (startDate) =>{
         this.setState({
             trainee_start_date: startDate,
-			trainee_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(84)._d ,
-			trainee_bench_start_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(85)._d ,
-			trainee_bench_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(168)._d ,
+			trainee_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(60)._d ,
+			trainee_bench_start_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(61)._d ,
+			trainee_bench_end_date: momentBusinessDays(startDate, 'DD-MM-YYYY').businessAdd(121)._d ,
         })
         console.log(startDate);
         console.log(this.state.trainee_start_date);
@@ -120,8 +120,8 @@ export default class CreateTrainee extends Component {
     onChangeEndDate = (endDate) =>{
         this.setState({
             trainee_end_date: endDate,
-			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(84)._d,
-			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(168)._d ,
+			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(61)._d,
+			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(121)._d ,
 
 	   })
         console.log(this.state.endDate);

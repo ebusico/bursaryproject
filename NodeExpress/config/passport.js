@@ -29,24 +29,25 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 						winston.error('login failed incorrect email');
 						return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 					}
-
-					var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
-					var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
-					Trainee.comparePassword(decryptPass, trainee.trainee_password, function(err, isMatch){
-						if(err){
-							return done(err);
-						}
-						else if(!isMatch){
-							console.log('trainee: ' + trainee._id + ' entered wrong password');
-							winston.error('trainee: ' + trainee._id + ' entered wrong password');
-							return done(null, false, {message: 'Login failed. Wrong Email/Password'});
-						}
-						else{
-							console.log('trainee: ' + trainee._id + ' logged in');
-							winston.info('trainee: ' + trainee._id + ' logged in');
-							return done(null, trainee);
-						}
-					})
+					else{
+						var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
+						var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
+						Trainee.comparePassword(decryptPass, trainee.trainee_password, function(err, isMatch){
+							if(err){
+								return done(err);
+							}
+							else if(!isMatch){
+								console.log('trainee: ' + trainee._id + ' entered wrong password');
+								winston.error('trainee: ' + trainee._id + ' entered wrong password');
+								return done(null, false, {message: 'Login failed. Wrong Email/Password'});
+							}
+							else{
+								console.log('trainee: ' + trainee._id + ' logged in');
+								winston.info('trainee: ' + trainee._id + ' logged in');
+								return done(null, trainee);
+							}
+						})
+					}
 				})
       }
 	else{

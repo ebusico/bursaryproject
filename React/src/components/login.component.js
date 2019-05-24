@@ -57,20 +57,27 @@ export default class Login extends Component {
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
             .then(function (res) {
                 if (res.status === 200) {
-                    if (typeof res.data.user.role === "undefined") {
-                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/trainee-details/' + res.data.user._id
-                        token.token = decode(res.data.token);
-                        localStorage.setItem('currentUser', JSON.stringify(token));
+                    var status = CryptoJS.AES.decrypt(res.data.user.status, codes.staff ,{iv: codes.iv}).toString(CryptoJS.enc.Utf8);
+                    console.log("STATUS: "+status);
+                    if(status !== "Suspended"){
+                        if (typeof res.data.user.role === "undefined") {
+                            document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/trainee-details/' + res.data.user._id
+                            token.token = decode(res.data.token);
+                            localStorage.setItem('currentUser', JSON.stringify(token));
+                        }
+                        else if (res.data.user.role === "admin") {
+                            document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/admin';
+                            token.token = decode(res.data.token);
+                            localStorage.setItem('currentUser', JSON.stringify(token));
+                        } else {
+                            document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
+                            //Get user token and decode user token here
+                            token.token = decode(res.data.token);
+                            localStorage.setItem('currentUser', JSON.stringify(token));
+                        }
                     }
-                    else if (res.data.user.role === "admin") {
-                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/admin';
-                        token.token = decode(res.data.token);
-                        localStorage.setItem('currentUser', JSON.stringify(token));
-                    } else {
-                        document.location.href = 'http://'+process.env.REACT_APP_AWS_IP+':3000/';
-                        //Get user token and decode user token here
-                        token.token = decode(res.data.token);
-                        localStorage.setItem('currentUser', JSON.stringify(token));
+                    else{
+                        alert("Account Suspended");
                     }
                 }
                 else if (res.status === 204) {
