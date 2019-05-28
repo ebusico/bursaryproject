@@ -139,13 +139,31 @@ export default class CreateTrainee extends Component {
     onSubmit(e) {
         e.preventDefault();
 
+        var alertDeterminer;
+
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
-            alert('Please select the bursary start/end dates');
+            alertDeterminer = "blankdates";
         }
         else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
-            alert('The end date is before the start date, please resolve this before creating the trainee');
+            alertDeterminer = "dateswrongorder";
         }
-        else{
+        else if(moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') < 14 || moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') > 84 ){
+            alertDeterminer = "tooloworhigh";
+        }
+
+        switch (alertDeterminer){
+            case "blankdates":
+                alert('Please select the bursary start/end dates');
+                break;
+            case "dateswrongorder":
+                alert('The end date is before the start date, please resolve this before creating the trainee');
+                break;
+            case "tooloworhigh":
+                var dateWarning = window.confirm("The dates you have entered are unusually high or low. Are you sure you want to proceed?");
+                if (dateWarning == false){
+                break;
+                }
+            default:
             console.log(`Form submitted:`);
             console.log(`Trainee Fname: ${this.state.trainee_fname}`);
             console.log(`Trainee Lname: ${this.state.trainee_lname}`);
