@@ -44,23 +44,9 @@ export default class EditDates extends Component {
 	
 	//Working day
 	onChangeWorkingDays(e) {
-		let currentMonth = moment().format('MM');
-		let bursary_start = moment(this.state.trainee_start_date).format('MM');
-		let bursary_end = moment(this.state.trainee_end_date).format('MM');
-		let start = moment(this.state.trainee_start_date, 'YYYY-MM-DD'); //Pick any format
-		let end = moment(this.state.trainee_start_date, 'YYYY-MM-DD').endOf('month'); //right now (or define an end date yourself)
-		let weekdayCounter = 0;
-		console.log(end);
-		console.log(start);
-		while (start <= end) {
-			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
-				weekdayCounter++; //add 1 to your counter if its not a weekend day
-			}
-			start = moment(start, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
-		}
-		console.log(weekdayCounter); //display your total elapsed weekdays in the console!
-		console.log('Number of days to work: ' + currentMonth);
-		console.log('start '+ bursary_start);
+		this.setState({
+			trainee_days_worked: e.target.value
+		})
 	}
 	
 	onChangeBenchStartDate(benchStartDate) {
@@ -92,14 +78,6 @@ export default class EditDates extends Component {
         })
     }
 	
-	//gets all days based within start and end date
-	
-    /*calculateDaysLeft(trainee_start_date, trainee_end_date){
-		if(!moment.isMoment(trainee_start_date)) trainee_start_date = moment(trainee_start_date);
-		if(!moment.isMoment(trainee_end_date)) trainee_end_date = moment(trainee_end_date);
-		return trainee_end_date.diff(trainee_start_date, "days");
-	}
-	*/
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
@@ -144,6 +122,7 @@ export default class EditDates extends Component {
     }
     
     onSubmit(e) {
+	  e.preventDefault();
 		if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alert('Please select the bursary start/end dates');
         }
@@ -156,7 +135,18 @@ export default class EditDates extends Component {
 		else if (moment(this.state.trainee_bench_end_date).isBefore(this.state.trainee_bench_start_date)){
 			alert('The end date is before the start date, please resolve this before finish editing');
 		}
-        e.preventDefault();
+		else if(this.state.trainee_days_worked > 31 ){
+            alertDeterminer = "HighWorkingDays";
+        }
+		var alertDeterminer;
+		 switch (alertDeterminer){
+            case "HighWorkingDays":
+                var dateWarning = window.confirm("The Amount of working days to be paid for is higher than the amount of working days within the Month. Are you sure you want to proceed?");
+                
+				if (dateWarning == false){
+                break;
+                }
+			default:
 
         const obj = {
             trainee_start_date: this.state.trainee_start_date,
@@ -172,6 +162,8 @@ export default class EditDates extends Component {
                           this.props.history.push('/');
                           window.location.reload();});    
     }
+	
+}
 
 
     render() {
@@ -281,10 +273,9 @@ export default class EditDates extends Component {
                             />
                     </div>
 					<div className="form-group">
-                        <label>Amount of days to be paid bursary</label>
+                        <label>Amount of working days to be paid</label>
                         <input 
                                 type="number" 
-								max="31"
                                 className="form-control"
                                 value={this.state.trainee_days_worked}
                                 onChange={this.onChangeWorkingDays}

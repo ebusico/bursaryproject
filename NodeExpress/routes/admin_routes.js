@@ -56,7 +56,9 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
         console.log('STAFF TRYING TO FIND :');
         console.log(staff);
         //decrypt before sending back
-        staff.email = CryptoJS.AES.decrypt(staff.email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
+		staff.fname = CryptoJS.AES.decrypt(staff.fname, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
+		staff.lname = CryptoJS.AES.decrypt(staff.lname, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
+		staff.email = CryptoJS.AES.decrypt(staff.email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
         staff.status = CryptoJS.AES.decrypt(staff.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
          res.json(staff);
 		 winston.info('Rendered staff' + id )

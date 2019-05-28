@@ -6,6 +6,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+var CronJob = require('cron').CronJob;
+const fs = require('node-fs');
+const nodeMailer = require('nodemailer');
 
 // Remove the X-Powered-By headers.
 app.use(function (req, res, next) {  
@@ -13,12 +16,20 @@ app.use(function (req, res, next) {
   next();
 });
 
-const PORT = 4000;
+// schedule task to run on the server
+/*
+new CronJob('* * * * * *', function() {
+  console.log('You will see this message every second');
+}, null, true, 'America/Los_Angeles');
+*/	
 
+const PORT = 4000;
 var cookieParser = require('cookie-parser');
 
 
 require('dotenv').config()
+//cron file
+require('./config/scheduler');
 
 app.use(cors());
 app.use(bodyParser.json());

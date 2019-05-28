@@ -27,7 +27,8 @@ export default class Navigation extends React.Component {
       currentUser: authService.currentUserValue,
       token: '',
       id: '',
-      staff_email: '',
+      staff_fname: '',
+	  staff_lname: '',
       trainee_fname: '',
       trainee_lname: ''
     };
@@ -61,7 +62,8 @@ export default class Navigation extends React.Component {
                 }
                 else{
                   this.setState({
-                    staff_email: response.data.email
+                    staff_fname: response.data.fname,
+					staff_lname: response.data.lname
                   })
                 }
               })
@@ -100,7 +102,7 @@ export default class Navigation extends React.Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem className="display_name">Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_email}  |  </NavItem>
+                <NavItem className="display_name">Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_fname} {this.state.staff_lname}  |  </NavItem>
                 <NavItem>
                   <Button onClick={this.logout} href='/login'>
                     Logout
