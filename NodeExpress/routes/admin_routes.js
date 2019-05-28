@@ -1,6 +1,7 @@
 var express = require('express');
 var adminRoutes = express.Router();
 
+const fs = require('fs');
 const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
 const bcrypt = require('bcrypt');
@@ -28,6 +29,18 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
         }
     });
 });
+
+// Get logs 
+adminRoutes.route('/getServerLogs').get(function(req, res){
+	fs.readFile('./logs/server_logs.log', 'utf8', function(err,data) {
+		if(err){
+			res.send(err);
+		}else{
+		let splitted = data.toString().split("\\r");
+			res.send(splitted);
+		}
+		});
+	});
 
 //gets single user by id
 adminRoutes.route('/staff/:id').get(function(req, res) {

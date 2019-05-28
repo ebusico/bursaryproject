@@ -32,6 +32,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "~1.0.4",
+    "read-file": "^0.2.0",
     "sequelize": "^5.4.0",
     "sequelize-cli": "^5.4.0",
     "winston": "^3.2.1",

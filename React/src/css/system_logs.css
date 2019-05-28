@@ -2,17 +2,26 @@
 	margin: 0 auto;
     background-color: #f8f9fa;
     border-radius: 4px;
-    width:50%;
-	height:750px;
+    width:80%;
+	height:700px;
 	margin-top: 5%;
 }
-.system_body iframe{
+
+.system_body{
 	width:90%;
-	height:650px;
+	height:20px;
+
+}
+
+.system_body_logs{
+	overflow-y: auto;
+	top:55%;
+	height:630px;
+	width:90%;
+	white-space: pre-wrap;
 	padding:1%;
 	margin-left:5%;
 	background-color:aliceBlue;
-	margin-top:2%;
 }
 
 .system_wrapper button,textareabutton{

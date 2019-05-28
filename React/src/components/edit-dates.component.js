@@ -7,6 +7,7 @@ import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
 import "react-datepicker/dist/react-datepicker.css";
 import momentBusinessDays from 'moment-business-days';
+import moment from 'moment';
 
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -38,6 +39,7 @@ export default class EditDates extends Component {
             trainee_end_date: '',
 			trainee_bench_start_date: '',
 			trainee_bench_end_date: '',
+			trainee_days_worked: '',
 			currentUser: authService.currentUserValue
         }
     }
@@ -72,6 +74,7 @@ export default class EditDates extends Component {
     }
 	
 	//gets all days based within start and end date
+	
     /*calculateDaysLeft(trainee_start_date, trainee_end_date){
 		if(!moment.isMoment(trainee_start_date)) trainee_start_date = moment(trainee_start_date);
 		if(!moment.isMoment(trainee_end_date)) trainee_end_date = moment(trainee_end_date);
@@ -120,7 +123,12 @@ export default class EditDates extends Component {
             trainee_lname: e.target.value
         });
     }
-
+	//Working day
+	onChangeWorkingDays(e) {
+		this.setState({
+			trainee_days_worked: e.target.value
+		});
+	}
     onChangeTraineeEmail(e) {
         this.setState({
             trainee_email: e.target.value
