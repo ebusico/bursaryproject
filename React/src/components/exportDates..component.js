@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/list-trainee-recruiter.css';
@@ -37,31 +35,8 @@ export default class ListTrainee extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
             .then(response => {
-                var encrypted = response.data;
-                encrypted.map(function(currentTrainee, i){
-                    var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, codes.staff, {iv: codes.iv});
-                    currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
-                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, codes.trainee);
-                    currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
-                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, codes.trainee);
-                    currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
-
-                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_start_date, codes.trainee);
-                    currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
-                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, codes.trainee);
-                    currentTrainee.trainee_end_date = bytes.toString((CryptoJS.enc.Utf8));
-                    
-                    if(currentTrainee.trainee_bank_name != undefined && currentTrainee.trainee_account_no != undefined && currentTrainee.trainee_sort_code != undefined){
-                        console.log(currentTrainee.trainee_fname);
-                        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_bank_name, codes.trainee);
-                        currentTrainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
-                        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_account_no, codes.trainee);
-                        currentTrainee.trainee_account_no = bytes.toString(CryptoJS.enc.Utf8);
-                        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_sort_code, codes.trainee);
-                        currentTrainee.trainee_sort_code = bytes.toString(CryptoJS.enc.Utf8);
-                    }
-                });
-                this.setState({trainees: encrypted});
+                console.log(response.data);
+                this.setState({trainees: response.data});
             })
             .catch(function (error){
                 console.log(error);

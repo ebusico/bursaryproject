@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
@@ -56,16 +54,13 @@ export default class CreateUser extends Component {
         console.log(`User Email: ${this.state.user_email}`);
         console.log(`User role: ${this.state.user_role}`)
         
-        var email = CryptoJS.AES.encrypt(this.state.user_email.toLowerCase(), codes.staff, {iv: codes.iv});
-        var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.staffPass);
-        var setStatus = CryptoJS.AES.encrypt('Incomplete', codes.staff, {iv: codes.iv});
         // var setStatus = "Active";
 
         var newUser = {
-            email: email.toString(),
-            password: pass.toString(),
+            email: this.state.user_email.toLowerCase(),
+            password: Math.random().toString(36).slice(-8),
             role: this.state.user_role.toLowerCase(),
-            status: setStatus.toString()
+            status: 'Incomplete'
         };
         
         console.log(newUser)
@@ -82,7 +77,7 @@ export default class CreateUser extends Component {
                                  }
                                  else{
                                     console.log("else");
-                                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: email.toString()})
+                                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: this.state.user_email})
                                     .then( (response) => {console.log(response.data)
 									                      this.props.history.push('/admin');
 														  window.location.reload();

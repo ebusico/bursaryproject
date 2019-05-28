@@ -13,8 +13,6 @@ import {
 } from 'reactstrap';
 import { authService } from "./components/modules/authService";
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "./secrets/secrets.js";
 import './css/navigation.css';
 import SideBar from './components/sideBar.component.js';
 
@@ -35,8 +33,6 @@ export default class Navigation extends React.Component {
     };
   }
 
-
-
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -49,8 +45,11 @@ export default class Navigation extends React.Component {
     if (!authService.currentUserValue) {
       return null
     } else {
+      console.log("token id is: "+ this.state.currentUser.token._id);
+      console.log(this.state.currentUser);
       axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/' + this.state.currentUser.token._id)
         .then(response => {
+          console.log(response);
           if (response.data == null) {
             axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
               .then(response => {
@@ -61,19 +60,15 @@ export default class Navigation extends React.Component {
                   }
                 }
                 else{
-                  var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
-
                   this.setState({
-                    staff_email: email
+                    staff_email: response.data.email
                   })
                 }
               })
           } else {
-            var trainee_fname = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
-            var trainee_lname = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee).toString(CryptoJS.enc.Utf8);
             this.setState({
-              trainee_fname: trainee_fname,
-              trainee_lname: trainee_lname
+              trainee_fname: response.data.trainee_fname,
+              trainee_lname: response.data.trainee_lname
             })
           }
         })

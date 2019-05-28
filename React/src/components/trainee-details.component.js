@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import { CSVLink } from "react-csv";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
@@ -33,30 +31,20 @@ export default class TraineeDetails extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                console.log(Date(response.data.trainee_end_date));
-                if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
-                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee).toString(CryptoJS.enc.Utf8);
-                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee).toString(CryptoJS.enc.Utf8);
-                    var trainee_bank_name = CryptoJS.AES.decrypt(response.data.trainee_bank_name, codes.trainee).toString(CryptoJS.enc.Utf8);
-					this.setState({
-                        trainee_account_no: trainee_account_no,
-                        trainee_sort_code: trainee_sort_code,
-						trainee_bank_name: trainee_bank_name,
-                    }) 
-                }
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee).toString(CryptoJS.enc.Utf8);
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee).toString(CryptoJS.enc.Utf8);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv}).toString(CryptoJS.enc.Utf8);
-                var trainee_start_date = CryptoJS.AES.decrypt(response.data.trainee_start_date, codes.trainee).toString(CryptoJS.enc.Utf8);
-                var trainee_end_date = CryptoJS.AES.decrypt(response.data.trainee_end_date, codes.trainee).toString(CryptoJS.enc.Utf8);
+                console.log(response.data);
                 this.setState({
-                    trainee_fname: trainee_fname,
-                    trainee_lname: trainee_lname,
-                    trainee_email: trainee_email,
-                    trainee_start_date: trainee_start_date,
-                    trainee_end_date: trainee_end_date,
-                    csv: [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "DecimalPlace", "Append", "Data to Copy to Notepad"],[trainee_fname +" "+ trainee_lname, trainee_account_no, trainee_sort_code, "0.00", "2","000",trainee_sort_code+','+trainee_fname+' '+trainee_lname+','+trainee_account_no+','+"0"+".00"+','+"BURSARY"+','+"99"]]
-                }) 
+                    trainee_fname: response.data.trainee_fname,
+                    trainee_lname: response.data.trainee_lname,
+                    trainee_email: response.data.trainee_email,
+                    trainee_start_date: response.data.trainee_start_date,
+                    trainee_end_date: response.data.trainee_end_date,
+                    trainee_bank_name: response.data.trainee_bank_name,
+                    trainee_sort_code: response.data.trainee_sort_code,
+                    trainee_account_no: response.data.trainee_account_no,
+                    csv: [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "DecimalPlace", "Append", "Data to Copy to Notepad"],[response.data.trainee_fname +" "+ response.data.trainee_lname, response.data.trainee_account_no, response.data.trainee_sort_code, "0.00", "2","000",response.data.trainee_sort_code+','+response.data.trainee_fname+' '+response.data.trainee_lname+','+response.data.trainee_account_no+','+"0"+".00"+','+"BURSARY"+','+"99"]]
+                });
+                console.log(this.state.trainee_start_date);
+                console.log(this.state.trainee_end_date);
                 
             })
             .catch(function (error) {

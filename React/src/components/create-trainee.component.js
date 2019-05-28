@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import moment from 'moment';
@@ -59,10 +57,8 @@ export default class CreateTrainee extends Component {
             }
           }
           else{
-            var email = CryptoJS.AES.decrypt(response.data.email, codes.staff, { iv: codes.iv }).toString(CryptoJS.enc.Utf8);
-
             this.setState({
-              recruiterEmail: email
+              recruiterEmail: response.data.email
             })
           }
         });
@@ -99,7 +95,10 @@ export default class CreateTrainee extends Component {
 			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 		})
 	}
+	// calculate amount of days
+	
 	onChangeWorkingDays(){
+		let currentMonth = moment().format('MM');
 		let bursary_start = this.state.trainee_start_date;
 		let bursary_end = this.state.trainee_end_date;
 		
@@ -108,7 +107,7 @@ export default class CreateTrainee extends Component {
 				trainee_days_worked:bursary_start.diff(bursary_start, 'days'),
 			})
 		}
-		console.log('Number of days to work '+ this.state.trainee_days_worked);
+		console.log('Number of days to work: ' + currentMonth);
 	}
 		
 	onChangeBenchEndDate(benchEndDate) {
@@ -153,7 +152,46 @@ export default class CreateTrainee extends Component {
 	
     onSubmit(e) {
         e.preventDefault();
-
+		let currentMonth = moment().format('MM-YY');
+		let bursary_start = moment(this.state.trainee_start_date).format('MM-YY');
+		let bursary_end = moment(this.state.trainee_end_date).format('MM-YY');
+		
+		if(bursary_start > currentMonth){
+			this.setState({
+				trainee_days_worked: 0,
+			})
+		}
+		else if(bursary_end < currentMonth){
+			this.setState({
+				trainee_days_worked: 0,
+			})
+		}		
+		else if( bursary_start === currentMonth){
+			let start = moment(this.state.trainee_start_date, 'YYYY-MM-DD'); //Pick any format
+			let end = moment(this.state.trainee_start_date, 'YYYY-MM-DD').endOf('month'); //right now (or define an end date yourself)
+			let workedDays = moment(start).businessDiff(end);
+			console.log('days worked: ' + workedDays);
+			
+			this.setState({
+				trainee_days_worked: workedDays,
+			})
+		}else if(bursary_end == currentMonth){
+			let start = moment(this.state.trainee_end_date, 'YYYY-MM-DD').startOf('month');
+			let end = moment(this.state.trainee_end_date, 'YYYY-MM-DD'); 
+			let workedDays = 1 + moment(start).businessDiff(end);
+			
+			console.log('working days for trainee ' + workedDays);
+			this.setState({
+				trainee_days_worked: workedDays,
+			})
+		}else{
+			let start = moment('YYYY-MM-DD').startOf('month');
+			let end = moment('YYYY-MM-DD').endOf('month');
+			console.log(start);
+			console.log(end)
+			console.log(moment(start).businessDiff(end));
+		}
+		
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alert('Please select the bursary start/end dates');
         }
@@ -166,32 +204,21 @@ export default class CreateTrainee extends Component {
             console.log(`Trainee Lname: ${this.state.trainee_lname}`);
             console.log(`Trainee Email: ${this.state.trainee_email}`);
             console.log(this.state.bursary);
-            
-            var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
-            var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-            var email = CryptoJS.AES.encrypt(this.state.trainee_email.toLowerCase(), codes.staff, {iv: codes.iv});
-            var pass  = CryptoJS.AES.encrypt(Math.random().toString(36).slice(-8), codes.trainee);
-            var startDate = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
-            var endDate = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
-            var benchStartDate = CryptoJS.AES.encrypt(this.state.trainee_bench_start_date.toString(), codes.trainee);
-			var benchEndDate = CryptoJS.AES.encrypt(this.state.trainee_bench_end_date.toString(), codes.trainee);
-			var recruiterEmail = CryptoJS.AES.encrypt(this.state.recruiterEmail, codes.trainee);
-            var setStatus = CryptoJS.AES.encrypt('Incomplete', codes.trainee);
-            var setBursary = CryptoJS.AES.encrypt(this.state.bursary, codes.trainee);
-
+            console.log("this is the start date of state : "+this.state.trainee_start_date);
             var newTrainee = {
-                trainee_fname: fname.toString(),
-                trainee_lname: lname.toString(),
-                trainee_email: email.toString(),
-                trainee_password: pass.toString(),
-                trainee_start_date: startDate.toString(),
-                trainee_end_date: endDate.toString(),
-                added_By: recruiterEmail.toString(),
-                status: setStatus.toString(),
-                bursary: setBursary.toString(),
-				trainee_bench_end_date: benchEndDate.toString(),
-				trainee_bench_start_date: benchStartDate.toString(),
+                trainee_fname: this.state.trainee_fname,
+                trainee_lname: this.state.trainee_lname,
+                trainee_email: this.state.trainee_email,
+                trainee_password: Math.random().toString(36).slice(-8),
+                trainee_start_date: this.state.trainee_start_date.toString(),
+                trainee_end_date: this.state.trainee_end_date.toString(),
+                added_By: this.state.recruiterEmail,
+                status: 'Incomplete',
+                bursary: this.state.bursary,
+				trainee_bench_end_date: this.state.trainee_bench_end_date,
+				trainee_bench_start_date: this.state.trainee_bench_start_date,
             };
+            console.log("this is the start date of the variable : "+ newTrainee.trainee_start_date);
 
             console.log(newTrainee);
             
@@ -200,8 +227,9 @@ export default class CreateTrainee extends Component {
                                     alert("Email is already in use");
                                 }
                                 else{
+
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {
-                                        trainee_email: email.toString()
+                                        trainee_email: this.state.trainee_email.toLowerCase()
                                         })
                                     .then( (response) => {console.log(response.data);
 									                      this.props.history.push('/');

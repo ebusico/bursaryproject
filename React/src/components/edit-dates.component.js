@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
@@ -46,9 +44,23 @@ export default class EditDates extends Component {
 	
 	//Working day
 	onChangeWorkingDays(e) {
-		this.setState({
-			trainee_days_worked: e.target.value
-		});
+		let currentMonth = moment().format('MM');
+		let bursary_start = moment(this.state.trainee_start_date).format('MM');
+		let bursary_end = moment(this.state.trainee_end_date).format('MM');
+		let start = moment(this.state.trainee_start_date, 'YYYY-MM-DD'); //Pick any format
+		let end = moment(this.state.trainee_start_date, 'YYYY-MM-DD').endOf('month'); //right now (or define an end date yourself)
+		let weekdayCounter = 0;
+		console.log(end);
+		console.log(start);
+		while (start <= end) {
+			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
+				weekdayCounter++; //add 1 to your counter if its not a weekend day
+			}
+			start = moment(start, 'YYYY-MM-DD').add(1, 'days'); //increment by one day
+		}
+		console.log(weekdayCounter); //display your total elapsed weekdays in the console!
+		console.log('Number of days to work: ' + currentMonth);
+		console.log('start '+ bursary_start);
 	}
 	
 	onChangeBenchStartDate(benchStartDate) {
@@ -92,22 +104,15 @@ export default class EditDates extends Component {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 console.log(response);
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv:codes.iv});
-                var trainee_start_date = CryptoJS.AES.decrypt(response.data.trainee_start_date, codes.trainee);
-                var trainee_end_date = CryptoJS.AES.decrypt(response.data.trainee_end_date, codes.trainee);
-                var benchStartDate = CryptoJS.AES.decrypt(response.data.trainee_bench_start_date.toString(), codes.trainee);
-				var benchEndDate = CryptoJS.AES.decrypt(response.data.trainee_bench_end_date.toString(), codes.trainee);
                 
                 this.setState({
-                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
-                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
-                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
-                    trainee_start_date: new Date (trainee_start_date.toString(CryptoJS.enc.Utf8)),
-                    trainee_end_date: new Date (trainee_end_date.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_start_date: new Date (benchStartDate.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_end_date: new Date(benchEndDate.toString(CryptoJS.enc.Utf8)),
+                    trainee_fname: response.data.trainee_fname,
+                    trainee_lname: response.data.trainee_lname,
+                    trainee_email: response.data.trainee_email,
+                    trainee_start_date: new Date (response.data.trainee_start_date),
+                    trainee_end_date: new Date (response.data.trainee_end_date),
+					trainee_bench_start_date: new Date (response.data.trainee_bench_start_date),
+					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
                 })
                 console.log(this.state.trainee_start_date);
                 console.log(this.state.trainee_end_date);
@@ -151,25 +156,20 @@ export default class EditDates extends Component {
 			alert('The end date is before the start date, please resolve this before finish editing');
 		}
         e.preventDefault();
-        var start = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
-        var end = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
-		var bench_start = CryptoJS.AES.encrypt(this.state.trainee_bench_start_date.toString(), codes.trainee);
-		var bench_end = CryptoJS.AES.encrypt(this.state.trainee_bench_end_date.toString(), codes.trainee);
-		var working_days = CryptoJS.AES.encrypt(this.state.trainee_days_worked.toString(), codes.trainee);
-		
+
         const obj = {
-            trainee_start_date: start.toString(),
-            trainee_end_date: end.toString(),
-			trainee_bench_start_date:bench_start(),
-			trainee_bench_end_date:bench_end(),
-			trainee_days_worked:working_days(),
-        };
+            trainee_start_date: this.state.trainee_start_date,
+            trainee_end_date: this.state.trainee_end_date,
+			trainee_bench_start_date:this.state.trainee_bench_start_date,
+			trainee_bench_end_date:this.state.trainee_bench_end_date,
+			trainee_days_worked: this.state.trainee_days_worked,
+		}
+		
         console.log(obj);
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
-                          window.location.reload();});
-        
+                          window.location.reload();});    
     }
 
 
