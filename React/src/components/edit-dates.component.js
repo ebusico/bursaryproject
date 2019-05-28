@@ -28,7 +28,7 @@ export default class EditDates extends Component {
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
 		this.onChangeBenchStartDate = this.onChangeBenchStartDate.bind(this);
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
-		
+		this.onChangeWorkingDays = this.onChangeWorkingDays.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -43,6 +43,13 @@ export default class EditDates extends Component {
 			currentUser: authService.currentUserValue
         }
     }
+	
+	//Working day
+	onChangeWorkingDays(e) {
+		this.setState({
+			trainee_days_worked: e.target.value
+		});
+	}
 	
 	onChangeBenchStartDate(benchStartDate) {
 		this.setState({
@@ -123,12 +130,7 @@ export default class EditDates extends Component {
             trainee_lname: e.target.value
         });
     }
-	//Working day
-	onChangeWorkingDays(e) {
-		this.setState({
-			trainee_days_worked: e.target.value
-		});
-	}
+
     onChangeTraineeEmail(e) {
         this.setState({
             trainee_email: e.target.value
@@ -136,13 +138,31 @@ export default class EditDates extends Component {
     }
     
     onSubmit(e) {
+		if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
+            alert('Please select the bursary start/end dates');
+        }
+        else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
+            alert('The end date is before the start date, please resolve this before creating the trainee');
+        }
+		else if(this.state.trainee_bench_start_date === '' || this.state.trainee_bench_end_date === ''){
+			alert('Please Enter the trainee bench start/end dates');
+		}
+		else if (moment(this.state.trainee_bench_end_date).isBefore(this.state.trainee_bench_start_date)){
+			alert('The end date is before the start date, please resolve this before finish editing');
+		}
         e.preventDefault();
         var start = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
         var end = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
-
+		var bench_start = CryptoJS.AES.encrypt(this.state.trainee_bench_start_date.toString(), codes.trainee);
+		var bench_end = CryptoJS.AES.encrypt(this.state.trainee_bench_end_date.toString(), codes.trainee);
+		var working_days = CryptoJS.AES.encrypt(this.state.trainee_days_worked.toString(), codes.trainee);
+		
         const obj = {
             trainee_start_date: start.toString(),
             trainee_end_date: end.toString(),
+			trainee_bench_start_date:bench_start(),
+			trainee_bench_end_date:bench_end(),
+			trainee_days_worked:working_days(),
         };
         console.log(obj);
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
@@ -258,6 +278,16 @@ export default class EditDates extends Component {
                                     },
                                 }}
                             />
+                    </div>
+					<div className="form-group">
+                        <label>Amount of days to be paid bursary</label>
+                        <input 
+                                type="number" 
+								max="31"
+                                className="form-control"
+                                value={this.state.trainee_days_worked}
+                                onChange={this.onChangeWorkingDays}
+								required/>
                     </div>
                     <br />
                     <div className="form-group">

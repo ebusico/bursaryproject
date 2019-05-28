@@ -99,7 +99,18 @@ export default class CreateTrainee extends Component {
 			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 		})
 	}
-	
+	onChangeWorkingDays(){
+		let bursary_start = this.state.trainee_start_date;
+		let bursary_end = this.state.trainee_end_date;
+		
+		if( bursary_start !== moment(bursary_start).endOf("month")){
+			this.setState({
+				trainee_days_worked:bursary_start.diff(bursary_start, 'days'),
+			})
+		}
+		console.log('Number of days to work '+ this.state.trainee_days_worked);
+	}
+		
 	onChangeBenchEndDate(benchEndDate) {
 		this.setState({
 			trainee_bench_end_date: benchEndDate
@@ -139,7 +150,7 @@ export default class CreateTrainee extends Component {
             });
         }
     }
-
+	
     onSubmit(e) {
         e.preventDefault();
 
