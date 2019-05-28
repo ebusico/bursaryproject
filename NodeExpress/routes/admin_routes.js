@@ -26,6 +26,8 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
             //
             staff.map(function(currentStaff, i){
                 currentStaff.email = CryptoJS.AES.decrypt(currentStaff.email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
+                currentStaff.fname = CryptoJS.AES.decrypt(currentStaff.fname, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
+                currentStaff.lname = CryptoJS.AES.decrypt(currentStaff.lname, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
                 currentStaff.status = CryptoJS.AES.decrypt(currentStaff.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             });
             res.json(staff);
@@ -72,6 +74,8 @@ adminRoutes.route('/addUser', requireAuth).post(function(req,res){
     var newUser = new User({
       email: CryptoJS.AES.encrypt(req.body.email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(),
       password: CryptoJS.AES.encrypt(req.body.password, 'c9nMaacr2Y'),
+      fname: CryptoJS.AES.encrypt(req.body.fname, 'c9nMaacr2Y').toString(),
+      lname: CryptoJS.AES.encrypt(req.body.lname, 'c9nMaacr2Y').toString(),
       role: req.body.role,
       status: CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString()
     });
@@ -102,6 +106,8 @@ adminRoutes.route('/addUser/postman').post(function(req,res){
         var newUser = new User({
           email: encrypted.toString(),
           status: status.toString(),
+          fname: CryptoJS.AES.encrypt(req.body.fname, 'c9nMaacr2Y').toString(),
+          lname: CryptoJS.AES.encrypt(req.body.lname, 'c9nMaacr2Y').toString(),
           password: req.body.password,
           role: req.body.role
         });
