@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
@@ -40,25 +38,13 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv:codes.iv});
-                
-                if(response.data.trainee_account_no != null && response.data.trainee_sort_code != null){
-					var trainee_bank_name = CryptoJS.AES.decrypt(response.data.trainee_bank_name, codes.trainee);
-                    var trainee_account_no = CryptoJS.AES.decrypt(response.data.trainee_account_no, codes.trainee);
-                    var trainee_sort_code = CryptoJS.AES.decrypt(response.data.trainee_sort_code, codes.trainee);
-                    this.setState({
-						trainee_bank_name: trainee_bank_name.toString(CryptoJS.enc.Utf8),
-                        trainee_account_no: trainee_account_no.toString(CryptoJS.enc.Utf8),
-                        trainee_sort_code: trainee_sort_code.toString(CryptoJS.enc.Utf8)
-                    })
-                }
-                
                 this.setState({
-                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
-                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
-                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
+                    trainee_fname: response.data.trainee_fname,
+                    trainee_lname: response.data.trainee_lname,
+                    trainee_email: response.data.trainee_email,
+                    trainee_bank_name: response.data.trainee_bank_name,
+                    trainee_account_no: response.data.trainee_account_no,
+                    trainee_sort_code: response.data.trainee_sort_code
                 })   
             })
             .catch(function (error) {
@@ -147,12 +133,6 @@ export default class EditTrainee extends Component {
     
     onSubmit(e) {
         e.preventDefault();
-        var fname = CryptoJS.AES.encrypt(this.state.trainee_fname, codes.trainee);
-        var lname = CryptoJS.AES.encrypt(this.state.trainee_lname, codes.trainee);
-        var email = CryptoJS.AES.encrypt(this.state.trainee_email, codes.staff, {iv: codes.iv});
-        var bankName = CryptoJS.AES.encrypt(this.state.trainee_bank_name, codes.trainee);
-		var accountNo = CryptoJS.AES.encrypt(this.state.trainee_account_no, codes.trainee);
-        var sortCode = CryptoJS.AES.encrypt(this.state.trainee_sort_code, codes.trainee);
         var formatted_sort_code = '';
 
         if(this.state.trainee_sort_code.charAt(0) == 0){
@@ -163,12 +143,12 @@ export default class EditTrainee extends Component {
         }
 		
         const updated_trainee = {
-            trainee_fname: fname.toString(),
-            trainee_lname: lname.toString(),
-            trainee_email: email.toString(),
-			trainee_bank_name:bankName.toString(),
-            trainee_account_no: accountNo.toString(),
-            trainee_sort_code: sortCode.toString()
+            trainee_fname: this.state.trainee_fname,
+            trainee_lname: this.state.trainee_lname,
+            trainee_email: this.state.trainee_email,
+			trainee_bank_name: this.state.trainee_bank_name,
+            trainee_account_no: this.state.trainee_account_no,
+            trainee_sort_code: this.state.trainee_sort_code
         };
 
         const new_bank = {

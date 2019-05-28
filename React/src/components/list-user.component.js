@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import { authService } from './modules/authService';
 import { Link } from 'react-router-dom'
 import AccessDenied from './modules/AccessDenied';
@@ -39,15 +37,9 @@ export default class ListUser extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/')
             .then(response => {
+                console.log(response.data);
 			if(this.state.currentUser.token.role === 'admin'){
-                var encrypted = response.data;
-                encrypted.map(function(currentUser, i){
-                    var email = CryptoJS.AES.decrypt(currentUser.email, codes.staff ,{iv: codes.iv});
-                    var status = CryptoJS.AES.decrypt(currentUser.status, codes.staff ,{iv: codes.iv});
-                    currentUser.email = email.toString(CryptoJS.enc.Utf8);
-                    currentUser.status = status.toString(CryptoJS.enc.Utf8);
-                });
-                this.setState({users: encrypted});
+                this.setState({users: response.data});
             }
 			})
             .catch(function (error){

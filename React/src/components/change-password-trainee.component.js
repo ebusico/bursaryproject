@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import '../css/changePasswordTrainee.css';
 
 export default class ChangePassword extends Component {
@@ -40,11 +38,9 @@ export default class ChangePassword extends Component {
             })
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.state.trainee_id)
             .then(response => {
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv: codes.iv});
-                var trainee_password  = CryptoJS.AES.decrypt(response.data.trainee_password, codes.trainee);
                 this.setState({
-                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
-                    trainee_password: trainee_password.toString(CryptoJS.enc.Utf8),
+                    trainee_email: response.data.trainee_email,
+                    trainee_password: response.data.trainee_password,
                 })   
             })
             .catch((error) => {
@@ -74,9 +70,8 @@ export default class ChangePassword extends Component {
             alert("Password does not match");
 		} 
         else {
-            var pass = CryptoJS.AES.encrypt(this.state.trainee_password, codes.trainee);
             const obj = {
-                trainee_password: pass.toString()
+                trainee_password: this.state.trainee_password
             };
             console.log(obj);
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update-password/'+this.props.match.params.token, obj)

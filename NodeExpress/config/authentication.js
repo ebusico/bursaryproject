@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/staff');
 var secret = require('./auth');
 var winston = require('./winston');
+var CryptoJS = require("crypto-js");
 
 // JWT token
 function generateToken(user){
@@ -11,10 +12,12 @@ function generateToken(user){
 }
 
 function setUserInfo(request){
+	console.log(request.status);
+	console.log(CryptoJS.AES.decrypt(request.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
 	return {
 	_id: request._id,
 	role: request.role,
-	status: request.status
+	status: CryptoJS.AES.decrypt(request.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)
 };
 }
 

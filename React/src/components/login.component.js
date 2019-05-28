@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 
 import { authService } from "./modules/authService";
 import decode from "jwt-decode";
@@ -40,13 +38,10 @@ export default class Login extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        CryptoJS.pad.NoPadding = { pad: function () { }, unpad: function () { } };
 
-        var encrypted = CryptoJS.AES.encrypt(this.state.email, codes.staff, { iv: codes.iv });
-        var pass = CryptoJS.AES.encrypt(this.state.psw, codes.staffPass);
         const user = {
-            username: encrypted.toString(),
-            password: pass.toString(),
+            username: this.state.email,
+            password: this.state.psw,
             token: ''
         };
 
@@ -57,7 +52,7 @@ export default class Login extends Component {
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
             .then(function (res) {
                 if (res.status === 200) {
-                    var status = CryptoJS.AES.decrypt(res.data.user.status, codes.staff ,{iv: codes.iv}).toString(CryptoJS.enc.Utf8);
+                    var status = res.data.user.status;
                     console.log("STATUS: "+status);
                     if(status !== "Suspended"){
                         if (typeof res.data.user.role === "undefined") {

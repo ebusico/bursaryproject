@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
@@ -82,22 +80,15 @@ export default class EditDates extends Component {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
                 console.log(response);
-                var trainee_fname  = CryptoJS.AES.decrypt(response.data.trainee_fname, codes.trainee);
-                var trainee_lname  = CryptoJS.AES.decrypt(response.data.trainee_lname, codes.trainee);
-                var trainee_email  = CryptoJS.AES.decrypt(response.data.trainee_email, codes.staff, {iv:codes.iv});
-                var trainee_start_date = CryptoJS.AES.decrypt(response.data.trainee_start_date, codes.trainee);
-                var trainee_end_date = CryptoJS.AES.decrypt(response.data.trainee_end_date, codes.trainee);
-                var benchStartDate = CryptoJS.AES.decrypt(response.data.trainee_bench_start_date.toString(), codes.trainee);
-				var benchEndDate = CryptoJS.AES.decrypt(response.data.trainee_bench_end_date.toString(), codes.trainee);
                 
                 this.setState({
-                    trainee_fname: trainee_fname.toString(CryptoJS.enc.Utf8),
-                    trainee_lname: trainee_lname.toString(CryptoJS.enc.Utf8),
-                    trainee_email: trainee_email.toString(CryptoJS.enc.Utf8),
-                    trainee_start_date: new Date (trainee_start_date.toString(CryptoJS.enc.Utf8)),
-                    trainee_end_date: new Date (trainee_end_date.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_start_date: new Date (benchStartDate.toString(CryptoJS.enc.Utf8)),
-					trainee_bench_end_date: new Date(benchEndDate.toString(CryptoJS.enc.Utf8)),
+                    trainee_fname: response.data.trainee_fname,
+                    trainee_lname: response.data.trainee_lname,
+                    trainee_email: response.data.trainee_email,
+                    trainee_start_date: new Date (response.data.trainee_start_date),
+                    trainee_end_date: new Date (response.data.trainee_end_date),
+					trainee_bench_start_date: new Date (response.data.trainee_bench_start_date),
+					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
                 })
                 console.log(this.state.trainee_start_date);
                 console.log(this.state.trainee_end_date);
@@ -129,19 +120,16 @@ export default class EditDates extends Component {
     
     onSubmit(e) {
         e.preventDefault();
-        var start = CryptoJS.AES.encrypt(this.state.trainee_start_date.toString(), codes.trainee);
-        var end = CryptoJS.AES.encrypt(this.state.trainee_end_date.toString(), codes.trainee);
 
         const obj = {
-            trainee_start_date: start.toString(),
-            trainee_end_date: end.toString(),
+            trainee_start_date: this.state.trainee_start_date,
+            trainee_end_date: this.state.trainee_end_date,
         };
         console.log(obj);
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
-                          window.location.reload();});
-        
+                          window.location.reload();});    
     }
 
 

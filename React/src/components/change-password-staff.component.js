@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
 import { codes } from "../secrets/secrets.js";
 import '../css/changePasswordTrainee.css';
 
@@ -26,6 +25,7 @@ export default class ChangePasswordStaff extends Component {
             .then(response => {
                     console.log(response.data.message);
                     if (response.data.message === 'password reset link a-ok') {
+                        console.log(response.data.staff_id);
                         this.setState({
                             id: response.data.staff_id,
                             error: false
@@ -40,11 +40,9 @@ export default class ChangePasswordStaff extends Component {
             })
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/staff/'+this.state.id)
             .then(response => {
-                var email  = CryptoJS.AES.decrypt(response.data.email, codes.staff, {iv: codes.iv});
-                var password  = CryptoJS.AES.decrypt(response.data.password, codes.staffPass);
                 this.setState({
-                    email: email.toString(CryptoJS.enc.Utf8),
-                    password: password.toString(CryptoJS.enc.Utf8),
+                    email: response.data.email,
+                    password: response.data.password
                 })   
             })
             .catch((error) => {
@@ -74,9 +72,8 @@ export default class ChangePasswordStaff extends Component {
             alert("Password does not match");
 		} 
         else {
-            var pass = CryptoJS.AES.encrypt(this.state.password, codes.staffPass);
             const obj = {
-                password: pass.toString()
+                password: this.state.password
             };
             console.log(obj);
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/update-password-staff/'+this.props.match.params.token, obj)

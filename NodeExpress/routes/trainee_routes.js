@@ -19,6 +19,9 @@ let SortCodeCollection = require('../models/sortcode.model');
 
 require('dotenv').config()
 
+let hex = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
+let iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
+
 //gets all trainees in database
 traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin','recruiter','finance'])).get(function(req, res) {
     Trainee.find(function(err, trainee) {
@@ -26,6 +29,33 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
             console.log(err);
 			winston.error(err);
         } else {
+            trainee.map(function(currentTrainee, i){
+                var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+                currentTrainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
+                currentTrainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx');
+                currentTrainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx');
+                currentTrainee.status = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.added_By, '3FJSei8zPx');
+                currentTrainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
+                currentTrainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_start_date, '3FJSei8zPx');
+                currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, '3FJSei8zPx');
+                currentTrainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
+                if(currentTrainee.status === 'Active'){
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_bank_name, '3FJSei8zPx');
+                    currentTrainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_account_no, '3FJSei8zPx');
+                    currentTrainee.trainee_account_no = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_sort_code, '3FJSei8zPx');
+                    currentTrainee.trainee_sort_code = bytes.toString(CryptoJS.enc.Utf8);
+                }
+            });
+            console.log(trainee);
             res.json(trainee);
 			winston.info('database collected all trainees successfully')
         }
@@ -35,9 +65,45 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
 //get a single trainee by id
 traineeRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
+    console.log(req.params);
     Trainee.findById(id, function(err, trainee) {
-         res.json(trainee);
-		 winston.info('get data for trainee: '+ id);
+        console.log('trainee found is :');
+        console.log(trainee);
+        if(trainee === null){
+            res.json(null);
+        }
+        else{
+            var bytes  = CryptoJS.AES.decrypt(trainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+            trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx');
+            trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_lname, '3FJSei8zPx');
+            trainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx');
+            trainee.status = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.added_By, '3FJSei8zPx');
+            trainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx');
+            trainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx');
+            trainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_end_date, '3FJSei8zPx');
+            trainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_bench_start_date, '3FJSei8zPx');
+            trainee.trainee_bench_start_date = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx');
+            trainee.trainee_bench_end_date = bytes.toString(CryptoJS.enc.Utf8);
+            if(trainee.status === 'Active'){
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_bank_name, '3FJSei8zPx');
+                trainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_account_no, '3FJSei8zPx');
+                trainee.trainee_account_no = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_sort_code, '3FJSei8zPx');
+                trainee.trainee_sort_code = bytes.toString(CryptoJS.enc.Utf8);
+            }
+            res.json(trainee);
+            winston.info('get data for trainee: '+ id);
+        }
     })
     .catch(err => {
         console.log(err);
@@ -48,7 +114,20 @@ traineeRoutes.route('/:id').get(function(req, res) {
 
 //get a single trainee by email
 traineeRoutes.route('/getByEmail').post(function(req,res) {
-    Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+    let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+    Trainee.findOne({trainee_email: email}, function(err, trainee) {
+        var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+        trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
+        trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx');
+        trainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+        bytes = CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx');
+        trainee.status = bytes.toString(CryptoJS.enc.Utf8);
+        bytes = CryptoJS.AES.decrypt(currentTrainee.added_By, '3FJSei8zPx');
+        trainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+        bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
+        trainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
         res.json(trainee);
 		winston.info('found email: ' + trainee);
     })
@@ -59,14 +138,25 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
 })
 //adds new trainee to database
 traineeRoutes.route('/add').post(function(req, res) {
-	let id = req.params._id;
+    console.log("adding a trainee req.body : ");
+    console.log(req.body);
+    req.body.trainee_fname = CryptoJS.AES.encrypt(req.body.trainee_fname, '3FJSei8zPx').toString();
+    req.body.trainee_lname = CryptoJS.AES.encrypt(req.body.trainee_lname, '3FJSei8zPx').toString();
+    req.body.trainee_email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+    req.body.trainee_password  = CryptoJS.AES.encrypt(req.body.trainee_password, '3FJSei8zPx').toString();
+    req.body.trainee_start_date = CryptoJS.AES.encrypt(req.body.trainee_start_date, '3FJSei8zPx').toString();
+    req.body.trainee_end_date = CryptoJS.AES.encrypt(req.body.trainee_end_date, '3FJSei8zPx').toString();
+    req.body.trainee_bench_start_date = CryptoJS.AES.encrypt(req.body.trainee_bench_start_date.toString(), '3FJSei8zPx').toString();
+	req.body.trainee_bench_end_date = CryptoJS.AES.encrypt(req.body.trainee_bench_end_date.toString(), '3FJSei8zPx').toString();
+	req.body.added_By = CryptoJS.AES.encrypt(req.body.added_By, '3FJSei8zPx').toString();
+    req.body.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();
+    req.body.bursary = CryptoJS.AES.encrypt(req.body.bursary, '3FJSei8zPx').toString();
     let trainee = new Trainee(req.body);
-	var added_By = CryptoJS.AES.decrypt(trainee.added_By, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
     trainee.save()
         .then(trainee => {
-			console.log('Recruitor: ' + added_By + ' has created a new trainee: '+ trainee._id);
+			console.log('Recruitor: ' + trainee.added_By + ' has created a new trainee: '+ trainee._id);
 			console.log('An email is being sent to ' + trainee._id );
-			winston.info('Recruitor: ' + added_By + ' has created a new trainee: '+ trainee._id);
+			winston.info('Recruitor: ' + trainee.added_By + ' has created a new trainee: '+ trainee._id);
 			winston.info('An email is being sent to ' + trainee._id );
             res.status(200).json({'trainee': 'Trainee added successfully'});
 			
@@ -85,7 +175,7 @@ traineeRoutes.route('/delete/:id').get(function(req, res) {
             res.status(404).send("trainee is not found");
         }
         else{
-                trainee.status = CryptoJS.AES.encrypt('Suspended', '3FJSei8zPx');
+                trainee.status = CryptoJS.AES.encrypt('Suspended', '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     res.json('Trainee deleted');
                     winston.info(trainee._id + ' has been suspended')
@@ -106,10 +196,10 @@ traineeRoutes.route('/reactivate/:id').get(function(req,res){
         }
         else{
             if(trainee.trainee_bank_name != null){
-                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
+                trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx').toString();
             }
             else{
-                trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx');                  
+                trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();                  
             }
             trainee.save().then(trainee => {
                 res.json('Trainee reactivated');
@@ -134,12 +224,12 @@ traineeRoutes.route('/update/:id').post(function(req, res) {
             if(status === 'Incomplete'){
                 trainee.status = CryptoJS.AES.encrypt('Active', '3FJSei8zPx');
             }
-            trainee.trainee_fname = req.body.trainee_fname;
-            trainee.trainee_lname = req.body.trainee_lname;
-            trainee.trainee_email = req.body.trainee_email;
-			trainee.trainee_bank_name = req.body.trainee_bank_name;
-            trainee.trainee_account_no = req.body.trainee_account_no;
-            trainee.trainee_sort_code = req.body.trainee_sort_code;
+            trainee.trainee_email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+            trainee.trainee_fname = CryptoJS.AES.encrypt(req.body.trainee_fname, '3FJSei8zPx').toString();
+            trainee.trainee_lname = CryptoJS.AES.encrypt(req.body.trainee_lname, '3FJSei8zPx').toString();
+            trainee.trainee_bank_name = CryptoJS.AES.encrypt(req.body.trainee_bank_name, '3FJSei8zPx').toString();
+            trainee.trainee_account_no = CryptoJS.AES.encrypt(req.body.trainee_account_no, '3FJSei8zPx').toString();
+            trainee.trainee_sort_code = CryptoJS.AES.encrypt(req.body.trainee_sort_code, '3FJSei8zPx').toString();
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
@@ -160,8 +250,8 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
             res.status(404).send("data is not found");
         }
         else {
-            trainee.trainee_start_date = req.body.trainee_start_date;
-            trainee.trainee_end_date = req.body.trainee_end_date;
+            trainee.trainee_start_date = CryptoJS.AES.encrypt(req.body.trainee_start_date, '3FJSei8zPx').toString();
+            trainee.trainee_end_date = CryptoJS.AES.encrypt(req.body.trainee_end_date, '3FJSei8zPx').toString();
 
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
@@ -195,12 +285,12 @@ traineeRoutes.route('/reset/:token').get(function(req, res) {
 
 //sends trainee password reset email
 traineeRoutes.route('/send-email').post(function(req, res) {
-    var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
-    var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-    var email = CryptoJS.AES.decrypt(req.body.trainee_email, key, {iv:iv});
-    console.log("got email:" + email.toString(CryptoJS.enc.Utf8));
-	winston.info('an email will be sent to the trainee:');
-    Trainee.findOne({trainee_email: req.body.trainee_email}, function(err, trainee) {
+    console.log("got email:" + req.body.trainee_email);
+    winston.info('an email will be sent to the trainee:');
+    let email = CryptoJS.AES.encrypt(req.body.trainee_email, hex, {iv: iv}).toString();
+    console.log(email);
+    
+    Trainee.findOne({trainee_email: email}, function(err, trainee) {
         console.log(trainee);
 		winston.info(trainee);
         if (!trainee){
@@ -223,7 +313,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             });
             var mailOptions = {
                 from: 'QABursary@aol.com', // sender address
-                to: email.toString(CryptoJS.enc.Utf8), // list of receivers
+                to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
                 text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
             }            
@@ -247,11 +337,8 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
             res.status(404).send("data is not found");
         else
             //bcrypt pass
-            //var bytes  = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx');
-            var decryptPass = CryptoJS.AES.decrypt(req.body.trainee_password, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			
             bcrypt.genSalt(10, function(err, salt) {
-                bcrypt.hash(decryptPass, salt, function(err, hash) {
+                bcrypt.hash(req.body.trainee_password, salt, function(err, hash) {
                   req.body.trainee_password = hash;
                   trainee.trainee_password = req.body.trainee_password;
                   trainee.save().then(trainee => {

@@ -15,6 +15,8 @@ var options = { mode: CryptoJS.mode.ECB, padding:  CryptoJS.pad.Pkcs7};
 //Looking for email got encrypted code instead
 
 var localLogin = new LocalStrategy(function(email, password, done) {
+	var email = CryptoJS.AES.encrypt(email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), { iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString();
+	var password = CryptoJS.AES.encrypt(password,'c9nMaacr2Y').toString();
     User.getUserByEmail(email, function(err, user){
       // if(err){
 	  	// 	return done(err);

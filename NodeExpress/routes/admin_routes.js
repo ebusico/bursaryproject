@@ -23,6 +23,11 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
            console.log(err);
 		   winston.error(err);
         } else {
+            //
+            staff.map(function(currentStaff, i){
+                currentStaff.email = CryptoJS.AES.decrypt(currentStaff.email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
+                currentStaff.status = CryptoJS.AES.decrypt(currentStaff.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            });
             res.json(staff);
 			winston.info('All staff users were collected successfully')
         }
@@ -33,6 +38,11 @@ adminRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization([
 adminRoutes.route('/staff/:id').get(function(req, res) {
     let id = req.params.id;
     User.findById(id, function(err, staff) {
+        console.log('STAFF TRYING TO FIND :');
+        console.log(staff);
+        //decrypt before sending back
+        staff.email = CryptoJS.AES.decrypt(staff.email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
+        staff.status = CryptoJS.AES.decrypt(staff.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
          res.json(staff);
 		 winston.info('Rendered staff' + id )
     })
@@ -46,6 +56,7 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
 //gets single user by email
 adminRoutes.route('/getByEmail').post(function(req,res) {
     User.findOne({email: req.body.staff_email}, function(err, user) {
+        //decrypt before sending back
         res.json(user);
 		winston.info('CollecteD a single user by email');
     })
@@ -57,11 +68,12 @@ adminRoutes.route('/getByEmail').post(function(req,res) {
 
 //adds new user to database
 adminRoutes.route('/addUser', requireAuth).post(function(req,res){
+    //encrypt before adding
     var newUser = new User({
-      email: req.body.email,
-      password: req.body.password,
+      email: CryptoJS.AES.encrypt(req.body.email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(),
+      password: CryptoJS.AES.encrypt(req.body.password, 'c9nMaacr2Y'),
       role: req.body.role,
-      status: req.body.status
+      status: CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString()
     });
     User.createUser(newUser, function(err, user){
       if(err){
@@ -85,7 +97,7 @@ adminRoutes.route('/addUser/postman').post(function(req,res){
     var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
     
     var encrypted = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv});
-    var status =  CryptoJS.AES.encrypt(req.body.status, key, {iv: iv});
+    var status =  CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
         //var encryptedemail = CryptoJS.AES.encrypt(encrypted, 'bW5Ks7SIJu');
         var newUser = new User({
           email: encrypted.toString(),
@@ -124,9 +136,7 @@ adminRoutes.route('/delete/:id').get(function(req, res) {
             res.status(404).send("user is not found");
         }
         else{
-            var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-            var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-            user.status =  CryptoJS.AES.encrypt("Suspended", key, {iv: iv});
+            user.status =  CryptoJS.AES.encrypt("Suspended", '3FJSei8zPx');
             user.save().then(user => {
                 res.json('User deleted');
                 winston.info(user._id + ' has been suspended')
@@ -145,9 +155,7 @@ adminRoutes.route('/reactivate/:id').get(function(req, res) {
             res.status(404).send("user is not found");
         }
         else{
-            var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-            var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-            user.status =  CryptoJS.AES.encrypt("Active", key, {iv: iv});
+            user.status =  CryptoJS.AES.encrypt("Active", '3FJSei8zPx');
             user.save().then(user => {
                 res.json('User reactivated');
                 winston.info(user._id + ' has been reactivated')
@@ -180,13 +188,14 @@ adminRoutes.route('/reset-staff/:token').get(function(req, res) {
 
 //sends password reset email for staff
 adminRoutes.route('/send-email-staff').post(function(req, res) {
-        var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+        //decrypt before sending
+        var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
         var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-        var email = CryptoJS.AES.decrypt(req.body.email, key, {iv:iv});
-        console.log(email.toString(CryptoJS.enc.Utf8));
-		winston.info('password reset email has been sent to' + email.toString(CryptoJS.enc.Utf8) );
-        User.findOne({email: req.body.email}, function(err, staff) {
-            console.log(staff);
+        console.log(req);
+        var email = CryptoJS.AES.encrypt(req.body.email, key, {iv: iv}).toString();
+		winston.info('password reset email has been sent to' + email.toString() );
+        User.findOne({email: email}, function(err, staff) {
+            console.log(email);
 			winston.info(staff);
             if (!staff){
                 res.status(404).send("Email is not found");
@@ -208,7 +217,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 });
                 var mailOptions = {
                     from: 'QABursary@aol.com', // sender address
-                    to: email.toString(CryptoJS.enc.Utf8), // list of receivers
+                    to: req.body.email, // list of receivers
                     subject: 'Password Reset', // Subject line
                     text: 'Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePasswordStaff/'+token // plain text body
                 }            
@@ -229,16 +238,14 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
     
 //updates user password      
 adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
+        //encrypt before updating
         User.findOne({password_token: req.params.token}, function(err, staff) {
             if (!staff)
                 res.status(404).send("data is not found");
             else
-                var key = CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939");
-                var iv  = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
-                var decryptPass = CryptoJS.AES.decrypt(req.body.password, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
-                var active =  CryptoJS.AES.encrypt("Active", key, {iv: iv});
+                var active =  CryptoJS.AES.encrypt("Active", '3FJSei8zPx').toString();
                 bcrypt.genSalt(10, function(err, salt) {
-                    bcrypt.hash(decryptPass, salt, function(err, hash) {
+                    bcrypt.hash(req.body.password, salt, function(err, hash) {
                       req.body.password = hash;
                       staff.status = active
                       staff.password = req.body.password;
