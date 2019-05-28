@@ -138,60 +138,33 @@ export default class CreateTrainee extends Component {
 	
     onSubmit(e) {
         e.preventDefault();
-		// calculate amount of days
-		/*let currentMonth = moment().format('MM-YY');
-		let bursary_start = moment(this.state.trainee_start_date).format('MM-YY');
-		let bursary_end = moment(this.state.trainee_end_date).format('MM-YY');
-		
-		if(bursary_start > currentMonth){
-			this.setState({
-				trainee_days_worked: 0,
-			})
-		}
-		else if(bursary_end < currentMonth){
-			this.setState({
-				trainee_days_worked: 0,
-			})
-		}		
-		else if( bursary_start === currentMonth){
-			let start = moment(this.state.trainee_start_date, 'YYYY-MM-DD'); //Pick any format
-			let end = moment(this.state.trainee_start_date, 'YYYY-MM-DD').endOf('month'); //right now (or define an end date yourself)
-			let workedDays = moment(start).businessDiff(end);
-			console.log('days worked: ' + workedDays);
-			
-			this.setState({
-				trainee_days_worked: workedDays,
-			})
-		}else if(bursary_end == currentMonth){
-			let start = moment(this.state.trainee_end_date, 'YYYY-MM-DD').startOf('month');
-			let end = moment(this.state.trainee_end_date, 'YYYY-MM-DD'); 
-			let workedDays = 1 + moment(start).businessDiff(end);
-			
-			console.log('working days for trainee ' + workedDays);
-			this.setState({
-				trainee_days_worked: workedDays,
-			})
-		}else{
-			let start = moment().startOf('month');
-			let end = moment().endOf('month');
-			console.log(start);
-			console.log(end)
-			console.log("All days: "+moment(start).businessDiff(end));
-		}
-		*/
+
+        var alertDeterminer;
+
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
-            alert('Please select the bursary start/end dates');
+            alertDeterminer = "blankdates";
         }
         else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
-            alert('The end date is before the start date, please resolve this before creating the trainee');
+            alertDeterminer = "dateswrongorder";
         }
-		else if(this.state.trainee_bench_start_date === '' || this.state.trainee_bench_end_date === ''){
-			alert('Please Enter the trainee bench start/end dates');
-		}
-		else if (moment(this.state.trainee_bench_end_date).isBefore(this.state.trainee_bench_start_date)){
-			alert('The end date is before the start date, please resolve this before finish editing');
-		}
-        else{
+        else if(moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') < 14 || moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') > 84 ){
+            alertDeterminer = "tooloworhigh";
+        }
+
+        switch (alertDeterminer){
+            case "blankdates":
+                alert('Please select the bursary start/end dates');
+                break;
+            case "dateswrongorder":
+                alert('The end date is before the start date, please resolve this before creating the trainee');
+                break;
+            case "tooloworhigh":
+                var dateWarning = window.confirm("The dates you have entered are unusually high or low. Are you sure you want to proceed?");
+                
+				if (dateWarning == false){
+                break;
+                }
+            default:
             console.log(`Form submitted:`);
             console.log(`Trainee Fname: ${this.state.trainee_fname}`);
             console.log(`Trainee Lname: ${this.state.trainee_lname}`);
