@@ -3,6 +3,8 @@ var traineeRoutes = express.Router();
 var async = require("async");
 
 const winston = require('../config/winston');
+var moment = require('moment');
+var businessDiff = require('moment-business-days');
 
 const crypto = require('crypto');
 const nodeMailer = require('nodemailer');
@@ -136,10 +138,85 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
 		winston.error(err);
     })
 })
+
+// find one trainee for days to work 
+traineeRoutes.route('/daysToWork').post(function(req, res){
+    let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString();
+    Trainee.findOne({trainee_email: email},  function(err, trainee) {
+        if(!trainee){
+            res.status(404).send("trainee is not found");
+        }else{
+        // calculate amount of days
+            let currentMonth = moment();
+            let bursary_start = moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
+            let bench_end = moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
+            console.log(trainee);
+            console.log("encrypted start: "+ trainee.trainee_start_date);
+            console.log("encrypted start: "+ trainee.trainee_bench_end_date);
+			console.log("start: "+bursary_start);
+            console.log("end: "+bench_end.format("MM"));
+
+            if(bursary_start.isSame(bench_end, "month")){
+                let workedDays = 1 + moment(bursary_start).businessDiff(bench_end);
+                console.log("same start end month, days:" + workedDays);
+                trainee.trainee_days_worked = workedDays;
+                trainee.save().then(trainee => {
+                res.json('Days worked updated!');
+                })
+            }else if(currentMonth.isBefore(bursary_start, 'month')){
+                console.log("Bursary starting in July, 0 days");
+                trainee.trainee_days_worked = 0
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                })
+            }else if(currentMonth.isAfter(bench_end, 'month')){
+                console.log("Bursary ending in April, 0 days");
+                trainee.trainee_days_worked = 0
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                })
+            }else if(bursary_start.isSame(currentMonth, 'month')){
+                let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").endOf('month');
+                let workedDays = moment(start).businessDiff(end);
+                console.log('current month is start date month, days worked: ' + workedDays);
+				console.log(start);
+				console.log(end);
+                trainee.trainee_days_worked = workedDays;
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                })
+            }else if(bench_end.isSame(currentMonth, "month")){
+                let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").startOf('month');
+                let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                let workedDays = 1 + moment(start).businessDiff(end);
+                console.log('current month is end date month, days:' + workedDays);
+                trainee.trainee_days_worked = workedDays;
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                })
+            }
+            else{
+				let start = moment().startOf('month');
+				let end = moment().endOf('month');
+				console.log(start);
+				console.log(end)
+                console.log("All days: "+moment(start).businessDiff(end));
+                let workedDays = moment(start).businessDiff(end);
+				trainee.trainee_days_worked = workedDays;
+					trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                })
+            }
+    }
+ });
+});
+
 //adds new trainee to database
 traineeRoutes.route('/add').post(function(req, res) {
     console.log("adding a trainee req.body : ");
     console.log(req.body);
+	
     req.body.trainee_fname = CryptoJS.AES.encrypt(req.body.trainee_fname, '3FJSei8zPx').toString();
     req.body.trainee_lname = CryptoJS.AES.encrypt(req.body.trainee_lname, '3FJSei8zPx').toString();
     req.body.trainee_email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
@@ -151,6 +228,7 @@ traineeRoutes.route('/add').post(function(req, res) {
 	req.body.added_By = CryptoJS.AES.encrypt(req.body.added_By, '3FJSei8zPx').toString();
     req.body.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();
     req.body.bursary = CryptoJS.AES.encrypt(req.body.bursary, '3FJSei8zPx').toString();
+	
     let trainee = new Trainee(req.body);
     trainee.save()
         .then(trainee => {
@@ -252,10 +330,13 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
         else {
             trainee.trainee_start_date = CryptoJS.AES.encrypt(req.body.trainee_start_date, '3FJSei8zPx').toString();
             trainee.trainee_end_date = CryptoJS.AES.encrypt(req.body.trainee_end_date, '3FJSei8zPx').toString();
-
+			trainee.trainee_bench_start_date = CryptoJS.AES.encrypt(req.body.trainee_bench_start_date, '3FJSei8zPx').toString();
+			trainee.trainee_bench_end_date = CryptoJS.AES.encrypt(req.body.trainee_bench_end_date, '3FJSei8zPx').toString();
+			trainee.trainee_days_worked = CryptoJS.AES.encrypt(req.body.trainee_days_worked, '3FJSei8zPx').toString();
+			
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');
-				winston.info('trainee: '+ trainee._id + 'has had there start & end dates changed');
+				winston.info('trainee: '+ trainee._id + 'has had changes made changed');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");

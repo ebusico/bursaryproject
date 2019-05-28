@@ -95,20 +95,6 @@ export default class CreateTrainee extends Component {
 			trainee_bench_end_date: momentBusinessDays(benchStartDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 		})
 	}
-	// calculate amount of days
-	
-	onChangeWorkingDays(){
-		let currentMonth = moment().format('MM');
-		let bursary_start = this.state.trainee_start_date;
-		let bursary_end = this.state.trainee_end_date;
-		
-		if( bursary_start !== moment(bursary_start).endOf("month")){
-			this.setState({
-				trainee_days_worked:bursary_start.diff(bursary_start, 'days'),
-			})
-		}
-		console.log('Number of days to work: ' + currentMonth);
-	}
 		
 	onChangeBenchEndDate(benchEndDate) {
 		this.setState({
@@ -152,7 +138,8 @@ export default class CreateTrainee extends Component {
 	
     onSubmit(e) {
         e.preventDefault();
-		let currentMonth = moment().format('MM-YY');
+		// calculate amount of days
+		/*let currentMonth = moment().format('MM-YY');
 		let bursary_start = moment(this.state.trainee_start_date).format('MM-YY');
 		let bursary_end = moment(this.state.trainee_end_date).format('MM-YY');
 		
@@ -185,19 +172,25 @@ export default class CreateTrainee extends Component {
 				trainee_days_worked: workedDays,
 			})
 		}else{
-			let start = moment('YYYY-MM-DD').startOf('month');
-			let end = moment('YYYY-MM-DD').endOf('month');
+			let start = moment().startOf('month');
+			let end = moment().endOf('month');
 			console.log(start);
 			console.log(end)
-			console.log(moment(start).businessDiff(end));
+			console.log("All days: "+moment(start).businessDiff(end));
 		}
-		
+		*/
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alert('Please select the bursary start/end dates');
         }
         else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
             alert('The end date is before the start date, please resolve this before creating the trainee');
         }
+		else if(this.state.trainee_bench_start_date === '' || this.state.trainee_bench_end_date === ''){
+			alert('Please Enter the trainee bench start/end dates');
+		}
+		else if (moment(this.state.trainee_bench_end_date).isBefore(this.state.trainee_bench_start_date)){
+			alert('The end date is before the start date, please resolve this before finish editing');
+		}
         else{
             console.log(`Form submitted:`);
             console.log(`Trainee Fname: ${this.state.trainee_fname}`);
@@ -215,8 +208,8 @@ export default class CreateTrainee extends Component {
                 added_By: this.state.recruiterEmail,
                 status: 'Incomplete',
                 bursary: this.state.bursary,
-				trainee_bench_end_date: this.state.trainee_bench_end_date,
-				trainee_bench_start_date: this.state.trainee_bench_start_date,
+				trainee_bench_end_date: this.state.trainee_bench_end_date.toString(),
+				trainee_bench_start_date: this.state.trainee_bench_start_date.toString(),
             };
             console.log("this is the start date of the variable : "+ newTrainee.trainee_start_date);
 
@@ -227,6 +220,12 @@ export default class CreateTrainee extends Component {
                                     alert("Email is already in use");
                                 }
                                 else{
+									axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/daysToWork', {
+										trainee_email: this.state.trainee_email.toLowerCase()
+										})
+									.then((response) => {
+										console.log(response.data) 
+									});
 
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {
                                         trainee_email: this.state.trainee_email.toLowerCase()

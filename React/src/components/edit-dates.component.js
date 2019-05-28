@@ -113,6 +113,7 @@ export default class EditDates extends Component {
                     trainee_end_date: new Date (response.data.trainee_end_date),
 					trainee_bench_start_date: new Date (response.data.trainee_bench_start_date),
 					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
+					trainee_days_worked: response.data.trainee_days_worked,
                 })
                 console.log(this.state.trainee_start_date);
                 console.log(this.state.trainee_end_date);
