@@ -146,6 +146,7 @@ export default class ListUser extends Component {
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -166,6 +167,7 @@ export default class ListUser extends Component {
                             }                          
                             return (
                                 <tr>
+                                <td>{user.fname} {user.lname}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>{user.status}</td>

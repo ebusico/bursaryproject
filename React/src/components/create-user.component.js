@@ -11,11 +11,15 @@ export default class CreateUser extends Component {
         super(props);
         this.onChangeUserEmail = this.onChangeUserEmail.bind(this);
         this.onChangeUserPassword = this.onChangeUserPassword.bind(this);
+        this.changeUserFName = this.onChangeUserFName.bind(this);
+        this.changeUserLName = this.onChangeUserLName.bind(this);
         this.changeUserRole = this.changeUserRole.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.toggle = this.toggle.bind(this);
         this.state = {
             user_email: '',
+            user_fname: ' ',
+            user_lname: ' ',
             user_password: '',
             user_role: 'Role',
             dropdownOpen: false,
@@ -32,6 +36,18 @@ export default class CreateUser extends Component {
     onChangeUserEmail(e) {
         this.setState({
             user_email: e.target.value
+        });
+    }
+
+    onChangeUserFName(e) {
+        this.setState({
+            user_fname: e.target.value
+        });
+    }
+
+    onChangeUserLName(e) {
+        this.setState({
+            user_lname: e.target.value
         });
     }
     
@@ -58,6 +74,8 @@ export default class CreateUser extends Component {
 
         var newUser = {
             email: this.state.user_email.toLowerCase(),
+            fname: this.state.user_fname,
+            lname: this.state.user_lname,
             password: Math.random().toString(36).slice(-8),
             role: this.state.user_role.toLowerCase(),
             status: 'Incomplete'
@@ -99,6 +117,22 @@ export default class CreateUser extends Component {
                 <form className="addForm" onSubmit={this.onSubmit}>
                     <h3>Add User</h3>
                     <div className="form-group">
+                        <label>First Name: </label>
+                        <input 
+                            type="text"
+                            className="form-control"
+                            value={this.state.user_fname}
+                            onChange={this.changeUserFName}
+                            required/>
+                        <br/>
+                        <label>Last Name: </label>
+                        <input 
+                            type="text"
+                            className="form-control"
+                            value={this.state.user_lname}
+                            onChange={this.changeUserLName}
+                            required/>
+                        <br/>
                         <label>Email: </label>
                         <input 
                                 type="text" 
