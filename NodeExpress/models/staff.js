@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const _ = require('lodash');
 
 
 const UserSchema = new mongoose.Schema({
@@ -58,6 +59,19 @@ module.exports.createUser = function(newUser, callback){
   }
 
   var User = module.exports = mongoose.model('User', UserSchema);
+
+  //Runs once on server startup, does nothing if there is a preexisting db with entries.
+  User.count().then((count) => {
+    if (count === 0) {
+	  var admin = new User(JSON.parse(process.env.PREMADE_ADMIN));
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(admin.password, salt, function(err, hash) {
+          admin.password = hash;
+          admin.save();
+        });
+      });
+    }
+  });
   
   module.exports.getUserByEmail = function(email, callback){
     var query = {email: email};
