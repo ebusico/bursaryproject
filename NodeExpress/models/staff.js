@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const _ = require('lodash');
+var CryptoJS = require("crypto-js");
 
 
 const UserSchema = new mongoose.Schema({
@@ -59,19 +59,6 @@ module.exports.createUser = function(newUser, callback){
   }
 
   var User = module.exports = mongoose.model('User', UserSchema);
-
-  //Runs once on server startup, does nothing if there is a preexisting db with entries.
-  User.count().then((count) => {
-    if (count === 0) {
-	  var admin = new User(JSON.parse(process.env.PREMADE_ADMIN));
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(admin.password, salt, function(err, hash) {
-          admin.password = hash;
-          admin.save();
-        });
-      });
-    }
-  });
   
   module.exports.getUserByEmail = function(email, callback){
     var query = {email: email};
@@ -88,3 +75,19 @@ module.exports.createUser = function(newUser, callback){
       callback(null, isMatch);
     });
   }
+
+    //Runs once on server startup, does nothing if there is a preexisting db with entries.
+  User.count().then((count) => {
+    if (count === 0) {
+	  var admin = new User(JSON.parse(process.env.PREMADE_ADMIN));
+	  var newUser = new User({
+        email: CryptoJS.AES.encrypt(admin.email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(),
+        password: admin.password,
+        fname: CryptoJS.AES.encrypt(admin.fname, 'c9nMaacr2Y').toString(),
+        lname: CryptoJS.AES.encrypt(admin.lname, 'c9nMaacr2Y').toString(),
+        role: admin.role,
+        status: CryptoJS.AES.encrypt(admin.status, '3FJSei8zPx').toString()
+      });
+      User.createUser(newUser);
+    }
+  });
