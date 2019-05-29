@@ -160,6 +160,7 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
         }else{
         // calculate amount of days
             let currentMonth = moment();
+            let bursary = CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             let bursary_start = moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
             let bench_end = moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
             console.log(trainee);
@@ -167,8 +168,14 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
             console.log("encrypted start: "+ trainee.trainee_bench_end_date);
 			console.log("start: "+bursary_start);
             console.log("end: "+bench_end.format("MM"));
-
-            if(bursary_start.isSame(bench_end, "month")){
+            
+            if(bursary == "False"){
+                trainee.trainee_days_worked = 0;
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                    logger.info("Trainee working days for current month updated (automatic)");
+                })
+            }else if(bursary_start.isSame(bench_end, "month")){
                 let workedDays = 1 + moment(bursary_start).businessDiff(bench_end);
                 console.log("same start end month, days:" + workedDays);
                 trainee.trainee_days_worked = workedDays;
