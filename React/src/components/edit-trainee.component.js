@@ -244,20 +244,12 @@ export default class EditTrainee extends Component {
                     {show_matching_bank ?
                         <div>
                         <div className="form-group"> 
-                            <label>Bank Name: </label>
-                            <input  type="text"
-                                className="form-control"
-                                value={this.state.trainee_bank_name}
-                                disabled
-                                />                              
+                            <label>Bank Name: </label> <br></br>
+                            <label>{this.state.trainee_bank_name}</label>
                         </div>
                         <div className="form-group"> 
-                            <label>Bank Address: </label>                               
-                            <input  type="text"
-                                className="form-control"
-                                value={this.state.trainee_bank_branch}
-                                disabled
-                                />                                
+                            <label>Bank Address: </label> <br></br>
+                            <label>{this.state.trainee_bank_branch}</label>                              
                         </div>
                         </div>
                     : ""}
