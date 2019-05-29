@@ -407,14 +407,6 @@ export default class ListTrainee extends Component {
                         >
                         Filters
                         </button>
-                        {/* <DatePicker
-                            selected={this.state.selectedDate}
-                            onChange={this.onChangeSearch}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="Specify Start Date to filter"
-                            strictParsing
-                            disabledKeyboardNavigation
-                        /> */}
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                             <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
                             <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
