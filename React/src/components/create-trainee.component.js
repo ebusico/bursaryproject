@@ -116,8 +116,8 @@ export default class CreateTrainee extends Component {
     onChangeEndDate = (endDate) =>{
         this.setState({
             trainee_end_date: endDate,
-			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(61)._d,
-			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(121)._d ,
+			trainee_bench_start_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(1)._d,
+			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(60)._d ,
 
 	   })
         console.log(this.state.endDate);

@@ -21,6 +21,13 @@ midnightJob.start();
 	//console.log('Every Tenth Minute:', d);
 //});
 //tenMinJob.start();
+ 
+//Will start every 10 minutes after 12 on the first every month
+//const onceMonth = new CronJob('* 10 0 1 * *', function() {
+	//const d = new Date();
+	//console.log('On the First of every month: ', d);
+//});
+//onceMonth.start();
 
 // Send Trainee an email if they have not updated thier password
 const autoEmail =  new CronJob('0 0 */12 * * * *', function() {
