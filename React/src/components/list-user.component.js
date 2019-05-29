@@ -87,9 +87,9 @@ export default class ListUser extends Component {
             })
         }
 
-        if(filter.role != 'All'){
+        if(filter.role !== 'All'){
             users = users.filter(function(user){
-                if(user.role == filter.role.toLowerCase()){
+                if(user.role === filter.role.toLowerCase()){
                     return user;
                 }
 

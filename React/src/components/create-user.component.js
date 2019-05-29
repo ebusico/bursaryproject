@@ -83,13 +83,13 @@ export default class CreateUser extends Component {
         
         console.log(newUser)
 
-        if(newUser.role == "role"){
+        if(newUser.role === "role"){
             alert("You must select a role")
         }
         else{
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/addUser', newUser)
             .then( (response) => {console.log(response);
-                                if(response.status == 205){
+                                if(response.status === 205){
                                     console.log("dupe email");
                                     alert("Email already in use");
                                  }
