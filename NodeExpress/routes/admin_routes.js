@@ -237,12 +237,12 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 var transporter = nodeMailer.createTransport({
                     service: 'AOL',
                     auth: {
-                        user: 'QABursary@aol.com',
-                        pass: 'Passw0rd123'
+                        user: process.env.USER-EMAIL,
+                        pass: process.env.USER-PASSWORD
                     }
                 });
                 var mailOptions = {
-                    from: 'QABursary@aol.com', // sender address
+                    from: process.env.USER-EMAIL, // sender address
                     to: req.body.email, // list of receivers
                     subject: 'Password Reset', // Subject line
                     text: 'Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePasswordStaff/'+token // plain text body
