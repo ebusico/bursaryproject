@@ -8,7 +8,7 @@ function createLogger(label){
       new winston.transports.MongoDB({
         level: 'info',
         label: label,
-        db: 'mongodb://localhost:27017/trainees',
+        db: 'mongodb://'+process.env.REACT_APP_DATABASE_IP+':27017/trainees',
         collection: 'log'
       })
     ],

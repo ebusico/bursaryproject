@@ -32,7 +32,7 @@ export default class sideBar extends React.Component {
 		// Pass on our props
 		<Menu>
 			<a className="sidebar_btn" onClick={() => { document.location.href = "/"; }}>Home</a>
-			<a id="HelperGuide" target="_new" className="menu-item" href="https://docs.google.com/document/d/1AXQ9NMtyfb5IkY0sDhafANRjIISliqCThlpj8kq99LA/edit">User Guide</a>
+			<a id="HelperGuide" target="_new" className="menu-item" href="https://busaryuserguide.fandom.com/wiki/User_Guide">User Guide</a>
 			{show_server_logs ? 
 				<a className="sidebar_btn" onClick={() => { document.location.href = "/system_logs"; }}>
 				System Logs

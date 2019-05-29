@@ -352,7 +352,7 @@ export default class ListTrainee extends Component {
                         </select>&nbsp;&nbsp;
                         <label>Show Suspended</label> &nbsp;
                         <input type="checkbox" value="Suspended" onClick={this.onChangeSuspendedFilter}/> &nbsp;&nbsp;
-                        <button className="resetBtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
+                        <button className="resetBtn" onClick={this.toggle}>Select Start Dates</button> &nbsp;&nbsp;
                     </p>
                     </Collapse>
                 </div>
