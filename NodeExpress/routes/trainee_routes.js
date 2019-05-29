@@ -48,6 +48,8 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                 currentTrainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
                 currentTrainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.bursary_amount, '3FJSei8zPx');
+                currentTrainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8)
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_start_date, '3FJSei8zPx');
                 currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, '3FJSei8zPx');
@@ -256,6 +258,7 @@ traineeRoutes.route('/add').post(function(req, res) {
 	req.body.added_By = CryptoJS.AES.encrypt(req.body.added_By, '3FJSei8zPx').toString();
     req.body.status = CryptoJS.AES.encrypt('Pending', '3FJSei8zPx').toString();
     req.body.bursary = CryptoJS.AES.encrypt(req.body.bursary, '3FJSei8zPx').toString();
+	req.body.bursary_amount = CryptoJS.AES.encrypt(req.body.bursary_amount, '3FJSei8zPx').toString();
 	
     let trainee = new Trainee(req.body);
     trainee.save()

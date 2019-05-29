@@ -68,6 +68,11 @@ let Trainee = new Schema({
         type: String,
         required: true
     },
+    bursary_amount:{
+        type: String,
+        format: Number,
+        required: true
+    },
 	trainee_days_worked:{
 		type: String
 	}

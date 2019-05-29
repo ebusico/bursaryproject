@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import '../css/add-trainee.css';
-
+import Collapse from 'react-bootstrap/Collapse'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import MomentLocaleUtils, {
@@ -29,6 +29,7 @@ export default class CreateTrainee extends Component {
         this.onChangeBenchStartDate = this.onChangeBenchStartDate.bind(this);
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
         this.onClickBursary = this.onClickBursary.bind(this);
+        this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
 
         this.state = {
             trainee_fname: '',
@@ -42,7 +43,9 @@ export default class CreateTrainee extends Component {
             currentUser: authService.currentUserValue,
             recruiterEmail: '',
 			trainee_days_worked:'',
-            bursary: 'False'
+            bursary: 'False',
+            bursary_amount: 0,
+            open: false
         }
     }
 	
@@ -124,23 +127,33 @@ export default class CreateTrainee extends Component {
     }
 
     onClickBursary(e) {
-        if(document.getElementById("bursaryValue").checked){
+        if(this.state.bursary==="False"){
             this.setState({
-                bursary: "True"
+                bursary: "True",
+                bursary_amount: 30,
+                open: true
             });
         }
         else{
             this.setState({
-                bursary: "False"
+                bursary: "False",
+                bursary_amount: 0,
+                open: false
             });
         }
+    }
+
+    onChangeBursaryAmount(e){
+        this.setState({
+            bursary_amount: e.target.value
+        })
     }
 	
     onSubmit(e) {
         e.preventDefault();
 
         var alertDeterminer;
-
+        
         if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
             alertDeterminer = "blankdates";
         }
@@ -149,6 +162,9 @@ export default class CreateTrainee extends Component {
         }
         else if(moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') < 14 || moment(this.state.trainee_end_date).diff(this.state.trainee_start_date, 'days') > 84 ){
             alertDeterminer = "tooloworhigh";
+        }
+        else if(this.state.bursary_amount > 100){
+            alertDeterminer = "toomuchbursary"
         }
 
         switch (alertDeterminer){
@@ -163,6 +179,12 @@ export default class CreateTrainee extends Component {
                 
 				if (dateWarning == false){
                 break;
+                }
+            case "toomuchbursary":
+                var dateWarning = window.confirm("Are you sure you want to give this trainee a bursary of more than £100 daily?");
+    
+                if(dateWarning == false){
+                    break;
                 }
             default:
             console.log(`Form submitted:`);
@@ -181,6 +203,7 @@ export default class CreateTrainee extends Component {
                 added_By: this.state.recruiterEmail,
                 status: 'Pending',
                 bursary: this.state.bursary,
+                bursary_amount: this.state.bursary_amount.toString(),
 				trainee_bench_end_date: this.state.trainee_bench_end_date.toString(),
 				trainee_bench_start_date: this.state.trainee_bench_start_date.toString(),
             };
@@ -252,6 +275,17 @@ export default class CreateTrainee extends Component {
                         <label> Bursary: </label>
                         <input type="checkbox" id="bursaryValue" onClick={this.onClickBursary}/>
                     </div>
+
+                    <Collapse in={this.state.open}>
+                    <div className="form-group">
+                        <label>Bursary Amount</label>
+                                <input 
+                                    type="number"
+                                    value={this.state.bursary_amount}
+                                    onChange={this.onChangeBursaryAmount}
+                                    required/>
+                    </div>
+                    </Collapse>
 
                     <div className="form-group" >
                         <label> Bursary Start Date</label>

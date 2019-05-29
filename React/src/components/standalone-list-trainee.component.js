@@ -256,6 +256,7 @@ export default class ListTrainee extends Component {
                                 <th>Status</th>
                                 <th>Recruited By</th>
                                 <th>Bursary</th>
+                                <th>Daily Bursary</th>
                                 <th>Action</th>
                             </tr>
                         </thead>               
@@ -279,6 +280,7 @@ export default class ListTrainee extends Component {
                                             <td> {t.status}</td>
                                             <td> {t.added_By}</td>
                                             <td> {t.bursary}</td>
+                                            <td> {t.bursary_amount}</td>
                                             <td> 
                                                 <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
                                                 <button onClick={() => { 
@@ -342,6 +344,7 @@ export default class ListTrainee extends Component {
                             <th>Email</th>
                             <th>Status</th>
                             <th>Bursary</th>
+                            <th>Bursary Amount</th>
                             <th>Action</th>
                         </tr>
                     </thead>               
@@ -356,6 +359,7 @@ export default class ListTrainee extends Component {
                                             <td> {t.trainee_email}</td>
                                             <td> {t.status}</td>
                                             <td> {t.bursary}</td>
+                                            <td> {t.bursary_amount}</td>
                                             <td> 
                                                 <button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
                                             </td>
