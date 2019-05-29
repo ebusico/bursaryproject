@@ -7,7 +7,7 @@ import '../css/list-trainee-recruiter.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { CSVLink } from "react-csv";
 import moment from 'moment';
-
+import Collapse from 'react-bootstrap/Collapse';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
@@ -23,13 +23,27 @@ export default class ListTrainee extends Component {
             splitDays:[],
             currentUser: authService.currentUserValue,
             csv: '',
-            modal: false
+            modal: false,
+            filterBoolean: false,
+            searchString: "",
+            recruiterEmail: '',
+            filter: {
+                myTrainees: false,
+                status: 'All',
+                bursary: 'All',
+            },
+            from: undefined,
+            to: undefined,
 			};
         
        //Added onChangeSearch - Ernie
         this.onChangeSearch = this.onChangeSearch.bind(this);
         this.handleDayClick = this.handleDayClick.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
+        this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
+        this.onChangeBursaryFilter = this.onChangeBursaryFilter.bind(this);
+        this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
     }
     
     componentDidMount() {
@@ -40,7 +54,21 @@ export default class ListTrainee extends Component {
             })
             .catch(function (error){
                 console.log(error);
-            })
+            });
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+            .then(response => {
+              if(response.data == null){
+                authService.logout();
+                if (!authService.currentUserValue) {
+                  document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+                }
+              }
+              else{
+                this.setState({
+                  recruiterEmail: response.data.email
+                })
+              }
+            });
     }
 
     // Added onChangeSearch(e) function. Needed for the search filter
@@ -71,6 +99,51 @@ export default class ListTrainee extends Component {
         }
         this.setState({ selectedDays });
       }
+    
+      onChangeMyTraineeFilter(e){
+        var newVal = !this.state.filter.myTrainees
+        console.log(newVal)
+        var newFilter = this.state.filter
+        newFilter.myTrainees = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+    onChangeStatusFilter(e){
+        var newVal = e.target.value;
+        var newFilter = this.state.filter;
+        newFilter.status = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+    onChangeBursaryFilter(e){
+        var newVal = e.target.value;
+        var newFilter = this.state.filter
+        newFilter.bursary = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+
+      onChangeFilterSearch(e) {
+        this.setState({
+            searchString: e.target.value
+        });
+    }
+
+      getInitialState() {
+    return {
+      from: undefined,
+      to: undefined,
+    };
+  }
+
+    handleResetClick() {
+        this.setState(this.getInitialState());
+      }
 	
     render() {
         //Declared variables in order to read input from search function
@@ -78,7 +151,53 @@ export default class ListTrainee extends Component {
         let search = this.state.selectedDays;
         let splitDays = this.state.splitDays;
         let output = this.state.csv;
-        let role = this.state.currentUser.token.role
+        let role = this.state.currentUser.token.role;
+        let searchString = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
+        let filter = this.state.filter;
+        let email = this.state.recruiterEmail;
+        const { from, to } = this.state;
+        const modifiers = { start: from, end: to };
+
+        if(searchString.length > 0){
+            trainees = trainees.filter(function(i){
+                if(i.trainee_fname.toLowerCase().match(searchString) ||
+                   i.status.toLowerCase().match(searchString)        ||
+                   i.added_By.toLowerCase().match(searchString)      ||
+                   i.bursary.toLowerCase().match(searchString)       ||
+                   i.trainee_lname.toLowerCase().match(searchString) ||
+                   i.trainee_email.toLowerCase().match(searchString) ||
+                   (i.trainee_fname.toLowerCase() + i.trainee_lname.toLowerCase() + i.trainee_email.toLowerCase()).match(searchString)){
+                    return i;
+                }
+            })
+        }
+        if(filter.status != 'All'){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.status == filter.status){
+                    console.log(trainee);
+                    return trainee;
+                }
+
+            })
+        }
+
+        if(filter.bursary != 'All'){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.bursary == filter.bursary){
+                    return trainee;
+                }
+
+            })
+        }
+
+        if(filter.myTrainees === true){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.added_By === email){
+                    return trainee;
+                }
+            })
+        }
+
         if(role === 'finance'){
 			output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place","Append","Data to Copy to Notepad"]];
             trainees.map( t => {
@@ -121,10 +240,24 @@ export default class ListTrainee extends Component {
                 }
             })
         }
-        if(this.state.currentUser.token.role === 'finance' || this.state.currentUser.token.role === 'admin'){
+        if(this.state.currentUser.token.role === 'admin'){
         return (
             <div className="QAtable">
                 <div className="QASearchBar">
+                    <input
+                        type="text"
+                        value={this.state.searchString}
+                        onChange={this.onChangeFilterSearch}
+                        placeholder="Find trainee..."
+                    />
+                    <button
+                    onClick={() => this.setState({ filterBoolean: !this.state.filterBoolean })}
+                    aria-controls="example-collapse-text"
+                    aria-expanded={this.state.filter}
+                    className="filter-btn"
+                    >
+                    Filters
+                    </button>
                     {/* <DatePicker
                         selected={this.state.selectedDate}
                         onChange={this.onChangeSearch}
@@ -136,16 +269,56 @@ export default class ListTrainee extends Component {
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                         <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
                         <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
-                            <DayPicker
+                        <p>
+                            {!from && !to && 'Please select the first day.'}
+                            {from && !to && 'Please select the last day.'}
+                            {from &&
+                                to &&
+                                `Selected from ${from.toLocaleDateString()} to
+                                    ${to.toLocaleDateString()}`}{' '}
+                            {from &&
+                                to && (
+                                <button className="link" onClick={this.handleResetClick}>
+                                    Reset
+                                </button>
+                                )}
+                        </p>
+                        <DayPicker
+                            className="Selectable"
+                            numberOfMonths={this.props.numberOfMonths}
+                            selectedDays={[from, { from, to }]}
+                            modifiers={modifiers}
+                            onDayClick={this.handleDayClick}
+                        />
+                            {/* <DayPicker
                                 selectedDays={this.state.selectedDays}
                                 onDayClick={this.handleDayClick}
-                            />
+                            /> */}
                         </ModalBody>
                     </Modal>
                     <div id="addUser">
-                        <button className="qabtn" onClick={this.toggle}>Select Dates</button>
                         <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV </CSVLink></button>
                     </div>
+                    <Collapse in={this.state.filterBoolean}>
+                    <p>
+                        <br></br>
+                        <label>My Trainees</label> &nbsp;
+                        <input type="checkbox" value="MyTrainees" onClick={this.onChangeMyTraineeFilter}/> &nbsp;&nbsp;
+                        <label>Status</label> &nbsp;
+                        <select onChange={this.onChangeStatusFilter}>
+                            <option value="All">All</option>
+                            <option value="Incomplete">Incomplete</option>
+                            <option value="Active">Active</option>
+                        </select>&nbsp;&nbsp;
+                        <label>Bursary</label> &nbsp;
+                        <select onChange={this.onChangeBursaryFilter}>
+                            <option>All</option>
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select>&nbsp;&nbsp;
+                        <button className="qabtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
+                    </p>
+                    </Collapse>
                 </div>
 
                 <table className="table table-striped" style={{ marginTop: 20 }} >
@@ -154,6 +327,9 @@ export default class ListTrainee extends Component {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
+                            <th>Status</th>
+                            <th>Recruited By</th>
+                            <th>Bursary</th>
                             <th>Start Date</th>
                         </tr>
                     </thead>               
@@ -164,6 +340,9 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td> {t.trainee_email}</td>
+                                    <td> {t.status}</td>
+                                    <td> {t.added_By}</td>
+                                    <td> {t.bursary}</td>
                                     <td> {moment(t.trainee_start_date).format('MMMM Do YYYY')}</td>
                                 </tr>
                             );
@@ -173,6 +352,117 @@ export default class ListTrainee extends Component {
                 </table>
             </div>
         );
+        }
+        else if(this.state.currentUser.token.role === 'finance'){
+            return (
+                <div className="QAtable">
+                    <div className="QASearchBar">
+                        <input
+                            type="text"
+                            value={this.state.searchString}
+                            onChange={this.onChangeFilterSearch}
+                            placeholder="Find trainee..."
+                        />
+                        <button
+                        onClick={() => this.setState({ filterBoolean: !this.state.filterBoolean })}
+                        aria-controls="example-collapse-text"
+                        aria-expanded={this.state.filter}
+                        className="filter-btn"
+                        >
+                        Filters
+                        </button>
+                        {/* <DatePicker
+                            selected={this.state.selectedDate}
+                            onChange={this.onChangeSearch}
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText="Specify Start Date to filter"
+                            strictParsing
+                            disabledKeyboardNavigation
+                        /> */}
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
+                            <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
+                            <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
+                            <p>
+                                {!from && !to && 'Please select the first day.'}
+                                {from && !to && 'Please select the last day.'}
+                                {from &&
+                                    to &&
+                                    `Selected from ${from.toLocaleDateString()} to
+                                        ${to.toLocaleDateString()}`}{' '}
+                                {from &&
+                                    to && (
+                                    <button className="link" onClick={this.handleResetClick}>
+                                        Reset
+                                    </button>
+                                    )}
+                            </p>
+                            <DayPicker
+                                className="Selectable"
+                                numberOfMonths={this.props.numberOfMonths}
+                                selectedDays={[from, { from, to }]}
+                                modifiers={modifiers}
+                                onDayClick={this.handleDayClick}
+                            />
+                                {/* <DayPicker
+                                    selectedDays={this.state.selectedDays}
+                                    onDayClick={this.handleDayClick}
+                                /> */}
+                            </ModalBody>
+                        </Modal>
+                        <div id="addUser">
+                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV </CSVLink></button>
+                        </div>
+                        <Collapse in={this.state.filterBoolean}>
+                        <p>
+                            <br></br>
+                            <label>Status</label> &nbsp;
+                            <select onChange={this.onChangeStatusFilter}>
+                                <option value="All">All</option>
+                                <option value="Incomplete">Incomplete</option>
+                                <option value="Active">Active</option>
+                            </select>&nbsp;&nbsp;
+                            <label>Bursary</label> &nbsp;
+                            <select onChange={this.onChangeBursaryFilter}>
+                                <option>All</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>&nbsp;&nbsp;
+                            <button className="qabtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
+                        </p>
+                        </Collapse>
+                    </div>
+    
+                    <table className="table table-striped" style={{ marginTop: 20 }} >
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Recruited By</th>
+                                <th>Bursary</th>
+                                <th>Start Date</th>
+                            </tr>
+                        </thead>               
+                        <tbody>
+                            {trainees.map(t => {
+                                return (
+                                    <tr>
+                                        <td> {t.trainee_fname}</td>
+                                        <td> {t.trainee_lname}</td>
+                                        <td> {t.trainee_email}</td>
+                                        <td> {t.status}</td>
+                                        <td> {t.added_By}</td>
+                                        <td> {t.bursary}</td>
+                                        <td> {moment(t.trainee_start_date).format('MMMM Do YYYY')}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+    
+                    </table>
+                </div>
+            );
         }
         else{
 			return (

@@ -47,10 +47,10 @@ const autoEmail = new CronJob('0 */10 * * * *', function() {
          }            
       transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-          throw error;
+          console.log(error);
         } else {
           console.log("Email successfully sent!");
         }
       });
 });
-autoEmail.start();
+//autoEmail.start();

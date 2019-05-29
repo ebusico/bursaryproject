@@ -226,7 +226,7 @@ traineeRoutes.route('/add').post(function(req, res) {
     req.body.trainee_bench_start_date = CryptoJS.AES.encrypt(req.body.trainee_bench_start_date.toString(), '3FJSei8zPx').toString();
 	req.body.trainee_bench_end_date = CryptoJS.AES.encrypt(req.body.trainee_bench_end_date.toString(), '3FJSei8zPx').toString();
 	req.body.added_By = CryptoJS.AES.encrypt(req.body.added_By, '3FJSei8zPx').toString();
-    req.body.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();
+    req.body.status = CryptoJS.AES.encrypt('Pending', '3FJSei8zPx').toString();
     req.body.bursary = CryptoJS.AES.encrypt(req.body.bursary, '3FJSei8zPx').toString();
 	
     let trainee = new Trainee(req.body);
@@ -417,6 +417,10 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
         if (!trainee)
             res.status(404).send("data is not found");
         else
+            //update status if Pending
+            if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === 'Pending'){
+                trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();
+            } 
             //bcrypt pass
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(req.body.trainee_password, salt, function(err, hash) {

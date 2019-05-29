@@ -46,7 +46,7 @@ export default class ForgotPass extends Component {
                                  }
                                 else{
                                     console.log("trainee found")
-									axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {trainee_email: this.state.emai})
+									axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {trainee_email: this.state.email})
 									.then( (response) => {console.log(response.data);
 														  this.props.history.push('/login');
 														  window.location.reload();

@@ -179,7 +179,7 @@ export default class CreateTrainee extends Component {
                 trainee_start_date: this.state.trainee_start_date.toString(),
                 trainee_end_date: this.state.trainee_end_date.toString(),
                 added_By: this.state.recruiterEmail,
-                status: 'Incomplete',
+                status: 'Pending',
                 bursary: this.state.bursary,
 				trainee_bench_end_date: this.state.trainee_bench_end_date.toString(),
 				trainee_bench_start_date: this.state.trainee_bench_start_date.toString(),

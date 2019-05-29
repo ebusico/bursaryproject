@@ -78,7 +78,7 @@ export default class CreateUser extends Component {
             lname: this.state.user_lname,
             password: Math.random().toString(36).slice(-8),
             role: this.state.user_role.toLowerCase(),
-            status: 'Incomplete'
+            status: 'Pending'
         };
         
         console.log(newUser)

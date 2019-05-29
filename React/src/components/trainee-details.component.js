@@ -77,10 +77,6 @@ render() {
                             <tr><th>Account Number</th><td>{this.state.trainee_account_no}</td></tr>
                             <tr><th>Sort Code</th><td>{this.state.trainee_sort_code}</td></tr>
                             <tr>
-                            <th></th>
-                            <td>
-                                <CSVLink data={this.state.csv} filename='trainee-details.csv'>Download CSV </CSVLink>
-                            </td>
                             </tr>
                     </tbody>
                 </table>
