@@ -38,7 +38,8 @@ export default class EditDates extends Component {
 			trainee_bench_start_date: '',
 			trainee_bench_end_date: '',
 			trainee_days_worked: '',
-			currentUser: authService.currentUserValue
+            currentUser: authService.currentUserValue,
+            bursary: true
         }
     }
 	
@@ -91,8 +92,18 @@ export default class EditDates extends Component {
                     trainee_end_date: new Date (response.data.trainee_end_date),
 					trainee_bench_start_date: new Date (response.data.trainee_bench_start_date),
 					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
-					trainee_days_worked: response.data.trainee_days_worked,
+                    trainee_days_worked: response.data.trainee_days_worked,
                 })
+
+                if(response.data.bursary === 'True'){
+                    console.log(response.data.bursary);
+                }
+                else if(response.data.bursary === 'False'){
+                    console.log(response.data.bursary);
+                    this.setState({
+                        bursary: false
+                    })
+                }
                 console.log(this.state.trainee_start_date);
                 console.log(this.state.trainee_end_date);
                 console.log(this.state.trainee_bench_start_date);
@@ -167,6 +178,7 @@ export default class EditDates extends Component {
 
 
     render() {
+        const {bursary} = this.state;
 		if(this.state.currentUser.token.role === 'admin' || this.state.currentUser.token.role === 'recruiter'){
         return (
             <div className="QATable">
@@ -272,8 +284,9 @@ export default class EditDates extends Component {
                                 }}
                             />
                     </div>
-					<div className="form-group">
-                        <label>Amount of working days to be paid</label>
+                    {bursary ?
+                        <div className="form-group">
+                        <label>Amount of working days to be paid this month</label>
                         <input 
                                 type="number" 
                                 className="form-control"
@@ -281,6 +294,7 @@ export default class EditDates extends Component {
                                 onChange={this.onChangeWorkingDays}
 								required/>
                     </div>
+                    : ""}
                     <br />
                     <div className="form-group">
                         <input type="submit" value="Update" className="btn btn-primary" />
