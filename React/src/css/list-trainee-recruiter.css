@@ -49,6 +49,16 @@
     background-color: grey;
     color: white;
     border-radius: 0.25rem;
-    width: 5%;
     margin-left: 0.3%;
+}
+
+.mod-body{
+    text-align: center;
+    margin-right: 6%;
+}
+.resetBtn{
+    border:1px solid transparent;
+    background-color: grey;
+    color: white;
+    border-radius: 0.25rem;
 }
