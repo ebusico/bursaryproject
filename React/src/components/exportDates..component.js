@@ -31,9 +31,12 @@ export default class ListTrainee extends Component {
                 myTrainees: false,
                 status: 'All',
                 bursary: 'All',
+                suspended: false
             },
-            from: undefined,
-            to: undefined,
+            range:{
+                from: undefined,
+                to: undefined,
+            }
 			};
         
        //Added onChangeSearch - Ernie
@@ -44,6 +47,9 @@ export default class ListTrainee extends Component {
         this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
         this.onChangeBursaryFilter = this.onChangeBursaryFilter.bind(this);
         this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
+        this.handleDaysClicked = this.handleDaysClicked.bind(this);
+        this.handleResetClick = this.handleResetClick.bind(this);
+        this.onChangeSuspendedFilter = this.onChangeSuspendedFilter.bind(this);
     }
     
     componentDidMount() {
@@ -99,6 +105,14 @@ export default class ListTrainee extends Component {
         }
         this.setState({ selectedDays });
       }
+
+      handleDaysClicked(day) {
+        const range = DateUtils.addDayToRange(day, this.state.range);
+        console.log(range);
+        this.setState({
+            range: range});
+        console.log(this.state.range);
+      }
     
       onChangeMyTraineeFilter(e){
         var newVal = !this.state.filter.myTrainees
@@ -114,6 +128,16 @@ export default class ListTrainee extends Component {
         var newVal = e.target.value;
         var newFilter = this.state.filter;
         newFilter.status = newVal
+        this.setState({
+            filter : newFilter
+        })
+    }
+    
+    onChangeSuspendedFilter(e){
+        var newVal = !this.state.filter.suspended
+        console.log(newVal)
+        var newFilter = this.state.filter
+        newFilter.suspended = newVal
         this.setState({
             filter : newFilter
         })
@@ -134,15 +158,13 @@ export default class ListTrainee extends Component {
         });
     }
 
-      getInitialState() {
-    return {
-      from: undefined,
-      to: undefined,
-    };
-  }
-
     handleResetClick() {
-        this.setState(this.getInitialState());
+        this.setState({
+            range: {
+                from: undefined,
+                to: undefined
+            }
+        });
       }
 	
     render() {
@@ -155,7 +177,8 @@ export default class ListTrainee extends Component {
         let searchString = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         let filter = this.state.filter;
         let email = this.state.recruiterEmail;
-        const { from, to } = this.state;
+        let range = this.state.range;
+        const { from, to } = this.state.range;
         const modifiers = { start: from, end: to };
 
         if(searchString.length > 0){
@@ -196,6 +219,32 @@ export default class ListTrainee extends Component {
                     return trainee;
                 }
             })
+        }
+        if(filter.suspended === false){
+            trainees = trainees.filter(function(trainee){
+                if(trainee.status !== 'Suspended'){
+                    return trainee;
+                }
+            })
+        }
+
+        if(from != undefined){
+            if(to == undefined){
+                trainees = trainees.filter(function(trainee){
+                    let start = new Date(Date.parse(trainee.trainee_start_date));
+                    if(DateUtils.isSameDay(start, from)){
+                         return trainee;
+                    }
+                })
+            }
+            else if(to!= undefined){
+                trainees = trainees.filter(function(trainee){
+                    let start = new Date(Date.parse(trainee.trainee_start_date));
+                    if(DateUtils.isDayInRange(start, range)){
+                         return trainee;
+                    }
+                })
+            }
         }
 
         if(role === 'finance'){
@@ -258,42 +307,26 @@ export default class ListTrainee extends Component {
                     >
                     Filters
                     </button>
-                    {/* <DatePicker
-                        selected={this.state.selectedDate}
-                        onChange={this.onChangeSearch}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Specify Start Date to filter"
-                        strictParsing
-                        disabledKeyboardNavigation
-                    /> */}
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                         <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
                         <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
-                        <p>
-                            {!from && !to && 'Please select the first day.'}
-                            {from && !to && 'Please select the last day.'}
-                            {from &&
-                                to &&
-                                `Selected from ${from.toLocaleDateString()} to
-                                    ${to.toLocaleDateString()}`}{' '}
-                            {from &&
-                                to && (
-                                <button className="link" onClick={this.handleResetClick}>
-                                    Reset
-                                </button>
-                                )}
-                        </p>
+                        <div className = "mod-body">
                         <DayPicker
                             className="Selectable"
                             numberOfMonths={this.props.numberOfMonths}
                             selectedDays={[from, { from, to }]}
                             modifiers={modifiers}
-                            onDayClick={this.handleDayClick}
+                            onDayClick={this.handleDaysClicked}
                         />
-                            {/* <DayPicker
-                                selectedDays={this.state.selectedDays}
-                                onDayClick={this.handleDayClick}
-                            /> */}
+                        <p>
+                            {from &&
+                                to && (
+                                <button className="resetBtn" onClick={this.handleResetClick}>
+                                    Reset
+                                </button>
+                                )}
+                        </p>
+                        </div>
                         </ModalBody>
                     </Modal>
                     <div id="addUser">
@@ -307,6 +340,7 @@ export default class ListTrainee extends Component {
                         <label>Status</label> &nbsp;
                         <select onChange={this.onChangeStatusFilter}>
                             <option value="All">All</option>
+                            <option value="Pending">Pending</option>
                             <option value="Incomplete">Incomplete</option>
                             <option value="Active">Active</option>
                         </select>&nbsp;&nbsp;
@@ -316,7 +350,9 @@ export default class ListTrainee extends Component {
                             <option value="True">True</option>
                             <option value="False">False</option>
                         </select>&nbsp;&nbsp;
-                        <button className="qabtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
+                        <label>Show Suspended</label> &nbsp;
+                        <input type="checkbox" value="Suspended" onClick={this.onChangeSuspendedFilter}/> &nbsp;&nbsp;
+                        <button className="resetBtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
                     </p>
                     </Collapse>
                 </div>
@@ -371,37 +407,23 @@ export default class ListTrainee extends Component {
                         >
                         Filters
                         </button>
-                        {/* <DatePicker
-                            selected={this.state.selectedDate}
-                            onChange={this.onChangeSearch}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="Specify Start Date to filter"
-                            strictParsing
-                            disabledKeyboardNavigation
-                        /> */}
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                             <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
                             <ModalBody cssModule={{'modal-body':'w-100 text-center'}}>
                             <p>
-                                {!from && !to && 'Please select the first day.'}
-                                {from && !to && 'Please select the last day.'}
-                                {from &&
-                                    to &&
-                                    `Selected from ${from.toLocaleDateString()} to
-                                        ${to.toLocaleDateString()}`}{' '}
-                                {from &&
-                                    to && (
-                                    <button className="link" onClick={this.handleResetClick}>
-                                        Reset
-                                    </button>
-                                    )}
+                            {from &&
+                                to && (
+                                <button className="resetBtn" onClick={this.handleResetClick}>
+                                    Reset
+                                </button>
+                                )}
                             </p>
                             <DayPicker
                                 className="Selectable"
                                 numberOfMonths={this.props.numberOfMonths}
                                 selectedDays={[from, { from, to }]}
                                 modifiers={modifiers}
-                                onDayClick={this.handleDayClick}
+                                onDayClick={this.handleDaysClicked}
                             />
                                 {/* <DayPicker
                                     selectedDays={this.state.selectedDays}
@@ -418,6 +440,7 @@ export default class ListTrainee extends Component {
                             <label>Status</label> &nbsp;
                             <select onChange={this.onChangeStatusFilter}>
                                 <option value="All">All</option>
+                                <option value="Pending">Pending</option>
                                 <option value="Incomplete">Incomplete</option>
                                 <option value="Active">Active</option>
                             </select>&nbsp;&nbsp;
@@ -427,7 +450,7 @@ export default class ListTrainee extends Component {
                                 <option value="True">True</option>
                                 <option value="False">False</option>
                             </select>&nbsp;&nbsp;
-                            <button className="qabtn" onClick={this.toggle}>Select Dates</button> &nbsp;&nbsp;
+                            <button className="resetBtn" onClick={this.toggle}>Select Start Dates</button> &nbsp;&nbsp;
                         </p>
                         </Collapse>
                     </div>
@@ -446,6 +469,7 @@ export default class ListTrainee extends Component {
                         </thead>               
                         <tbody>
                             {trainees.map(t => {
+                                if(t.status != "Suspended"){
                                 return (
                                     <tr>
                                         <td> {t.trainee_fname}</td>
@@ -457,7 +481,7 @@ export default class ListTrainee extends Component {
                                         <td> {moment(t.trainee_start_date).format('MMMM Do YYYY')}</td>
                                     </tr>
                                 );
-                            })}
+                            }})}
                         </tbody>
     
                     </table>

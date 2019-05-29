@@ -175,6 +175,7 @@ export default class ListTrainee extends Component {
                         <label>Status</label> &nbsp;
                         <select onChange={this.onChangeStatusFilter}>
                             <option value="All">All</option>
+                            <option value="Pending">Pending</option>
                             <option value="Incomplete">Incomplete</option>
                             <option value="Active">Active</option>
                         </select>&nbsp;&nbsp;
