@@ -236,11 +236,7 @@ export default class EditDates extends Component {
                                 disabled
                                 />
                     </div>
-					<div className="form-group">
-						<label> Pay for Bank Holidays: </label> 
-						&nbsp;&nbsp;
-						<input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
-                    </div>
+					
                     <div id="bursaryDates">
                     <label> Bursary Start Date : </label>
                     <br></br>
