@@ -138,8 +138,6 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
         else{
             var bytes  = CryptoJS.AES.decrypt(trainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
             trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
-            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
-            trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx');
             trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(trainee.trainee_lname, '3FJSei8zPx');
