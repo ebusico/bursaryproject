@@ -1,0 +1,33 @@
+rd ul {
+	list-style-type: none;
+	color: white;
+}
+
+rd li {
+	display: inline;
+}
+
+rd li a {
+	font-size: 20px;
+	padding: 20px;
+	background-color: #2b67c6;
+	margin-left: 10px;
+	border-radius: 10px;
+}
+
+rd li a:link {
+	color: white;
+}
+
+rd li a:visited {
+	color: white;
+}
+
+rd li a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+rd li a:active {
+	color: white;
+}

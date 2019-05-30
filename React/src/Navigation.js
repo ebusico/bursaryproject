@@ -14,7 +14,7 @@ import {
 import { authService } from "./components/modules/authService";
 import axios from 'axios';
 import './css/navigation.css';
-import SideBar from './components/sideBar.component.js';
+import TopNavBar from './components/topNavBar.component.js';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -94,12 +94,12 @@ export default class Navigation extends React.Component {
 
     if (authService.currentUserValue) {
       return (
-         <div id='bar'>
-	  	<SideBar pageWrapId={"navigation-bar"} outerContainerId={"bar"} />
+        <div id='bar'>
 		<div id="navigation-bar">
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/login"><img src={logo} alt="QA logo" width="60px" /></NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
+                      <NavbarToggler onClick={this.toggle} />
+                      <TopNavBar pageWrapId={"navigation-bar"} outerContainerId={"bar"} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem className="display_name">Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_fname} {this.state.staff_lname}  |  </NavItem>
