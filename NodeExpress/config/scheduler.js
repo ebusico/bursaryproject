@@ -122,6 +122,8 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 			let status =CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 			console.log(status);
 			let email = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
+			let fname = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+			let lname = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 			if(status == 'Pending'){
 				const token = crypto.randomBytes(20).toString('hex');
 							currentTrainee.trainee_password_token = token;
@@ -144,7 +146,7 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 				from: 'QABursary@aol.com', // sender address
 				to: email, // list of receivers
 				subject: 'Activate QA Account', // Subject line
-                text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                text: 'Hi'+ fname + '' + lname + 'It seems you have not activated your QA Bursary Acccount yet. Please navigate to the following link to activate your QA bursary account and create your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
 			}            
 			transporter.sendMail(mailOptions, function(error, info) {
 				if (error) {

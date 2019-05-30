@@ -28,7 +28,8 @@ export default class EditDates extends Component {
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
 		this.onChangeWorkingDays = this.onChangeWorkingDays.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+		this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
+		
         this.state = {
             trainee_fname: '',
             trainee_lname: '',
@@ -39,7 +40,8 @@ export default class EditDates extends Component {
 			trainee_bench_end_date: '',
 			trainee_days_worked: '',
             currentUser: authService.currentUserValue,
-            bursary: true
+            bursary: true,
+			bankHolidays: 'False',
         }
     }
 	
@@ -49,7 +51,20 @@ export default class EditDates extends Component {
 			trainee_days_worked: e.target.value
 		})
 	}
-	
+	onClickBankHolidays(e) {
+        if(this.state.bankHolidays==="False"){
+            this.setState({
+                bankHolidays:'True',
+                open: true
+            });
+        }
+        else{
+            this.setState({
+                bankHolidays: "False",
+                open: false
+            });
+        }
+    }
 	onChangeBenchStartDate(benchStartDate) {
 		this.setState({
 			trainee_bench_start_date: benchStartDate,
@@ -292,6 +307,10 @@ export default class EditDates extends Component {
                                     },
                                 }}
                             />
+                    </div>
+					<div className="form-group">
+                        <label> Pay for Bank Holidays: </label>
+                        <input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
                     </div>
                     {bursary ?
                         <div className="form-group">

@@ -1,6 +1,7 @@
 var express = require('express');
 var traineeRoutes = express.Router();
 var async = require("async");
+var request = require('request');
 
 const winston = require('../config/winston');
 var databaseLogger = require('../config/winston-db')
@@ -19,7 +20,7 @@ var requireAuth = passport.authenticate('jwt', {session: false});
 
 let Trainee = require('../models/trainee.model');
 let SortCodeCollection = require('../models/sortcode.model');
-
+const bankHolidays = 'https://www.gov.uk/bank-holidays.json';
 
 require('dotenv').config()
 
@@ -164,21 +165,31 @@ traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
         if (!trainee)
             res.status(404).send("no data is not found");
         else{
+			let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+                .toString(CryptoJS.enc.Utf8)
+            let logger = databaseLogger.createLogger(email);
+			
 			trainee.trainee_days_worked = req.body.trainee_days_worked;
 			console.log(req.body.trainee_days_worked);
 			
 			trainee.save().then(trainee => {
                 res.json('Trainee working days have been updated');
+				winston.info('Trainee: '+ email+ ' has had their starting/ending dates changed');
+                logger.info('Trainee: '+ email+ ' has had their starting/ending dates changed');
             })
             .catch(err => {
                 res.status(400).send("Could not updated Days Worked");
                 console.log(err);
+				winston.error('Trainee: '+ email+ ' has not been updated due to error: '+err)
+                logger.error('Trainee: '+ email+ ' has not been updated due to error: '+err);
             });
 		}
 	});
 });
 
-// find one trainee for days to work 
+//find one trainee for days to work 
 traineeRoutes.route('/daysToWork').post(function(req, res){
     let logger = databaseLogger.createLogger(req.body.trainee_email);
     let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString();
