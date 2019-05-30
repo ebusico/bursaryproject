@@ -187,8 +187,8 @@ traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
 			
 			trainee.save().then(trainee => {
                 res.json('Trainee working days have been updated');
-				winston.info('Trainee: '+ email+ ' has had their starting/ending dates changed');
-                logger.info('Trainee: '+ email+ ' has had their starting/ending dates changed');
+				winston.info('Trainee: '+ email+ ' has had their working days amount changed');
+                logger.info('Trainee: '+ email+ ' has had their working days dates changed');
             })
             .catch(err => {
                 res.status(400).send("Could not updated Days Worked");
