@@ -171,7 +171,6 @@ const myRoute = async (req, res) => {
 // update trainee days to work
 traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
 	Trainee.findById(req.params.id, function(err, trainee) {
-		await feed.load();
 		if (!trainee)
             res.status(404).send("no data is not found");
         else{
