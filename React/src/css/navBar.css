@@ -1,33 +1,27 @@
-rd ul {
-	list-style-type: none;
-	color: white;
+#top-nav-bar li {
+    display: inline;
+    color:black;
+    text-decoration:none;
+}
+#top-nav-bar li :hover {
+    color:white;
+    text-decoration:none;
 }
 
-rd li {
-	display: inline;
+.sidebar_btn{
+    background-color: #f8f9fb;
+    display: inline;
+    font-size: 20px;
+    padding: 20px;
+    margin-left: 10px;
+    border-radius: 10px;
+    color:black;
 }
+.sidebar_btn:a{
+    color:white;
 
-rd li a {
-	font-size: 20px;
-	padding: 20px;
-	background-color: #2b67c6;
-	margin-left: 10px;
-	border-radius: 10px;
 }
-
-rd li a:link {
-	color: white;
-}
-
-rd li a:visited {
-	color: white;
-}
-
-rd li a:hover {
-	color: white;
-	text-decoration: none;
-}
-
-rd li a:active {
-	color: white;
+.sidebar_btn:hover{
+    background-color:#2b67c6;
+    color:white;
 }

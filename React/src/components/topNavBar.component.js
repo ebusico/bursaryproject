@@ -30,17 +30,17 @@ export default class topNavBar extends React.Component {
 
         return (
             // Pass on our props
-            <rd>
+            <div id="top-nav-bar">
             <ul>
                 <li><a className="sidebar_btn" onClick={() => { document.location.href = "/"; }}>Home</a></li>
-                <li><a id="HelperGuide" target="_new" className="menu-item" href="https://busaryuserguide.fandom.com/wiki/User_Guide">User Guide</a></li>
+                <li><a id="HelperGuide" target="_new" className="sidebar_btn" href="https://docs.google.com/document/d/1AXQ9NMtyfb5IkY0sDhafANRjIISliqCThlpj8kq99LA/edit">User Guide</a></li>
                 {show_server_logs ?
                     <li><a className="sidebar_btn" onClick={() => { document.location.href = "/system_logs"; }}>
                         System Logs
 				</a></li>
                     : ""}
                 </ul>
-                </rd>
+            </div>
         );
     };
 };

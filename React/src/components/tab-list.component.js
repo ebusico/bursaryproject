@@ -70,13 +70,6 @@ export default class TabList extends React.Component {
               CSV Reports
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink              
-              className={classnames({ active: this.state.activeTab === '4' })}
-              onClick={() => { this.toggle('4'); }}>
-              Cost Report
-            </NavLink>
-          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -87,9 +80,6 @@ export default class TabList extends React.Component {
           </TabPane>
           <TabPane tabId="3">
           <ExportDates />
-          </TabPane>
-          <TabPane tabId="4">
-            <CostReports />
           </TabPane>
         </TabContent>
       </div>
