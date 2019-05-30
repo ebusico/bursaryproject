@@ -1,0 +1,17 @@
+
+.QAtable{
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.BigBox{
+    padding-top: 5%;
+}
+
+h2{
+    text-align:center;
+}
+
+
+.QAtable td{width:1px;white-space:nowrap;}

@@ -20,6 +20,7 @@ import EditDates from './components/edit-dates.component';
 import { CookieBanner } from '@palmabit/react-cookie-law';
 import {codes} from './secrets/secrets';
 import ForgotPass from "./components/forgot-password.component";
+import UserRecord from "./components/user-history.component";
 import "./css/Login.css";
 
 
@@ -63,6 +64,7 @@ class App extends Component {
          <Route path="/addUser" component={AddUser} />
          <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
          <Route path="/editDates/:id" component={EditDates} />
+         <Route path="/history/:id" component={UserRecord} />
          <div >
            <CookieBanner
            className="Banner"

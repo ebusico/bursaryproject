@@ -60,7 +60,7 @@ adminRoutes.route('/staff/:id').get(function(req, res) {
     User.findById(id, function(err, staff) {
         console.log('STAFF TRYING TO FIND :');
         console.log(staff);
-        if(staff === undefined){
+        if(!staff){
             res.json(null);
         }
         else{
@@ -346,7 +346,7 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
                 Trainee.findById(req.params.id, function(err, trainee){
                     if(!trainee){
                         winston.error("User not found")
-                        logger.err("User not found")
+                        logger.error("User not found")
                     }
                     else{
                         let email = CryptoJS.AES.decrypt(trainee.trainee_email
