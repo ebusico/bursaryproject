@@ -12,6 +12,8 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
+
+
 export default class ListTrainee extends Component {
     
     constructor(props) {
@@ -251,7 +253,7 @@ export default class ListTrainee extends Component {
         if(role === 'finance'){
 			output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place","Append","Data to Copy to Notepad"]];
             trainees.map( t => {
-                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,"1000","2","00",t.trainee_sort_code+','+t.trainee_fname+' '+t.trainee_lname+','+t.trainee_account_no+','+"1000"+".00"+','+"BURSARY"+','+"99"];
+                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
                     output.push(obj);
                 }
             )
