@@ -6,6 +6,7 @@ import { authService } from './modules/authService';
 import AccessDenied from './modules/AccessDenied';
 import ListTrainee from './standalone-list-trainee.component.js';
 import ExportDates from './exportDates..component.js';
+import CostReports from './cost-Report.component.js';
 import '../css/tabs.css';
 
 export default class TabList extends React.Component {
@@ -49,6 +50,14 @@ export default class TabList extends React.Component {
               CSV Reports
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Cost Report
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -56,6 +65,9 @@ export default class TabList extends React.Component {
           </TabPane>
           <TabPane tabId="2">
           <ExportDates />
+          </TabPane>
+          <TabPane tabId="3">
+            <CostReports />
           </TabPane>
         </TabContent>
       </div>
