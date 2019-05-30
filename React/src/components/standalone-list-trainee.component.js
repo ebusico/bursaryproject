@@ -268,7 +268,7 @@ export default class ListTrainee extends Component {
                                 <th>Status</th>
                                 <th>Recruited By</th>
                                 <th>Bursary</th>
-                                <th>Daily Payment (£)</th>
+                                <th>Payment This Month(£)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>               
@@ -292,7 +292,7 @@ export default class ListTrainee extends Component {
                                             <td> {t.status}</td>
                                             <td> {t.added_By}</td>
                                             <td> {t.bursary}</td>
-                                            <td> {t.bursary_amount}</td>
+                                            <td> {t.bursary_amount*t.trainee_days_worked}</td>
                                             <td> 
                                                 <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
                                                 <button onClick={() => { 

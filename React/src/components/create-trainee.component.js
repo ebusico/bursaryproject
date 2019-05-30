@@ -265,7 +265,7 @@ export default class CreateTrainee extends Component {
                     <div className="form-group">
                         <label>Email: </label>
                         <input 
-                                type="text" 
+                                type="email" 
                                 className="form-control"
                                 value={this.state.trainee_email}
                                 onChange={this.onChangeTraineeEmail}

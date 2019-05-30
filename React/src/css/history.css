@@ -7,6 +7,9 @@
 
 .BigBox{
     padding-top: 5%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h2{
@@ -14,4 +17,4 @@ h2{
 }
 
 
-.QAtable td{width:1px;white-space:nowrap;}
+.QAtable td{white-space:nowrap;}
