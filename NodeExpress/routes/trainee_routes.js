@@ -49,7 +49,7 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                 bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
                 currentTrainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.bursary_amount, '3FJSei8zPx');
-                currentTrainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8)
+                currentTrainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_start_date, '3FJSei8zPx');
                 currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, '3FJSei8zPx');
@@ -157,6 +157,26 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
         logger.error(err);
     })
 })
+
+// update trainee days to work
+traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
+	Trainee.findById(req.params.id, function(err, trainee) {
+        if (!trainee)
+            res.status(404).send("no data is not found");
+        else{
+			trainee.trainee_days_worked = req.body.trainee_days_worked;
+			console.log(req.body.trainee_days_worked);
+			
+			trainee.save().then(trainee => {
+                res.json('Trainee working days have been updated');
+            })
+            .catch(err => {
+                res.status(400).send("Could not updated Days Worked");
+                console.log(err);
+            });
+		}
+	});
+});
 
 // find one trainee for days to work 
 traineeRoutes.route('/daysToWork').post(function(req, res){
@@ -401,7 +421,6 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
             trainee.trainee_end_date = CryptoJS.AES.encrypt(req.body.trainee_end_date, '3FJSei8zPx').toString();
 			trainee.trainee_bench_start_date = CryptoJS.AES.encrypt(req.body.trainee_bench_start_date, '3FJSei8zPx').toString();
 			trainee.trainee_bench_end_date = CryptoJS.AES.encrypt(req.body.trainee_bench_end_date, '3FJSei8zPx').toString();
-			trainee.trainee_days_worked = CryptoJS.AES.encrypt(req.body.trainee_days_worked, '3FJSei8zPx').toString();
 			
             trainee.save().then(trainee => {
                 res.json('Trainee updated!');

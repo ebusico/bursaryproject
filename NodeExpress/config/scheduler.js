@@ -143,7 +143,7 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 			var mailOptions = {
 				from: 'QABursary@aol.com', // sender address
 				to: email, // list of receivers
-				subject: 'Password Reset', // Subject line
+				subject: 'Activate QA Account', // Subject line
                 text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
 			}            
 			transporter.sendMail(mailOptions, function(error, info) {

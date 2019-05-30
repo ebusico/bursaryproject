@@ -167,6 +167,8 @@ export default class EditDates extends Component {
             trainee_end_date: this.state.trainee_end_date,
 			trainee_bench_start_date:this.state.trainee_bench_start_date,
 			trainee_bench_end_date:this.state.trainee_bench_end_date,
+		}
+		const workingDays = {
 			trainee_days_worked: this.state.trainee_days_worked,
 		}
 		
@@ -174,7 +176,11 @@ export default class EditDates extends Component {
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
-                          window.location.reload();});    
+                          window.location.reload();});
+		axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/daysToWork/'+this.props.match.params.id, workingDays)
+            .then(res => {console.log(res.data);
+                          this.props.history.push('/');
+                          window.location.reload();});
     }
 	
 }
@@ -289,10 +295,11 @@ export default class EditDates extends Component {
                     </div>
                     {bursary ?
                         <div className="form-group">
-                        <label>Amount of working days to be paid this month</label>
+                        <label>Amount of working days to be paid this month:</label>
+						<br></br>
                         <input 
                                 type="number" 
-                                className="form-control"
+                                className="workingDays"
                                 value={this.state.trainee_days_worked}
                                 onChange={this.onChangeWorkingDays}
 								required/>
