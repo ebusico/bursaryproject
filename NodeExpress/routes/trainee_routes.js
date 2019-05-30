@@ -180,9 +180,10 @@ traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
                 , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
                 .toString(CryptoJS.enc.Utf8)
             let logger = databaseLogger.createLogger(email);
-			
-			trainee.trainee_days_worked = req.body.trainee_days_worked;
-			console.log(req.body.trainee_days_worked);
+			let days = CryptoJS.AES.encrypt(req.body.trainee_days_worked, '3FJSei8zPx').toString();
+			trainee.trainee_days_worked = days;
+            console.log(req.body.trainee_days_worked);
+            console.log("encrypted"+days);
 			
 			trainee.save().then(trainee => {
                 res.json('Trainee working days have been updated');
