@@ -49,7 +49,7 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                 bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
                 currentTrainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.bursary_amount, '3FJSei8zPx');
-                currentTrainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8)
+                currentTrainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_start_date, '3FJSei8zPx');
                 currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, '3FJSei8zPx');
@@ -457,12 +457,12 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             var transporter = nodeMailer.createTransport({
                 service: 'AOL',
                 auth: {
-                    user: 'QABursary@aol.com',
-                    pass: 'Passw0rd123'
+                    user: process.env.SYSTEM_EMAIL,
+                    pass: process.env.SYSTEM_PASSWORD
                 }
             });
             var mailOptions = {
-                from: 'QABursary@aol.com', // sender address
+                from: process.env.SYSTEM_EMAIL, // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
                 text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
