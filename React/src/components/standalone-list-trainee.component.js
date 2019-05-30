@@ -101,6 +101,11 @@ export default class ListTrainee extends Component {
             filter : newFilter
         })
     }
+
+    handleHistoryClick(e){
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/getRecord/'+e.target.value)
+        .then(response => console.log(response.data))
+    }
 	
     render() {
         //Declared variables in order to read input from search function
@@ -256,7 +261,7 @@ export default class ListTrainee extends Component {
                                 <th>Status</th>
                                 <th>Recruited By</th>
                                 <th>Bursary</th>
-                                <th>Daily Bursary</th>
+                                <th>Daily Payment (£)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>               
@@ -287,7 +292,8 @@ export default class ListTrainee extends Component {
                                                                 if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
                                                                 axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+deleteRoute+'/'+t._id).then(() => window.location.reload()) } }>
                                                                 {deleteToggle}
-                                                </button>
+                                                </button>&nbsp;
+                                                <button value={t._id} onClick={this.handleHistoryClick}>View History</button>
                                            </td>
                                         </tr>
                                 );

@@ -78,7 +78,7 @@ traineeRoutes.route('/:id').get(function(req, res) {
     Trainee.findById(id, function(err, trainee) {
         console.log('trainee found is :');
         console.log(trainee);
-        if(trainee === null){
+        if(!trainee){
             res.json(null);
         }
         else{
@@ -125,28 +125,36 @@ traineeRoutes.route('/:id').get(function(req, res) {
 
 //get a single trainee by email
 traineeRoutes.route('/getByEmail').post(function(req,res) {
-    let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+    let logger = databaseLogger.createLogger(req.body.trainee_email);
+    let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString();
     Trainee.findOne({trainee_email: email}, function(err, trainee) {
-        var bytes  = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
-        trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
-        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
-        trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
-        bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx');
-        trainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
-        bytes = CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx');
-        trainee.status = bytes.toString(CryptoJS.enc.Utf8);
-        bytes = CryptoJS.AES.decrypt(currentTrainee.added_By, '3FJSei8zPx');
-        trainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
-        bytes = CryptoJS.AES.decrypt(currentTrainee.bursary, '3FJSei8zPx');
-        trainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
-        res.json(trainee);
-        let logger = databaseLogger.createLogger(trainee.trainee_email);
-        winston.info('found email: ' + trainee.trainee_email);
-        logger.verbose("Trainee info accessed")
+        if(!trainee){
+            res.status(205).send("Trainee doesn't exist");
+            winston.error("Trainee: "+ req.body.trainee_email+ " doesn't exist");
+            logger.error("Trainee: "+ req.body.trainee_email+ " doesn't exist");
+        }
+        else{
+            var bytes  = CryptoJS.AES.decrypt(trainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+            trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx');
+            trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_lname, '3FJSei8zPx');
+            trainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx');
+            trainee.status = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.added_By, '3FJSei8zPx');
+            trainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx');
+            trainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
+            res.json(trainee);
+            winston.info("Trainee: "+req.body.trainee_email+" info returned");
+            logger.verbose("Trainee: "+req.body.trainee_email+" info returned");
+        }
     })
     .catch(err => {
         res.status(205).send("Trainee doesn't exist");
-		winston.error(err);
+        winston.error(err);
+        logger.error(err);
     })
 })
 
@@ -476,7 +484,12 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
     Trainee.findOne({trainee_password_token: req.params.token}, function(err, trainee) {
         if (!trainee)
             res.status(404).send("data is not found");
-        else
+        else{
+            let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+                .toString(CryptoJS.enc.Utf8)
+            let logger = databaseLogger.createLogger(email);
             //update status if Pending
             if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === 'Pending'){
                 trainee.status = CryptoJS.AES.encrypt('Incomplete', '3FJSei8zPx').toString();
@@ -488,14 +501,17 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
                   trainee.trainee_password = req.body.trainee_password;
                   trainee.save().then(trainee => {
                     res.json('Password updated!');
-					winston.info(trainee._id + 'has updated thier password');
+                    logger.info(email + ' has updated their password')
+					winston.info(email + 'has updated thier password');
                 })
                 .catch(err => {
                     res.status(400).send("Update not possible");
-					winston.error('trainee could not update thier password' + err);
+                    winston.error('Trainee: '+email+' could not update thier password. Error: ' + err);
+                    logger.error('Trainee: '+email+' could not update thier password. Error: ' + err);
                 });
                 });
-              });
+            });
+        }     
     });
 });
 
@@ -546,6 +562,5 @@ traineeRoutes.route('/addBank').post(function(req, res) {
             res.status(205).send('Adding new Sortcode failed');
         });
 });
-
 
 module.exports = traineeRoutes;

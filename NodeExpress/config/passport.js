@@ -3,6 +3,7 @@ var User = require('../models/staff.js');
 var Trainee = require('../models/trainee.model');
 var secret = require('./auth');
 var winston = require('./winston');
+var databaseLogger = require('../config/winston-db')
 
 var passportJWT = require("passport-jwt");
 var JwtStrategy = require('passport-jwt').Strategy;
@@ -32,20 +33,27 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 						return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 					}
 					else{
+						let email = CryptoJS.AES.decrypt(trainee.trainee_email
+							, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+							, {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+							.toString(CryptoJS.enc.Utf8)
+						let logger = databaseLogger.createLogger(email);
 						var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 						var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
 						Trainee.comparePassword(decryptPass, trainee.trainee_password, function(err, isMatch){
 							if(err){
+								logger.error('Unable to login, Error: ' + err);
 								return done(err);
 							}
 							else if(!isMatch){
-								console.log('trainee: ' + trainee._id + ' entered wrong password');
-								winston.error('trainee: ' + trainee._id + ' entered wrong password');
+								console.log('trainee: ' + email + ' entered wrong password');
+								winston.verbose('trainee: ' + email + ' entered wrong password');
 								return done(null, false, {message: 'Login failed. Wrong Email/Password'});
 							}
 							else{
-								console.log('trainee: ' + trainee._id + ' logged in');
-								winston.info('trainee: ' + trainee._id + ' logged in');
+								console.log('Trainee: ' + email + ' logged in');
+								winston.info('Trainee: ' + email + ' logged in');
+								logger.verbose('Trainee: ' + email + ' logged in')
 								return done(null, trainee);
 							}
 						})
@@ -53,12 +61,18 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 				})
       }
 	else{
+		let email = CryptoJS.AES.decrypt(user.email
+			, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+			, {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+			.toString(CryptoJS.enc.Utf8)
+		let logger = databaseLogger.createLogger(email);
 			var bytes  = CryptoJS.AES.decrypt(password, 'c9nMaacr2Y');
 			var decryptPass = bytes.toString(CryptoJS.enc.Utf8);
-      		User.comparePassword(decryptPass, user.password, function(err, isMatch){
-      		if(err){
+      User.comparePassword(decryptPass, user.password, function(err, isMatch){
+      	if(err){
 				console.log(err);
 				winston.error(err);
+				logger.error('Unable to login, Error: ' + err);
 				return done(err);
 			}
      		else if(!isMatch){
@@ -67,8 +81,9 @@ var localLogin = new LocalStrategy(function(email, password, done) {
 			return done(null, false, {message: 'Password is incorrect.'});
 			}
 			else {
-				console.log('user: '+ user._id + " logged in");
-				winston.info('user: '+ user._id + " logged in");
+				console.log('User: ' + email + ' has logged in');
+				winston.verbose('User: ' + email + ' has logged in');
+				logger.verbose('User: ' + email + ' has logged in');
 			return done(null, user);
 			}
      });}
