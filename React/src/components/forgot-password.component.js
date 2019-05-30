@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CryptoJS from "react-native-crypto-js";
-import { codes } from "../secrets/secrets.js";
 import '../css/changePasswordTrainee.css';
 
 export default class ForgotPass extends Component {

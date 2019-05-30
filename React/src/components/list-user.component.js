@@ -72,6 +72,10 @@ export default class ListUser extends Component {
         })
     }
 
+    handleHistoryClick(e){
+        window.location.href="history/"+e.target.value   
+    }
+
     
     render() {
         let users = this.state.users;
@@ -143,7 +147,7 @@ export default class ListUser extends Component {
                     </p>
                     </Collapse>
                 </div>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-striped" style={{ marginTop: 20}} >
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -176,7 +180,8 @@ export default class ListUser extends Component {
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
                                                     axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
-                                    </button>
+                                    </button>&nbsp;
+                                    <button value={user._id} onClick={this.handleHistoryClick}>View History</button>
                                 </td>
                             </tr>
                             )

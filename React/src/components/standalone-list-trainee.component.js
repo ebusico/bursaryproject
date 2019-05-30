@@ -12,7 +12,8 @@ export default class ListTrainee extends Component {
         super(props);
 			
         this.state = {
-			trainees: [], 
+            trainees: [],
+            record: [],
 			searchString: "",
             currentUser: authService.currentUserValue,
             staffEmail: '',
@@ -25,7 +26,8 @@ export default class ListTrainee extends Component {
             open: false
 			};
         
-       //Added onChangeSearch - Ernie
+
+        this.handleHistoryClick = this.handleHistoryClick.bind(this);
         this.onChangeSearch = this.onChangeSearch.bind(this);
         this.onChangeBursaryFilter = this.onChangeBursaryFilter.bind(this);
         this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
@@ -103,9 +105,14 @@ export default class ListTrainee extends Component {
     }
 
     handleHistoryClick(e){
-        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/getRecord/'+e.target.value)
-        .then(response => console.log(response.data))
+        window.location.href="history/"+e.target.value   
     }
+
+    toggle() {
+        this.setState(prevState => ({
+          modal: !prevState.modal
+        }));
+      }
 	
     render() {
         //Declared variables in order to read input from search function

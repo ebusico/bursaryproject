@@ -224,7 +224,8 @@ export default class CreateTrainee extends Component {
 									});
 
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {
-                                        trainee_email: this.state.trainee_email.toLowerCase()
+                                        trainee_email: this.state.trainee_email.toLowerCase(),
+                                        trainee_fname: this.state.trainee_fname
                                         })
                                     .then( (response) => {console.log(response.data);
 									                      this.props.history.push('/');
