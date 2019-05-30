@@ -46,7 +46,7 @@ export default class CreateTrainee extends Component {
 			trainee_days_worked:'',
             bursary: 'False',
             bursary_amount: 0,
-			bankHolidays: 'True',
+			bankHolidays: true,
             open: false
         }
     }
@@ -104,18 +104,22 @@ export default class CreateTrainee extends Component {
 		this.setState({
 			trainee_bench_end_date: benchEndDate
 		})	
+		console.log(this.state.bankHolidays);
 	}
-	
+	// bank holidays 
 	onClickBankHolidays(e) {
-        if(this.state.bankHolidays==="False"){
+        if(this.state.bankHolidays){
             this.setState({
-                bankHolidays:'False'
-            });
+                bankHolidays: false
+            
+			});
+			console.log(this.state.bankHolidays);
         }
         else{
             this.setState({
-                bankHolidays: "True"
+                bankHolidays: true
             });
+			console.log(this.state.bankHolidays);
         }
     }
 
@@ -220,10 +224,11 @@ export default class CreateTrainee extends Component {
                 bursary_amount: this.state.bursary_amount.toString(),
 				trainee_bench_end_date: this.state.trainee_bench_end_date.toString(),
 				trainee_bench_start_date: this.state.trainee_bench_start_date.toString(),
-				bank_holidays: this.state.bank_holidays,
+				bank_holiday: this.state.bankHolidays,
+				
             };
             console.log("this is the start date of the variable : "+ newTrainee.trainee_start_date);
-
+			console.log(this.state.bank_holidays);
             console.log(newTrainee);
             
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/add', newTrainee)
@@ -280,21 +285,23 @@ export default class CreateTrainee extends Component {
                     <div className="form-group">
                         <label>Email: </label>
                         <input 
-                                type="text" 
+                                type="email" 
                                 className="form-control"
                                 value={this.state.trainee_email}
                                 onChange={this.onChangeTraineeEmail}
                                 required/>
                     </div>
-
+					
                     <div className="form-group">
                         <label> Bursary: </label>
+						&nbsp;&nbsp;
                         <input type="checkbox" id="bursaryValue" onClick={this.onClickBursary}/>
                     </div>
 
                     <Collapse in={this.state.open}>
                     <div className="form-group">
                         <label>Bursary Amount</label>
+						&nbsp;&nbsp;
                                 <input 
                                     type="number"
                                     value={this.state.bursary_amount}
@@ -302,8 +309,14 @@ export default class CreateTrainee extends Component {
                                     required/>
                     </div>
                     </Collapse>
-
-                    <div className="form-group" >
+					
+					<div className="form-group">
+						<label> Pay for Bank Holidays: </label> 
+						&nbsp;&nbsp;
+						<input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
+                    </div>
+                    
+					<div className="form-group" >
                         <label> Bursary Start Date</label>
                         <div style={{height: '50px'}}>
                         <DayPickerInput
@@ -372,10 +385,6 @@ export default class CreateTrainee extends Component {
                                 }}
                             />
                         </div>
-						<div className="form-group">
-                        <label> Bank Holidays: </label>
-                        <input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
-                    </div>
                     </div>
 
                     <div className="form-group">

@@ -21,7 +21,9 @@ var requireAuth = passport.authenticate('jwt', {session: false});
 
 let Trainee = require('../models/trainee.model');
 let SortCodeCollection = require('../models/sortcode.model');
-const bankHolidays = 'https://www.gov.uk/bank-holidays.json';
+
+
+let monthlyReports = require('../models/monthlyReport.model');
 
 require('dotenv').config()
 
@@ -56,6 +58,8 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                 currentTrainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_end_date, '3FJSei8zPx');
                 currentTrainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_days_worked, '3FJSei8zPx');
+                currentTrainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
                 if(currentTrainee.status === 'Active'){
                     bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_bank_name, '3FJSei8zPx');
                     currentTrainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
@@ -106,6 +110,8 @@ traineeRoutes.route('/:id').get(function(req, res) {
             trainee.trainee_bench_end_date = bytes.toString(CryptoJS.enc.Utf8);
 			bytes = CryptoJS.AES.decrypt(trainee.bank_holiday, '3FJSei8zPx');
 			trainee.bank_holiday = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx');
+            trainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
             if(trainee.status === 'Active'){
                 bytes = CryptoJS.AES.decrypt(trainee.trainee_bank_name, '3FJSei8zPx');
                 trainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
@@ -219,15 +225,16 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
             console.log("end: "+bench_end.format("MM"));
 			console.log("pay for bank holidays: " + bank)
             if(bursary == "False"){
-                trainee.trainee_days_worked = 0;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();;
                 trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(bench_end, "month")){
 				let bankHolidays = 0;
-                if(bank == true){
+                if(bank === true){
                     bankHolidays = england.holidays(bursary_start,bench_end).length;
+					con
                 }
 				let workedDays = 1 + moment(bursary_start).businessDiff(bench_end) - bankHolidays;
 				console.log("same start end month, days:" + workedDays);
@@ -235,25 +242,26 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
 				trainee.save().then(trainee => {
                   res.json('Days worked updated!');
                   logger.info("Trainee working days for current month updated (automatic)");
-                })
+				})
             }else if(currentMonth.isBefore(bursary_start, 'month')){
                 console.log("Bursary starting in July, 0 days");
-                trainee.trainee_days_worked = 0
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(currentMonth.isAfter(bench_end, 'month')){
                 console.log("Bursary ending in April, 0 days");
-                trainee.trainee_days_worked = 0
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(currentMonth, 'month')){
 				let bankHolidays = 0;
-                if(bank == true){
-                    let bankHolidays = england.holidays(bursary_start,currentMonth.endOf('month')).length
+                if(bank === true){
+                    bankHolidays = england.holidays(bursary_start,currentMonth.endOf('month')).length
+					console.log(bankHolidays);
                 }
                 let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
                 let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").endOf('month');
@@ -261,7 +269,7 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                 console.log('current month is start date month, days worked: ' + workedDays);
 				console.log(start);
 				console.log(end);
-                trainee.trainee_days_worked = workedDays;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)")
@@ -269,13 +277,13 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
             }else if(bench_end.isSame(currentMonth, "month")){
 				let bankHolidays = 0;
                 if(bank == true){
-                    let bankHolidays = england.holidays(currentMonth.startOf('month'),bench_end).length
+                     bankHolidays = england.holidays(currentMonth.startOf('month'),bench_end).length
                 }
                 let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").startOf('month');
                 let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
                 let workedDays = 1 + moment(start).businessDiff(end) - bankHolidays;
                 console.log('current month is end date month, days:' + workedDays);
-                trainee.trainee_days_worked = workedDays;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)")
@@ -284,7 +292,7 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
             else{
 				let bankHolidays = 0;
                 if(bank == true){
-                    let bankHolidays = england.holidays(start,end).length
+                    bankHolidays = england.holidays(start,end).length
                 }
 				let start = moment().startOf('month');
 				let end = moment().endOf('month');
@@ -292,7 +300,7 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
 				console.log(end);
 				let workedDays = moment(start).businessDiff(end) - bankHolidays;
                 console.log("All days: "+workedDays);
-				trainee.trainee_days_worked = workedDays;
+				trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
 					trainee.save().then(trainee => {
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)")
@@ -617,5 +625,66 @@ traineeRoutes.route('/addBank').post(function(req, res) {
             res.status(205).send('Adding new Sortcode failed');
         });
 });
+
+
+//update or create new Monthly Report
+traineeRoutes.route('/monthlyReport').post(function(req, res) {
+    monthlyReports.findOne({month: req.body.month}, function(err, report) {
+        if(!report){
+            // needs to be changed to put in correct total days, daily payments, totalAmounts etc.
+            req.body.totalDays = CryptoJS.AES.encrypt(req.body.totalDays, '3FJSei8zPx').toString();
+            req.body.totalDailyPayments = CryptoJS.AES.encrypt(req.body.totalDailyPayments, '3FJSei8zPx').toString();
+            req.body.totalAmount = CryptoJS.AES.encrypt(req.body.totalAmount, '3FJSei8zPx').toString();
+            req.body.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
+            let newReport = new monthlyReports(req.body);
+            newReport.save().then(newReport =>{
+                res.json('Success');
+            });
+        }
+        else{
+            // decrypt, update & encrypt and save report
+            report.totalDays = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalDays, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalDays)).toString(), '3FJSei8zPx').toString();
+            report.totalDailyPayments = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalDailyPayments)).toString(), '3FJSei8zPx').toString();;
+            report.totalAmount = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalAmount)).toString(), '3FJSei8zPx').toString();;
+            report.save().then(report => {
+                res.json('Successfully Updated');
+            })
+        }
+    })
+});
+
+//get a specific monthly report
+traineeRoutes.route('/monthlyReport/:month').get(function(req, res) {
+    monthlyReports.findOne({month: req.params.month}, function(err, report){
+        console.log('here');
+        console.log(report);
+        if(!report){
+            // returns report is not ready yet
+            res.json('no report');
+        } else{
+            report.totalDays = CryptoJS.AES.decrypt(report.totalDays, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            report.totalDailyPayments = CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            report.totalAmount = CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            report.status = CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+
+            res.json(report);
+        }
+    })
+})
+
+//update report status
+traineeRoutes.route('/monthlyReport/update').post(function(req, res) {
+    monthlyReports.findOne({month: req.body.month}, function(err, report){
+        if(!report){
+            res.json('Unable to find a monthly report');
+        }
+        else{
+            report.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
+            report.save().then(report => {
+                res.json('Sucessfully updated ');
+            })
+        }
+    })
+})
 
 module.exports = traineeRoutes;

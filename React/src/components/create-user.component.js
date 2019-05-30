@@ -135,7 +135,7 @@ export default class CreateUser extends Component {
                         <br/>
                         <label>Email: </label>
                         <input 
-                                type="text" 
+                                type="email" 
                                 className="form-control"
                                 value={this.state.user_email}
                                 onChange={this.onChangeUserEmail}

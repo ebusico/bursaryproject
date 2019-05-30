@@ -77,8 +77,7 @@ let Trainee = new Schema({
 		type: String
 	},
 	bank_holiday:{
-        type: Boolean,
-        default: true
+        type: Boolean
     },
 });
 module.exports = mongoose.model('Trainee', Trainee);
