@@ -3,6 +3,7 @@ var traineeRoutes = express.Router();
 var async = require("async");
 var request = require('request');
 
+var HolidayFeed = require('uk-bank-holidays');
 const winston = require('../config/winston');
 var databaseLogger = require('../config/winston-db')
 var moment = require('moment');
@@ -160,11 +161,18 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
         logger.error(err);
     })
 })
+const myRoute = async (req, res) => {
+  	let feed = new HolidayFeed();
+	const data = await feed.load();
 
+	let england = data.divisions('england-and-wales');
+	console.log(england);
+}
 // update trainee days to work
 traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
 	Trainee.findById(req.params.id, function(err, trainee) {
-        if (!trainee)
+		await feed.load();
+		if (!trainee)
             res.status(404).send("no data is not found");
         else{
 			let email = CryptoJS.AES.decrypt(trainee.trainee_email
@@ -188,19 +196,22 @@ traineeRoutes.route('/daysToWork/:id').post(function(req, res) {
                 logger.error('Trainee: '+ email+ ' has not been updated due to error: '+err);
             });
 		}
-	});
+  });
 });
-
 //find one trainee for days to work 
 traineeRoutes.route('/daysToWork').post(function(req, res){
     let logger = databaseLogger.createLogger(req.body.trainee_email);
     let email = CryptoJS.AES.encrypt(req.body.trainee_email.toLowerCase(), CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString();
-    Trainee.findOne({trainee_email: email},  function(err, trainee) {
+    Trainee.findOne({trainee_email: email}, async function(err, trainee) {
         if(!trainee){
             res.status(404).send("trainee is not found");
             logger.error("Trainee not found");
             winston.error("Trainee not found");
         }else{
+			let feed = new HolidayFeed();
+			await feed.load();
+			let divisions = feed.divisions();
+			let england = feed.divisions('england-and-wales')
         // calculate amount of days
             let currentMonth = moment();
             let bursary = CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
@@ -219,7 +230,8 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(bench_end, "month")){
-                let workedDays = 1 + moment(bursary_start).businessDiff(bench_end);
+				let bankHolidays = england.holidays(bursary_start,bench_end).length
+                let workedDays = 1 + moment(bursary_start).businessDiff(bench_end) - bankHolidays;
                 console.log("same start end month, days:" + workedDays);
                 trainee.trainee_days_worked = workedDays;
                 trainee.save().then(trainee => {
@@ -241,9 +253,10 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(currentMonth, 'month')){
+				let bankHolidays = england.holidays(bursary_start,currentMonth.endOf('month')).length
                 let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
                 let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").endOf('month');
-                let workedDays = moment(start).businessDiff(end);
+                let workedDays = moment(start).businessDiff(end) - bankHolidays;
                 console.log('current month is start date month, days worked: ' + workedDays);
 				console.log(start);
 				console.log(end);
@@ -253,9 +266,10 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                     logger.info("Trainee working days for current month updated (automatic)")
                 })
             }else if(bench_end.isSame(currentMonth, "month")){
+				let bankHolidays = england.holidays(currentMonth.startOf('month'),bench_end).length
                 let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").startOf('month');
                 let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
-                let workedDays = 1 + moment(start).businessDiff(end);
+                let workedDays = 1 + moment(start).businessDiff(end) - bankHolidays;
                 console.log('current month is end date month, days:' + workedDays);
                 trainee.trainee_days_worked = workedDays;
                 trainee.save().then(trainee => {
@@ -266,10 +280,11 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
             else{
 				let start = moment().startOf('month');
 				let end = moment().endOf('month');
+				let bankHolidays = england.holidays(start,end).length
 				console.log(start);
-				console.log(end)
-                console.log("All days: "+moment(start).businessDiff(end));
-                let workedDays = moment(start).businessDiff(end);
+				console.log(end);
+				let workedDays = moment(start).businessDiff(end) - bankHolidays;
+                console.log("All days: "+workedDays);
 				trainee.trainee_days_worked = workedDays;
 					trainee.save().then(trainee => {
                     res.json('Days worked updated!');
