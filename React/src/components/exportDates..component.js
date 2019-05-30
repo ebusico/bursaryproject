@@ -40,6 +40,7 @@ export default class ListTrainee extends Component {
 			};
         
        //Added onChangeSearch - Ernie
+        this.onChangeFilterSearch = this.onChangeFilterSearch.bind(this)
         this.onChangeSearch = this.onChangeSearch.bind(this);
         this.handleDayClick = this.handleDayClick.bind(this);
         this.toggle = this.toggle.bind(this);
