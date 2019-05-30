@@ -136,6 +136,8 @@ traineeRoutes.route('/getByEmail').post(function(req,res) {
         else{
             var bytes  = CryptoJS.AES.decrypt(trainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
             trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx');
+            trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx');
             trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(trainee.trainee_lname, '3FJSei8zPx');
@@ -465,7 +467,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: process.env.SYSTEM_EMAIL, // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'Please navigate to the following link to activate your QA bursary account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                text: 'Hello '+ req.body.trainee_fname +'!\n Welcome to the QA team!\nPlease click the link below to activate your QA bursary account and create your password:\nhttp://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {
@@ -506,8 +508,8 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
                 })
                 .catch(err => {
                     res.status(400).send("Update not possible");
-                    winston.error('Trainee: '+email+' could not update thier password. Error: ' + err);
-                    logger.error('Trainee: '+email+' could not update thier password. Error: ' + err);
+                    winston.error('Trainee: '+email+' could not update their password. Error: ' + err);
+                    logger.error('Trainee: '+email+' could not update their password. Error: ' + err);
                 });
                 });
             });
