@@ -75,8 +75,11 @@ let Trainee = new Schema({
     },
 	trainee_days_worked:{
 		type: String
-	}
-
+	},
+	bank_holiday:{
+        type: Boolean,
+        default: true
+    },
 });
 module.exports = mongoose.model('Trainee', Trainee);
 

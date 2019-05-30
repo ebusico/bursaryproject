@@ -41,7 +41,7 @@ export default class EditDates extends Component {
 			trainee_days_worked: '',
             currentUser: authService.currentUserValue,
             bursary: true,
-			bankHolidays: 'False',
+			bankHolidays: 'True',
         }
     }
 	
@@ -54,13 +54,13 @@ export default class EditDates extends Component {
 	onClickBankHolidays(e) {
         if(this.state.bankHolidays==="False"){
             this.setState({
-                bankHolidays:'True',
+                bankHolidays:'False',
                 open: true
             });
         }
         else{
             this.setState({
-                bankHolidays: "False",
+                bankHolidays: "True",
                 open: false
             });
         }

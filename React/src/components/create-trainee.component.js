@@ -30,6 +30,7 @@ export default class CreateTrainee extends Component {
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
         this.onClickBursary = this.onClickBursary.bind(this);
         this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
+		this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
 
         this.state = {
             trainee_fname: '',
@@ -45,6 +46,7 @@ export default class CreateTrainee extends Component {
 			trainee_days_worked:'',
             bursary: 'False',
             bursary_amount: 0,
+			bankHolidays: 'True',
             open: false
         }
     }
@@ -79,7 +81,6 @@ export default class CreateTrainee extends Component {
         });
     }
 	
-
     onChangeTraineeEmail(e) {
         this.setState({
             trainee_email: e.target.value
@@ -104,6 +105,19 @@ export default class CreateTrainee extends Component {
 			trainee_bench_end_date: benchEndDate
 		})	
 	}
+	
+	onClickBankHolidays(e) {
+        if(this.state.bankHolidays==="False"){
+            this.setState({
+                bankHolidays:'False'
+            });
+        }
+        else{
+            this.setState({
+                bankHolidays: "True"
+            });
+        }
+    }
 
     onChangeStartDate = (startDate) =>{
         this.setState({
@@ -206,6 +220,7 @@ export default class CreateTrainee extends Component {
                 bursary_amount: this.state.bursary_amount.toString(),
 				trainee_bench_end_date: this.state.trainee_bench_end_date.toString(),
 				trainee_bench_start_date: this.state.trainee_bench_start_date.toString(),
+				bank_holidays: this.state.bank_holidays,
             };
             console.log("this is the start date of the variable : "+ newTrainee.trainee_start_date);
 
@@ -357,6 +372,10 @@ export default class CreateTrainee extends Component {
                                 }}
                             />
                         </div>
+						<div className="form-group">
+                        <label> Bank Holidays: </label>
+                        <input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
+                    </div>
                     </div>
 
                     <div className="form-group">
