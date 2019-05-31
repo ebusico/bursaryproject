@@ -6,6 +6,7 @@ import '../css/edit-list-trainee.css';
 import "react-datepicker/dist/react-datepicker.css";
 import momentBusinessDays from 'moment-business-days';
 import moment from 'moment';
+import Collapse from 'react-bootstrap/Collapse'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -28,7 +29,9 @@ export default class EditDates extends Component {
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
 		this.onChangeWorkingDays = this.onChangeWorkingDays.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-		this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
+        this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
+        this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
+        this.onClickBursary = this.onClickBursary.bind(this);
 		
         this.state = {
             trainee_fname: '',
@@ -40,8 +43,7 @@ export default class EditDates extends Component {
 			trainee_bench_end_date: '',
 			trainee_days_worked: '',
             currentUser: authService.currentUserValue,
-            bursary: true,
-			bankHolidays: 'True',
+            bankHolidays: 'True',
         }
     }
 	
@@ -96,6 +98,29 @@ export default class EditDates extends Component {
 			trainee_bench_end_date: momentBusinessDays(endDate, 'DD-MM-YYYY').businessAdd(60)._d ,
         })
     }
+
+    onClickBursary(e){
+        if(this.state.bursary==="False"){
+            this.setState({
+                bursary: "True",
+                bursary_amount: 30,
+                open: true
+            });
+        }
+        else{
+            this.setState({
+                bursary: "False",
+                bursary_amount: 0,
+                open: false
+            });
+        }
+    }
+
+    onChangeBursaryAmount(e){
+        this.setState({
+                bursary_amount: e.target.value
+        });
+    }
 	
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
@@ -111,15 +136,22 @@ export default class EditDates extends Component {
 					trainee_bench_start_date: new Date (response.data.trainee_bench_start_date),
 					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
                     trainee_days_worked: response.data.trainee_days_worked,
+                    trainee_bursary: response.data.bursary,
+                    trainee_bursary_amount: response.data.bursary_amount
                 })
 
                 if(response.data.bursary === 'True'){
                     console.log(response.data.bursary);
+                    this.setState({
+                        bursary: "True",
+                        open: true
+                    })
                 }
                 else if(response.data.bursary === 'False'){
                     console.log(response.data.bursary);
                     this.setState({
-                        bursary: false
+                        bursary: "False",
+                        open: false
                     })
                 }
                 console.log(this.state.trainee_start_date);
@@ -185,9 +217,14 @@ export default class EditDates extends Component {
 		}
 		const workingDays = {
 			trainee_days_worked: this.state.trainee_days_worked,
-		}
+        }
+        const bursary = {
+            trainee_bursary: this.state.bursary,
+            trainee_bursary_amount: this.state.bursary_amount
+        }
 		
         console.log(obj);
+        console.log(bursary);
         axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
@@ -196,12 +233,17 @@ export default class EditDates extends Component {
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
                           window.location.reload();});
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editBursary/'+this.props.match.params.id, bursary)
+                .then(res => {console.log(res.data);
+                             this.props.history.push('/');
+                             window.location.reload();});                 
     }
 	
 }
 
 
     render() {
+        console.log(this.state.bursary)
         const {bursary} = this.state;
 		if(this.state.currentUser.token.role === 'admin' || this.state.currentUser.token.role === 'recruiter'){
         return (
@@ -237,6 +279,24 @@ export default class EditDates extends Component {
                                 />
                     </div>
 					
+                    <div className="form-group">
+                        <label>Bursary: </label>    
+                        &nbsp;&nbsp;
+                        <input type="checkbox" id="bursaryValue" checked={this.state.open} onClick={this.onClickBursary}/>
+                    </div>
+
+                    <Collapse in={this.state.open}>
+                    <div className="form-group">
+                        <label>Bursary Amount</label>
+						&nbsp;&nbsp;
+                                <input 
+                                    type="number"
+                                    value={this.state.bursary_amount}
+                                    onChange={this.onChangeBursaryAmount}
+                                    required/>
+                    </div>
+                    </Collapse>
+
                     <div id="bursaryDates">
                     <label> Bursary Start Date : </label>
                     <br></br>

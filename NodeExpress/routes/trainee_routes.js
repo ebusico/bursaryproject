@@ -481,6 +481,35 @@ traineeRoutes.route('/editDates/:id').post(function(req, res) {
     });
 });
 
+//gets trainee by id and updates bursary status and bursary amount
+traineeRoutes.route('/editBursary/:id').post(function(req, res){
+    console.log(req);
+    Trainee.findById(req.params.id, function(err, trainee){
+        if(!trainee){
+            res.status(404).send("data is not found");
+        }
+        else{
+            let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+                .toString(CryptoJS.enc.Utf8)
+            let logger = databaseLogger.createLogger(email);
+            trainee.bursary =  CryptoJS.AES.encrypt(req.body.trainee_bursary, '3FJSei8zPx').toString();
+            trainee.bursary_amount = CryptoJS.AES.encrypt(req.body.trainee_bursary_amount.toString(), '3FJSei8zPx').toString();
+
+            trainee.save().then(trainee => {
+                res.json('Trainee updated!');
+                winston.info('Trainee: '+ email+ ' has had their bursary status and amount changed');
+                logger.info('Trainee: '+ email+ 'has had their bursary status and amount changed');
+            }).catch(err =>{
+                res.status(400).send("Update not possible");
+                winston.error('Trainee: '+ email+ ' has not been updated due to error: '+err)
+                logger.error('Trainee: '+ email+ ' has not been updated due to error: '+err);
+            });
+        }
+    })
+});
+
 //checks if trainee password reset token is valid
 traineeRoutes.route('/reset/:token').get(function(req, res) {
     Trainee.findOne({trainee_password_token: req.params.token, trainee_password_expires: {$gt: Date.now()}}).then((trainee) => {
