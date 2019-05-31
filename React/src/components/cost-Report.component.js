@@ -20,7 +20,7 @@ export default class CostReport extends Component {
                 amountPayable: 0,
                 daysPayable: 0,
                 dailyPayments: 0,
-                date: moment().format('MMMYYYY'),
+                date: '21/yyyy',
                 status: ''
             },
             button:'',
@@ -53,20 +53,23 @@ export default class CostReport extends Component {
         //     })
 
             // set date as current month and year before below get
-            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport/' + this.state.totals.date).then(response => {
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport/c').then(response => {
                 if(response.data === 'no report'){
                     console.log('No reports found');
                 } else{
                     console.log(response.data);
+                    if(response.data.status === 'PendingApproval'){
+                        response.data.status = 'Pending Approval';
+                    }
                     this.setState({
                         totals:{
                             amountPayable: response.data.totalAmount,
                             daysPayable: response.data.totalDays,
                             dailyPayments: response.data.totalDailyPayments,
-                            date: response.data.month,
+                            date: 'May 2019',
                             status: response.data.status
                         }
-                    })
+                    });
                 }
             })
             
@@ -135,67 +138,21 @@ export default class CostReport extends Component {
             return (
                 <div className="QAtable">
                 <div className="detailsDiv">
-                <label>Month</label> &nbsp;
-                <select onChange={this.onChangeMonth}>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
-                        </select>&nbsp;&nbsp;
-                <label>Year</label>&nbsp;
-                <input value={this.state.year} placeholder="e.g. 2019" onChange={this.onChangeYear}/>&nbsp;&nbsp;
-                <button type="submit"> Find Report </button>
                 <div className="heading">
                 <h1>Cost Report</h1>
                 <br></br>
                 <table className="trainee_table" cellPadding="20">
                     <tbody id="detailstbody">                          
                             <tr><th>Month</th> <td>{this.state.totals.date}</td></tr>
-                            <tr><th>Daily Payments (£)</th><td> {this.state.totals.dailyPayments}</td></tr>
                             <tr><th>Days Payable</th><td> {this.state.totals.daysPayable}</td></tr>
                             <tr><th>Amount Payable (£)</th><td> {this.state.totals.amountPayable}</td></tr>
+                            <tr><th>Status</th><td> {this.state.totals.status}</td></tr>
                             <tr> </tr>
                     </tbody>
                 </table>
                 </div>
-                <div className="QASearchBar">
-                    <button className="approveBtn" disabled={this.state.button}>Approve</button>
                 </div>
                 </div>
-                </div>
-                // <div className="QAtable">
-                //     <div className="QASearchBar">
-                        
-                //     </div>
-    
-                //     <table className="table table-striped" style={{ marginTop: 20 }} >
-                //         <thead>
-                //             <tr>
-                //                 <th>Month</th>
-                //                 <th>Daily Payments (£)</th>
-                //                 <th>Days Payable</th>
-                //                 <th>Amount Payable (£)</th>
-                //             </tr>
-                //         </thead>               
-                //         <tbody>
-                //             <tr>
-                //                 <td> {moment().format('MMM YYYY')}</td>
-                //                 <td> {this.state.totals.dailyPayments}</td>
-                //                 <td> {this.state.totals.daysPayable}</td>
-                //                 <td> {this.state.totals.amountPayable}</td>
-                //                 </tr>
-                //         </tbody>
-    
-                //     </table>
-                // </div>
             );
         }
         else{
@@ -208,15 +165,12 @@ export default class CostReport extends Component {
             <table className="trainee_table" cellPadding="20">
                 <tbody id="detailstbody">                          
                         <tr><th>Month</th> <td>{this.state.totals.date}</td></tr>
-                        <tr><th>Daily Payments (£)</th><td> {this.state.totals.dailyPayments}</td></tr>
                         <tr><th>Days Payable</th><td> {this.state.totals.daysPayable}</td></tr>
                         <tr><th>Amount Payable (£)</th><td> {this.state.totals.amountPayable}</td></tr>
+                        <tr><th>Status</th><td> {this.state.totals.status}</td></tr>
                         <tr> </tr>
                 </tbody>
             </table>
-            </div>
-            <div className="QASearchBar">
-                    <button className="approveBtn" disabled={this.state.button}>Approve</button>
             </div>
             </div>
             </div>
