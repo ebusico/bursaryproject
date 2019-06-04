@@ -660,26 +660,35 @@ traineeRoutes.route('/addBank').post(function(req, res) {
 //update or create new Monthly Report
 traineeRoutes.route('/monthlyReport').post(function(req, res) {
     monthlyReports.findOne({month: req.body.month}, function(err, report) {
-        if(!report){
-            // needs to be changed to put in correct total days, daily payments, totalAmounts etc.
-            req.body.totalDays = CryptoJS.AES.encrypt(req.body.totalDays, '3FJSei8zPx').toString();
-            req.body.totalDailyPayments = CryptoJS.AES.encrypt(req.body.totalDailyPayments, '3FJSei8zPx').toString();
-            req.body.totalAmount = CryptoJS.AES.encrypt(req.body.totalAmount, '3FJSei8zPx').toString();
-            req.body.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
-            let newReport = new monthlyReports(req.body);
-            newReport.save().then(newReport =>{
-                res.json('Success');
-            });
-        }
-        else{
-            // decrypt, update & encrypt and save report
-            report.totalDays = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalDays, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalDays)).toString(), '3FJSei8zPx').toString();
-            report.totalDailyPayments = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalDailyPayments)).toString(), '3FJSei8zPx').toString();;
-            report.totalAmount = CryptoJS.AES.encrypt((parseFloat(CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)) + parseFloat(req.body.totalAmount)).toString(), '3FJSei8zPx').toString();;
-            report.save().then(report => {
-                res.json('Successfully Updated');
+        let reportTrainees=[]
+        Trainee.find(async function(err, trainee){
+            trainee.map(async function(trainee, i){
+                let start = CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                let end = CryptoJS.AES.decrypt(trainee.trainee_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                let days = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                let status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);   
+                let amount = CryptoJS.AES.decrypt(trainee.bursary_amount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                let reportTrainee = {start_date: start, end_date: end, days_worked: days, trainee_status: status, bursary_amount: amount}
+                await reportTrainees.push(reportTrainee);
             })
-        }
+            if(!report){
+                let report = new monthlyReports()
+                report.month = req.body.month;
+                report.reportTrainees = reportTrainees;
+                report.status = CryptoJS.AES.encrypt("PendingApproval", '3FJSei8zPx').toString();
+                report.save().then(report =>{
+                    res.json('Success');
+                });
+            }
+            else{
+                // decrypt, update & encrypt and save report
+                report.reportTrainees = reportTrainees;
+                report.save().then(report => {
+                    res.json('Successfully Updated');
+                })
+            }
+
+        })
     })
 });
 
@@ -692,9 +701,9 @@ traineeRoutes.route('/monthlyReport/:month').get(function(req, res) {
             // returns report is not ready yet
             res.json('no report');
         } else{
-            report.totalDays = CryptoJS.AES.decrypt(report.totalDays, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-            report.totalDailyPayments = CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-            report.totalAmount = CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            // report.totalDays = CryptoJS.AES.decrypt(report.totalDays, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            // report.totalDailyPayments = CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            // report.totalAmount = CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             report.status = CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 
             res.json(report);

@@ -20,7 +20,7 @@ export default class CostReport extends Component {
                 amountPayable: 0,
                 daysPayable: 0,
                 dailyPayments: 0,
-                date: '21/yyyy',
+                date: '',
                 status: ''
             },
             button:'',
@@ -35,24 +35,6 @@ export default class CostReport extends Component {
     }
     
     componentDidMount() {
-        // axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
-        //     .then(response => {
-        //         this.setState({trainees: response.data});
-        //         this.state.trainees.map(t => {
-        //             this.setState({ totals: {
-        //                 amountPayable : this.state.totals.amountPayable + parseFloat(t.bursary_amount) * parseFloat(t.trainee_days_worked),
-        //                 daysPayable: this.state.totals.daysPayable + parseFloat(t.trainee_days_worked),
-        //                 dailyPayments: this.state.totals.dailyPayments + parseFloat(t.bursary_amount),
-        //                 date: moment().format('MMM YYYY').toString()
-        //             }
-        //             });
-        //         })
-        //     })
-        //     .catch(function (error){
-        //         console.log(error);
-        //     })
-
-            // set date as current month and year before below get
             axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport/c').then(response => {
                 if(response.data === 'no report'){
                     console.log('No reports found');
@@ -61,15 +43,22 @@ export default class CostReport extends Component {
                     if(response.data.status === 'PendingApproval'){
                         response.data.status = 'Pending Approval';
                     }
+                let totalDays = 0;
+                let totalAmount = 0;
+                let traineeAmount = 0;
+                response.data.reportTrainees.map(reportTrainee =>{
+                    totalDays = totalDays + parseInt(reportTrainee.days_worked)
+                    traineeAmount = reportTrainee.days_worked*reportTrainee.bursary_amount
+                    totalAmount = totalAmount + traineeAmount
                     this.setState({
                         totals:{
-                            amountPayable: response.data.totalAmount,
-                            daysPayable: response.data.totalDays,
-                            dailyPayments: response.data.totalDailyPayments,
-                            date: 'May 2019',
+                            amountPayable: totalAmount,
+                            daysPayable: totalDays,
+                            date: 'June 2019',
                             status: response.data.status
                         }
                     });
+                })
                 }
             })
             
@@ -95,8 +84,6 @@ export default class CostReport extends Component {
                 });
             }
     }
-
-    // Added onChangeSearch(e) function. Needed for the search filter
 
     onChangeYear(e) {
         console.log(e.target.value);
