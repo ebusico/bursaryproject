@@ -7,17 +7,8 @@ const MonthlySchema = new mongoose.Schema({
   required: true, 
   unique: true 
   },
-  totalDays: {
-    type: String,
-    required: true
-  },
-  totalDailyPayments: {
-    type: String,
-    required: true
-  },
-  totalAmount: {
-    type: String,
-    required: true
+  reportTrainees: {
+    type: Array
   },
   status: {
     type: String,

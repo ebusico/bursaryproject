@@ -12,7 +12,7 @@ export default class SystemLogs extends Component {
 				super(props);
 					
 				this.state = {
-					logs:' ',
+					logs:[],
 					currentUser: authService.currentUserValue,
 					};
 			}
@@ -52,7 +52,7 @@ export default class SystemLogs extends Component {
 				<div className="system_body">
 				</div>
 					<div id ="sample" className="system_body_logs">
-					{this.state.logs}
+					{this.state.logs.map(log => {return( <div>{log}</div>)})}
 					
 				</div>
 			</div>

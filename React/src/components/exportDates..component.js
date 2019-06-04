@@ -28,7 +28,7 @@ export default class ListTrainee extends Component {
             modal: false,
             filterBoolean: false,
             searchString: "",
-            recruiterEmail: '',
+            recruiterName: '',
             filter: {
                 myTrainees: false,
                 status: 'All',
@@ -74,7 +74,7 @@ export default class ListTrainee extends Component {
               }
               else{
                 this.setState({
-                  recruiterEmail: response.data.email
+                  recruiterName: response.data.fname + " " + response.data.lname
                 })
               }
             });
@@ -179,7 +179,7 @@ export default class ListTrainee extends Component {
         let role = this.state.currentUser.token.role;
         let searchString = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         let filter = this.state.filter;
-        let email = this.state.recruiterEmail;
+        let recruiterName = this.state.recruiterName;
         let range = this.state.range;
         const { from, to } = this.state.range;
         const modifiers = { start: from, end: to };
@@ -218,7 +218,7 @@ export default class ListTrainee extends Component {
 
         if(filter.myTrainees === true){
             trainees = trainees.filter(function(trainee){
-                if(trainee.added_By === email){
+                if(trainee.added_By === recruiterName){
                     return trainee;
                 }
             })
@@ -251,9 +251,10 @@ export default class ListTrainee extends Component {
         }
 
         if(role === 'finance'){
-			output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place","Append","Data to Copy to Notepad"]];
+			output = [];
             trainees.map( t => {
-                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
+                // var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
+                var obj = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,t.bursary_amount*t.trainee_days_worked+".00","BURSARY","99"];
                     output.push(obj);
                 }
             )
