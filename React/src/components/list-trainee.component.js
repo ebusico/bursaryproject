@@ -208,7 +208,7 @@ export default class ListTrainee extends Component {
                                     <tr>
                                         <td> {t.trainee_fname}</td>
                                         <td> {t.trainee_lname}</td>
-                                        <td> {t.trainee_email}</td>
+                                        <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
                                         <td> {t.status}</td>
                                         <td> {t.added_By}</td>
                                         <td> {t.bursary}</td>

@@ -33,3 +33,9 @@
 .heading{
     background-color:aliceblue;
 }
+
+
+#email a{
+    text-decoration: none;
+    color: black;
+}

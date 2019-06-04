@@ -172,7 +172,7 @@ export default class ListUser extends Component {
                             return (
                                 <tr>
                                 <td>{user.fname} {user.lname}</td>
-                                <td>{user.email}</td>
+                                <td id="email"><a href={"mailto:"+user.email}>{user.email}</a></td>
                                 <td>{user.role}</td>
                                 <td>{user.status}</td>
                                 <td>

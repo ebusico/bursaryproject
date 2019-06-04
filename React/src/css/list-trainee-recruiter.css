@@ -62,3 +62,8 @@
     color: white;
     border-radius: 0.25rem;
 }
+
+#email a{
+    text-decoration: none;
+    color: black;
+}
