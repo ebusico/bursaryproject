@@ -16,7 +16,7 @@ export default class ListTrainee extends Component {
             record: [],
 			searchString: "",
             currentUser: authService.currentUserValue,
-            staffEmail: '',
+            staffName: '',
             filter: {
                 myTrainees: false,
                 status: 'All',
@@ -54,7 +54,7 @@ export default class ListTrainee extends Component {
               }
               else{
                 this.setState({
-                  staffEmail: response.data.email
+                  staffName: response.data.fname + " " + response.data.lname
                 })
               }
             });
@@ -119,7 +119,7 @@ export default class ListTrainee extends Component {
         let trainees = this.state.trainees;
         let search = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         let filter = this.state.filter;
-        let email = this.state.staffEmail;
+        let staffName = this.state.staffName;
         const {open} = this.state;
         
         if(search.length > 0){
@@ -155,7 +155,7 @@ export default class ListTrainee extends Component {
 
         if(filter.myTrainees === true){
             trainees = trainees.filter(function(trainee){
-                if(trainee.added_By === email){
+                if(trainee.added_By === staffName){
                     return trainee;
                 }
             })
