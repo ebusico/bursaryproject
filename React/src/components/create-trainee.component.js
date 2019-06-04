@@ -42,7 +42,7 @@ export default class CreateTrainee extends Component {
 			trainee_bench_start_date: '',
 			trainee_bench_end_date: '',
             currentUser: authService.currentUserValue,
-            recruiterEmail: '',
+            recruiterName: '',
 			trainee_days_worked:'',
             bursary: 'False',
             bursary_amount: 0,
@@ -62,8 +62,9 @@ export default class CreateTrainee extends Component {
             }
           }
           else{
+            console.log(response.data);
             this.setState({
-              recruiterEmail: response.data.email
+              recruiterName: response.data.fname + ' ' + response.data.lname 
             })
           }
         });
@@ -218,7 +219,7 @@ export default class CreateTrainee extends Component {
                 trainee_password: Math.random().toString(36).slice(-8),
                 trainee_start_date: this.state.trainee_start_date.toString(),
                 trainee_end_date: this.state.trainee_end_date.toString(),
-                added_By: this.state.recruiterEmail,
+                added_By: this.state.recruiterName,
                 status: 'Pending',
                 bursary: this.state.bursary,
                 bursary_amount: this.state.bursary_amount.toString(),
