@@ -29,43 +29,46 @@ let iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
 
 //gets the settings (get all method only get one in this case)
 settingsRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization(['admin'])).get(function(req, res){
-    Settings.find(function(err, settings){
+    Settings.findOne(function(err, settings){
         let logger = databaseLogger.createLogger("universal");
         if (err){
             console.log(err);
             winston.error(err);
             logger.error(err);
         } else{
-            settings.map(function(currentSettings, i){
-                bytes = CryptoJS.AES.decrypt(currentSettings.pay_bank_holidays, '3FJSei8zPx');
-                currentSettings.pay_bank_holidays = bytes.toString(CryptoJS.enc.Utf8);
-                bytes = CryptoJS.AES.decrypt(currentSettings.default_bursary, '3FJSei8zPx');
-                currentSettings.default_bursary = bytes.toString(CryptoJS.enc.Utf8);
-            });
-        console.log(currentSettings);
-        res.json(currentSettings);
+               // bytes = CryptoJS.AES.decrypt(settings.pay_bank_holidays, '3FJSei8zPx');
+               // settings.pay_bank_holidays = bytes.toString(CryptoJS.enc.Utf8);
+               // bytes = CryptoJS.AES.decrypt(settings.default_bursary, '3FJSei8zPx');
+               // settings.default_bursary = bytes.toString(CryptoJS.enc.Utf8);
+        };
+        console.log(settings);
+        res.json(settings);
         logger.verbose('database collected settings successfully');
 			winston.info('database collected settings successfully');
-        }
+        });
     });
-});
 //Edits the settings
-settingsRoutes.route('/editSettings', requireAuth, AuthenticationController.roleAuthorization(['admin'])).get(function(req, res){
-    Settings.find(function(err, settings){
+settingsRoutes.route('/editSettings', requireAuth, AuthenticationController.roleAuthorization(['admin'])).post(function(req, res){
+    Settings.findOne(function(err, settings){
+        let logger = databaseLogger.createLogger("universal");
         if(!settings){
             res.status(404).send("no data is not found");
         }else{
-            settings.map(function(currentSettings, i){
-                let pay_bank_holidays = CryptoJS.AES.encrypt(req.body.pay_bank_holidays, '3FJSei8zPx').toString();
-                settings.pay_bank_holidays = pay_bank_holidays;
-                let default_bursary = CryptoJS.AES.encrypt(req.body.default_bursary, '3FJSei8zPx').toString();
-                settings.default_bursary = default_bursary;
-                currentSettings.save().then(settings =>{
-                    res.json('Settings have been updated');
+                settings.pay_bank_holidays = req.body.bank_holidays.toString();
+                settings.default_bursary = req.body.bursary_amount.toString();
+                settings.save().then(settings =>{
+                    res.json('Settings have been updated: ' + settings.default_bursary);
 				    winston.info('Settings have been changed');
                     logger.info('Settings have been changed');
+                }).catch(err => {
+                    res.status(205).send('Changing settings failed');
+                    console.log(err);
+                    winston.error('Changing settings failed. Error: '+err);
+                    logger.error('Changing settings failed. Error: '+err);
                 });
-            });
-        }
+            };
+        })
     });
-});
+
+
+module.exports = settingsRoutes;

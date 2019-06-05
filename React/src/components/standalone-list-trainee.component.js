@@ -185,7 +185,7 @@ export default class ListTrainee extends Component {
                         placeholder="Find trainee..."
                     />
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>            
                     </div>
                 </div>
 
@@ -233,7 +233,7 @@ export default class ListTrainee extends Component {
                     Filters
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>               
                     </div>
                     <Collapse in={this.state.open}>
                     <p>

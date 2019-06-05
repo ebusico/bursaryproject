@@ -8,6 +8,7 @@ import EditTrainee from "./components/edit-trainee.component";
 import ListTrainee from "./components/list-trainee.component";
 import TabFinance from "./components/tab-finance.component";
 import SystemLogs from "./components/SystemLogs.component";
+import TraineeSettings from "./components/TraineeSettings.component";
 
 import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";

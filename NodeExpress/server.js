@@ -46,6 +46,7 @@ connection.once('open', function() {
 app.use('/trainee', require('./routes/trainee_routes'));
 app.use('/admin', require('./routes/admin_routes'));
 app.use('/auth', require('./routes/auth_routes'));
+app.use('/settings', require('./routes/settings_routes'));
 
 app.listen(PORT, function() {
 	console.log("Server is running on Port: " + PORT);

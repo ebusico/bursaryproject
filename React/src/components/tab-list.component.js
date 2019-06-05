@@ -9,6 +9,7 @@ import ExportDates from './exportDates..component.js';
 import ListTrainee from './standalone-list-trainee.component.js';
 import CostReports from './cost-Report.component.js';
 import '../css/tabs.css';
+import TraineeSettings from './TraineeSettings.component';
 
 export default class TabList extends React.Component {
   constructor(props) {
@@ -77,6 +78,13 @@ export default class TabList extends React.Component {
               Cost Report
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink              
+              className={classnames({ active: this.state.activeTab === '5' })}
+              onClick={() => { this.toggle('5'); }}>
+              TraineeSettings
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
@@ -90,6 +98,9 @@ export default class TabList extends React.Component {
           </TabPane>
           <TabPane tabId="4">
             <CostReports />
+          </TabPane>
+          <TabPane tabId="5">
+            <TraineeSettings/>
           </TabPane>
         </TabContent>
       </div>
