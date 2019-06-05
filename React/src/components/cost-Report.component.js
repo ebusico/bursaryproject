@@ -160,14 +160,6 @@ export default class CostReport extends Component {
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
-                            let totals = 0;
-                            if(t.status != "Suspended"){
-                                totals = totals + parseInt(t.trainee_days_worked);
-                                this.setState({
-                                    totals:{
-                                        amountPayable: totals,
-                                    }
-                                })
                                 return (
                                     <tr>
                                         <td>{t.trainee_fname}</td>
@@ -179,8 +171,7 @@ export default class CostReport extends Component {
                                         <td>£{t.bursary_amount*t.trainee_days_worked}</td>
                                     </tr>
                                 );
-                            }
-                        })}
+                            })}
                     </tbody>
 
                 </table>
@@ -221,12 +212,6 @@ export default class CostReport extends Component {
                     {trainees.map(t => {
                         let totals = 0;
                         if(t.status != "Suspended"){
-                            totals = totals + parseInt(t.trainee_days_worked);
-                            this.setState({
-                                totals:{
-                                    amountPayable: totals,
-                                }
-                            })
                             return (
                                 <tr>
                                     <td>{t.trainee_fname}</td>
