@@ -45,8 +45,7 @@ export default class TraineeSettings extends Component{
         e.preventDefault();
         console.log(this.state);
         axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/settings/editSettings', this.state).then(response =>{
-                console.log(response);
-                this.props.history.push('/');
+                alert("Settings updated");
             }
         )
     }

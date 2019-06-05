@@ -47,7 +47,8 @@ export default class CreateTrainee extends Component {
             bursary: 'False',
             bursary_amount: 0,
 			bankHolidays: true,
-            open: false
+            open: false,
+            default_bursary: 0
         }
     }
 	
@@ -66,7 +67,12 @@ export default class CreateTrainee extends Component {
             this.setState({
               recruiterName: response.data.fname + ' ' + response.data.lname 
             })
-          }
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/settings/').then(response =>{
+                console.log(response.data);
+                this.setState({bankHolidays: response.data.pay_bank_holidays,
+                            default_bursary: response.data.default_bursary});
+                })
+            }
         });
     }
     
@@ -149,7 +155,7 @@ export default class CreateTrainee extends Component {
         if(this.state.bursary==="False"){
             this.setState({
                 bursary: "True",
-                bursary_amount: 30,
+                bursary_amount: this.state.default_bursary,
                 open: true
             });
         }
@@ -314,7 +320,7 @@ export default class CreateTrainee extends Component {
 					<div className="form-group">
 						<label> Pay for Bank Holidays: </label> 
 						&nbsp;&nbsp;
-						<input type="checkbox" id="bursaryValue" onClick={this.onClickBankHolidays}/>
+						<input type="checkbox" checked={this.state.bankHolidays} id="bursaryValue" onClick={this.onClickBankHolidays}/>
                     </div>
                     
 					<div className="form-group" >
