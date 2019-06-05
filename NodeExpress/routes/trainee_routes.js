@@ -663,13 +663,7 @@ traineeRoutes.route('/monthlyReport').post(function(req, res) {
         let reportTrainees=[]
         Trainee.find(async function(err, trainee){
             trainee.map(async function(trainee, i){
-                let start = CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-                let end = CryptoJS.AES.decrypt(trainee.trainee_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-                let days = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-                let status = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);   
-                let amount = CryptoJS.AES.decrypt(trainee.bursary_amount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-                let reportTrainee = {start_date: start, end_date: end, days_worked: days, trainee_status: status, bursary_amount: amount}
-                await reportTrainees.push(reportTrainee);
+                await reportTrainees.push(trainee);
             })
             if(!report){
                 let report = new monthlyReports()
@@ -693,8 +687,8 @@ traineeRoutes.route('/monthlyReport').post(function(req, res) {
 });
 
 //get a specific monthly report
-traineeRoutes.route('/monthlyReport/:month').get(function(req, res) {
-    monthlyReports.findOne({month: req.params.month}, function(err, report){
+traineeRoutes.route('/getMonthlyReport').post(function(req, res) {
+    monthlyReports.findOne({month: req.body.month}, function(err, report){
         console.log('here');
         console.log(report);
         if(!report){
@@ -705,6 +699,36 @@ traineeRoutes.route('/monthlyReport/:month').get(function(req, res) {
             // report.totalDailyPayments = CryptoJS.AES.decrypt(report.totalDailyPayments, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             // report.totalAmount = CryptoJS.AES.decrypt(report.totalAmount, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             report.status = CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            report.reportTrainees.map(trainee =>{
+                var bytes  = CryptoJS.AES.decrypt(trainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")});
+                trainee.trainee_email = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx');
+                trainee.trainee_fname = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_lname, '3FJSei8zPx');
+                trainee.trainee_lname = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx');
+                trainee.status = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.added_By, '3FJSei8zPx');
+                trainee.added_By = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx');
+                trainee.bursary = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.bursary_amount, '3FJSei8zPx');
+                trainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx');
+                trainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_end_date, '3FJSei8zPx');
+                trainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx');
+                trainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
+                if(trainee.status === 'Active'){
+                    bytes = CryptoJS.AES.decrypt(trainee.trainee_bank_name, '3FJSei8zPx');
+                    trainee.trainee_bank_name = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(trainee.trainee_account_no, '3FJSei8zPx');
+                    trainee.trainee_account_no = bytes.toString(CryptoJS.enc.Utf8);
+                    bytes = CryptoJS.AES.decrypt(trainee.trainee_sort_code, '3FJSei8zPx');
+                    trainee.trainee_sort_code = bytes.toString(CryptoJS.enc.Utf8);
+                }
+            })
 
             res.json(report);
         }
@@ -712,18 +736,18 @@ traineeRoutes.route('/monthlyReport/:month').get(function(req, res) {
 })
 
 //update report status
-traineeRoutes.route('/monthlyReport/update').post(function(req, res) {
-    monthlyReports.findOne({month: req.body.month}, function(err, report){
-        if(!report){
-            res.json('Unable to find a monthly report');
-        }
-        else{
-            report.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
-            report.save().then(report => {
-                res.json('Sucessfully updated ');
-            })
-        }
-    })
-})
+// traineeRoutes.route('/monthlyReport/update').post(function(req, res) {
+//     monthlyReports.findOne({month: req.body.month}, function(err, report){
+//         if(!report){
+//             res.json('Unable to find a monthly report');
+//         }
+//         else{
+//             report.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
+//             report.save().then(report => {
+//                 res.json('Sucessfully updated ');
+//             })
+//         }
+//     })
+// })
 
 module.exports = traineeRoutes;

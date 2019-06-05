@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { authService } from './modules/authService';
+import axios from 'axios';
 import '../css/privacy-notice.css';
 
 
@@ -125,7 +127,10 @@ const privText = <div className='priv-text'><h4 id="modal-label" className="priv
 class PrivNotice extends Component {
     constructor(...args) {
         super(...args);
-        this.state = { showModal: true };
+        this.state = { 
+            showModal: false,
+            currentUser: authService.currentUserValue
+         };
 
         this.close = () => {
             this.setState({ showModal: false });
@@ -134,6 +139,23 @@ class PrivNotice extends Component {
         this.open = () => {
             this.setState({ showModal: true });
         };
+    }
+
+    componentDidMount(){
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/privacy/' + this.state.currentUser.token._id)
+        .then(response => {
+            console.log(response);
+            if(response.data === 'Success'){
+                this.setState({
+                    showModal: false
+                })
+            }
+            else if(response.data === 'Failed'){
+                this.setState({
+                    showModal: true
+                })
+            }
+        });
     }
 
     render() {
@@ -153,7 +175,10 @@ class PrivNotice extends Component {
                     className='priv-btn'
                     variant='secondary'
                     block='false'
-                    onClick={this.close}
+                    //onClick={this.close}
+                    onClick = {() => {
+                        console.log(this.state.currentUser.token._id);
+                        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/privacy/accept/'+this.state.currentUser.token._id).then(() => this.setState({ showModal: false })) } }
                     //Additional logic is required for click event
                 >Accept</Button>
                 <br></br>
