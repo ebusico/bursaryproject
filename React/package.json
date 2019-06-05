@@ -37,6 +37,7 @@
     "react-scripts": "2.1.8",
     "react-sidebar": "^3.0.2",
     "react-slidedown": "^2.0.9",
+    "react-table": "^6.10.0",
     "react-widgets": "^4.4.10",
     "reactstrap": "^7.1.0",
     "rxjs": "^6.4.0"
