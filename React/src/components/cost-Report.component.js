@@ -35,7 +35,7 @@ export default class CostReport extends Component {
     }
     
     componentDidMount() {
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/getMonthlyReport', {month: moment().format("MMMM YYYY")})
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport', {month: moment().format("MMMM YYYY")})
             .then( () => {
                 axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/getMonthlyReport', {month: moment().format("MMMM YYYY")}).then(response => {
                     if(response.data === 'no report'){
