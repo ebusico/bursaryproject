@@ -1,0 +1,28 @@
+.priv-notice-title {
+    text-align: center;
+    font-size: 150%;
+  }
+  
+.priv-text{
+  padding:20px;
+}
+
+  .modal-style {
+    width: 90%;
+    z-index: 1040;
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: translate(-50%,-50%);
+    border: 1px solid #e5e5e5;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    padding: 20px
+  }
+  
+  .priv-btn{
+    position: relative;
+    max-width: 100px;
+    left: 50%;
+    margin-left: -50px
+  }
