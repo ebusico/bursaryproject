@@ -294,13 +294,13 @@ export default class ListTrainee extends Component {
                                             <td> {t.bursary}</td>
                                             <td> {t.bursary_amount*t.trainee_days_worked}</td>
                                             <td> 
-                                                <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
-                                                <button onClick={() => { 
+                                                <button className="actionBtn" onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
+                                                <button className="actionBtn" onClick={() => { 
                                                                 if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
                                                                 axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+deleteRoute+'/'+t._id).then(() => window.location.reload()) } }>
                                                                 {deleteToggle}
                                                 </button>&nbsp;
-                                                <button value={t._id} onClick={this.handleHistoryClick}>View History</button>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History</button>
                                            </td>
                                         </tr>
                                 );
@@ -374,7 +374,7 @@ export default class ListTrainee extends Component {
                                             <td> {t.bursary}</td>
                                             <td> {t.bursary_amount*t.trainee_days_worked}</td>
                                             <td> 
-                                                <button onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
+                                                <button className="actionBtn" onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
                                             </td>
                                         </tr>
                                     );

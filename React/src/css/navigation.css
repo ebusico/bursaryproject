@@ -82,3 +82,18 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
+#loginBtn{
+  background-color: #004050;
+}
+
+#loginBtn:hover{
+  filter: brightness(85%);
+}
+
+#logoutBtn{
+  background-color: #004050;
+}
+
+#logoutBtn:hover{
+  filter: brightness(85%);
+}

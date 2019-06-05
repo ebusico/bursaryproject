@@ -3,6 +3,8 @@ import axios from 'axios';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
+import ok from './icons/ok.svg';
+import close from './icons/close.svg';
 
 
 export default class EditTrainee extends Component {
@@ -194,6 +196,7 @@ export default class EditTrainee extends Component {
             if( accountlen.length === 8){
                 document.getElementById("accountnumber").style.borderColor = "green";
                 document.getElementById("accountnumber").style.borderWidth = "thick";
+                document.getElementById("accountImg").src = ok;
                 if( sortcodelen!= undefined){
                     if(sortcodelen.length  === 6){
                         document.getElementById("updateBtn").disabled = false;
@@ -204,6 +207,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("accountnumber").style.borderColor = "red";
                 document.getElementById("accountnumber").style.borderWidth = "thick";
                 document.getElementById("updateBtn").disabled = true;
+                document.getElementById("accountImg").src = close;
             }
         }
 
@@ -211,6 +215,7 @@ export default class EditTrainee extends Component {
             if(sortcodelen.length === 6){
                 document.getElementById("sortcode").style.borderColor = "green";
                 document.getElementById("sortcode").style.borderWidth = "thick";
+                document.getElementById("sortImg").src = ok;
                 if( accountlen!= undefined){
                     if(accountlen.length === 8){
                         document.getElementById("updateBtn").disabled = false;
@@ -221,6 +226,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("sortcode").style.borderColor = "red";
                 document.getElementById("sortcode").style.borderWidth = "thick";
                 document.getElementById("updateBtn").disabled = true;
+                document.getElementById("sortImg").src = close;
             }
         }
 		
@@ -263,20 +269,22 @@ export default class EditTrainee extends Component {
                     </div>
                     <div className="form-group">
                         <label>Sort Code: </label>
+                        <img id="sortImg"></img>
                         <input 
-                                type="text"
+                                type="number"
                                 id="sortcode" 
                                 className="form-control"
                                 placeholder= "eg. 987654"
                                 value={this.state.trainee_sort_code}
                                 onChange={this.onChangeTraineeSort}
-                                //maxLength="6"
+                                maxLength="6"
                                 required minLength = {6}
                                 />
                     </div>
                     <div className="form-group"> 
                         <label>Account Number: </label>
-                        <input  type="text"
+                        <img id="accountImg"></img> 
+                        <input  type="number"
                                 id="accountnumber"
                                 className="form-control"
                                 placeholder= "eg. 12345678"
@@ -284,7 +292,7 @@ export default class EditTrainee extends Component {
                                 onChange={this.onChangeTraineeAccount}
                                 //maxLength="8"
                                 required minLength = {8}
-                                />
+                                />                      
                     </div>
                     {show_matching_bank ?
                         <div>

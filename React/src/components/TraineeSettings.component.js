@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
+import '../css/edit-list-trainee.css';
 
 export default class TraineeSettings extends Component{
     constructor(props){
@@ -74,7 +75,7 @@ export default class TraineeSettings extends Component{
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Update settings" className="btn btn-primary" />
+                        <input type="submit" value="Update settings" id="updateBtn" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

@@ -38,3 +38,33 @@
     padding-top: 1%;
     padding-bottom: 1%;
 }
+
+#updateBtn {
+	background-color: #004050;
+	width: 40%;
+	margin-left: 30%;
+}
+
+#updateBtn:hover {
+	opacity: 0.6;
+}
+
+#accountnumber {
+	width: 15%;
+}
+
+#sortcode {
+	width:15%;
+}
+
+#sortImg{
+	float: right;
+	padding-top: 2%;
+	padding-right: 80%; 
+}
+
+#accountImg{
+		float: right;
+		padding-top: 2%;
+		padding-right: 80%; 
+}

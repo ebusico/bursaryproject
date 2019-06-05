@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './QA_logo.png';
 
 import {
   Collapse,
@@ -104,7 +104,7 @@ export default class Navigation extends React.Component {
               <Nav className="ml-auto" navbar>
                 <NavItem className="display_name">Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_fname} {this.state.staff_lname}  |  </NavItem>
                 <NavItem>
-                  <Button onClick={this.logout} href='/login'>
+                  <Button id="logoutBtn" onClick={this.logout} href='/login'>
                     Logout
                   </Button>
                 </NavItem>
@@ -123,7 +123,7 @@ export default class Navigation extends React.Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <Button onClick={this.login} href='/login'>
+                <Button id="loginBtn" onClick={this.login} href='/login'>
                   Login
                 </Button>
               </Nav>

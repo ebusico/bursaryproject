@@ -1,5 +1,5 @@
 body {
-  background: gray;
+  background: #004050;
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,7 +10,7 @@ body {
 }
 
 #root{
-  background-color: grey;
+  background-color: #004050;
   overflow: hidden;    
   min-height: 650px;
 }
@@ -21,5 +21,5 @@ code {
 }
 
 :root {
-	background-color: grey;
+	background-color: #004050;
 }

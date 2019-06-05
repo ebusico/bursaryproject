@@ -176,12 +176,12 @@ export default class ListUser extends Component {
                                 <td>{user.role}</td>
                                 <td>{user.status}</td>
                                 <td>
-                                    <button onClick={() => { 
+                                    <button className="actionBtn" onClick={() => { 
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
                                                     axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
                                     </button>&nbsp;
-                                    <button value={user._id} onClick={this.handleHistoryClick}>View History</button>
+                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History</button>
                                 </td>
                             </tr>
                             )
