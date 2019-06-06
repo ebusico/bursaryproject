@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom'
 import AccessDenied from './modules/AccessDenied';
 import Collapse from 'react-bootstrap/Collapse'
 import '../css/list-trainee.css';
+import add from './icons/person-add.svg';
+import history from './icons/history.svg';
+import close from './icons/close2.svg';
+import filterIcon from './icons/filter.svg';
 
 
 export default class ListUser extends Component {
@@ -128,9 +132,10 @@ export default class ListUser extends Component {
                     className="filter-btn"
                     >
                     Filters
+                    <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User</Link></button>
+                        <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User<img src={add}></img></Link></button>
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -180,8 +185,9 @@ export default class ListUser extends Component {
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
                                                     axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
+                                                    <img src={close}></img>
                                     </button>&nbsp;
-                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History</button></center>
+                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button></center>
                                 </td>
                             </tr>
                             )

@@ -121,7 +121,7 @@ export default class ChangePassword extends Component {
 					
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Update Password" className="btn btn-primary" />
+                        <input id="updateBtn" type="submit" value="Update Password" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

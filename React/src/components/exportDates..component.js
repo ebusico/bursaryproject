@@ -11,6 +11,8 @@ import Collapse from 'react-bootstrap/Collapse';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import download from './icons/download.svg';
+import filterIcon from './icons/filter.svg';
 
 
 
@@ -310,6 +312,7 @@ export default class ListTrainee extends Component {
                     className="filter-btn"
                     >
                     Filters
+                    <img src={filterIcon}></img>
                     </button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                         <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
@@ -334,7 +337,7 @@ export default class ListTrainee extends Component {
                         </ModalBody>
                     </Modal>
                     <div id="addUser">
-                        <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV </CSVLink></button>
+                        <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV <img src={download}></img></CSVLink></button>
                     </div>
                     <Collapse in={this.state.filterBoolean}>
                     <p>
@@ -410,6 +413,7 @@ export default class ListTrainee extends Component {
                         className="filter-btn"
                         >
                         Filters
+                        <img src={filterIcon}></img>
                         </button>
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} className="dateModal">
                             <ModalHeader toggle={this.toggle} cssModule={{'modal-title':'w-100 text-center'}}>Select Start Dates</ModalHeader>
@@ -436,7 +440,7 @@ export default class ListTrainee extends Component {
                             </ModalBody>
                         </Modal>
                         <div id="addUser">
-                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV </CSVLink></button>
+                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV <img src={download}></img></CSVLink></button>
                         </div>
                         <Collapse in={this.state.filterBoolean}>
                         <p>

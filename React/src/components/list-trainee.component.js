@@ -5,6 +5,9 @@ import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import Collapse from 'react-bootstrap/Collapse'
 import '../css/list-trainee-recruiter.css';
+import add from './icons/person-add.svg';
+import close from './icons/close2.svg';
+import filterIcon from './icons/filter.svg';
 
 export default class ListTrainee extends Component {
     
@@ -163,9 +166,10 @@ export default class ListTrainee extends Component {
                     className="filter-btn"
                     >
                     Filters
+                    <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee <img src={add}></img></Link></button>
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -217,6 +221,7 @@ export default class ListTrainee extends Component {
                                                             if (window.confirm('Are you sure you wish to delete this trainee?'))
                                                             axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
                                                             Delete
+                                                            <img src={close}></img>
                                         </button></center>
                                         </td>
                                     </tr>
