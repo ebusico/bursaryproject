@@ -240,7 +240,8 @@ export default class ListTrainee extends Component {
                     <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee <img src={add}></img></Link></button>               
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee <img src={add}></img></Link></button>
+                        <button className="qabtn"><Link className="link" to={"/trainee-settings"}>Settings</Link></button>                              
                     </div>
                     <Collapse in={this.state.open}>
                     <p>

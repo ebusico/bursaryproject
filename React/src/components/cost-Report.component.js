@@ -393,12 +393,12 @@ export default class CostReport extends Component {
 
         if(this.state.currentUser.token.role === "finance"){
             if(this.state.values.status == "Admin Approved"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="cRButton" onClick={this.updateReport}>Approve</button> 
             }
         }
         else if(this.state.currentUser.token.role === "admin"){
             if(this.state.values.status == "Pending Approval"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="cRButton" onClick={this.updateReport}>Approve</button> 
             }
         }
 
@@ -500,11 +500,11 @@ export default class CostReport extends Component {
                             showMonthYearPicker
                             placeholderText="MM/YYYY" 
                         />
-                </div>
-                <h1>Cost Report - {this.state.date}</h1>
+                                </div>
+                                <h1 className="cRTitle">&nbsp;&nbsp;Cost Report - {this.state.date}</h1>
                 </div>
                 <br/>
-                <table cellPadding='5'>
+                <table className="cRStatus" cellPadding='5'>
                     <tbody>                          
                             <tr>
                                 <th>Status:</th><td>{this.state.values.status}</td>&nbsp;&nbsp;
@@ -519,7 +519,7 @@ export default class CostReport extends Component {
                 <p>&nbsp;&nbsp;Note: Pending trainees are not included in amount payable</p>
                 <br/>
                 </div>
-                <button onClick={() => this.setState({ open: !open })}>Individual Trainee Breakdown</button>&nbsp;&nbsp; 
+                <button className="cRButton" onClick={() => this.setState({ open: !open })}>Individual Trainee Breakdown</button>&nbsp;&nbsp; 
                 {button}
                 <hr />
                 <Collapse in={this.state.open}>
@@ -577,14 +577,14 @@ export default class CostReport extends Component {
                     </Collapse>
                     <br/>
 
-                </div>
-                <ReactTable
+                                </div>
+                                <ReactTable
                     data={trainees}
                     showPagination={false}
                     pageSize={(trainees.length > 5) ? trainees.length : 5}
                     columns={[
                         {
-                        Header: () => <div><strong>Name</strong></div>,
+                        Header: () => <div id="tName"><strong>Name</strong></div>,
                         accessor: "name",
                         show: true
                         },
@@ -634,7 +634,7 @@ export default class CostReport extends Component {
                         
                     ]}
                     style={{
-                      height: "400px" // This will force the table body to overflow and scroll, since there is not enough room
+                        height: "400px" // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                     />
