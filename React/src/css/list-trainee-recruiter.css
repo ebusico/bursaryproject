@@ -89,3 +89,7 @@
 .actionBtn:hover{
     opacity: 1;
 }
+
+.trainees:hover{
+	cursor: pointer;
+}

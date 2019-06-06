@@ -4,7 +4,8 @@ import axios from 'axios';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import Collapse from 'react-bootstrap/Collapse'
-// import '../css/list-trainee-recruiter.css';
+//import '../css/list-trainee-recruiter.css';
+import '../css/cost-report.css';
 import moment from 'moment';
 
 export default class CostReport extends Component {
@@ -133,11 +134,11 @@ export default class CostReport extends Component {
             return (
                 <div className="QAtable">
                 <div className>
-                <div>
-                <h1>Cost Report - {this.state.date}</h1>
+                        <div>
+                            <h1 className="reportTitle">Cost Report - {this.state.date}</h1>
                 <br></br>
                 <table cellPadding="20">
-                    <tbody>                          
+                    <tbody className="reportDetails">                          
                             <tr><th>Month</th> <td>{this.state.date}</td></tr>
                             <tr><th>Total Days Payable</th><td> {this.state.totals.daysPayable}</td></tr>
                             <tr><th>Amount Payable (£)</th><td> {this.state.totals.amountPayable}</td></tr>
@@ -145,8 +146,7 @@ export default class CostReport extends Component {
                     </tbody>
                 </table>
                 </div>
-                <div>{this.state.totals.amountPayable}</div>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -196,7 +196,7 @@ export default class CostReport extends Component {
             </table>
             </div>
             <div>{this.state.totals.amountPayable}</div>
-            <table className="table table-striped" style={{ marginTop: 20 }} >
+            <table className="table table-hover" style={{ marginTop: 20 }} >
                 <thead>
                     <tr>
                         <th>Name</th>

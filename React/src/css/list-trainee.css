@@ -38,3 +38,11 @@
 #email a{
     text-decoration: none;
 }
+
+.trainee:hover{
+	cursor: pointer;
+}
+
+.userRole{
+	text-transform: capitalize;
+}

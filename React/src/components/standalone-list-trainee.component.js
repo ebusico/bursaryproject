@@ -259,17 +259,17 @@ export default class ListTrainee extends Component {
                     </Collapse>
                     </div>
     
-                    <table className="table table-striped" style={{ marginTop: 20 }} >
+                    <table className="table table-hover" style={{ marginTop: 20 }} >
                         <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th><center>Status</center></th>
                                 <th>Recruited By</th>
-                                <th>Bursary</th>
-                                <th>Payment This Month(£)</th>
-                                <th>Action</th>
+                                <th><center>Bursary</center></th>
+                                <th><center>Payment This Month (£)</center></th>
+                                <th><center>Action</center></th>
                             </tr>
                         </thead>               
                         <tbody>
@@ -285,22 +285,21 @@ export default class ListTrainee extends Component {
                                     deleteRoute = "delete";
                                 }
                                 return (
-                                        <tr>
-                                            <td> {t.trainee_fname}</td>
-                                            <td> {t.trainee_lname}</td>
-                                            <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email}</a></td>
-                                            <td> {t.status}</td>
-                                            <td> {t.added_By}</td>
-                                            <td> {t.bursary}</td>
-                                            <td> {t.bursary_amount*t.trainee_days_worked}</td>
-                                            <td> 
-                                                <button className="actionBtn" onClick={() => window.location.href="/editDates/"+t._id}> Edit </button>&nbsp;
-                                                <button className="actionBtn" onClick={() => { 
+                                    <tr className="trainees">
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_fname}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_lname}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id} id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email}</a></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.status}</center></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.added_By}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary}</center></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
+                                            <td>
+                                            <center><button className="actionBtn" onClick={() => { 
                                                                 if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
                                                                 axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+deleteRoute+'/'+t._id).then(() => window.location.reload()) } }>
                                                                 {deleteToggle}
                                                 </button>&nbsp;
-                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History</button>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History</button></center>
                                            </td>
                                         </tr>
                                 );
@@ -349,16 +348,16 @@ export default class ListTrainee extends Component {
                     </Collapse>
                 </div>
 
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Status</th>
-                            <th>Bursary</th>
-                            <th>Payment This Month(£)</th>
-                            <th>Action</th>
+                            <th><center>Status</center></th>
+                            <th><center>Bursary</center></th>
+                            <th><center>Payment This Month (£)</center></th>
+                            <th><center>Action</center></th>
                         </tr>
                     </thead>               
                     <tbody>
@@ -366,15 +365,15 @@ export default class ListTrainee extends Component {
 							if(this.state.currentUser.token.role === 'finance'){
                                 if(t.status != "Suspended"){
                                     return (
-                                        <tr>
-                                            <td> {t.trainee_fname}</td>
-                                            <td> {t.trainee_lname}</td>
-                                            <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
-                                            <td> {t.status}</td>
-                                            <td> {t.bursary}</td>
-                                            <td> {t.bursary_amount*t.trainee_days_worked}</td>
+                                        <tr className="trainees">
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> {t.trainee_fname}</td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> {t.trainee_lname}</td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id} id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.status}</center></td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary}</center></td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
                                             <td> 
-                                                <button className="actionBtn" onClick={()=>window.location.href="/trainee-details/"+t._id}> View Details </button>
+                                                <center><button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details </button></center>
                                             </td>
                                         </tr>
                                     );

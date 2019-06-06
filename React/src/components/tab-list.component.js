@@ -82,7 +82,7 @@ export default class TabList extends React.Component {
             <NavLink              
               className={classnames({ active: this.state.activeTab === '5' })}
               onClick={() => { this.toggle('5'); }}>
-              TraineeSettings
+              Trainee Settings
             </NavLink>
           </NavItem>
         </Nav>
