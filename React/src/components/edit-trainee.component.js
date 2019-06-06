@@ -3,6 +3,8 @@ import axios from 'axios';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
+import ok from './icons/ok.svg';
+import close from './icons/close.svg';
 
 
 export default class EditTrainee extends Component {
@@ -31,7 +33,12 @@ export default class EditTrainee extends Component {
             similar_codes: [],
             show_matching_bank: false,
             show_non_matching_bank: false,
-			currentUser: authService.currentUserValue
+            accountOver: false,
+            sortOver: false,
+            accountError: false,
+            sortError: false,
+            currentUser: authService.currentUserValue,
+            disabled: false
         }
     }
     
@@ -89,6 +96,7 @@ export default class EditTrainee extends Component {
         this.setState({
             trainee_account_no: e.target.value
         });
+        console.log(this.state.trainee_account_no);
     }
 
     onChangeTraineeSort(e) {
@@ -180,6 +188,47 @@ export default class EditTrainee extends Component {
     render() {
         const {show_matching_bank} = this.state;
         const {show_non_matching_bank} = this.state;
+        let accountlen = this.state.trainee_account_no;
+        let sortcodelen = this.state.trainee_sort_code;
+        console.log(sortcodelen);
+
+        if(this.state.trainee_account_no != undefined){
+            if( accountlen.length === 8){
+                document.getElementById("accountnumber").style.borderColor = "green";
+                document.getElementById("accountnumber").style.borderWidth = "thick";
+                document.getElementById("accountImg").src = ok;
+                if( sortcodelen!= undefined){
+                    if(sortcodelen.length  === 6){
+                        document.getElementById("updateBtn").disabled = false;
+                    }
+                }
+            }
+            else if(accountlen.length > 8){
+                document.getElementById("accountnumber").style.borderColor = "red";
+                document.getElementById("accountnumber").style.borderWidth = "thick";
+                document.getElementById("updateBtn").disabled = true;
+                document.getElementById("accountImg").src = close;
+            }
+        }
+
+        if(this.state.trainee_sort_code != undefined){
+            if(sortcodelen.length === 6){
+                document.getElementById("sortcode").style.borderColor = "green";
+                document.getElementById("sortcode").style.borderWidth = "thick";
+                document.getElementById("sortImg").src = ok;
+                if( accountlen!= undefined){
+                    if(accountlen.length === 8){
+                        document.getElementById("updateBtn").disabled = false;
+                    }
+                }
+            }
+            else if(sortcodelen.length > 6){
+                document.getElementById("sortcode").style.borderColor = "red";
+                document.getElementById("sortcode").style.borderWidth = "thick";
+                document.getElementById("updateBtn").disabled = true;
+                document.getElementById("sortImg").src = close;
+            }
+        }
 		
 		if(this.state.currentUser.token.role !== undefined){
 			return (
@@ -218,21 +267,12 @@ export default class EditTrainee extends Component {
                                 disabled
                                 />
                     </div>
-                    <div className="form-group"> 
-                        <label>Account Number: </label>
-                        <input  type="text"
-                                className="form-control"
-                                placeholder= "eg. 12345678"
-                                value={this.state.trainee_account_no}
-                                onChange={this.onChangeTraineeAccount}
-                                maxLength="8"
-                                required minLength = {8}
-                                />
-                    </div>
                     <div className="form-group">
                         <label>Sort Code: </label>
+                        <img id="sortImg"></img>
                         <input 
-                                type="text" 
+                                type="number"
+                                id="sortcode" 
                                 className="form-control"
                                 placeholder= "eg. 987654"
                                 value={this.state.trainee_sort_code}
@@ -240,6 +280,19 @@ export default class EditTrainee extends Component {
                                 maxLength="6"
                                 required minLength = {6}
                                 />
+                    </div>
+                    <div className="form-group"> 
+                        <label>Account Number: </label>
+                        <img id="accountImg"></img> 
+                        <input  type="number"
+                                id="accountnumber"
+                                className="form-control"
+                                placeholder= "eg. 12345678"
+                                value={this.state.trainee_account_no}
+                                onChange={this.onChangeTraineeAccount}
+                                //maxLength="8"
+                                required minLength = {8}
+                                />                      
                     </div>
                     {show_matching_bank ?
                         <div>
@@ -283,7 +336,7 @@ export default class EditTrainee extends Component {
 
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Update" className="btn btn-primary" />
+                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" disabled="true"/>
                     </div>
 					</div>
 				</form>

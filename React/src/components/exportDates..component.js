@@ -361,16 +361,16 @@ export default class ListTrainee extends Component {
                     </Collapse>
                 </div>
 
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Status</th>
+                            <th><center>Status</center></th>
                             <th>Recruited By</th>
-                            <th>Bursary</th>
-                            <th>Start Date</th>
+                            <th><center>Bursary</center></th>
+                            <th><center>Start Date</center></th>
                         </tr>
                     </thead>               
                     <tbody>
@@ -380,10 +380,10 @@ export default class ListTrainee extends Component {
                                     <td> {t.trainee_fname}</td>
                                     <td> {t.trainee_lname}</td>
                                     <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email}</a></td>
-                                    <td> {t.status}</td>
+                                    <td> <center>{t.status}</center></td>
                                     <td> {t.added_By}</td>
-                                    <td> {t.bursary}</td>
-                                    <td> {moment(t.trainee_start_date).format('MMMM Do YYYY')}</td>
+                                    <td> <center>{t.bursary}</center></td>
+                                    <td> <center>{moment(t.trainee_start_date).format('MMMM Do YYYY')}</center></td>
                                 </tr>
                             );
                         })}
@@ -459,33 +459,32 @@ export default class ListTrainee extends Component {
                         </Collapse>
                     </div>
     
-                    <table className="table table-striped" style={{ marginTop: 20 }} >
+                    <table className="table table-hover" style={{ marginTop: 20 }} >
                         <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th><center>Status</center></th>
                                 <th>Recruited By</th>
-                                <th>Bursary</th>
-                                <th>Start Date</th>
+                                <th><center>Bursary</center></th>
+                                <th><center>Start Date</center></th>
                             </tr>
-                        </thead>               
+                        </thead>
                         <tbody>
                             {trainees.map(t => {
-                                if(t.status != "Suspended"){
                                 return (
                                     <tr>
                                         <td> {t.trainee_fname}</td>
                                         <td> {t.trainee_lname}</td>
-                                        <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
-                                        <td> {t.status}</td>
+                                        <td id="email"> <a href={"mailto:" + t.trainee_email}>{t.trainee_email}</a></td>
+                                        <td> <center>{t.status}</center></td>
                                         <td> {t.added_By}</td>
-                                        <td> {t.bursary}</td>
-                                        <td> {moment(t.trainee_start_date).format('MMMM Do YYYY')}</td>
+                                        <td> <center>{t.bursary}</center></td>
+                                        <td> <center>{moment(t.trainee_start_date).format('MMMM Do YYYY')}</center></td>
                                     </tr>
                                 );
-                            }})}
+                            })}
                         </tbody>
     
                     </table>

@@ -147,14 +147,14 @@ export default class ListUser extends Component {
                     </p>
                     </Collapse>
                 </div>
-                <table className="table table-striped" style={{ marginTop: 20}} >
+                <table className="table table-hover" style={{ marginTop: 20}} >
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th className="action">Action</th>
+                            <th><center>Role</center></th>
+                            <th><center>Status</center></th>
+                            <th className="action"><center>Action</center></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,16 +172,16 @@ export default class ListUser extends Component {
                             return (
                                 <tr>
                                 <td>{user.fname} {user.lname}</td>
-                                <td id="email"><a href={"mailto:"+user.email}>{user.email}</a></td>
-                                <td>{user.role}</td>
-                                <td>{user.status}</td>
+                                    <td id="email"><a href={"mailto:" + user.email}>{user.email}</a></td>
+                                    <td className="userRole"><center>{user.role}</center></td>
+                                    <td><center>{user.status}</center></td>
                                 <td>
-                                    <button onClick={() => { 
+                                        <center><button className="actionBtn" onClick={() => { 
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
                                                     axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
                                     </button>&nbsp;
-                                    <button value={user._id} onClick={this.handleHistoryClick}>View History</button>
+                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History</button></center>
                                 </td>
                             </tr>
                             )

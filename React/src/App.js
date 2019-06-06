@@ -8,6 +8,7 @@ import EditTrainee from "./components/edit-trainee.component";
 import ListTrainee from "./components/list-trainee.component";
 import TabFinance from "./components/tab-finance.component";
 import SystemLogs from "./components/SystemLogs.component";
+import TraineeSettings from "./components/TraineeSettings.component";
 
 import ChangePassword from "./components/change-password-trainee.component";
 import TraineeDetails from "./components/trainee-details.component";
@@ -21,6 +22,7 @@ import { CookieBanner } from '@palmabit/react-cookie-law';
 import {codes} from './secrets/secrets';
 import ForgotPass from "./components/forgot-password.component";
 import UserRecord from "./components/user-history.component";
+import Privacy from "./components/priv-notice.component";
 import "./css/Login.css";
 
 
@@ -66,24 +68,7 @@ class App extends Component {
          <Route path="/editDates/:id" component={EditDates} />
          <Route path="/history/:id" component={UserRecord} />
          <div >
-           <CookieBanner
-           className="Banner"
-           message= {codes.message}
-           onAccept = {() => {}}
-           onAcceptPreferences = {() => {}}
-           onAcceptStatistics = {() => {}}
-           onAcceptMarketing = {() => {}}
-           styles={{
-             dialog: {    
-               position: 'fixed',
-               bottom: 0,
-               left: 0,
-               right: 0,
-               padding: 10,
-               backgroundColor: '#f2f2f2'
-             }
-           }}
-           />
+           <Privacy/>
          </div>
        </Router>  
      );
@@ -105,24 +90,7 @@ class App extends Component {
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/editDates/:id" component={EditDates} />
         <div >
-          <CookieBanner
-          className="Banner"
-          message= {codes.message}
-          onAccept = {() => {}}
-          onAcceptPreferences = {() => {}}
-          onAcceptStatistics = {() => {}}
-          onAcceptMarketing = {() => {}}
-          styles={{
-            dialog: {    
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: 10,
-              backgroundColor: '#f2f2f2'
-            }
-          }}
-          />
+          <Privacy/>
         </div>
       </Router>  
 	  );
@@ -144,24 +112,7 @@ class App extends Component {
          <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
          <Route path="/editDates/:id" component={Login} />
          <div >
-           <CookieBanner
-           className="Banner"
-           message= {codes.message}
-           onAccept = {() => {}}
-           onAcceptPreferences = {() => {}}
-           onAcceptStatistics = {() => {}}
-           onAcceptMarketing = {() => {}}
-           styles={{
-             dialog: {    
-               position: 'fixed',
-               bottom: 0,
-               left: 0,
-               right: 0,
-               padding: 10,
-               backgroundColor: '#f2f2f2'
-             }
-           }}
-           />
+           <Privacy/>
          </div>
        </Router>  
      );

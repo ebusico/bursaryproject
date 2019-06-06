@@ -38,6 +38,7 @@ export default class sideBar extends React.Component {
 				System Logs
 				</a>
 				: ""}
+			<a className="sidebar_btn" onClick={() => { document.location.href = "/settings"; }}>Universal Settings</a>
 		</Menu>
 		);
 	};

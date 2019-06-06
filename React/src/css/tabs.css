@@ -23,10 +23,17 @@ ul.nav.nav-tabs {
 }
 
 
-
-
-
-.table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>tbody>tr:nth-child(odd)>th {
+.table-hover>tbody>tr:nth-child(odd),
+.table-hover>tbody>tr:nth-child(odd) {
     background-color: aliceblue;
+}
+
+.table-hover>tbody>tr:nth-child(odd):hover,
+.table-hover>tbody>tr:nth-child(odd):hover {
+    background-color: #c6e4ff;
+}
+
+.table-hover>tbody>tr:nth-child(even):hover,
+.table-hover>tbody>tr:nth-child(even):hover {
+    background-color: #c6e4ff;
 }

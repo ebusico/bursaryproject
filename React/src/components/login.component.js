@@ -5,6 +5,7 @@ import axios from 'axios';
 import { authService } from "./modules/authService";
 import decode from "jwt-decode";
 import {Button} from 'reactstrap';
+import '../css/navigation.css';
 
 export default class Login extends Component {
 
@@ -102,7 +103,7 @@ export default class Login extends Component {
                     <br />
                     <br/>
                     {/* <input type="submit" className="btn" value="Login"/> */}
-                    <Button type="submit" className="btn" value="Login">
+                    <Button id="loginBtn" type="submit" className="btn" value="Login">
                   Login
                     </Button>
 					<button className="forgotBtn" onClick={this.forgotPassword}>FORGOT PASSWORD?</button> 

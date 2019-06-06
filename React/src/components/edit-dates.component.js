@@ -383,7 +383,7 @@ export default class EditDates extends Component {
                     : ""}
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Update" className="btn btn-primary" />
+                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" />
                     </div>
 					</div>
 				</form>

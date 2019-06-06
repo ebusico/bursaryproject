@@ -141,25 +141,19 @@ export default class CreateUser extends Component {
                                 onChange={this.onChangeUserEmail}
                                 required/>
                         <br></br>
-                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
+                        <Dropdown id="dropDown" color='blue' isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>
                         {this.state.user_role}
                         </DropdownToggle>
                         <DropdownMenu>
-                        <DropdownItem>
-                            <div onClick={this.changeUserRole}>
+                        <DropdownItem onClick={this.changeUserRole}>
                                 Recruiter
-                            </div>
                         </DropdownItem>
-                        <DropdownItem>
-                            <div onClick={this.changeUserRole}>
+                        <DropdownItem onClick={this.changeUserRole}>
                                 Finance
-                            </div>
                         </DropdownItem>
-                        <DropdownItem>
-                            <div onClick={this.changeUserRole}>
+                        <DropdownItem onClick={this.changeUserRole}>
                                 Admin
-                            </div>
                         </DropdownItem>
                         </DropdownMenu>
                         </Dropdown>
@@ -167,7 +161,7 @@ export default class CreateUser extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Add User" className="btn btn-primary" />
+                        <input type="submit" value="Add User" id="updateBtn" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

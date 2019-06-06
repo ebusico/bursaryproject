@@ -20,13 +20,18 @@
     text-decoration: none;
 }
 
-.qabtn{
-    background-color: #337ab7;
+#addUser .qabtn{
+    background-color: #457581;
+    opacity: 0.8;
     border-radius: 4px;
     text-decoration: none;
     border:none;
     color: white;
     margin-right: 10px;
+}
+
+#addUser .qabtn :hover{
+    opacity: 0.6;
 }
 
 .modal-content{
@@ -46,10 +51,14 @@
 }
 .filter-btn{
     border:1px solid transparent;
-    background-color: grey;
+    background-color: #004050;
+    opacity: 0.65;
     color: white;
     border-radius: 0.25rem;
     margin-left: 0.3%;
+}
+.filter-btn:hover{
+    opacity: 0.8;
 }
 
 .mod-body{
@@ -58,12 +67,29 @@
 }
 .resetBtn{
     border:1px solid transparent;
-    background-color: grey;
+    background-color: #004050;
+    opacity: 0.65;
     color: white;
     border-radius: 0.25rem;
 }
 
 #email a{
     text-decoration: none;
-    color: black;
+}
+
+.actionBtn{
+    border:1px solid transparent;
+    background-color: #004050;
+    opacity: 0.65;
+    color: white;
+    border-radius: 0.25rem;
+    opacity: 0.8;
+}
+
+.actionBtn:hover{
+    opacity: 1;
+}
+
+.trainees:hover{
+	cursor: pointer;
 }

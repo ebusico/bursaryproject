@@ -166,6 +166,7 @@ export default class ListTrainee extends Component {
                     </button>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
+                        <button className="qabtn"><Link className="link" to={"/settings"}>Trainee Settings</Link></button>
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -189,35 +190,35 @@ export default class ListTrainee extends Component {
                     </Collapse>
                 </div>
 
-                <table className="table table-striped" style={{ marginTop: 20 }} >
+                <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
-                            <th>Status</th>
+                            <th><center>Status</center></th>
                             <th>Recruited By</th>
-                            <th>Bursary</th>
-                            <th>Action</th>
+                            <th><center>Bursary</center></th>
+                            <th><center>Action</center></th>
                         </tr>
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
                             if(t.status != "Suspended"){
                                 return (
-                                    <tr>
-                                        <td> {t.trainee_fname}</td>
-                                        <td> {t.trainee_lname}</td>
-                                        <td id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
-                                        <td> {t.status}</td>
-                                        <td> {t.added_By}</td>
-                                        <td> {t.bursary}</td>
-                                        <td> <button onClick={() => window.location.href="/editDates/"+t._id}> Edit </button> &nbsp;
-                                        <button onClick={() => { 
+                                    <tr className="trainees">
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_fname}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_lname}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id} id="email"> <a href={"mailto:" + t.trainee_email}>{t.trainee_email} </a></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.status}</center></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.added_By}</td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary}</center></td>
+                                        <td>
+                                        <center><button className="actionBtn" onClick={() => { 
                                                             if (window.confirm('Are you sure you wish to delete this trainee?'))
                                                             axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
                                                             Delete
-                                        </button>
+                                        </button></center>
                                         </td>
                                     </tr>
                                 );
