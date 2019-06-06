@@ -27,7 +27,7 @@ export default class ForgotPass extends Component {
 		
 		axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/getByEmail', {trainee_email: this.state.email})
 		.then( (response) => {console.log(response);
-                                if(response.data == null) {
+                                if(response.data === "") {
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/getByEmail', {staff_email: this.state.email})
 									.then ( (response) => {
 										if(response.data == null){
