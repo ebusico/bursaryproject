@@ -663,23 +663,37 @@ traineeRoutes.route('/monthlyReport').post(function(req, res) {
         let reportTrainees=[]
         Trainee.find(async function(err, trainee){
             trainee.map(async function(trainee, i){
-                await reportTrainees.push(trainee);
+                if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)!=="Suspended" 
+                && CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === "True"
+                && CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== ''){
+                    await reportTrainees.push(trainee);
+                }
             })
             if(!report){
-                let report = new monthlyReports()
-                report.month = req.body.month;
-                report.reportTrainees = reportTrainees;
-                report.status = CryptoJS.AES.encrypt("PendingApproval", '3FJSei8zPx').toString();
-                report.save().then(report =>{
-                    res.json('Success');
-                });
+                if(req.body.month === moment().format("MMMM YYYY")){
+                    let report = new monthlyReports()
+                    report.month = req.body.month;
+                    report.reportTrainees = reportTrainees;
+                    report.status = CryptoJS.AES.encrypt("PendingApproval", '3FJSei8zPx').toString();
+                    report.save().then(report =>{
+                        res.json('Success');
+                    });
+                }
+                else{
+                    res.json('Report cannot be created');
+                }
             }
             else{
-                // decrypt, update & encrypt and save report
-                report.reportTrainees = reportTrainees;
-                report.save().then(report => {
-                    res.json('Successfully Updated');
-                })
+                if(CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== "FinanceApproved" &&
+                   report.month === moment().format("MMMM YYYY")){
+                    report.reportTrainees = reportTrainees;
+                    report.save().then(report => {
+                        res.json('Successfully Updated');
+                    })
+                }
+                else{
+                    res.json('Report cannot be updated');
+                }
             }
 
         })
@@ -718,6 +732,10 @@ traineeRoutes.route('/getMonthlyReport').post(function(req, res) {
                 trainee.trainee_start_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(trainee.trainee_end_date, '3FJSei8zPx');
                 trainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_bench_start_date, '3FJSei8zPx');
+                trainee.trainee_bench_start_date = bytes.toString(CryptoJS.enc.Utf8);
+                bytes = CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx');
+                trainee.trainee_bench_end_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx');
                 trainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
                 if(trainee.status === 'Active'){
@@ -736,18 +754,29 @@ traineeRoutes.route('/getMonthlyReport').post(function(req, res) {
 })
 
 //update report status
-// traineeRoutes.route('/monthlyReport/update').post(function(req, res) {
-//     monthlyReports.findOne({month: req.body.month}, function(err, report){
-//         if(!report){
-//             res.json('Unable to find a monthly report');
-//         }
-//         else{
-//             report.status = CryptoJS.AES.encrypt(req.body.status, '3FJSei8zPx').toString();
-//             report.save().then(report => {
-//                 res.json('Sucessfully updated ');
-//             })
-//         }
-//     })
-// })
+traineeRoutes.route('/monthlyReport/updateStatus').post(function(req, res) {
+    monthlyReports.findOne({month: req.body.month}, function(err, report){
+        if(!report){
+            res.json('Unable to find a monthly report');
+        }
+        else{
+            if(req.body.user_role === "admin"){
+                report.status = CryptoJS.AES.encrypt('AdminApproved', '3FJSei8zPx').toString();
+                report.save().then(report => {
+                    res.json('Sucessfully updated ');
+                })
+            }
+            else if(req.body.user_role === "finance"){
+                report.status = CryptoJS.AES.encrypt('FinanceApproved', '3FJSei8zPx').toString();
+                report.save().then(report => {
+                    res.json('Sucessfully updated ');
+                })
+            }
+            else{
+                res.json('Unable to update report');
+            }
+        }
+    })
+})
 
 module.exports = traineeRoutes;
