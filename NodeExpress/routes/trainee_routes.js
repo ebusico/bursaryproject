@@ -548,7 +548,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
             logger.verbose('Email has been sent to ' + req.body.trainee_email)
 			);
             var transporter = nodeMailer.createTransport({
-                service: 'AOL',
+                service: 'Gmail',
                 auth: {
                     user: process.env.SYSTEM_EMAIL,
                     pass: process.env.SYSTEM_PASSWORD
@@ -663,10 +663,15 @@ traineeRoutes.route('/monthlyReport').post(function(req, res) {
         let reportTrainees=[]
         Trainee.find(async function(err, trainee){
             trainee.map(async function(trainee, i){
-                if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)!=="Suspended" 
-                && CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === "True"
-                && CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== ''){
-                    await reportTrainees.push(trainee);
+                if(req.body.month === moment().format("MMMM YYYY")){
+                    if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)!=="Suspended" 
+                    && CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === "True"
+                    && CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== ''){
+                        await reportTrainees.push(trainee);
+                    }
+                }
+                else if(moment(req.body.month, 'MMMM YYYY').isSameOrAfter(moment())){
+                    console.log("FUTURE REPORT")
                 }
             })
             if(!report){
