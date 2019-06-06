@@ -197,6 +197,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("accountnumber").style.borderColor = "green";
                 document.getElementById("accountnumber").style.borderWidth = "thick";
                 document.getElementById("accountImg").src = ok;
+                document.getElementById("accountImg").style.visibility = "visible"
                 if( sortcodelen!= undefined){
                     if(sortcodelen.length  === 6){
                         document.getElementById("updateBtn").disabled = false;
@@ -208,6 +209,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("accountnumber").style.borderWidth = "thick";
                 document.getElementById("updateBtn").disabled = true;
                 document.getElementById("accountImg").src = close;
+                document.getElementById("accountImg").style.visibility = "visible"
             }
         }
 
@@ -216,6 +218,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("sortcode").style.borderColor = "green";
                 document.getElementById("sortcode").style.borderWidth = "thick";
                 document.getElementById("sortImg").src = ok;
+                document.getElementById("sortImg").style.visibility = "visible";
                 if( accountlen!= undefined){
                     if(accountlen.length === 8){
                         document.getElementById("updateBtn").disabled = false;
@@ -227,6 +230,7 @@ export default class EditTrainee extends Component {
                 document.getElementById("sortcode").style.borderWidth = "thick";
                 document.getElementById("updateBtn").disabled = true;
                 document.getElementById("sortImg").src = close;
+                document.getElementById("sortImg").style.visibility = "visible";
             }
         }
 		
@@ -269,30 +273,38 @@ export default class EditTrainee extends Component {
                     </div>
                     <div className="form-group">
                         <label>Sort Code: </label>
-                        <img id="sortImg"></img>
-                        <input 
-                                type="number"
-                                id="sortcode" 
-                                className="form-control"
-                                placeholder= "eg. 987654"
-                                value={this.state.trainee_sort_code}
-                                onChange={this.onChangeTraineeSort}
-                                maxLength="6"
-                                required minLength = {6}
-                                />
+                        <br />
+                        <div className="validated-field-container">
+                            <input 
+                                    type="number"
+                                    id="sortcode" 
+                                    className="form-control"
+                                    placeholder= "eg. 987654"
+                                    value={this.state.trainee_sort_code}
+                                    onChange={this.onChangeTraineeSort}
+                                    maxLength="6"
+                                    required minLength = {6}
+                                    />
+                            <img id="sortImg"></img>
+                        </div>
+                        
                     </div>
                     <div className="form-group"> 
                         <label>Account Number: </label>
-                        <img id="accountImg"></img> 
-                        <input  type="number"
-                                id="accountnumber"
-                                className="form-control"
-                                placeholder= "eg. 12345678"
-                                value={this.state.trainee_account_no}
-                                onChange={this.onChangeTraineeAccount}
-                                //maxLength="8"
-                                required minLength = {8}
-                                />                      
+                        <br />
+                        <div className="validated-field-container">
+                            
+                            <input  type="number"
+                                    id="accountnumber"
+                                    className="form-control"
+                                    placeholder= "eg. 12345678"
+                                    value={this.state.trainee_account_no}
+                                    onChange={this.onChangeTraineeAccount}
+                                    //maxLength="8"
+                                    required minLength = {8}
+                                    />
+                            <img id="accountImg"></img> 
+                        </div>
                     </div>
                     {show_matching_bank ?
                         <div>

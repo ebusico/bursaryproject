@@ -51,23 +51,27 @@
 }
 
 #accountnumber {
-	width: 15%;
+	width: 100%;
 }
 
 #sortcode {
-	width:15%;
+	width: 100%;
 }
 
-#sortImg{
-	float: right;
-	padding-top: 2%;
-	padding-right: 80%; 
+.validated-field-container {
+	display: inline-flex;
+	min-width: 40%;
+	justify-content: center;
 }
 
-#accountImg{
-		float: right;
-		padding-top: 2%;
-		padding-right: 80%; 
+#accountImg {
+	min-width: 48px;
+	visibility: hidden;
+}
+
+#sortImg {
+	min-width: 48px;
+	visibility: hidden;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
