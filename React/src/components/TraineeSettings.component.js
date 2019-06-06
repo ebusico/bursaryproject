@@ -62,34 +62,33 @@ export default class TraineeSettings extends Component{
     render(){
         console.log(this.state)
         return(
-            <div className="QAtable">
-                <div className="QASearchBar">
+            <div className="QAtable" id="settings">
+                <div className="settingTitle">
                 <h3> <div className="gSTitle">Global settings for Trainees </div></h3>
                 </div>
-            <div className="createTrainee" style={{marginLeft: 200, marginRight: 200}}>
+            <div className="adminSettings">
                 <form id="gS" className="createTraineeForm" onSubmit={this.onSubmit}>
-                    <div className="form-group">
+                    <div className="formSettings">
 						<label className="gSLabel"> Pay for Bank Holidays: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.bank_holidays} onClick={this.onClickBankHolidays}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="formSettings">
 						<label className="gSLabel"> Apply to old Trainees: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.apply_old} onClick={this.onClickApplyOld}/>
                     </div>
 
-                    <div className="form-group">
-                        <label className="gSLabel"> Default daily bursary amount:</label>
-                        &nbsp;&nbsp;
+                    <div className="formSettings">
+                        <label className="gSLabel"> Default daily bursary amount:</label>&nbsp;
                         <input id="gSInput" type="number" 
                                 value={this.state.bursary_amount}
                                 onChange={this.onChangeBursaryAmount}
                                 required/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="formSettings">
                         <input type="submit" value="Update settings" className="updateBtn" />
                     </div>
                 </form>

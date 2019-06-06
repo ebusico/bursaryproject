@@ -524,7 +524,7 @@ export default class CostReport extends Component {
                 <p>&nbsp;&nbsp;Note: Pending trainees are not included in amount payable</p>
                 <br/>
                 </div>
-                <button onClick={() => this.setState({ open: !open })}>Individual Trainee Breakdown</button>&nbsp;&nbsp; 
+                <button className="actionBtn" id="individual" onClick={() => this.setState({ open: !open })}>Individual Trainee Breakdown</button>&nbsp;&nbsp; 
                 {button}
                 <hr />
                 <Collapse in={this.state.open}>

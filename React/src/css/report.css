@@ -9,7 +9,6 @@
 }
 
 .cRStatus{
-	box-shadow: 5px 10px #c6e4ff;
 	border-radius: 5px;
 }
 
@@ -29,35 +28,6 @@
 	color: #457581;
 }
 
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div:nth-child(odd) {
-	background-color: #e2f1ff;
-}
-
- 
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div:nth-child(odd):hover {
-	background-color: #c6e4ff;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div:nth-child(even):hover {
-	background-color: #c6e4ff;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div>div>div:nth-child(3) {
-	text-align: center;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div>div>div:nth-child(5) {
-	text-align: center;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div>div>div:nth-child(6) {
-	text-align: center;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div>div>div:nth-child(7) {
-	text-align: center;
-}
-
-.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div>div>div:nth-child(8) {
-	text-align: center;
+#individual {
+	margin-left: 1%;
 }

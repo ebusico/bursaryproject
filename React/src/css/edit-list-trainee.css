@@ -20,18 +20,15 @@
 	margin: auto;
 	font-family: "Roboto", sans-serif;
 	font-size: 40px;
-	box-shadow: 5px 10px #c6e4ff;
 	border-radius: 5px;
 	width: 50%;
 	
 }
 
-#gS{
-	background-color: #c6e4ff; 
+#gS{ 
 	padding: 20px;
-	border-left: solid 5px #457581;
-	border-top: solid 5px #457581;
-	border-right: solid 5px #457581;
+	width:70%;
+	height: 460px;
 }
 
 .gSLabel{
@@ -78,19 +75,14 @@
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
-	margin-left: 10px;
-	
+	margin-left: 18%;
+	margin-top: 8%;
 }
 
 .updateBtn:hover {
 	opacity: 1;
 	background-color: white;
 	color: #457581;
-}
-#updateBtn:hover {
-	background-color: white;
-	color: #004050;
-	border: 1px solid #004050;
 }
 
 #accountnumber {
@@ -121,4 +113,29 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+#settings{
+	margin-top: 5%;
+}
+
+.adminSettings{
+	height:500px;
+}
+
+.settingTitle {
+	padding: 2%;
+}
+
+.formSettings{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2%;
+}
+
+#updateBtn:hover {
+	background-color: white;
+	color: #004050;
+	border: 1px solid #004050;
 }
