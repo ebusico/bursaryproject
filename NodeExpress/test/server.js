@@ -44,18 +44,19 @@ describe('trainee/', () => {
 let addUser = {
 	'trainee_email': 'testing@aol.co.uk',
 	'trainee_password': 'password123',
-	'trainee_start_date': '21-01-2019',
-	'trainee_end_date': '25-04-2019',
+	'trainee_start_date': "2019-06-01T00:00:00.000",
+	'trainee_end_date': "2019-09-01T00:00:00.000",
 	'added_By': 'Adam',
 	'trainee_fname': 'John',
 	'trainee_lname': 'Adams',
 	'bursary_amount': '30',
-	'bursary': 'yes',
-	'trainee_bench_start_date': '26-04-2019',
-	'trainee_bench_end_date': '26-07-2019',
+	'bursary': 'true',
+	'trainee_bench_start_date': "2019-09-02T00:00:00.000",
+	'trainee_bench_end_date': "2019-12-02T00:00:00.000",
 	'trainee_days_worked': '1',
-	'trainee.bank_holiday': 'yes'
+	'bank_holiday': 'true'
 };
+
 
 let deleteUser = {
 	'trainee_email': 'delete@aol.co.uk',
@@ -105,6 +106,8 @@ describe('trainee tests', () => {
 							}
 						i++;
 					}
+					chai.request('http://localhost:4000').post('/trainee/daysToWork').send({'trainee_email': userEmail}).end((err, res) => {
+					});
 					done();
 				});
 			 }
