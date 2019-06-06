@@ -46,3 +46,8 @@
 .userRole{
 	text-transform: capitalize;
 }
+
+#resultsTable{
+    width: 100%;
+    overflow :scroll;
+}

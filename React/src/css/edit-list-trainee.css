@@ -87,6 +87,11 @@
 	background-color: white;
 	color: #457581;
 }
+#updateBtn:hover {
+	background-color: white;
+	color: #004050;
+	border: 1px solid #004050;
+}
 
 #accountnumber {
 	width: 100%;
