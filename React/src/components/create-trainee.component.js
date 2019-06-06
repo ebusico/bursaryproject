@@ -257,30 +257,32 @@ export default class CreateTrainee extends Component {
             <div className="createTrainee" style={{marginLeft: 200, marginRight: 200}}>
                 <form className="createTraineeForm" onSubmit={this.onSubmit}>
                     <h3 className="title">Add Trainee</h3>
-                    <div className="form-group"> 
-                        <label>First Name: </label>
-                        <input  type="text"
-                                className="form-control"
-                                value={this.state.trainee_fname}
-                                onChange={this.onChangeTraineeFname}
-                                required/>
-                    </div>
-                    <div className="form-group"> 
-                        <label>Last Name: </label>
-                        <input  type="text"
-                                className="form-control"
-                                value={this.state.trainee_lname}
-                                onChange={this.onChangeTraineeLname}
-                                required/>
-                    </div>
-                    <div className="form-group">
-                        <label>Email: </label>
-                        <input 
-                                type="email" 
-                                className="form-control"
-                                value={this.state.trainee_email}
-                                onChange={this.onChangeTraineeEmail}
-                                required/>
+                    <div className="text-input-fields">
+                        <div className="form-group"> 
+                            <label>First Name: </label>
+                            <input  type="text"
+                                    className="form-control"
+                                    value={this.state.trainee_fname}
+                                    onChange={this.onChangeTraineeFname}
+                                    required/>
+                        </div>
+                        <div className="form-group"> 
+                            <label>Last Name: </label>
+                            <input  type="text"
+                                    className="form-control"
+                                    value={this.state.trainee_lname}
+                                    onChange={this.onChangeTraineeLname}
+                                    required/>
+                        </div>
+                        <div className="form-group">
+                            <label>Email: </label>
+                            <input 
+                                    type="email" 
+                                    className="form-control"
+                                    value={this.state.trainee_email}
+                                    onChange={this.onChangeTraineeEmail}
+                                    required/>
+                        </div>
                     </div>
 					
                     <div className="form-group">
