@@ -84,6 +84,7 @@
 
 #loginBtn{
   background-color: #004050;
+	margin-top: 10px;
 }
 
 #loginBtn:hover{
