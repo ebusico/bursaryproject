@@ -3,6 +3,7 @@ import axios from 'axios';
 import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import '../css/edit-list-trainee.css';
+import '../css/global-settings.css';
 
 export default class TraineeSettings extends Component{
     constructor(props){
@@ -62,25 +63,25 @@ export default class TraineeSettings extends Component{
     render(){
         console.log(this.state)
         return(
-            <div className="QAtable">
+            <div className="QAtable" id="gSFrame">
                 <div className="QASearchBar">
                 <h3> <div className="gSTitle">Global settings for Trainees </div></h3>
                 </div>
-            <div className="createTrainee" style={{marginLeft: 200, marginRight: 200}}>
-                <form id="gS" className="createTraineeForm" onSubmit={this.onSubmit}>
-                    <div className="form-group">
+            <div className="createTrainee" style={{marginLeft: 0, marginRight: 0}}>
+                    <form id="gS" className="createTraineeForm" onSubmit={this.onSubmit}>
+                    <div >
 						<label className="gSLabel"> Pay for Bank Holidays: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.bank_holidays} onClick={this.onClickBankHolidays}/>
                     </div>
 
-                    <div className="form-group">
+                    <div >
 						<label className="gSLabel"> Apply to old Trainees: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.apply_old} onClick={this.onClickApplyOld}/>
                     </div>
 
-                    <div className="form-group">
+                    <div >
                         <label className="gSLabel"> Default daily bursary amount:</label>
                         &nbsp;&nbsp;
                         <input id="gSInput" type="number" 
@@ -89,7 +90,7 @@ export default class TraineeSettings extends Component{
                                 required/>
                     </div>
 
-                    <div className="form-group">
+                        <div id="gSUpdateBtn">
                         <input type="submit" value="Update settings" className="updateBtn" />
                     </div>
                 </form>

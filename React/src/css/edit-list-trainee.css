@@ -16,34 +16,7 @@
 	margin-right: auto;
 }
 
-.gSTitle{
-	margin: auto;
-	font-family: "Roboto", sans-serif;
-	font-size: 40px;
-	box-shadow: 5px 10px #c6e4ff;
-	border-radius: 5px;
-	width: 50%;
-	
-}
 
-#gS{
-	background-color: #c6e4ff; 
-	padding: 20px;
-	border-left: solid 5px #457581;
-	border-top: solid 5px #457581;
-	border-right: solid 5px #457581;
-}
-
-.gSLabel{
-	font-family: "Roboto", sans-serif;
-	font-size: 25px;
-}
-
-#gSInput{
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	width: 75px;
-}
 
 .all-edit-box{
 	padding-top:5%;
@@ -70,15 +43,15 @@
 }
 
 .updateBtn {
+  float: right;
 	font-family: "Roboto", sans-serif;
 	font-size: 20px;
-	border:1px solid #457581;
+	border:1px solid white;
 	background-color: #457581;
 	opacity: 0.65;
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
-	margin-left: 10px;
 	
 }
 
@@ -86,11 +59,6 @@
 	opacity: 1;
 	background-color: white;
 	color: #457581;
-}
-#updateBtn:hover {
-	background-color: white;
-	color: #004050;
-	border: 1px solid #004050;
 }
 
 #accountnumber {

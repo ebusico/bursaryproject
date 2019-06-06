@@ -1,0 +1,37 @@
+#gSFrame{
+	margin-top: 100px;
+	border-radius: 5px;
+}
+
+.gSTitle{
+	margin: auto;
+	font-family: "Roboto", sans-serif;
+	font-size: 40px;
+	box-shadow: 5px 10px #c6e4ff;
+	border-radius: 5px;
+	width: 50%;
+	
+}
+
+#gS{
+	height: 200px;
+	color: white;
+	background-color: #457581; 
+	padding: 20px;
+	border-left: solid 5px #457581;
+	border-top: solid 5px #457581;
+	border-right: solid 5px #457581;
+	border-top-right-radius: 30px;
+	border-top-left-radius: 30px;
+}
+
+.gSLabel{
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+}
+
+#gSInput{
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	width: 75px;
+}
