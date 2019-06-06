@@ -117,29 +117,31 @@ export default class CreateUser extends Component {
                 <form className="addForm" onSubmit={this.onSubmit}>
                     <h3>Add User</h3>
                     <div className="form-group">
-                        <label>First Name: </label>
-                        <input 
-                            type="text"
-                            className="form-control"
-                            value={this.state.user_fname}
-                            onChange={this.changeUserFName}
-                            required/>
-                        <br/>
-                        <label>Last Name: </label>
-                        <input 
-                            type="text"
-                            className="form-control"
-                            value={this.state.user_lname}
-                            onChange={this.changeUserLName}
-                            required/>
-                        <br/>
-                        <label>Email: </label>
-                        <input 
-                                type="email" 
+                        <div className="user-text-inputs">
+                            <label>First Name: </label>
+                            <input 
+                                type="text"
                                 className="form-control"
-                                value={this.state.user_email}
-                                onChange={this.onChangeUserEmail}
+                                value={this.state.user_fname}
+                                onChange={this.changeUserFName}
                                 required/>
+                            <br/>
+                            <label>Last Name: </label>
+                            <input 
+                                type="text"
+                                className="form-control"
+                                value={this.state.user_lname}
+                                onChange={this.changeUserLName}
+                                required/>
+                            <br/>
+                            <label>Email: </label>
+                            <input 
+                                    type="email" 
+                                    className="form-control"
+                                    value={this.state.user_email}
+                                    onChange={this.onChangeUserEmail}
+                                    required/>
+                        </div>
                         <br></br>
                         <Dropdown id="dropDown" color='blue' isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>

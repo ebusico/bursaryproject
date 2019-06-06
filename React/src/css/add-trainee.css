@@ -21,3 +21,10 @@
 .title{
     margin-left: 5%;
 }
+
+.text-input-fields {
+    width: 35%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}

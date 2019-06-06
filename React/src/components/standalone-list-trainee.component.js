@@ -5,6 +5,11 @@ import AccessDenied from './modules/AccessDenied';
 import { authService } from './modules/authService';
 import Collapse from 'react-bootstrap/Collapse'
 import '../css/list-trainee-recruiter.css';
+import add from './icons/person-add.svg';
+import history from './icons/history.svg';
+import close from './icons/close2.svg';
+import filterIcon from './icons/filter.svg';
+import eye from './icons/eye.svg';
 
 export default class ListTrainee extends Component {
     
@@ -223,6 +228,7 @@ export default class ListTrainee extends Component {
                             value={this.state.searchString}
                             onChange={this.onChangeSearch}
                             placeholder="Find trainee..."
+                            //search icon
                         />
                     <button
                     onClick={() => this.setState({ open: !open })}
@@ -231,9 +237,11 @@ export default class ListTrainee extends Component {
                     className="filter-btn"
                     >
                     Filters
+                    <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>               
+                        <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee <img src={add}></img></Link></button>
+                        <button className="qabtn"><Link className="link" to={"/trainee-settings"}>Settings</Link></button>                              
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -298,8 +306,9 @@ export default class ListTrainee extends Component {
                                                                 if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
                                                                 axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+deleteRoute+'/'+t._id).then(() => window.location.reload()) } }>
                                                                 {deleteToggle}
+                                                                <img src={close}></img>
                                                 </button>&nbsp;
-                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History</button></center>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button></center>
                                            </td>
                                         </tr>
                                 );
@@ -327,6 +336,7 @@ export default class ListTrainee extends Component {
                     className="filter-btn"
                     >
                     Filters
+                    <img src={filterIcon}></img>
                     </button>
                     <Collapse in={this.state.open}>
                     <p>
@@ -373,7 +383,7 @@ export default class ListTrainee extends Component {
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary}</center></td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
                                             <td> 
-                                                <center><button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details </button></center>
+                                                <center><button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details <img src={eye}></img></button></center>
                                             </td>
                                         </tr>
                                     );
