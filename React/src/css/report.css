@@ -14,8 +14,8 @@
 }
 
 .cRButton{
-	border:1px solid transparent;
-	background-color: #004050;
+	border:1px solid #457581;
+	background-color: #457581;
 	opacity: 0.65;
 	color: white;
 	border-radius: 0.25rem;
@@ -25,6 +25,8 @@
 
 .cRButton:hover{
 	opacity: 1;
+	background-color: white;
+	color: #457581;
 }
 
 .-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div:nth-child(odd) {
