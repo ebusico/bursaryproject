@@ -166,7 +166,6 @@ export default class ListTrainee extends Component {
                     </button>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee</Link></button>
-                        <button className="qabtn"><Link className="link" to={"/settings"}>Trainee Settings</Link></button>
                     </div>
                     <Collapse in={this.state.open}>
                     <p>

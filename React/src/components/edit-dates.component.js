@@ -29,7 +29,6 @@ export default class EditDates extends Component {
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
 		this.onChangeWorkingDays = this.onChangeWorkingDays.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
         this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
         this.onClickBursary = this.onClickBursary.bind(this);
 		
@@ -53,20 +52,7 @@ export default class EditDates extends Component {
 			trainee_days_worked: e.target.value
 		})
 	}
-	onClickBankHolidays(e) {
-        if(this.state.bankHolidays==="False"){
-            this.setState({
-                bankHolidays:'False',
-                open: true
-            });
-        }
-        else{
-            this.setState({
-                bankHolidays: "True",
-                open: false
-            });
-        }
-    }
+	
 	onChangeBenchStartDate(benchStartDate) {
 		this.setState({
 			trainee_bench_start_date: benchStartDate,

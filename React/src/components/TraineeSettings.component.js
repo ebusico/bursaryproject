@@ -9,10 +9,12 @@ export default class TraineeSettings extends Component{
         super(props)
         this.state = {
             bank_holidays: false,
-            bursary_amount: "30"
+            bursary_amount: "30",
+            apply_old: false
         }
         this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
         this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
+        this.onClickApplyOld = this.onClickApplyOld.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
     componentDidMount(){
@@ -35,6 +37,13 @@ export default class TraineeSettings extends Component{
                 bank_holidays: true
             });
 			console.log(this.state.bank_holidays);
+        }
+    }
+    onClickApplyOld(e){
+        if(this.state.apply_old===true){
+            this.setState({apply_old: false});
+        }else{
+            this.setState({apply_old: true});
         }
     }
     onChangeBursaryAmount(e){
@@ -63,6 +72,12 @@ export default class TraineeSettings extends Component{
 						<label> Pay for Bank Holidays: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.bank_holidays} onClick={this.onClickBankHolidays}/>
+                    </div>
+
+                    <div className="form-group">
+						<label> Apply to old Trainees: </label> 
+						&nbsp;&nbsp;
+						<input type="checkbox" id="bursaryValue" checked={this.state.apply_old} onClick={this.onClickApplyOld}/>
                     </div>
 
                     <div className="form-group">
