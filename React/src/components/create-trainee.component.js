@@ -293,7 +293,8 @@ export default class CreateTrainee extends Component {
 
                     <Collapse in={this.state.open}>
                     <div className="form-group">
-                        <label>Bursary Amount</label>
+                        <label>Bursary Amount:</label>
+                        <br />
 						&nbsp;&nbsp;
                                 <input 
                                     type="number"
