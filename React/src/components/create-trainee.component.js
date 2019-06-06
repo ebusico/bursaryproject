@@ -30,7 +30,6 @@ export default class CreateTrainee extends Component {
         this.onChangeBenchEndDate = this.onChangeBenchEndDate.bind(this);
         this.onClickBursary = this.onClickBursary.bind(this);
         this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);
-		this.onClickBankHolidays = this.onClickBankHolidays.bind(this);
 
         this.state = {
             trainee_fname: '',
@@ -46,9 +45,9 @@ export default class CreateTrainee extends Component {
 			trainee_days_worked:'',
             bursary: 'False',
             bursary_amount: 0,
-			bankHolidays: true,
             open: false,
-            default_bursary: 0
+            default_bursary: 0,
+            bankHolidays: true
         }
     }
 	
@@ -69,7 +68,8 @@ export default class CreateTrainee extends Component {
             })
             axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/settings/').then(response =>{
                 console.log(response.data);
-                this.setState({bankHolidays: response.data.pay_bank_holidays,
+                this.setState({
+                            bankHolidays: response.data.pay_bank_holidays,
                             default_bursary: response.data.default_bursary});
                 })
             }
@@ -113,22 +113,6 @@ export default class CreateTrainee extends Component {
 		})	
 		console.log(this.state.bankHolidays);
 	}
-	// bank holidays 
-	onClickBankHolidays(e) {
-        if(this.state.bankHolidays){
-            this.setState({
-                bankHolidays: false
-            
-			});
-			console.log(this.state.bankHolidays);
-        }
-        else{
-            this.setState({
-                bankHolidays: true
-            });
-			console.log(this.state.bankHolidays);
-        }
-    }
 
     onChangeStartDate = (startDate) =>{
         this.setState({
@@ -316,13 +300,7 @@ export default class CreateTrainee extends Component {
                                     required/>
                     </div>
                     </Collapse>
-					
-					<div className="form-group">
-						<label> Pay for Bank Holidays: </label> 
-						&nbsp;&nbsp;
-						<input type="checkbox" checked={this.state.bankHolidays} id="bursaryValue" onClick={this.onClickBankHolidays}/>
-                    </div>
-                    
+				                    
 					<div className="form-group" >
                         <label> Bursary Start Date</label>
                         <div style={{height: '50px'}}>
