@@ -3,8 +3,9 @@
     "",
     "\\config",
     "\\models",
-    "\\routes"
+    "\\routes",
+    "\\test"
   ],
-  "SelectedNode": "\\config\\scheduler.js",
+  "SelectedNode": "\\models\\staff.js",
   "PreviewInSolutionExplorer": false
 }
