@@ -90,7 +90,7 @@ export default class TraineeSettings extends Component{
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Update settings" id="updateBtn" className="btn btn-primary" />
+                        <input type="submit" value="Update settings" className="updateBtn" />
                     </div>
                 </form>
             </div>
