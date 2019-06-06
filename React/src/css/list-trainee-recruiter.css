@@ -15,9 +15,9 @@
     color: white;
     text-decoration: none;
 }
-.link:hover {
-    color:white;
-    text-decoration: none;
+
+a.link:hover{
+    color: #457581;
 }
 
 #addUser .qabtn{
@@ -30,8 +30,16 @@
     margin-right: 10px;
 }
 
-#addUser .qabtn :hover{
-    opacity: 0.6;
+#addUser .qabtn:hover{
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #457581;
+    color: #457581;
+    text-decoration: #457581;
+}
+
+a:hover{
+    color: #457581;
 }
 
 .modal-content{
@@ -58,7 +66,11 @@
     margin-left: 0.3%;
 }
 .filter-btn:hover{
-    opacity: 0.8;
+    background-color: white;
+    color : #004050;
+    border-radius: 0.25rem;
+    margin-left: 0.3%;
+    border: 2px solid #004050;
 }
 
 .mod-body{
@@ -87,7 +99,10 @@
 }
 
 .actionBtn:hover{
-    opacity: 1;
+    background-color: white;
+    color : #004050;
+    border-radius: 0.25rem;
+    border: 1px solid #004050;
 }
 
 .trainees:hover{
