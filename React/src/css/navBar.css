@@ -4,7 +4,7 @@
     text-decoration:none;
 }
 #top-nav-bar li :hover {
-    color:white;
+    color: #004050;
     text-decoration:none;
 }
 
@@ -22,6 +22,6 @@
 
 }
 .sidebar_btn:hover{
-    background-color:#004050;
-    color:white;
+    background-color: #d9d9d9;
+    border-bottom: 3px solid #00ddb5;
 }
