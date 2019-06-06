@@ -20,6 +20,7 @@ var CryptoJS = require("crypto-js");
 var requireAuth = passport.authenticate('jwt', {session: false});
 
 let Settings = require('../models/globalSettings.model');
+let Trainee = require('../models/trainee.model');
 let SortCodeCollection = require('../models/sortcode.model');
 let monthlyReports = require('../models/monthlyReport.model');
 
@@ -56,6 +57,25 @@ settingsRoutes.route('/editSettings', requireAuth, AuthenticationController.role
         }else{
                 settings.pay_bank_holidays = req.body.bank_holidays.toString();
                 settings.default_bursary = req.body.bursary_amount.toString();
+                if(req.body.apply_old===true){
+                Trainee.find(function(err, trainee) {
+                    let logger = databaseLogger.createLogger("universal");
+                    if (err) {
+                        console.log(err);
+                        winston.error(err);
+                        logger.error(err);
+                    } else {
+                        trainee.map(function(currentTrainee, i){
+                            currentTrainee.bank_holiday = settings.pay_bank_holidays;
+                            currentTrainee.save().then(currentTrainee =>{
+                                
+                            }).catch(err => {
+    
+                            })
+                    })
+                    }
+                });
+            }
                 settings.save().then(settings =>{
                     res.json('Settings have been updated: ' + settings.default_bursary);
 				    winston.info('Settings have been changed');
@@ -67,8 +87,8 @@ settingsRoutes.route('/editSettings', requireAuth, AuthenticationController.role
                     logger.error('Changing settings failed. Error: '+err);
                 });
             };
-        })
     });
+});
 
 
 module.exports = settingsRoutes;
