@@ -74,13 +74,11 @@ export default class TraineeSettings extends Component{
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.bank_holidays} onClick={this.onClickBankHolidays}/>
                     </div>
-
                     <div >
 						<label className="gSLabel"> Apply to old Trainees: </label> 
 						&nbsp;&nbsp;
 						<input type="checkbox" id="bursaryValue" checked={this.state.apply_old} onClick={this.onClickApplyOld}/>
                     </div>
-
                     <div >
                         <label className="gSLabel"> Default daily bursary amount:</label>
                         &nbsp;&nbsp;
@@ -89,8 +87,8 @@ export default class TraineeSettings extends Component{
                                 onChange={this.onChangeBursaryAmount}
                                 required/>
                     </div>
-
                         <div id="gSUpdateBtn">
+
                         <input type="submit" value="Update settings" className="updateBtn" />
                     </div>
                 </form>

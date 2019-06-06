@@ -277,7 +277,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
 				console.log('email token generated'),
 				winston.info('user has had a reset email sent to them'));
                 var transporter = nodeMailer.createTransport({
-                    service: 'AOL',
+                    service: 'Gmail',
                     auth: {
                         user: process.env.SYSTEM_EMAIL,
                         pass: process.env.SYSTEM_PASSWORD

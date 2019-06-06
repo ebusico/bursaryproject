@@ -16,8 +16,6 @@
 	margin-right: auto;
 }
 
-
-
 .all-edit-box{
 	padding-top:5%;
 	padding-bottom:5%;
@@ -52,7 +50,6 @@
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
-	
 }
 
 .updateBtn:hover {
@@ -89,4 +86,29 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+#settings{
+	margin-top: 5%;
+}
+
+.adminSettings{
+	height:500px;
+}
+
+.settingTitle {
+	padding: 2%;
+}
+
+.formSettings{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2%;
+}
+
+#updateBtn:hover {
+	background-color: white;
+	color: #004050;
+	border: 1px solid #004050;
 }
