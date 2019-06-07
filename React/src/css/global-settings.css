@@ -7,7 +7,8 @@
 	margin: auto;
 	font-family: "Roboto", sans-serif;
 	font-size: 40px;
-	box-shadow: 5px 10px #c6e4ff;
+	box-shadow: 5px 10px #004050;
+opacity: 0.8;
 	border-radius: 5px;
 	width: 50%;
 	
@@ -34,4 +35,20 @@
 	font-family: "Roboto", sans-serif;
 	font-size: 20px;
 	width: 75px;
+}
+
+#gSUpdateBtn {
+	width: 20%;
+	font-family: "Roboto", sans-serif;
+	font-size: 18px;
+	border:1px solid white;
+	background-color: #004050;
+	color: white;
+	border-radius: 0.25rem;
+	opacity: 0.8;
+}
+
+#gSUpdateBtn:hover {
+	background-color: white;
+	color:  #004050;
 }

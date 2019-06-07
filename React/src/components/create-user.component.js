@@ -152,7 +152,7 @@ export default class CreateUser extends Component {
                                     required/>
                         </div>
                         <br></br>
-                        <Dropdown id="dropDown" color='blue' isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
+                        <Dropdown id="dropDown" isOpen={this.state.dropdownOpen} toggle={this.toggle} required>
                         <DropdownToggle caret>
                         {this.state.user_role}
                         </DropdownToggle>

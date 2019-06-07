@@ -87,9 +87,9 @@ export default class TraineeSettings extends Component{
                                 onChange={this.onChangeBursaryAmount}
                                 required/>
                     </div>
-                        <div id="gSUpdateBtn">
+                        <div>
 
-                        <input type="submit" value="Update settings" className="updateBtn" />
+                        <input type="submit" value="Update settings" id="gSUpdateBtn" />
                     </div>
                 </form>
             </div>

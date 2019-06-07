@@ -17,25 +17,26 @@
 }
 
 a.link:hover{
-    color: #457581;
+    color: #004050;;
 }
 
 #addUser .qabtn{
 	width: 145px;
 	height:30px;
-    background-color: #457581;
+    background-color: #004050;
     opacity: 0.8;
     border-radius: 4px;
     text-decoration: none;
     border:none;
     color: white;
     margin-right: 10px;
-    border: 0.5px solid #457581;
+    border: 0.5px solid #004050;
+	opacity: 0.8;
 }
 
 #addUser .qabtn:hover{
     background-color: white;
-    border: 0.5px solid #457581;
+    border: 0.5px solid #004050;
     color: #457581;
     margin-right: 10px;
 }

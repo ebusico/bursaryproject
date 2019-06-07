@@ -40,12 +40,11 @@
     padding-bottom: 1%;
 }
 
-.updateBtn {
+#updateBtn {
 	font-family: "Roboto", sans-serif;
-	font-size: 20px;
+	font-size: 18px;
 	border:1px solid white;
-	background-color: #457581;
-	opacity: 0.65;
+	background-color: #004050;
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
@@ -59,8 +58,7 @@
 	font-family: "Roboto", sans-serif;
 	font-size: 22px;
 	border:1px solid white;
-	background-color: #457581;
-	opacity: 0.65;
+	background-color: #004050;
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
