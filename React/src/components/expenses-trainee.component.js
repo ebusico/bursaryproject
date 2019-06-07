@@ -4,6 +4,7 @@ import '../css/history.css';
 import { authService } from './modules/authService';
 import AccessDenied from './modules/AccessDenied';
 import { Button, ButtonGroup } from 'reactstrap';
+import close from './icons/close2.svg';
 
 export default class TraineeExpenses extends Component {
 
@@ -126,12 +127,13 @@ export default class TraineeExpenses extends Component {
                                     <option value="Taxi Fares">Taxi Fares</option>
                                     <option value="Training Materials">Training Materials</option>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <ButtonGroup>  <Button type="submit" onClick={this.onSave}>Add</Button> </ButtonGroup>
+                                <ButtonGroup>  <Button type="submit" id="createExpenseBtn" onClick={this.onSave}>Add</Button> </ButtonGroup>
                                 <table id="logTable" className="table table-striped" style={{ marginTop: 20 }} >
                                     <thead>
                                         <tr>
                                             <th>Expenses</th>
                                             <th>Amount(£)</th>
+                                            <th>Actions</th>
                                         </tr>
 
                                     </thead>
@@ -141,6 +143,12 @@ export default class TraineeExpenses extends Component {
                                                 <tr>
                                                     <td>{monthly_expenses.type}</td>
                                                     <td>£{monthly_expenses.amount}</td>
+                                                    <td><button className="actionBtn" onClick={() => { 
+                                                            if (window.confirm('Are you sure you wish to delete this expense?'))
+                                                            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeExpenses/'+this.props.match.params.id, {expenseType: monthly_expenses.type, amount: monthly_expenses.amount }).then(() => window.location.reload()) } }>
+                                                            Delete
+                                                            <img src={close}></img>
+                                        </button></td>
                                                 </tr>
                                             );
                                         })}
