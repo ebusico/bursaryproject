@@ -513,7 +513,7 @@ export default class CostReport extends Component {
                             placeholderText="MM/YYYY" 
                         />
                 </div>
-                <h1>Cost Report - {this.state.date}</h1>
+                <h1 id="cRTitle">&nbsp;Cost Report - {this.state.date}</h1>
                 </div>
                 <br/>
                 <table cellPadding='5'>
