@@ -45,14 +45,29 @@ export default class EditTrainee extends Component {
     componentDidMount() {
         axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
             .then(response => {
-                this.setState({
-                    trainee_fname: response.data.trainee_fname,
-                    trainee_lname: response.data.trainee_lname,
-                    trainee_email: response.data.trainee_email,
-                    trainee_bank_name: response.data.trainee_bank_name,
-                    trainee_account_no: response.data.trainee_account_no,
-                    trainee_sort_code: response.data.trainee_sort_code
-                })   
+                console.log(response.data);
+                if(response.data.bursary==="True"){
+                    this.setState({
+                        trainee_fname: response.data.trainee_fname,
+                        trainee_lname: response.data.trainee_lname,
+                        trainee_email: response.data.trainee_email,
+                        trainee_bank_name: response.data.trainee_bank_name,
+                        trainee_account_no: response.data.trainee_account_no,
+                        trainee_sort_code: response.data.trainee_sort_code,
+                        trainee_bursary: response.data.bursary
+                    })  
+                }else{
+                    this.setState({
+                        trainee_fname: response.data.trainee_fname,
+                        trainee_lname: response.data.trainee_lname,
+                        trainee_email: response.data.trainee_email,
+                        trainee_bursary: response.data.bursary,
+                        trainee_bank_name: " ",
+                        trainee_account_no: " ",
+                        trainee_sort_code: " "
+                    })
+                }
+                 
             })
             .catch(function (error) {
                 console.log(error);
@@ -190,46 +205,52 @@ export default class EditTrainee extends Component {
     onSubmit(e) {
         e.preventDefault();
         var formatted_sort_code = '';
-
-        if(this.state.trainee_sort_code.charAt(0) == 0){
-            formatted_sort_code = this.state.trainee_sort_code.slice(1);
-        }
-        else{
-            formatted_sort_code =this.state.trainee_sort_code;
-        }
-		
         const updated_trainee = {
             trainee_fname: this.state.trainee_fname,
             trainee_lname: this.state.trainee_lname,
             trainee_email: this.state.trainee_email,
-			trainee_bank_name: this.state.trainee_bank_name,
+            trainee_bank_name: this.state.trainee_bank_name,
             trainee_account_no: this.state.trainee_account_no,
             trainee_sort_code: this.state.trainee_sort_code
         };
+        if(this.state.trainee_bursary==="True"){
+            if(this.state.trainee_sort_code.charAt(0) == 0){
+                formatted_sort_code = this.state.trainee_sort_code.slice(1);
+            }
+            else{
+                formatted_sort_code =this.state.trainee_sort_code;
+            }
 
-        const new_bank = {
-            SortCode: formatted_sort_code,
-            BankName: this.state.trainee_bank_name.toUpperCase(),
-            Branch: this.state.trainee_bank_branch.toUpperCase()
-        }
-        if(this.state.show_non_matching_bank == true){
-            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
-            .then(res => {
-                console.log(res.data);
-                console.log(new_bank);
-                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/addBank/', new_bank)
+            const new_bank = {
+                SortCode: formatted_sort_code,
+                BankName: this.state.trainee_bank_name.toUpperCase(),
+                Branch: this.state.trainee_bank_branch.toUpperCase()
+            }
+            if(this.state.show_non_matching_bank == true){
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
+                .then(res => {
+                    console.log(res.data);
+                    console.log(new_bank);
+                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/addBank/', new_bank)
+                    .then(res => {
+                        console.log(res.data);
+                        this.props.history.push('/trainee-details/'+this.props.match.params.id);
+                    });
+                });
+            }
+            else{
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
                 .then(res => {
                     console.log(res.data);
                     this.props.history.push('/trainee-details/'+this.props.match.params.id);
                 });
-            });
-        }
-        else{
+            }
+        }else{
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
-            .then(res => {
-                console.log(res.data);
-                this.props.history.push('/trainee-details/'+this.props.match.params.id);
-            });
+                .then(res => {
+                    console.log(res.data);
+                    this.props.history.push('/trainee-details/'+this.props.match.params.id);
+                });
         }
     }
 
@@ -246,7 +267,49 @@ export default class EditTrainee extends Component {
 		if(this.state.currentUser.token.role !== undefined){
 			return (
 			<AccessDenied/>
-		);
+        );
+        }else if(this.state.trainee_bursary==="False"){
+            return(
+                <div className="QATable">
+                <form className="edit-form" onSubmit={this.onSubmit}>
+                    <div className="all-edit-box">
+					<div className="form-group"> 
+                        <label>First Name: </label>
+                        <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_fname}
+                                onChange={this.onChangeTraineeFname}
+                                disabled
+                                />
+                    </div>
+                     <div className="form-group"> 
+                        <label>Last Name: </label>
+                        <input  type="text"
+                                className="form-control"
+                                value={this.state.trainee_lname}
+                                onChange={this.onChangeTraineeLname}
+                                disabled
+                                />
+                    </div>           
+                    <div className="form-group">
+                        <label>Email: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.trainee_email}
+                                onChange={this.onChangeTraineeEmail}
+                                disabled
+                                />
+                    </div>
+                    <br />
+                    <div className="form-group">
+                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary"/>
+                    </div>
+					</div>
+				</form>
+            </div>
+
+            );
 		}else{
         return (
             <div className="QATable">
@@ -359,7 +422,7 @@ export default class EditTrainee extends Component {
 
                     <br />
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" disabled="true"/>
+                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary"/>
                     </div>
 					</div>
 				</form>

@@ -23,6 +23,7 @@ import {codes} from './secrets/secrets';
 import ForgotPass from "./components/forgot-password.component";
 import UserRecord from "./components/user-history.component";
 import Privacy from "./components/priv-notice.component";
+import TraineeExpenses from "./components/expenses-trainee.component";
 import "./css/Login.css";
 
 
@@ -68,6 +69,7 @@ class App extends Component {
          <Route path="/editDates/:id" component={EditDates} />
          <Route path="/history/:id" component={UserRecord} />
          <Route path="/trainee-settings" component={TraineeSettings}/>
+         <Route path="/expenses/:id" component={TraineeExpenses} />
          <div >
            <Privacy/>
          </div>
