@@ -11,6 +11,9 @@ import close from './icons/close2.svg';
 import filterIcon from './icons/filter.svg';
 import eye from './icons/eye.svg';
 import settings from './icons/settings.svg';
+import addmoney from './icons/add.svg'
+
+import { Button, ButtonGroup } from 'reactstrap';
 
 export default class ListTrainee extends Component {
     
@@ -39,6 +42,7 @@ export default class ListTrainee extends Component {
         this.onChangeStatusFilter = this.onChangeStatusFilter.bind(this);
         this.onChangeMyTraineeFilter = this.onChangeMyTraineeFilter.bind(this);
         this.onChangeSuspendedFilter = this.onChangeSuspendedFilter.bind(this);
+        this.handleExpensesClick = this.handleExpensesClick.bind(this);
     }
     
     componentDidMount() {
@@ -112,6 +116,10 @@ export default class ListTrainee extends Component {
 
     handleHistoryClick(e){
         window.location.href="history/"+e.target.value   
+    }
+
+    handleExpensesClick(e){
+        window.location.href="expenses/"+e.target.value
     }
 
     toggle() {
@@ -309,7 +317,8 @@ export default class ListTrainee extends Component {
                                                                 {deleteToggle}
                                                                 <img src={close}></img>
                                                 </button>&nbsp;
-                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button></center>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
+                                                <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}>View Expenses <img src={addmoney}></img></button></center>
                                            </td>
                                         </tr>
                                 );
