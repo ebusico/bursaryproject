@@ -325,7 +325,8 @@ export default class CostReport extends Component {
                         status: reportTrainee.status,
                         days: reportTrainee.trainee_days_worked,
                         bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
-                        expenses : 0
+                        expenses : 0,
+                        totalMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked
                     }
                     data.push(trainee_row)
                     this.setState({

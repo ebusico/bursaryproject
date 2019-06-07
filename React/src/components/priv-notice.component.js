@@ -160,7 +160,7 @@ class PrivNotice extends Component {
 
     render() {
         return (
-            <div>
+            <div data-keyboard="false">
 
                 <Modal
                     onHide={this.close}
@@ -169,6 +169,7 @@ class PrivNotice extends Component {
                     dialogClassName="modal-style"
                     aria-labelledby="modal-label"
                     show={this.state.showModal}
+                    keyboard={false}
                 >
                 {privText}
                 <Button
