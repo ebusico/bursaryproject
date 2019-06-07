@@ -10,11 +10,11 @@
 
 .addForm{
     height: 80%;
-    width: 80%;
+    width: 100%;
     margin-right: auto;
     margin-left: auto;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
 }
 
 #updateBtn {
@@ -25,8 +25,8 @@
 }
 
 #dropDown{
-    width:50%;
-    margin-left: 25%;
+    width:40%;
+    margin-left: 30%;
     text-align: center;
 }
 
@@ -34,7 +34,7 @@
 /* Change style of Role button and dropdown*/
 
 button.dropdown-toggle.btn.btn-secondary {
-    width: 40%;
+    width: 100%;
     background-color: rgb(0,64,80);
     margin-left: auto;
     margin-right: auto;

@@ -41,7 +41,6 @@
 }
 
 .updateBtn {
-  float: right;
 	font-family: "Roboto", sans-serif;
 	font-size: 20px;
 	border:1px solid white;
@@ -50,6 +49,27 @@
 	color: white;
 	border-radius: 0.25rem;
 	opacity: 0.8;
+}
+
+#cancelBtn{
+	width: 125px;
+	height: 45px;
+	position: relative;
+	left: 40%;
+	font-family: "Roboto", sans-serif;
+	font-size: 22px;
+	border:1px solid white;
+	background-color: #457581;
+	opacity: 0.65;
+	color: white;
+	border-radius: 0.25rem;
+	opacity: 0.8;
+}
+
+#cancelBtn:hover{
+	background-color: white;
+	color: #004050;
+	border: 1px solid #004050;
 }
 
 .updateBtn:hover {

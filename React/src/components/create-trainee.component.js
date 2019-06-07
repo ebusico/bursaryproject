@@ -257,6 +257,7 @@ export default class CreateTrainee extends Component {
             <div className="createTrainee" style={{marginLeft: 200, marginRight: 200}}>
                 <form className="createTraineeForm" onSubmit={this.onSubmit}>
                     <h3 className="title">Add Trainee</h3>
+                    <div><center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>Cancel</button></center></div>
                     <div className="text-input-fields">
                         <div className="form-group"> 
                             <label>First Name: </label>

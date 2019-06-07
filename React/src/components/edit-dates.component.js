@@ -236,6 +236,7 @@ export default class EditDates extends Component {
             <div className="QATable">
                 <form className="edit-form" onSubmit={this.onSubmit}>
                     <div className="all-edit-box">
+                        <center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>Cancel</button></center>
 					<div className="form-group"> 
                         <label>First Name: </label>
                         <input  type="text"
@@ -370,7 +371,7 @@ export default class EditDates extends Component {
                     : ""}
                     <br />
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" />
+                            <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" /> &nbsp;
                     </div>
 					</div>
 				</form>

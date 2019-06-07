@@ -115,7 +115,7 @@ export default class CreateUser extends Component {
             <div className="createUser" style={{marginLeft: 100, marginRight: 100}}>
                 
                 <form className="addForm" onSubmit={this.onSubmit}>
-                    <h3>Add User</h3>
+                    <h3>Add User <center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>Back</button></center></h3>
                     <div className="form-group">
                         <div className="user-text-inputs">
                             <label>First Name: </label>
