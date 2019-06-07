@@ -318,7 +318,7 @@ export default class ListTrainee extends Component {
                                                                 <img src={close}></img>
                                                 </button>&nbsp;
                                                 <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
-                                                <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}>View Expenses <img src={addmoney}></img></button></center>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}> Expenses <img src={addmoney}></img></button></center>
                                            </td>
                                         </tr>
                                 );

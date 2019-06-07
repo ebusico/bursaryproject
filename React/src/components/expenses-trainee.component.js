@@ -22,21 +22,6 @@ export default class TraineeExpenses extends Component {
             expenseType: ''
         }
     }
-
-    // onClick = () => {
-
-    //     const { monthly_expenses, expArray, expenseType } = this.state;
-    //     if (monthly_expenses) {
-    //         const nextState = [...expArray, monthly_expenses + ' - ' + expenseType];
-            
-
-    //         this.setState({
-    //             expArray: nextState,
-    //             monthly_expenses: 0,
-    //             expenseType: ''
-    //         })
-    //     }
-    // }
     
     onSave = () => {
     
@@ -92,9 +77,9 @@ export default class TraineeExpenses extends Component {
         .then(response => {
             response.data.monthly_expenses.map(expenses=>
                 {
-                    let nextExpense = expenses.amount+ ' - ' + expenses.expenseType;
+                    let nextExpense = {"amount":expenses.amount,"type":expenses.expenseType};
             
-            this.state.expArray.push(nextExpense);
+                    this.state.expArray.push(nextExpense);
                 }
                 )
             console.log(response)
@@ -114,17 +99,13 @@ export default class TraineeExpenses extends Component {
             return (
                 <div className="BigBox">
                     <div className="QAtable">
-                        <div className="QASearchBar">
+                        <div>
                             <h2>Expenses for {userType} - {recordOf}</h2>
                             <hr />
-                            <br></br>
-                            <div className="form-group">
-                                <label> Amount (£) : </label>
-                                <br></br>
-                                <input className="form-control" value={monthly_expenses} onChange={this.onChange} type="number" />
-                                <br></br>
-                                {" "}
-
+                            <div>
+                                &nbsp;&nbsp;&nbsp;<label>Amount (£): </label>&nbsp;&nbsp;
+                                <input value={monthly_expenses} onChange={this.onChange} type="number" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label>Type: </label>&nbsp;&nbsp;
                                 <select id="expenseType" value={expenseType} onChange={this.onSelect}>
                                     <option selected value="">Select expense type</option>
                                     <option value="Air fares">Air fares</option>
@@ -144,21 +125,13 @@ export default class TraineeExpenses extends Component {
                                     <option value="Subscription and req. fees">Subscription and req. fees</option>
                                     <option value="Taxi Fares">Taxi Fares</option>
                                     <option value="Training Materials">Training Materials</option>
-                                </select>
-                                {" "}
-                                {/* <ButtonGroup>
-                                    <Button type="submit" onClick={this.onClick}> Add Expense </Button>
-                                </ButtonGroup> */}
-                                 {" "}
-                                
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <ButtonGroup>  <Button type="submit" onClick={this.onSave}>Add</Button> </ButtonGroup>
-                               
-                                {" "}
-                                <ButtonGroup> <Button type="submit" onClick={this.clearAll}>Clear Expense</Button></ButtonGroup>
                                 <table id="logTable" className="table table-striped" style={{ marginTop: 20 }} >
                                     <thead>
                                         <tr>
-                                            <th>Amount(£) - Expense Type</th>
+                                            <th>Expenses</th>
+                                            <th>Amount(£)</th>
                                         </tr>
 
                                     </thead>
@@ -166,7 +139,8 @@ export default class TraineeExpenses extends Component {
                                         {expArray.map(monthly_expenses => {
                                             return (
                                                 <tr>
-                                                    <td>£{monthly_expenses}</td>
+                                                    <td>{monthly_expenses.type}</td>
+                                                    <td>£{monthly_expenses.amount}</td>
                                                 </tr>
                                             );
                                         })}
