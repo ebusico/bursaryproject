@@ -67,7 +67,7 @@ export default class UserRecord extends Component {
                 <div className="QASearchBar">
                     <h2>{userType} History- {recordOf}</h2>
                 </div>
-                <table id="logTable"className="table table-striped" style={{ marginTop: 20 }} >
+                <table id="logTable"className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
                             <th>Date</th>
