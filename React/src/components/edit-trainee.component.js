@@ -97,6 +97,30 @@ export default class EditTrainee extends Component {
             trainee_account_no: e.target.value
         });
         console.log(this.state.trainee_account_no);
+
+        let sortcodelen = document.getElementById("sortcode").value;
+        let accountlen = document.getElementById("accountnumber").value;
+
+        if(accountlen){
+            if( accountlen.length === 8){
+                document.getElementById("accountnumber").style.borderColor = "green";
+                document.getElementById("accountnumber").style.borderWidth = "thick";
+                document.getElementById("accountImg").src = ok;
+                document.getElementById("accountImg").style.visibility = "visible"
+                if( sortcodelen!= undefined){
+                    if(sortcodelen.length  === 6){
+                        document.getElementById("updateBtn").disabled = false;
+                    }
+                }
+            }
+            else if(accountlen.length > 8 || accountlen.length < 8){
+                document.getElementById("accountnumber").style.borderColor = "red";
+                document.getElementById("accountnumber").style.borderWidth = "thick";
+                document.getElementById("updateBtn").disabled = true;
+                document.getElementById("accountImg").src = close;
+                document.getElementById("accountImg").style.visibility = "visible"
+            }
+        }
     }
 
     onChangeTraineeSort(e) {
@@ -136,6 +160,30 @@ export default class EditTrainee extends Component {
                 show_matching_bank: false,
                 show_non_matching_bank: false
             })
+        }
+
+        let sortcodelen = document.getElementById("sortcode").value;
+        let accountlen = document.getElementById("accountnumber").value;
+
+        if(sortcodelen){
+            if(sortcodelen.length === 6){
+                document.getElementById("sortcode").style.borderColor = "green";
+                document.getElementById("sortcode").style.borderWidth = "thick";
+                document.getElementById("sortImg").src = ok;
+                document.getElementById("sortImg").style.visibility = "visible";
+                if( accountlen!= undefined){
+                    if(accountlen.length === 8){
+                        document.getElementById("updateBtn").disabled = false;
+                    }
+                }
+            }
+            else if(sortcodelen.length > 6 || sortcodelen.length < 6){
+                document.getElementById("sortcode").style.borderColor = "red";
+                document.getElementById("sortcode").style.borderWidth = "thick";
+                document.getElementById("updateBtn").disabled = true;
+                document.getElementById("sortImg").src = close;
+                document.getElementById("sortImg").style.visibility = "visible";
+            }
         }
     }
     
@@ -188,51 +236,12 @@ export default class EditTrainee extends Component {
     render() {
         const {show_matching_bank} = this.state;
         const {show_non_matching_bank} = this.state;
-        let accountlen = this.state.trainee_account_no;
-        let sortcodelen = this.state.trainee_sort_code;
-        console.log(sortcodelen);
+        
+        
 
-        if(this.state.trainee_account_no != undefined){
-            if( accountlen.length === 8){
-                document.getElementById("accountnumber").style.borderColor = "green";
-                document.getElementById("accountnumber").style.borderWidth = "thick";
-                document.getElementById("accountImg").src = ok;
-                document.getElementById("accountImg").style.visibility = "visible"
-                if( sortcodelen!= undefined){
-                    if(sortcodelen.length  === 6){
-                        document.getElementById("updateBtn").disabled = false;
-                    }
-                }
-            }
-            else if(accountlen.length > 8){
-                document.getElementById("accountnumber").style.borderColor = "red";
-                document.getElementById("accountnumber").style.borderWidth = "thick";
-                document.getElementById("updateBtn").disabled = true;
-                document.getElementById("accountImg").src = close;
-                document.getElementById("accountImg").style.visibility = "visible"
-            }
-        }
+        
 
-        if(this.state.trainee_sort_code != undefined){
-            if(sortcodelen.length === 6){
-                document.getElementById("sortcode").style.borderColor = "green";
-                document.getElementById("sortcode").style.borderWidth = "thick";
-                document.getElementById("sortImg").src = ok;
-                document.getElementById("sortImg").style.visibility = "visible";
-                if( accountlen!= undefined){
-                    if(accountlen.length === 8){
-                        document.getElementById("updateBtn").disabled = false;
-                    }
-                }
-            }
-            else if(sortcodelen.length > 6){
-                document.getElementById("sortcode").style.borderColor = "red";
-                document.getElementById("sortcode").style.borderWidth = "thick";
-                document.getElementById("updateBtn").disabled = true;
-                document.getElementById("sortImg").src = close;
-                document.getElementById("sortImg").style.visibility = "visible";
-            }
-        }
+        
 		
 		if(this.state.currentUser.token.role !== undefined){
 			return (
