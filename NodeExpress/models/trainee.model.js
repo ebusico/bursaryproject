@@ -79,6 +79,10 @@ let Trainee = new Schema({
 	bank_holiday:{
         type: Boolean
     },
+    monthly_expenses:{
+        type: Array,
+        default: []
+    },
 });
 module.exports = mongoose.model('Trainee', Trainee);
 

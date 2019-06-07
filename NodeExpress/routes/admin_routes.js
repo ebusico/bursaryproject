@@ -378,4 +378,69 @@ adminRoutes.route('/update-password-staff/:token').post(function(req, res) {
         })
     })
 
+//gets trainee by id and adds expense
+adminRoutes.route('/expenses/:id').post(function (req, res) {
+    console.log(req.params.id);
+    console.log(req.body);
+    Trainee.findById(req.params.id, function (err, trainee) {
+        console.log(trainee);
+        if (!trainee) {
+            console.log('notFound');
+            res.status(404).send("data is not found");
+        }
+        else {
+            console.log('trainee found');
+            let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , { iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000") })
+                .toString(CryptoJS.enc.Utf8);
+                let logger = databaseLogger.createLogger(email);
+
+            console.log(trainee);
+            
+             
+            console.log(req.body.amount);
+           
+            let data = trainee.monthly_expenses;
+            data.push({"expenseType":CryptoJS.AES.encrypt(req.body.expenseType, '3FJSei8zPx').toString(),"amount":CryptoJS.AES.encrypt(req.body.amount, '3FJSei8zPx').toString()})
+            console.log("DATA")
+            console.log(data)
+            trainee.monthly_expenses = data;
+
+            trainee.save().then(trainee => {
+                res.json('Trainee updated!');
+                winston.info('Trainee: ' + email + ' has requested expenses');
+                logger.info('Trainee: ' + email + ' has requested expenses');
+            })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                    winston.error('Trainee: ' + email + ' tried to request expense but got an error: ' + err)
+                    logger.error('Trainee: ' + email + ' tried to request expense but got an error: ' + err)
+                });
+        }
+    });
+});
+
+
+//get trainee by id with expense
+adminRoutes.route('/getexp/:id').get(function(req,res){
+    Trainee.findById(req.params.id, function (err, trainee){
+        if(!trainee){
+            res.status(400).send("data is not found");
+        }
+        else {
+            trainee.monthly_expenses.map(expense => {
+             //console.log(expense);
+             expense.expenseType = CryptoJS.AES.decrypt(expense.expenseType,'3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+             expense.amount = CryptoJS.AES.decrypt(expense.amount,'3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            } )
+            res.json(trainee)
+        }
+    }) 
+    .catch(err => {
+        res.status(400).send("couldnt get");
+    });
+})
+
+
 module.exports = adminRoutes;
