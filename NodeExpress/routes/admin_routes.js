@@ -440,7 +440,61 @@ adminRoutes.route('/getexp/:id').get(function(req,res){
     .catch(err => {
         res.status(400).send("couldnt get");
     });
-})
+});
+
+//gets trainee by id and removes expense
+adminRoutes.route('/removeExpenses/:id').post(function (req, res) {
+
+    function arrayRemove(arr, amount, type) {
+
+        return arr.filter(function(ele){
+            if(ele.amount!==amount && ele.type !== type){
+                return ele;
+            }
+        });
+     
+     }
+     
+    //arrayRemove(array, 6);
+    Trainee.findById(req.params.id, function (err, trainee) {
+        console.log(trainee);
+        if (!trainee) {
+            console.log('notFound');
+            res.status(404).send("data is not found");
+        }
+        else {
+            console.log('trainee found');
+            let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , { iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000") })
+                .toString(CryptoJS.enc.Utf8);
+                let logger = databaseLogger.createLogger(email);
+
+            trainee.monthly_expenses.map(expense => {
+                    //console.log(expense);
+                    expense.expenseType = CryptoJS.AES.decrypt(expense.expenseType,'3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                    expense.amount = CryptoJS.AES.decrypt(expense.amount,'3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                } )
+           
+            let data = trainee.monthly_expenses;
+            data = arrayRemove(data, req.body.amount, req.body.type);
+            console.log('removed array is :')
+            console.log(data);
+            trainee.monthly_expenses = data;
+
+            trainee.save().then(trainee => {
+                res.json('Trainee updated!');
+                winston.info('Trainee: ' + email + ' expense has been deleted');
+                logger.info('Trainee: ' + email + ' expense has been deleted');
+            })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                    winston.error('Trainee: ' + email + ' tried to delete expense but got an error: ' + err)
+                    logger.error('Trainee: ' + email + ' tried to delete expense but got an error: ' + err)
+                });
+        }
+    });
+});
 
 
 module.exports = adminRoutes;
