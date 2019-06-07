@@ -157,6 +157,15 @@ export default class CreateTrainee extends Component {
             bursary_amount: e.target.value
         })
     }
+
+    // Function to transform names to only having first letter of each word capitalised
+    toTitleCase(phrase) {
+        return phrase
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+    };
 	
     onSubmit(e) {
         e.preventDefault();
@@ -203,8 +212,8 @@ export default class CreateTrainee extends Component {
             console.log(this.state.bursary);
             console.log("this is the start date of state : "+this.state.trainee_start_date);
             var newTrainee = {
-                trainee_fname: this.state.trainee_fname,
-                trainee_lname: this.state.trainee_lname,
+                trainee_fname: this.toTitleCase(this.state.trainee_fname),
+                trainee_lname: this.toTitleCase(this.state.trainee_lname),
                 trainee_email: this.state.trainee_email,
                 trainee_password: Math.random().toString(36).slice(-8),
                 trainee_start_date: this.state.trainee_start_date.toString(),
@@ -236,7 +245,7 @@ export default class CreateTrainee extends Component {
 
                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {
                                         trainee_email: this.state.trainee_email.toLowerCase(),
-                                        trainee_fname: this.state.trainee_fname
+                                        trainee_fname: this.toTitleCase(this.state.trainee_fname)
                                         })
                                     .then( (response) => {console.log(response.data);
 									                      this.props.history.push('/');
@@ -376,7 +385,7 @@ export default class CreateTrainee extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Add Trainee" className="btn btn-primary" />
+                        <input id="createTraineeBtn" type="submit" value="Add Trainee" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
