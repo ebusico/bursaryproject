@@ -21,6 +21,8 @@ a.link:hover{
 }
 
 #addUser .qabtn{
+	width: 145px;
+	height:30px;
     background-color: #457581;
     opacity: 0.8;
     border-radius: 4px;
