@@ -3,3 +3,5 @@
 /NodeExpress/logs/
 /React/src/components/helper/
 /NodeExpress/.nyc_output/
+/NodeExpress/.env
+/React/.env

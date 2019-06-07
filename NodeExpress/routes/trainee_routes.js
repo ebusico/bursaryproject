@@ -109,7 +109,9 @@ traineeRoutes.route('/:id').get(function(req, res) {
             bytes = CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx');
             trainee.trainee_bench_end_date = bytes.toString(CryptoJS.enc.Utf8);
 			bytes = CryptoJS.AES.decrypt(trainee.bank_holiday, '3FJSei8zPx');
-			trainee.bank_holiday = bytes.toString(CryptoJS.enc.Utf8);
+            trainee.bank_holiday = bytes.toString(CryptoJS.enc.Utf8);
+            bytes = CryptoJS.AES.decrypt(trainee.bursary_amount, '3FJSei8zPx');
+            trainee.bursary_amount = bytes.toString(CryptoJS.enc.Utf8);
             bytes = CryptoJS.AES.decrypt(trainee.trainee_days_worked, '3FJSei8zPx');
             trainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
             if(trainee.status === 'Active'){

@@ -123,7 +123,7 @@ export default class EditDates extends Component {
 					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
                     trainee_days_worked: response.data.trainee_days_worked,
                     trainee_bursary: response.data.bursary,
-                    trainee_bursary_amount: response.data.bursary_amount
+                    bursary_amount: response.data.bursary_amount
                 })
 
                 if(response.data.bursary === 'True'){
@@ -171,7 +171,7 @@ export default class EditDates extends Component {
     onSubmit(e) {
 	  e.preventDefault();
 		if(this.state.trainee_start_date === '' || this.state.trainee_end_date === ''){
-            alert('Please select the bursary start/end dates');
+            alert('Please select the training start/end dates');
         }
         else if(moment(this.state.trainee_end_date).isBefore(this.state.trainee_start_date)){
             alert('The end date is before the start date, please resolve this before creating the trainee');
@@ -285,7 +285,7 @@ export default class EditDates extends Component {
                     </Collapse>
 
                     <div id="bursaryDates">
-                    <label> Bursary Start Date : </label>
+                    <label> Training Start Date : </label>
                     <br></br>
                         <DayPickerInput
                             value={this.state.trainee_start_date}
@@ -302,7 +302,7 @@ export default class EditDates extends Component {
                         />
                     </div>
                     <div id="bursaryDates">
-                        <label> Bursary End Date : </label>
+                        <label> Training End Date : </label>
                         <br></br>
                             <DayPickerInput
                                 value={this.state.trainee_end_date}

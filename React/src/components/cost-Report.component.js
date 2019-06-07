@@ -72,16 +72,15 @@ export default class CostReport extends Component {
                     } else{
                         console.log(response.data);
                         console.log(response.data.month)
-                        response.data.status = response.data.status.replace(/([A-Z])/g, ' $1').trim()
-                    let totalDays = 0;
-                    let totalAmount = 0;
-                    let traineeAmount = 0;
-                    let training = 0;
-                    let bench = 0;
-                    let pending = 0;
-                    this.setState({
-                        date: response.data.month
-                    })
+                        let totalDays = 0;
+                        let totalAmount = 0;
+                        let traineeAmount = 0;
+                        let training = 0;
+                        let bench = 0;
+                        let pending = 0;
+                        this.setState({
+                            date: response.data.month,
+                        })
                     response.data.reportTrainees.map(async reportTrainee =>{
                         if(reportTrainee.status === 'Pending'|| reportTrainee.status === 'Incomplete'){
                             await pending++
@@ -118,19 +117,19 @@ export default class CostReport extends Component {
                             console.log(reportTrainee.bursary_amount)
                             traineeAmount = reportTrainee.trainee_days_worked*reportTrainee.bursary_amount
                             totalAmount = totalAmount + traineeAmount
-                            this.setState({
-
-                                values:{
-                                    amountPayable: totalAmount,
-                                    daysPayable: totalDays,
-                                    status: response.data.status,
-                                    bench_number: bench,
-                                    training_number: training,
-                                    pending_number: pending
-                                }
-                            });
                             console.log(this.state.values.status)
                         }
+                        this.setState({
+
+                            values:{
+                                amountPayable: totalAmount,
+                                daysPayable: totalDays,
+                                status: response.data.status.replace(/([A-Z])/g, ' $1').trim(),
+                                bench_number: bench,
+                                training_number: training,
+                                pending_number: pending
+                            }
+                        });
                     })
                     }
                 })
@@ -329,18 +328,18 @@ export default class CostReport extends Component {
                         console.log(reportTrainee.bursary_amount)
                         traineeAmount = reportTrainee.trainee_days_worked*reportTrainee.bursary_amount
                         totalAmount = totalAmount + traineeAmount
-                        this.setState({
-
-                            values:{
-                                amountPayable: totalAmount,
-                                daysPayable: totalDays,
-                                bench_number: bench,
-                                training_number: training,
-                                pending_number: pending
-                            }
-                        });
                         console.log("STATUS"+this.state.values.status)
                     }
+                    this.setState({
+
+                        values:{
+                            amountPayable: totalAmount,
+                            daysPayable: totalDays,
+                            bench_number: bench,
+                            training_number: training,
+                            pending_number: pending
+                        }
+                    });
                 })
                 }
             })
@@ -398,12 +397,12 @@ export default class CostReport extends Component {
 
         if(this.state.currentUser.token.role === "finance"){
             if(this.state.values.status == "Admin Approved"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="actionBtn" onClick={this.updateReport}>Approve</button> 
             }
         }
         else if(this.state.currentUser.token.role === "admin"){
             if(this.state.values.status == "Pending Approval"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="actionBtn" onClick={this.updateReport}>Approve</button> 
             }
         }
 
@@ -497,7 +496,7 @@ export default class CostReport extends Component {
                 <div>
                 <br/>
                 <div id="addUser">
-                        <button className="qabtn">Choose month</button>
+                        <label>Choose Month :</label>&nbsp;
                         <DatePicker
                             selected={this.state.startDate}
                             onChange={this.handleChange}

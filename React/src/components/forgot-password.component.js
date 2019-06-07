@@ -74,7 +74,7 @@ export default class ForgotPass extends Component {
                     
                     <br />
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Send Email" className="btn btn-primary" />
+                        <input id="updatePasswordBtn" type="submit" value="Send Email" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
