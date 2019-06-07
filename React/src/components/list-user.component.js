@@ -9,6 +9,7 @@ import add from './icons/person-add.svg';
 import history from './icons/history.svg';
 import close from './icons/close2.svg';
 import filterIcon from './icons/filter.svg';
+import mail from './icons/envelope.svg';
 
 
 export default class ListUser extends Component {
@@ -157,9 +158,8 @@ export default class ListUser extends Component {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th><center>Role</center></th>
-                            <th><center>Status</center></th>
+                            <th>Role</th>
+                            <th>Status</th>
                             <th className="action"><center>Action</center></th>
                         </tr>
                     </thead>
@@ -178,9 +178,8 @@ export default class ListUser extends Component {
                             return (
                                 <tr>
                                 <td>{user.fname} {user.lname}</td>
-                                    <td id="email"><a href={"mailto:" + user.email}>{user.email}</a></td>
-                                    <td className="userRole"><center>{user.role}</center></td>
-                                    <td><center>{user.status}</center></td>
+                                <td className="userRole">{user.role}</td>
+                                <td>{user.status}</td>
                                 <td>
                                         <center><button className="actionBtn" onClick={() => { 
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
@@ -188,7 +187,9 @@ export default class ListUser extends Component {
                                                     {deleteToggle}
                                                     <img src={close}></img>
                                     </button>&nbsp;
-                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button></center>
+                                    <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
+                                    <a href={"mailto:"+user.email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                    </center>
                                 </td>
                             </tr>
                             )
