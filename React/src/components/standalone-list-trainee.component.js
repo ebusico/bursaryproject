@@ -10,6 +10,7 @@ import history from './icons/history.svg';
 import close from './icons/close2.svg';
 import filterIcon from './icons/filter.svg';
 import eye from './icons/eye.svg';
+import settings from './icons/settings.svg';
 
 export default class ListTrainee extends Component {
     
@@ -241,7 +242,7 @@ export default class ListTrainee extends Component {
                     </button>
                     <div id="addUser">
                         <button className="qabtn"><Link className="link" to={"/create"}>Add Trainee <img src={add}></img></Link></button>
-                        <button className="qabtn"><Link className="link" to={"/trainee-settings"}>Settings</Link></button>                              
+                        <button className="qabtn"><Link className="link" to={"/trainee-settings"}>Settings <img src={settings}></img></Link></button>                              
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -266,7 +267,7 @@ export default class ListTrainee extends Component {
                     </p>
                     </Collapse>
                     </div>
-    
+                    <div id="resultsTable">
                     <table className="table table-hover" style={{ marginTop: 20 }} >
                         <thead>
                             <tr>
@@ -316,6 +317,7 @@ export default class ListTrainee extends Component {
                         </tbody>
     
                     </table>
+                    </div>
                 </div>
             );
         }
@@ -357,7 +359,7 @@ export default class ListTrainee extends Component {
                     </p>
                     </Collapse>
                 </div>
-
+                <div id="resultsTable">
                 <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
@@ -393,6 +395,7 @@ export default class ListTrainee extends Component {
                     </tbody>
 
                 </table>
+                </div>
             </div>
         );
 		}

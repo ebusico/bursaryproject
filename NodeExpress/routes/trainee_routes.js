@@ -231,19 +231,6 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
-            }else if(bursary_start.isSame(bench_end, "month")){
-				let bankHolidays = 0;
-                if(bank === true){
-                    bankHolidays = england.holidays(bursary_start,bench_end).length;
-					con
-                }
-				let workedDays = 1 + moment(bursary_start).businessDiff(bench_end) - bankHolidays;
-				console.log("same start end month, days:" + workedDays);
-				trainee.trainee_days_worked = workedDays;
-				trainee.save().then(trainee => {
-                  res.json('Days worked updated!');
-                  logger.info("Trainee working days for current month updated (automatic)");
-				})
             }else if(currentMonth.isBefore(bursary_start, 'month')){
                 console.log("Bursary starting in July, 0 days");
                 trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
@@ -291,12 +278,12 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                 })
             }
             else{
-				let bankHolidays = 0;
+                let bankHolidays = 0;
+                let start = moment().startOf('month');
+				let end = moment().endOf('month');
                 if(bank == true){
                     bankHolidays = england.holidays(start,end).length
                 }
-				let start = moment().startOf('month');
-				let end = moment().endOf('month');
 				console.log(start);
 				console.log(end);
 				let workedDays = moment(start).businessDiff(end) - bankHolidays;
@@ -660,9 +647,9 @@ traineeRoutes.route('/addBank').post(function(req, res) {
 //update or create new Monthly Report
 traineeRoutes.route('/monthlyReport').post(function(req, res) {
     monthlyReports.findOne({month: req.body.month}, function(err, report) {
-        let reportTrainees=[]
-        Trainee.find(async function(err, trainee){
-            trainee.map(async function(trainee, i){
+        Trainee.find(function(err, trainee){
+            let reportTrainees=[]
+                let promises = trainee.map(async function(trainee, i){
                 if(req.body.month === moment().format("MMMM YYYY")){
                     if(CryptoJS.AES.decrypt(trainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)!=="Suspended" 
                     && CryptoJS.AES.decrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) === "True"
@@ -671,35 +658,91 @@ traineeRoutes.route('/monthlyReport').post(function(req, res) {
                     }
                 }
                 else if(moment(req.body.month, 'MMMM YYYY').isSameOrAfter(moment())){
-                    console.log("FUTURE REPORT")
+                    let feed = new HolidayFeed();
+                    await feed.load();
+                    let divisions = feed.divisions();
+                    let england = feed.divisions('england-and-wales')
+                    let currentMonth = moment(req.body.month, "MMMM YYYY");
+                    let bank = trainee.bank_holiday;
+                    let bursary = CryptoJS.AES.encrypt(trainee.bursary, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                    let bursary_start = moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
+                    console.log("BURSARY START"+moment(bursary_start).format("DD/MM/YYYY"));
+                    let bench_end = moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8));
+                    if(bursary == "False"){
+
+                    }else if(currentMonth.isBefore(bursary_start, 'month')){
+
+                    }else if(currentMonth.isAfter(bench_end, 'month')){
+
+                    }else if(bursary_start.isSame(currentMonth, 'month')){
+                        let bankHolidays = 0;
+                        if(bank === true){
+                            bankHolidays = england.holidays(bursary_start,currentMonth.endOf('month')).length
+                        }
+                        let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                        let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").endOf('month');
+                        let workedDays = moment(start).businessDiff(end) - bankHolidays;
+                        console.log('current month is start date month, days worked: ' + workedDays);
+                        trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
+                        await reportTrainees.push(trainee);
+                    }
+                    else if(bench_end.isSame(currentMonth, "month")){
+                        let bankHolidays = 0;
+                        if(bank == true){
+                             bankHolidays = england.holidays(currentMonth.startOf('month'),bench_end).length
+                        }
+                        let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD").startOf('month');
+                        let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                        let workedDays = 1 + moment(start).businessDiff(end) - bankHolidays;
+                        console.log('current month is end date month, days:' + workedDays);
+                        trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
+                        await reportTrainees.push(trainee);
+                    }
+                    else{
+                        let bankHolidays = 0;
+                        let start = moment(currentMonth,'MMMM YYYY').startOf('month');
+                        let end = moment(currentMonth,'MMMM YYYY').endOf('month');
+                        if(bank == true){
+                            bankHolidays = england.holidays(start,end).length
+                        }
+                        let workedDays = moment(start).businessDiff(end) - bankHolidays;
+                        console.log("All days: "+workedDays);
+                        trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
+                        await reportTrainees.push(trainee);
+                    }
+                    console.log("INSIDE AWAIT: "+reportTrainees.length) 
+                    return reportTrainees; 
                 }
             })
-            if(!report){
-                if(req.body.month === moment().format("MMMM YYYY")){
-                    let report = new monthlyReports()
-                    report.month = req.body.month;
-                    report.reportTrainees = reportTrainees;
-                    report.status = CryptoJS.AES.encrypt("PendingApproval", '3FJSei8zPx').toString();
-                    report.save().then(report =>{
-                        res.json('Success');
-                    });
+            Promise.all(promises).then(function () {
+                console.log("PROMISES"+reportTrainees.length);
+                //do something with the finalized list of albums here
+                if(!report){
+                    if(moment(req.body.month, 'MMMM YYYY').isSameOrAfter(moment(), 'month')){
+                        let report = new monthlyReports()
+                        report.month = req.body.month;
+                        report.reportTrainees = reportTrainees;
+                        report.status = CryptoJS.AES.encrypt("PendingApproval", '3FJSei8zPx').toString();
+                        report.save().then(report =>{
+                            res.json('Success');
+                        });
+                    }
+                    else{
+                        res.json('Report cannot be created');
+                    }
                 }
                 else{
-                    res.json('Report cannot be created');
+                    if(CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== "FinanceApproved"){
+                        report.reportTrainees = reportTrainees;
+                        report.save().then(report => {
+                            res.json('Successfully Updated');
+                        })
+                    }
+                    else{
+                        res.json('Report cannot be updated');
+                    }
                 }
-            }
-            else{
-                if(CryptoJS.AES.decrypt(report.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8) !== "FinanceApproved" &&
-                   report.month === moment().format("MMMM YYYY")){
-                    report.reportTrainees = reportTrainees;
-                    report.save().then(report => {
-                        res.json('Successfully Updated');
-                    })
-                }
-                else{
-                    res.json('Report cannot be updated');
-                }
-            }
+            });
 
         })
     })

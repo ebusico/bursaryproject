@@ -88,13 +88,17 @@
 }
 
 #loginBtn:hover{
-  filter: brightness(85%);
+  background-color: white;
+  color:#004050;
+  border: 1px solid #004050;
 }
 
 #logoutBtn{
-  background-color: #004050;
+  background-color: #2c3a3d;
 }
 
 #logoutBtn:hover{
-  filter: brightness(85%);
+  background-color: white;
+  color:#004050;
+  border: 1px solid #004050;
 }

@@ -192,7 +192,7 @@ export default class ListTrainee extends Component {
                     </p>
                     </Collapse>
                 </div>
-
+                <div id="resultsTable">
                 <table className="table table-hover" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
@@ -231,6 +231,7 @@ export default class ListTrainee extends Component {
                     </tbody>
 
                 </table>
+                </div>
             </div>
             </div>
         );

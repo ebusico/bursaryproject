@@ -40,14 +40,22 @@
     padding-bottom: 1%;
 }
 
-#updateBtn {
-	background-color: #004050;
-	width: 40%;
-	margin-left: 30%;
+.updateBtn {
+  float: right;
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	border:1px solid white;
+	background-color: #457581;
+	opacity: 0.65;
+	color: white;
+	border-radius: 0.25rem;
+	opacity: 0.8;
 }
 
-#updateBtn:hover {
-	opacity: 0.6;
+.updateBtn:hover {
+	opacity: 1;
+	background-color: white;
+	color: #457581;
 }
 
 #accountnumber {
@@ -78,4 +86,29 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+#settings{
+	margin-top: 5%;
+}
+
+.adminSettings{
+	height:500px;
+}
+
+.settingTitle {
+	padding: 2%;
+}
+
+.formSettings{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2%;
+}
+
+#updateBtn:hover {
+	background-color: white;
+	color: #004050;
+	border: 1px solid #004050;
 }
