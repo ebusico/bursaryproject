@@ -30,9 +30,12 @@
 }
 
 #createTraineeBtn {
-	background-color: #004050;
-    width: 40%;
-    border: 1px solid #004050;
+	background-color: #005b72;
+	width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+	text-transform: capitalize;
+	font-family: "Roboto", sans-serif;
 }
 
 #createTraineeBtn:hover {
