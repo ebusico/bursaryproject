@@ -397,12 +397,12 @@ export default class CostReport extends Component {
 
         if(this.state.currentUser.token.role === "finance"){
             if(this.state.values.status == "Admin Approved"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="actionBtn" onClick={this.updateReport}>Approve</button> 
             }
         }
         else if(this.state.currentUser.token.role === "admin"){
             if(this.state.values.status == "Pending Approval"){
-                button = <button onClick={this.updateReport}>Approve</button> 
+                button = <button className="actionBtn" onClick={this.updateReport}>Approve</button> 
             }
         }
 
@@ -496,7 +496,7 @@ export default class CostReport extends Component {
                 <div>
                 <br/>
                 <div id="addUser">
-                        <button className="qabtn">Choose month</button>
+                        <label>Choose Month :</label>&nbsp;
                         <DatePicker
                             selected={this.state.startDate}
                             onChange={this.handleChange}

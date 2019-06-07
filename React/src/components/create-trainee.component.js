@@ -376,7 +376,7 @@ export default class CreateTrainee extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Add Trainee" className="btn btn-primary" />
+                        <input id="createTraineeBtn" type="submit" value="Add Trainee" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
