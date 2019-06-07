@@ -62,6 +62,15 @@ export default class CreateUser extends Component {
             user_role: e.currentTarget.textContent
         });
     }
+
+    // Function to transform names to only having first letter of each word capitalised
+    toTitleCase(phrase) {
+        return phrase
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+    };
     
     onSubmit(e) {
         e.preventDefault();
@@ -74,8 +83,8 @@ export default class CreateUser extends Component {
 
         var newUser = {
             email: this.state.user_email.toLowerCase(),
-            fname: this.state.user_fname,
-            lname: this.state.user_lname,
+            fname: this.toTitleCase(this.state.user_fname),
+            lname: this.toTitleCase(this.state.user_lname),
             password: Math.random().toString(36).slice(-8),
             role: this.state.user_role.toLowerCase(),
             status: 'Pending'

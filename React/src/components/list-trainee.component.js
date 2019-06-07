@@ -8,6 +8,7 @@ import '../css/list-trainee-recruiter.css';
 import add from './icons/person-add.svg';
 import close from './icons/close2.svg';
 import filterIcon from './icons/filter.svg';
+import mail from './icons/envelope.svg';
 
 export default class ListTrainee extends Component {
     
@@ -198,7 +199,6 @@ export default class ListTrainee extends Component {
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Email</th>
                             <th><center>Status</center></th>
                             <th>Recruited By</th>
                             <th><center>Bursary</center></th>
@@ -212,7 +212,6 @@ export default class ListTrainee extends Component {
                                     <tr className="trainees">
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_fname}</td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_lname}</td>
-                                        <td onClick={() => window.location.href = "/editDates/" + t._id} id="email"> <a href={"mailto:" + t.trainee_email}>{t.trainee_email} </a></td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.status}</center></td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.added_By}</td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary}</center></td>
@@ -222,7 +221,9 @@ export default class ListTrainee extends Component {
                                                             axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/delete/'+t._id).then(() => window.location.reload()) } }>
                                                             Delete
                                                             <img src={close}></img>
-                                        </button></center>
+                                        </button>&nbsp;
+                                        <a href={"mailto:"+t.trainee_email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                        </center>
                                         </td>
                                     </tr>
                                 );

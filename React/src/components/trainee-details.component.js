@@ -41,6 +41,7 @@ export default class TraineeDetails extends Component {
                     trainee_bank_name: response.data.trainee_bank_name,
                     trainee_sort_code: response.data.trainee_sort_code,
                     trainee_account_no: response.data.trainee_account_no,
+                    trainee_bursary: response.data.bursary,
                     csv: [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "DecimalPlace", "Append", "Data to Copy to Notepad"],[response.data.trainee_fname +" "+ response.data.trainee_lname, response.data.trainee_account_no, response.data.trainee_sort_code, "0.00", "2","000",response.data.trainee_sort_code+','+response.data.trainee_fname+' '+response.data.trainee_lname+','+response.data.trainee_account_no+','+"0"+".00"+','+"BURSARY"+','+"99"]]
                 });
                 console.log(this.state.trainee_start_date);
@@ -85,7 +86,7 @@ render() {
             </div>
 
         )
-	} else if(this.state.currentUser.token._id === this.props.match.params.id) {
+	} else if(this.state.currentUser.token._id === this.props.match.params.id && this.state.trainee_bursary === "True") {
 		return (
 		<div className="details">
             <div className="detailsDiv">
@@ -114,7 +115,28 @@ render() {
                 </div>
                 </div>
             </div>
-		);
+        );
+    }else if(this.state.currentUser.token._id === this.props.match.params.id){
+        return(
+            <div className="details">
+            <div className="detailsDiv">
+                <div className="heading">
+                <h1>Your Details</h1>
+                <br></br>
+                <table onSubmit={this.onSubmit} className="trainee_table" cellPadding="20">
+                    <tbody id="detailstbody">
+                            <tr><th>First Name</th><td>{this.state.trainee_fname}</td></tr>
+                            <tr><th>Last Name</th><td>{this.state.trainee_lname}</td></tr>
+                            <tr><th>Email</th><td>{this.state.trainee_email}</td></tr>
+							<tr><th>Start Date</th><td>{moment(this.state.trainee_start_date).format('MMMM Do YYYY')}</td></tr>
+                            <tr><th>End Date</th><td>{moment(this.state.trainee_end_date).format('MMMM Do YYYY')}</td></tr>
+                           
+                    </tbody>
+                </table>
+                </div>
+                </div>
+            </div>
+        ); 
 	}else{ 
 	return(
 		< AccessDenied />

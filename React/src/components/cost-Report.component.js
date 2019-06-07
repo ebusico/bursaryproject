@@ -82,6 +82,11 @@ export default class CostReport extends Component {
                             date: response.data.month,
                         })
                     response.data.reportTrainees.map(async reportTrainee =>{
+                        let expenses = 0;
+                        console.log(reportTrainee.monthly_expenses)
+                        reportTrainee.monthly_expenses.map(expense =>{
+                            expenses += parseInt(expense.amount);
+                        })
                         if(reportTrainee.status === 'Pending'|| reportTrainee.status === 'Incomplete'){
                             await pending++
                         }
@@ -105,13 +110,16 @@ export default class CostReport extends Component {
                             recruitedBy: reportTrainee.added_By,
                             status: reportTrainee.status,
                             days: reportTrainee.trainee_days_worked,
-                            amountDay: reportTrainee.bursary_amount,
-                            amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked
+                            bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
+                            totalMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked+expenses,
+                            expenses : expenses
                         }
                         data.push(trainee_row)
                         this.setState({
                             trainee_data: data
                         })
+                        console.log("DATA")
+                        console.log(data)
                         if(reportTrainee.status === 'Training'||reportTrainee.status === 'Bench'){
                             totalDays = totalDays + parseInt(reportTrainee.trainee_days_worked)
                             console.log(reportTrainee.bursary_amount)
@@ -316,8 +324,8 @@ export default class CostReport extends Component {
                         recruitedBy: reportTrainee.added_By,
                         status: reportTrainee.status,
                         days: reportTrainee.trainee_days_worked,
-                        amountDay: reportTrainee.bursary_amount,
-                        amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked
+                        bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
+                        expenses : 0
                     }
                     data.push(trainee_row)
                     this.setState({
@@ -620,18 +628,36 @@ export default class CostReport extends Component {
                             return 'Total: ' + total}
                         },
                         {
-                        Header: <div><strong>Payment per day</strong></div>,
-                        accessor: "amountDay",
-                        Cell: row =>(<div>£{row.value}</div>)
+                        Header: () => <div><strong>Bursary this month</strong></div>,
+                        accessor: "bursary",
+                        Cell: row =>(<span>£{row.row.bursary.amountMonth}</span>),
+                        width: 200,
+                        Footer: () => {    
+                            let total = 0
+                            trainees.map(t => {
+                                total += t.bursary.amountMonth
+                            })
+                            return 'Total: £' + total}
                         },
                         {
-                        Header: () => <div><strong>Payment this month</strong></div>,
-                        accessor: "amountMonth",
+                        Header: () => <div><strong>Expenses</strong></div>,
+                        accessor: "expenses",
                         Cell: row =>(<div>£{row.value}</div>),
                         Footer: () => {    
                             let total = 0
                             trainees.map(t => {
-                                total += t.amountMonth
+                                total += parseInt(t.expenses)
+                            })
+                            return 'Total: £' + total}
+                        },
+                        {
+                        Header: () => <div><strong>Payment this month</strong></div>,
+                        accessor: "totalMonth",
+                        Cell: row =>(<div>£{row.value}</div>),
+                        Footer: () => {    
+                            let total = 0
+                            trainees.map(t => {
+                                total += t.totalMonth
                             })
                             return 'Total: £' + total}
                         }
