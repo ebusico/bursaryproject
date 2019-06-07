@@ -209,8 +209,8 @@ export default class EditTrainee extends Component {
 
         const new_bank = {
             SortCode: formatted_sort_code,
-            BankName: this.state.trainee_bank_name.toUpperCase,
-            Branch: this.state.trainee_bank_branch.toUpperCase
+            BankName: this.state.trainee_bank_name.toUpperCase(),
+            Branch: this.state.trainee_bank_branch.toUpperCase()
         }
         if(this.state.show_non_matching_bank == true){
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
@@ -291,7 +291,7 @@ export default class EditTrainee extends Component {
                                     placeholder= "eg. 987654"
                                     value={this.state.trainee_sort_code}
                                     onChange={this.onChangeTraineeSort}
-                                    maxLength="6"
+                                    //maxLength="6"
                                     required minLength = {6}
                                     />
                             <img id="sortImg"></img>
@@ -341,6 +341,7 @@ export default class EditTrainee extends Component {
                                 value={this.state.trainee_bank_name}
                                 onChange={this.onChangeTraineeBankName}
                                 placeholder= "eg. HALIFAX"
+                                maxLength="20"
                                 required
                                 />
                             <br/>
@@ -350,6 +351,7 @@ export default class EditTrainee extends Component {
                                 value={this.state.trainee_bank_branch}
                                 onChange={this.onChangeTraineeBankBranch}
                                 placeholder= "eg. OXFORD ROAD, LONDON"
+                                maxLength="30"
                                 required
                                 />                                
                         </div>
