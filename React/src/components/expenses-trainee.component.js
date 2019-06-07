@@ -127,7 +127,7 @@ export default class TraineeExpenses extends Component {
                                     <option value="Taxi Fares">Taxi Fares</option>
                                     <option value="Training Materials">Training Materials</option>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <ButtonGroup>  <Button type="submit" onClick={this.onSave}>Add</Button> </ButtonGroup>
+                                <ButtonGroup>  <Button type="submit" id="createExpenseBtn" onClick={this.onSave}>Add</Button> </ButtonGroup>
                                 <table id="logTable" className="table table-striped" style={{ marginTop: 20 }} >
                                     <thead>
                                         <tr>

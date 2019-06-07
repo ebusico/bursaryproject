@@ -18,3 +18,15 @@ h2{
 
 
 .QAtable td{white-space:nowrap;}
+
+#createExpenseBtn {
+	background-color: #004050;
+    width: 40%;
+    border: 1px solid #004050;
+}
+
+#createExpenseBtn:hover {
+    background-color: white;
+    color: #004050;
+    border: 1px solid #004050;
+}
