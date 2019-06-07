@@ -19,7 +19,6 @@ export default class EditTrainee extends Component {
         this.onChangeTraineeSort = this.onChangeTraineeSort.bind(this);
         this.onChangeTraineeBankName = this.onChangeTraineeBankName.bind(this);
         this.onChangeTraineeBankBranch = this.onChangeTraineeBankBranch.bind(this);
-        this.goBack = this.goBack.bind(this);
 		
         this.onSubmit = this.onSubmit.bind(this);
 
