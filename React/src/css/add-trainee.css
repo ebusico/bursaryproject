@@ -31,9 +31,12 @@
 
 #createTraineeBtn {
 	background-color: #004050;
-	width: 40%;
+    width: 40%;
+    border: 1px solid #004050;
 }
 
 #createTraineeBtn:hover {
-	opacity: 0.6;
+    background-color: white;
+    color: #004050;
+    border: 1px solid #004050;
 }

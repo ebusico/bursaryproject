@@ -11,7 +11,8 @@ import close from './icons/close2.svg';
 import filterIcon from './icons/filter.svg';
 import eye from './icons/eye.svg';
 import settings from './icons/settings.svg';
-import addmoney from './icons/add.svg'
+import addmoney from './icons/add.svg';
+import mail from './icons/envelope.svg';
 
 import { Button, ButtonGroup } from 'reactstrap';
 
@@ -281,7 +282,6 @@ export default class ListTrainee extends Component {
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Email</th>
                                 <th><center>Status</center></th>
                                 <th>Recruited By</th>
                                 <th><center>Bursary</center></th>
@@ -305,7 +305,6 @@ export default class ListTrainee extends Component {
                                     <tr className="trainees">
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_fname}</td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.trainee_lname}</td>
-                                        <td onClick={() => window.location.href = "/editDates/" + t._id} id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email}</a></td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.status}</center></td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.added_By}</td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary}</center></td>
@@ -318,7 +317,9 @@ export default class ListTrainee extends Component {
                                                                 <img src={close}></img>
                                                 </button>&nbsp;
                                                 <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
-                                                <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}> Expenses <img src={addmoney}></img></button></center>
+                                                <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}> Expenses <img src={addmoney}></img></button>&nbsp;
+                                                <a href={"mailto:"+t.trainee_email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                                </center>
                                            </td>
                                         </tr>
                                 );
@@ -374,7 +375,6 @@ export default class ListTrainee extends Component {
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Email</th>
                             <th><center>Status</center></th>
                             <th><center>Bursary</center></th>
                             <th><center>Payment This Month (£)</center></th>
@@ -389,12 +389,14 @@ export default class ListTrainee extends Component {
                                         <tr className="trainees">
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> {t.trainee_fname}</td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> {t.trainee_lname}</td>
-                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id} id="email"> <a href={"mailto:"+t.trainee_email}>{t.trainee_email} </a></td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.status}</center></td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary}</center></td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
                                             <td> 
-                                                <center><button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details <img src={eye}></img></button></center>
+                                                <center>
+                                                <button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details <img src={eye}></img></button>&nbsp;
+                                                <a href={"mailto:"+t.trainee_email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                                </center>
                                             </td>
                                         </tr>
                                     );
