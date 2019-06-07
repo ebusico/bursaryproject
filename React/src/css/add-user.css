@@ -34,7 +34,7 @@
 /* Change style of Role button and dropdown*/
 
 button.dropdown-toggle.btn.btn-secondary {
-    width: 40%;
+    width: 60%;
     background-color: rgb(0,64,80);
     margin-left: auto;
     margin-right: auto;
@@ -42,7 +42,8 @@ button.dropdown-toggle.btn.btn-secondary {
 
 div.dropdown-menu.show {
     background-color: white;
-    width: 100%;
+    width: 60%;
+    min-width: 0;
 }
 button.dropdown-item {
     color: black;
