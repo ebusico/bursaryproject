@@ -552,7 +552,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: process.env.SYSTEM_EMAIL, // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'Hello '+ req.body.trainee_fname +'!\n Welcome to the QA team!\nPlease click the link below to activate your QA bursary account and create your password:\nhttp://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                text: 'Hello '+ trainee.trainee_fname +'!\n Welcome to the QA team!\nPlease click the link below to activate your QA concourse account and create your password:\nhttp://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {

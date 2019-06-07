@@ -445,14 +445,18 @@ adminRoutes.route('/getexp/:id').get(function(req,res){
 //gets trainee by id and removes expense
 adminRoutes.route('/removeExpenses/:id').post(function (req, res) {
 
-    function arrayRemove(arr, amount, type) {
-
-        return arr.filter(function(ele){
-            if(ele.amount!==amount && ele.type !== type){
-                return ele;
-            }
+    function arrayRemove(arr, json) {
+        let result = arr.filter(function(ele){
+                console.log(ele)
+                console.log(json)
+                console.log(ele.amount !== json.amount);
+                if(ele.amount !== json.amount && ele.expenseType !== json.expenseType){
+                    ele.amount = CryptoJS.AES.encrypt(ele.amount, '3FJSei8zPx').toString();
+                    ele.expenseType = CryptoJS.AES.encrypt(ele.expenseType, '3FJSei8zPx').toString()
+                    return ele;
+                }
         });
-     
+        return result;
      }
      
     //arrayRemove(array, 6);
@@ -477,9 +481,7 @@ adminRoutes.route('/removeExpenses/:id').post(function (req, res) {
                 } )
            
             let data = trainee.monthly_expenses;
-            data = arrayRemove(data, req.body.amount, req.body.type);
-            console.log('removed array is :')
-            console.log(data);
+            data = arrayRemove(data, req.body);
             trainee.monthly_expenses = data;
 
             trainee.save().then(trainee => {

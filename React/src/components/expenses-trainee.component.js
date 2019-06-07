@@ -145,7 +145,7 @@ export default class TraineeExpenses extends Component {
                                                     <td>£{monthly_expenses.amount}</td>
                                                     <td><button className="actionBtn" onClick={() => { 
                                                             if (window.confirm('Are you sure you wish to delete this expense?'))
-                                                            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeExpenses/'+this.props.match.params.id, {expenseType: monthly_expenses.type, amount: monthly_expenses.amount }).then(() => window.location.reload()) } }>
+                                                            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeExpenses/'+this.props.match.params.id, {"expenseType": monthly_expenses.type, "amount": monthly_expenses.amount }).then(() => window.location.reload()) } }>
                                                             Delete
                                                             <img src={close}></img>
                                         </button></td>
