@@ -123,7 +123,7 @@ export default class EditDates extends Component {
 					trainee_bench_end_date: new Date(response.data.trainee_bench_end_date),
                     trainee_days_worked: response.data.trainee_days_worked,
                     trainee_bursary: response.data.bursary,
-                    trainee_bursary_amount: response.data.bursary_amount
+                    bursary_amount: response.data.bursary_amount
                 })
 
                 if(response.data.bursary === 'True'){
