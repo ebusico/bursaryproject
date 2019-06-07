@@ -520,7 +520,7 @@ export default class CostReport extends Component {
                 <table cellPadding='5'>
                     <tbody>                          
                             <tr>
-                                <th>Status:</th><td>{this.state.values.status}</td>&nbsp;&nbsp;
+                                &nbsp;&nbsp;<th>Status:</th><td>{this.state.values.status}</td>&nbsp;&nbsp;
                                 <th>Amount Payable:</th><td>£{this.state.values.amountPayable}</td>&nbsp;&nbsp;
                                 <th>Trainees in training:</th><td>{this.state.values.training_number}</td>&nbsp;&nbsp;
                                 <th>Trainees on bench:</th><td>{this.state.values.bench_number}</td>&nbsp;&nbsp;
@@ -529,7 +529,7 @@ export default class CostReport extends Component {
                     </tbody>
                 </table>
                 <br/>
-                <p>&nbsp;&nbsp;Note: Pending trainees are not included in amount payable</p>
+                <p>&nbsp;&nbsp;&nbsp;Note: Pending trainees are not included in amount payable</p>
                 <br/>
                 </div>
                 <button className="actionBtn" id="individual" onClick={() => this.setState({ open: !open })}>Individual Trainee Breakdown</button>&nbsp;&nbsp; 

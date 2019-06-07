@@ -31,3 +31,9 @@
 #individual {
 	margin-left: 1%;
 }
+
+.-striped.-highlight>div:nth-child(1)>div:nth-child(2)>div:nth-child(odd) {
+	
+	background-color: #eaf3ff;
+}
+
