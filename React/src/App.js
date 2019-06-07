@@ -70,7 +70,7 @@ class App extends Component {
          <Route path="/history/:id" component={UserRecord} />
          <Route path="/trainee-settings" component={TraineeSettings}/>
          <Route path="/expenses/:id" component={TraineeExpenses} />
-         <div >
+         <div data-keyboard="false">
            <Privacy/>
          </div>
        </Router>  
@@ -92,7 +92,7 @@ class App extends Component {
 		    <Route path="/addUser" component={AddUser} />
         <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
         <Route path="/editDates/:id" component={EditDates} />
-        <div >
+        <div data-keyboard="false">
           <Privacy/>
         </div>
       </Router>  
@@ -114,7 +114,7 @@ class App extends Component {
          <Route path="/addUser" component={AddUser} />
          <Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} />
          <Route path="/editDates/:id" component={Login} />
-         <div >
+         <div data-keyboard="false">
            <Privacy/>
          </div>
        </Router>  

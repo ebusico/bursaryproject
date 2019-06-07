@@ -422,7 +422,7 @@ export default class EditTrainee extends Component {
 
                     <br />
                     <div className="form-group">
-                        <input id="updateBtn" type="submit" value="Update" className="btn btn-primary"/>
+                            <input id="updateBtn" type="submit" value="Update" className="btn btn-primary" />
                     </div>
 					</div>
 				</form>
