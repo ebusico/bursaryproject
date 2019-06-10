@@ -77,9 +77,12 @@ export default class ChangePasswordStaff extends Component {
             };
             console.log(obj);
             axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/update-password-staff/'+this.props.match.params.token, obj)
-            .then(res => {console.log(res.data);
+            .then(res => {axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeToken/'+this.props.match.params.token)
+                          console.log(res.data);
+                         })
+            .then(res => {console.log(res);
                           this.props.history.push('/');
-                         });
+                         })             
         
        }
     }

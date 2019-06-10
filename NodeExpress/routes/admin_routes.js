@@ -254,6 +254,23 @@ adminRoutes.route('/reset-staff/:token').get(function(req, res) {
         });
       });  
 
+adminRoutes.route('/removeToken/:token').get(function(req, res) {
+        User.findOne({password_token: req.params.token}).then((user) => {
+        console.log(Date.now())
+        if (!user) {
+            console.error('No token found');
+            winston.error('No token found')
+            res.status(403).send('No token found');
+        } 
+        else {
+            user.password_expires = Date.now();
+            user.save().then(()=>
+                {res.status(200).send("Token destroyed")}
+            )      
+        }
+        });
+    });       
+
 //sends password reset email for staff
 adminRoutes.route('/send-email-staff').post(function(req, res) {
         let logger = databaseLogger.createLogger(req.body.email)

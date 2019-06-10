@@ -165,44 +165,15 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 });
 autoEmail.start();
 
-// Send Trainee an email if they have not completed thier profile
-const autoIncomplete = new CronJob('0 0 */12 * * *', function() {
-	 pending = [];
-	 Trainee.find(function(err, trainee) {
-		trainee.map(function(currentTrainee){
-			let status =CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			console.log(status);
-			let email = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
-			let fname = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			let lname = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			if(status == 'Incomplete'){
-				// create mail transporter
-			var transporter = nodeMailer.createTransport({
-                    service: 'AOL',
-                    auth: {
-                        user: process.env.SYSTEM_EMAIL,
-						pass: process.env.SYSTEM_PASSWORD
-                    }
-                });
-				//sending an email
-			console.log("---------------------");
-			console.log("Running Cron Job");
-			var mailOptions = {
-				from: process.env.SYSTEM_EMAIL, // sender address
-				to: email, // list of receivers
-				subject: 'QA Bursary Update Details', // Subject line
-				text: 'Hello '+ fname + ' ' + lname + '!\n When you have a moment can you login and fill in your bank details for us to transfer your monthly bursary. !\n Please Login at: http://'+process.env.REACT_APP_AWS_IP+':3000/login'// plain text body
-			}            
-			transporter.sendMail(mailOptions, function(error, info) {
-				if (error) {
-					console.log(error);
-				}else{
-					console.log("Email successfully sent!");
-					winston.info('Cron job for trainees with Incomplete status have had emails sent');
-				}
-			});
-			}
-		})
-	})
+//clears expenses every month
+const clearExpenses =  new CronJob('0 1 1 * *', function() {
+	pending = [];
+	Trainee.find(function(err, trainee) {
+	   trainee.map(function(currentTrainee){
+		   currentTrainee.monthly_expenses = []
+		   currentTrainee.save()
+	   })
+   })
+   console.log("cleared expenses")
 });
-autoIncomplete.start();
+clearExpenses.start()

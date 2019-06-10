@@ -522,6 +522,23 @@ traineeRoutes.route('/reset/:token').get(function(req, res) {
     });
   });
 
+traineeRoutes.route('/removeToken/:token').get(function(req, res) {
+    Trainee.findOne({trainee_password_token: req.params.token}).then((trainee) => {
+      console.log(Date.now())
+      if (!trainee) {
+        console.error('No token found');
+		winston.error('No token found')
+        res.status(403).send('No token found');
+      } 
+      else {
+        trainee.trainee_password_expires = Date.now();
+        trainee.save().then(()=>
+          {res.status(200).send("Token destroyed")}
+        )      
+     }
+    });
+  });  
+
 //sends trainee password reset email
 traineeRoutes.route('/send-email').post(function(req, res) {
     console.log("got email:" + req.body.trainee_email);
