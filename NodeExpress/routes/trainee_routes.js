@@ -552,7 +552,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
         else{
             const token = crypto.randomBytes(20).toString('hex');
             trainee.trainee_password_token = token;
-            trainee.trainee_password_expires = Date.now() + 3600000;
+            trainee.trainee_password_expires = Date.now() + 86400000;
             trainee.save().then(()=>
 			console.log('email token has been generated'),
             winston.info('Email has been sent to ' + req.body.trainee_email),

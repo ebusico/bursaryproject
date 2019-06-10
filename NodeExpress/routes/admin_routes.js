@@ -289,7 +289,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
             else{
                 const token = crypto.randomBytes(20).toString('hex');
                 staff.password_token = token;
-                staff.password_expires = Date.now() + 3600000;
+                staff.password_expires = Date.now() + 86400000;
                 staff.save().then(()=>
 				console.log('email token generated'),
                 winston.info('user has had a reset email sent to them'));
