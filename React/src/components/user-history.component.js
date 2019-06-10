@@ -66,12 +66,12 @@ export default class UserRecord extends Component {
                     <div className="QAtable">
                 <div className="QASearchBar">
                             <h2>{userType} History- {recordOf}</h2>
-                            <h3><center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>Back</button></center></h3>
+                            <h3><center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>⭠ Back</button></center></h3>
 
                         </div>
                         <div>
                             </div>
-                <table id="logTable"className="table table-hover" style={{ marginTop: 20 }} >
+                <table id="logTable" className="table table-hover" style={{ marginTop: 20}}>
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -83,7 +83,7 @@ export default class UserRecord extends Component {
                             return (
                                 <tr>
                                     <td> {moment(record.timestamp).format('DD/MM/YYYY')}</td>
-                                    <td> {record.message}</td>
+                                    <td> {record.message} </td>
                                 </tr>
                             );
                         })}

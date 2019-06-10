@@ -9,15 +9,19 @@
     padding-top: 5%;
     width: 60%;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;   
 }
 
 h2{
     text-align:center;
 }
 
+.logTable{
+    overflow: scroll;
+}
 
-.QAtable td{white-space:nowrap;}
+
+/* .QAtable td{white-space:nowrap;} */
 
 #createExpenseBtn {
 	background-color: #004050;

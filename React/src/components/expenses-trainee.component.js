@@ -36,7 +36,14 @@ export default class TraineeExpenses extends Component {
 
     onChange = (e) => this.setState({ monthly_expenses: e.target.value });
 
-    onSelect = (e) => this.setState({ expenseType: e.target.value });
+    // onSelect = (e) => this.setState({ expenseType: e.target.value });
+
+
+    onSelect(e) {
+        this.setState({
+            expenseType: e.target.value
+        });
+    }
 
     clearAll() {
         this.setState({
@@ -154,10 +161,11 @@ export default class TraineeExpenses extends Component {
                                         })}
                                     </tbody>
                                 </table >
-                                {/* <ButtonGroup>
-                                    <Button type="submit" style={{ marginBottom:30}}>Return</Button>
-                                </ButtonGroup> */}
-                            </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <ButtonGroup>
+                                    <Button type="submit" id="createExpenseBtn" style={{ marginBottom:30}} onClick={() => { document.location.href = "/"; }}>⭠ Back</Button>
+                            </ButtonGroup>
+
                         </div>
                     </div>
                 </div>
