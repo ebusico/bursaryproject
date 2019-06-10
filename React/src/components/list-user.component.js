@@ -136,7 +136,7 @@ export default class ListUser extends Component {
                     <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <button className="qabtn"><Link className="link" to ={"/addUser"}>Add User<img src={add}></img></Link></button>
+                        <Link className="link" to ={"/addUser"}><button className="qabtn">Add User<img src={add}></img></button></Link>
                     </div>
                     <Collapse in={this.state.open}>
                     <p>

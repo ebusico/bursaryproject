@@ -105,7 +105,7 @@ export default class TraineeExpenses extends Component {
                             <hr />
                             <div>
                                 &nbsp;&nbsp;&nbsp;<label>Amount (£): </label>&nbsp;&nbsp;
-                                <input value={monthly_expenses} onChange={this.onChange} type="number" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input value={monthly_expenses} onChange={this.onChange} type="number" min="0"/>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <label>Type: </label>&nbsp;&nbsp;
                                 <select id="expenseType" value={expenseType} onChange={this.onSelect}>
                                     <option selected value="">Select expense type</option>
