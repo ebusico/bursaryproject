@@ -443,10 +443,9 @@ export default class CostReport extends Component {
                 if(i.name.toLowerCase().match(searchString.toLowerCase()) ||
                    i.status.toLowerCase().match(searchString.toLowerCase())        ||
                    i.recruitedBy.toLowerCase().match(searchString.toLowerCase())      ||
-                   i.start.toLowerCase().match(searchString.toLowerCase())       ||
-                   i.days.toLowerCase().match(searchString.toLowerCase()) ||
-                   i.amountDay.toLowerCase().match(searchString.toLowerCase()) ||
-                   i.amountMonth.toString().match(searchString.toLowerCase()) ||
+                   i.start.toString().match(searchString)       ||
+                   i.days.toString().match(searchString) ||
+                   i.bursary.amountMonth.toString().match(searchString) ||
                    i.email.toLowerCase().match(searchString.toLowerCase()) ||
                    (i.name.toLowerCase() + i.status.toLowerCase() + i.email.toLowerCase() + i.recruitedBy.toLowerCase()).match(searchString.toLowerCase())){
                     return i;
