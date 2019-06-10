@@ -315,7 +315,7 @@ export default class CreateTrainee extends Component {
                     </Collapse>
 				                    
 					<div className="form-group" >
-                        <label> Bursary Start Date</label>
+                        <label> Training Start Date</label>
                         <div style={{height: '50px'}}>
                         <DayPickerInput
                             placeholder="DD/MM/YYYY"
@@ -332,7 +332,7 @@ export default class CreateTrainee extends Component {
                             }} 
                         />
                         </div>
-                        <label> Bursary End Date </label>
+                        <label> Training End Date </label>
                         <div style={{height: '50px'}}>
                             <DayPickerInput
                                 placeholder="DD/MM/YYYY"
