@@ -20,7 +20,8 @@ export default class TraineeExpenses extends Component {
             currentUser: authService.currentUserValue,
             expArray: [],
             monthly_expenses: 0,
-            expenseType: ''
+            expenseType: '',
+            other: false
         }
     }
     
@@ -36,13 +37,27 @@ export default class TraineeExpenses extends Component {
 
     onChange = (e) => this.setState({ monthly_expenses: e.target.value });
 
-    // onSelect = (e) => this.setState({ expenseType: e.target.value });
 
-
-    onSelect(e) {
+    onSelect = (e) => {
+        if(e.target.value === "Other"){
+            this.setState({
+                other: true
+            });
+        }
+        else{
+            this.setState({
+                other: false
+            });
+        }
         this.setState({
             expenseType: e.target.value
         });
+    }
+
+    onOtherAdd = (e) => {
+        this.setState({
+            expenseType: "Other("+e.target.value+")"
+        })
     }
 
     clearAll() {
@@ -103,6 +118,7 @@ export default class TraineeExpenses extends Component {
         else {
             let recordOf = this.state.recordOf;
             let userType = this.state.userType;
+            let other = this.state.other;
             const { expArray, monthly_expenses, expenseType } = this.state;
             return (
                 <div className="BigBox">
@@ -135,6 +151,14 @@ export default class TraineeExpenses extends Component {
                                     <option value="Training Materials">Training Materials</option>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <ButtonGroup>  <Button type="submit" id="createExpenseBtn" onClick={this.onSave}>Add</Button> </ButtonGroup>
+                                {other ? 
+                                <div id="OtherInput">
+                                    <label>Expense Type :</label>&nbsp;
+                                    <input 
+                                    onChange={this.onOtherAdd}
+                                    placeholder="Enter Expense Type Here"
+                                    />
+                                </div>:""}
                                 <table id="logTable" className="table table-striped" style={{ marginTop: 20 }} >
                                     <thead>
                                         <tr>

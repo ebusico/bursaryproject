@@ -63,7 +63,7 @@ export default class UserRecord extends Component {
             let userType = this.state.userType;
             return(
                 <div className = "BigBox">
-                    <div className="QAtable">
+                <div className="historyTable">
                 <div className="QASearchBar">
                             <h2>{userType} History- {recordOf}</h2>
                             <h3><center><button id="cancelBtn" onClick={() => { document.location.href = "/"; }}>⭠ Back</button></center></h3>

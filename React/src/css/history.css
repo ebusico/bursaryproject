@@ -5,6 +5,12 @@
     border-radius: 4px;
 }
 
+.historyTable{
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 4px;
+}
+
 .BigBox{
     padding-top: 5%;
     width: 60%;
@@ -21,7 +27,7 @@ h2{
 }
 
 
-/* .QAtable td{white-space:nowrap;} */
+.QAtable td{white-space:nowrap;}
 
 #createExpenseBtn {
 	background-color: #004050;
@@ -33,4 +39,11 @@ h2{
     background-color: white;
     color: #004050;
     border: 1px solid #004050;
+}
+
+#OtherInput{
+    margin-right: 28%;
+    float: right;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
