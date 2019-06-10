@@ -540,7 +540,8 @@ traineeRoutes.route('/send-email').post(function(req, res) {
 			console.log('email token has been generated'),
             winston.info('Email has been sent to ' + req.body.trainee_email),
             logger.verbose('Email has been sent to ' + req.body.trainee_email)
-			);
+            );
+            let fname = CryptoJS.AES.decrypt(trainee.trainee_fname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
             var transporter = nodeMailer.createTransport({
                 service: 'Gmail',
                 auth: {
@@ -552,7 +553,7 @@ traineeRoutes.route('/send-email').post(function(req, res) {
                 from: process.env.SYSTEM_EMAIL, // sender address
                 to: req.body.trainee_email, // list of receivers
                 subject: 'Password Reset', // Subject line
-                text: 'Hello '+ trainee.trainee_fname +'!\n Welcome to the QA team!\nPlease click the link below to activate your QA concourse account and create your password:\nhttp://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                text: 'Hello '+ fname +'!\n Welcome to the QA team!\nPlease click the link below to activate your QA concourse account and create your password:\nhttp://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
             }            
 
             transporter.sendMail(mailOptions, (error, info) => {

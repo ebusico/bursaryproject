@@ -275,7 +275,8 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                 staff.password_expires = Date.now() + 3600000;
                 staff.save().then(()=>
 				console.log('email token generated'),
-				winston.info('user has had a reset email sent to them'));
+                winston.info('user has had a reset email sent to them'));
+                let fname = CryptoJS.AES.decrypt(staff.fname, 'c9nMaacr2Y').toString(CryptoJS.enc.Utf8);
                 var transporter = nodeMailer.createTransport({
                     service: 'Gmail',
                     auth: {
@@ -287,7 +288,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                     from: process.env.SYSTEM_EMAIL, // sender address
                     to: req.body.email, // list of receivers
                     subject: 'Password Reset', // Subject line
-                    text: 'Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePasswordStaff/'+token // plain text body
+                    text: 'Hello '+fname+',\n Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePasswordStaff/'+token // plain text body
                 }            
     
                 transporter.sendMail(mailOptions, (error, info) => {
