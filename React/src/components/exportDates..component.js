@@ -255,9 +255,10 @@ export default class ListTrainee extends Component {
         if(role === 'finance'){
 			output = [];
             trainees.map( t => {
-                // var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
-                var obj = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,t.bursary_amount*t.trainee_days_worked+".00","BURSARY","99"];
-                    output.push(obj);
+                if(t.status === "Active" && t.bursary === "True"){
+                    var obj = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,t.bursary_amount*t.trainee_days_worked+".00","BURSARY","99"];
+                        output.push(obj);
+                }    
                 }
             )
         }else if(role === 'admin'){

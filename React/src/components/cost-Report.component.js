@@ -392,8 +392,6 @@ export default class CostReport extends Component {
     }
 	
     render() {
-        let totalDays = this.state.values.daysPayable;
-        let totalAmount = this.state.values.amountPayable;
         let trainees = this.state.trainee_data;
         let searchString = this.state.searchString;
         let filter = this.state.filter;
@@ -440,6 +438,8 @@ export default class CostReport extends Component {
 
         if(searchString.length > 0){
             trainees = trainees.filter(function(i){
+                console.log(i.name.toLowerCase());
+                console.log(trainees);
                 if(i.name.toLowerCase().match(searchString.toLowerCase()) ||
                    i.status.toLowerCase().match(searchString.toLowerCase())        ||
                    i.recruitedBy.toLowerCase().match(searchString.toLowerCase())      ||
