@@ -71,7 +71,16 @@ export default class CreateUser extends Component {
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
     };
-    
+
+    emailHandle(email) {
+        let split = email.split("@");
+        if(split[1] === 'qa.com'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     onSubmit(e) {
         e.preventDefault();
         
@@ -80,37 +89,41 @@ export default class CreateUser extends Component {
         console.log(`User role: ${this.state.user_role}`)
         
         // var setStatus = "Active";
-
-        var newUser = {
-            email: this.state.user_email.toLowerCase(),
-            fname: this.toTitleCase(this.state.user_fname),
-            lname: this.toTitleCase(this.state.user_lname),
-            password: Math.random().toString(36).slice(-8),
-            role: this.state.user_role.toLowerCase(),
-            status: 'Pending'
-        };
-        
-        console.log(newUser)
-
-        if(newUser.role === "role"){
-            alert("You must select a role")
+        if(this.emailHandle(this.state.user_email.toLowerCase())){
+            var newUser = {
+                email: this.state.user_email.toLowerCase(),
+                fname: this.toTitleCase(this.state.user_fname),
+                lname: this.toTitleCase(this.state.user_lname),
+                password: Math.random().toString(36).slice(-8),
+                role: this.state.user_role.toLowerCase(),
+                status: 'Pending'
+            };
+            
+            console.log(newUser)
+    
+            if(newUser.role === "role"){
+                alert("You must select a role")
+            }
+            else{
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/addUser', newUser)
+                .then( (response) => {console.log(response);
+                                    if(response.status === 205){
+                                        console.log("dupe email");
+                                        alert("Email already in use");
+                                     }
+                                     else{
+                                        console.log("else");
+                                        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: this.state.user_email})
+                                        .then( (response) => {console.log(response.data)
+                                                              this.props.history.push('/admin');
+                                                              window.location.reload();
+                                                             });
+                                     }
+                })
+            }
         }
         else{
-            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/addUser', newUser)
-            .then( (response) => {console.log(response);
-                                if(response.status === 205){
-                                    console.log("dupe email");
-                                    alert("Email already in use");
-                                 }
-                                 else{
-                                    console.log("else");
-                                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: this.state.user_email})
-                                    .then( (response) => {console.log(response.data)
-									                      this.props.history.push('/admin');
-														  window.location.reload();
-														 });
-                                 }
-            })
+            window.alert('Please use an QA email address');
         }
     }
     
