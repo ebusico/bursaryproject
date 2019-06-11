@@ -87,6 +87,7 @@ export default class ListUser extends Component {
         let search = this.state.searchString.trim().toLowerCase();
         let filter = this.state.filter;
         const {open} = this.state;
+        console.log(this.state.currentUser.token._id);
 
         if(search.length > 0){
             users = users.filter(function(i){
@@ -167,6 +168,7 @@ export default class ListUser extends Component {
                         {users.map(user => {
                             let deleteToggle = '';
                             let deleteRoute = '';  
+                            let currentStaff;
                             if(user.status === "Suspended"){
                                 deleteToggle = "Reactivate";
                                 deleteRoute = "reactivate";
@@ -174,19 +176,28 @@ export default class ListUser extends Component {
                             else{
                                 deleteToggle = "Suspend";
                                 deleteRoute = "delete";
-                            }                          
+                            }
+                            if(this.state.currentUser.token._id === user._id){
+                                currentStaff = true;
+                            }
+                            else{
+                                currentStaff = false;
+                            }                         
                             return (
                                 <tr>
                                 <td>{user.fname} {user.lname}</td>
                                 <td className="userRole">{user.role}</td>
                                 <td>{user.status}</td>
                                 <td>
-                                        <center><button className="actionBtn" onClick={() => { 
+                                        <center>{currentStaff ?  <button id="fakeBtn">
+                                                    {deleteToggle}
+                                                    <img src={close}></img>
+                                    </button> : <button className="actionBtn" onClick={() => { 
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
                                                     axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
                                                     <img src={close}></img>
-                                    </button>&nbsp;
+                                    </button>}&nbsp;
                                     <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
                                     <a href={"mailto:"+user.email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
                                     </center>
