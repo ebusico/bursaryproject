@@ -1,3 +1,5 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import React, { Component } from 'react';
 import './App.css';
 import Nav from './Navigation.js'

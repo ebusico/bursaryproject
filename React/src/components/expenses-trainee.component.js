@@ -6,6 +6,7 @@ import AccessDenied from './modules/AccessDenied';
 import { Button, ButtonGroup } from 'reactstrap';
 import close from './icons/close2.svg';
 
+
 export default class TraineeExpenses extends Component {
 
     constructor(props) {
@@ -128,7 +129,7 @@ export default class TraineeExpenses extends Component {
                             <hr />
                             <div>
                                 &nbsp;&nbsp;&nbsp;<label>Amount (£): </label>&nbsp;&nbsp;
-                                <input value={monthly_expenses} onChange={this.onChange} type="number" min="0"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input style={{marginBlock:30}} value={monthly_expenses} onChange={this.onChange} type="number" min="0"></input> &nbsp;&nbsp;&nbsp;&nbsp;
                                 <label>Type: </label>&nbsp;&nbsp;
                                 <select id="expenseType" value={expenseType} onChange={this.onSelect}>
                                     <option selected value="">Select expense type</option>

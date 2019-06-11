@@ -21,6 +21,7 @@
     "prop-types": "^15.7.2",
     "rb-datepicker": "0.0.5",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.1",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-burger-menu": "^2.6.10",
     "react-csv": "^1.1.1",
@@ -59,6 +60,7 @@
     "axios-mock-adapter": "^1.16.0",
     "babel-polyfill": "^6.26.0",
     "identity-obj-proxy": "^3.0.0",
+    "react-currency-input-field": "0.0.45",
     "react-test-renderer": "^16.8.6"
   },
   "jest": {
