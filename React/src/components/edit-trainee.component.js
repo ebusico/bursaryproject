@@ -257,12 +257,6 @@ export default class EditTrainee extends Component {
     render() {
         const {show_matching_bank} = this.state;
         const {show_non_matching_bank} = this.state;
-        
-        
-
-        
-
-        
 		
 		if(this.state.currentUser.token.role !== undefined){
 			return (
@@ -321,7 +315,6 @@ export default class EditTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_fname}
                                 onChange={this.onChangeTraineeFname}
-                                disabled
                                 />
                     </div>
                      <div className="form-group"> 
@@ -330,7 +323,6 @@ export default class EditTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_lname}
                                 onChange={this.onChangeTraineeLname}
-                                disabled
                                 />
                     </div>           
                     <div className="form-group">
@@ -340,7 +332,6 @@ export default class EditTrainee extends Component {
                                 className="form-control"
                                 value={this.state.trainee_email}
                                 onChange={this.onChangeTraineeEmail}
-                                disabled
                                 />
                     </div>
                     <div className="form-group">
@@ -354,7 +345,6 @@ export default class EditTrainee extends Component {
                                     placeholder= "eg. 987654"
                                     value={this.state.trainee_sort_code}
                                     onChange={this.onChangeTraineeSort}
-                                    //maxLength="6"
                                     required minLength = {6}
                                     />
                             <img id="sortImg"></img>
@@ -372,7 +362,6 @@ export default class EditTrainee extends Component {
                                     placeholder= "eg. 12345678"
                                     value={this.state.trainee_account_no}
                                     onChange={this.onChangeTraineeAccount}
-                                    //maxLength="8"
                                     required minLength = {8}
                                     />
                             <img id="accountImg"></img> 
