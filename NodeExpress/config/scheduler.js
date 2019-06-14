@@ -130,7 +130,7 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 			if(status == 'Pending'){
 				const token = crypto.randomBytes(20).toString('hex');
 							currentTrainee.trainee_password_token = token;
-							currentTrainee.trainee_password_expires = Date.now() + 3600000;
+							currentTrainee.trainee_password_expires = Date.now() + 1728000000;                            ;
 							currentTrainee.save().then(()=>
 							console.log('token has been generated'),
 							);

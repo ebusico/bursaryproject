@@ -438,8 +438,6 @@ export default class CostReport extends Component {
 
         if(searchString.length > 0){
             trainees = trainees.filter(function(i){
-                console.log(i.name.toLowerCase());
-                console.log(trainees);
                 if(i.name.toLowerCase().match(searchString.toLowerCase()) ||
                    i.status.toLowerCase().match(searchString.toLowerCase())        ||
                    i.recruitedBy.toLowerCase().match(searchString.toLowerCase())      ||
