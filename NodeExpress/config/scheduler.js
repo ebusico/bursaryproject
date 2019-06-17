@@ -162,7 +162,7 @@ const autoEmail =  new CronJob('00 00 10 * * 1-5', function() {
 			}
 		})
 	})
-});
+}, null, true, 'Europe/London');
 autoEmail.start();
 
 //clears expenses every month
@@ -175,5 +175,5 @@ const clearExpenses =  new CronJob('0 1 1 * *', function() {
 	   })
    })
    console.log("cleared expenses")
-});
+}, null, true, 'Europe/London');
 clearExpenses.start()
