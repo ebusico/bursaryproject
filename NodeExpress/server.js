@@ -16,13 +16,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// schedule task to run on the server
-
-new CronJob('* * * * * *', function() {
-  console.log('You will see this message every second');
-}, null, true, 'America/Los_Angeles');
-	
-
 const PORT = 4000;
 var cookieParser = require('cookie-parser');
 
