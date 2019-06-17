@@ -118,7 +118,7 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
 onceMonth.start();
 
 // Send Trainee an email if they have not updated thier password
-const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
+const autoEmail =  new CronJob('00 00 10 * * 1-5', function() {
 	 pending = [];
 	 Trainee.find(function(err, trainee) {
 		trainee.map(function(currentTrainee){
@@ -136,7 +136,7 @@ const autoEmail =  new CronJob('00 30 11 * * 1-5', function() {
 							);
 				// create mail transporter
 			var transporter = nodeMailer.createTransport({
-                    service: 'AOL',
+                    service: 'Gmail',
                     auth: {
                         user: process.env.SYSTEM_EMAIL,
 						pass: process.env.SYSTEM_PASSWORD
