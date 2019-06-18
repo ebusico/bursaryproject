@@ -119,14 +119,24 @@ onceMonth.start();
 
 // Send Trainee an email if they have not updated thier password
 const autoEmail =  new CronJob('00 00 10 * * 1,2,3,4,5', function() {
-	 pending = [];
+     // create mail transporter
+     var transporter = nodeMailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 5,
+        auth: {
+            user: process.env.SYSTEM_EMAIL,
+            pass: process.env.SYSTEM_PASSWORD,
+        }
+    });
 	 Trainee.find(function(err, trainee) {
 		trainee.map(function(currentTrainee){
 			let status =CryptoJS.AES.decrypt(currentTrainee.status, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			console.log(status);
 			let email = CryptoJS.AES.decrypt(currentTrainee.trainee_email, CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939"), {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")}).toString(CryptoJS.enc.Utf8);
 			let fname = CryptoJS.AES.decrypt(currentTrainee.trainee_fname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
-			let lname = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+            let lname = CryptoJS.AES.decrypt(currentTrainee.trainee_lname, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
 			if(status == 'Pending'){
 				const token = crypto.randomBytes(20).toString('hex');
 							currentTrainee.trainee_password_token = token;
@@ -134,31 +144,24 @@ const autoEmail =  new CronJob('00 00 10 * * 1,2,3,4,5', function() {
 							currentTrainee.save().then(()=>
 							console.log('token has been generated'),
 							);
-				// create mail transporter
-			var transporter = nodeMailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: process.env.SYSTEM_EMAIL,
-						pass: process.env.SYSTEM_PASSWORD
+                //sending an email
+                console.log("---------------------");
+                console.log("Running Cron Job");
+                console.log(status);
+                var mailOptions = {
+                    from: process.env.SYSTEM_EMAIL, // sender address
+                    to: email, // list of receivers
+                    subject: 'Activate QA Account', // Subject line
+                    text: 'Hello'+ fname + ' ' + lname + '!\n It seems you have not activated your QA Bursary Acccount yet. !\n Please navigate to the following link to activate your QA bursary account and create your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                }      
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                    }else{
+                        console.log("Email successfully sent!");
+                        winston.info('Cron job for trainees with Pending status have had emails sent');
                     }
                 });
-				//sending an email
-			console.log("---------------------");
-			console.log("Running Cron Job");
-			var mailOptions = {
-				from: process.env.SYSTEM_EMAIL, // sender address
-				to: email, // list of receivers
-				subject: 'Activate QA Account', // Subject line
-                text: 'Hello'+ fname + ' ' + lname + '!\n It seems you have not activated your QA Bursary Acccount yet. !\n Please navigate to the following link to activate your QA bursary account and create your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
-			}            
-			transporter.sendMail(mailOptions, function(error, info) {
-				if (error) {
-					console.log(error);
-				}else{
-					console.log("Email successfully sent!");
-					winston.info('Cron job for trainees with Pending status have had emails sent');
-				}
-			});
 			}
 		})
 	})

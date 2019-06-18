@@ -74,7 +74,6 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                     currentTrainee.trainee_sort_code = bytes.toString(CryptoJS.enc.Utf8);
                 }
             });
-            console.log(trainee);
             res.json(trainee);
             logger.verbose('database collected all trainees successfully');
 			winston.info('database collected all trainees successfully');
