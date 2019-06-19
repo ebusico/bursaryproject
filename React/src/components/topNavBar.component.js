@@ -60,12 +60,6 @@ export default class topNavBar extends React.Component {
                         <a className="sidebar_btn" onClick={this.handlePasswordStaff}>Change Password </a>
                     </li>
                         : ""}
-                    {show_server_logs ?
-                        <li><a className="sidebar_btn" value={this.state.currentUser.token._id} onClick={() => { document.location.href = "/system_logs"; }}>
-                            System Logs
-				</a></li>
-
-                        : ""}
                 </ul>
             </div>
         );
