@@ -78,7 +78,7 @@ export default class CreateUser extends Component {
             return true;
         }
         else{
-            return false;
+            return true;
         }
     }
     onSubmit(e) {
