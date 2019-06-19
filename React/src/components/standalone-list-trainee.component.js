@@ -321,7 +321,7 @@ export default class ListTrainee extends Component {
                                                 <a href={"mailto:"+t.trainee_email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
                                                 <button className="actionBtn" onClick={() => { 
                                                                 axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email/', {trainee_email: t.trainee_email}).then(() => window.alert("Email Sent!")) } }>
-                                                                Resend Activation Email 
+                                                                Send Password Reset Email 
                                                                 <img src={mail}></img>
                                                 </button>&nbsp;
                                                 </center>

@@ -198,7 +198,7 @@ export default class ListUser extends Component {
                                     <a href={"mailto:"+user.email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
                                     <button className="actionBtn" onClick={() => { 
                                                     axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff/', {email: user.email}).then(() => window.alert("Email Sent!")) } }>
-                                                    Resend Activation Email
+                                                    Send Password Reset Email
                                                     <img src={mail}></img>
                                     </button>&nbsp;
                                     </center>
