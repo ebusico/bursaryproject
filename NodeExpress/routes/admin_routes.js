@@ -271,7 +271,7 @@ adminRoutes.route('/removeToken/:token').get(function(req, res) {
         });
     });
     
-        //updates user password      
+//updates user password      
 adminRoutes.route('/update-mypassword-staff/:id').post(function(req, res) {
     //encrypt before updating
     User.findById(req.params.id, function(err, staff) {
