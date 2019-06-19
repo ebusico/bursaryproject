@@ -619,6 +619,50 @@ traineeRoutes.route('/update-password/:token').post(function(req, res) {
     });
 });
 
+//updates trainee password
+traineeRoutes.route('/update-my-password/:id').post(function(req, res) {
+    Trainee.findById(req.params.id, function(err, trainee) {
+        if (!trainee)
+            res.status(404).send("data is not found");
+        else{
+            let email = CryptoJS.AES.decrypt(trainee.trainee_email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+                .toString(CryptoJS.enc.Utf8)
+            let logger = databaseLogger.createLogger(email);
+
+            Trainee.comparePassword(req.body.previous, trainee.trainee_password, function(err, isMatch){
+                if(err){
+                    logger.error('Unable to login, Error: ' + err);
+                    res.send('Something went wrong!');
+                }
+                else if(!isMatch){
+                    winston.verbose('trainee: ' + email + ' entered wrong password');
+                    res.send('Old password did not match!');
+                }
+                else{
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(req.body.trainee_password, salt, function(err, hash) {
+                          req.body.trainee_password = hash;
+                          trainee.trainee_password = req.body.trainee_password;
+                          trainee.save().then(trainee => {
+                            res.json('Password updated!');
+                            logger.info(email + ' has updated their password '+moment().format('h:mm:ss a'));
+                            winston.info(email + 'has updated thier password '+moment().format('h:mm:ss a'));
+                        })
+                        .catch(err => {
+                            res.status(400).send("Update not possible");
+                            winston.error('Trainee: '+email+' could not update their password. Error: ' + err + " "+moment().format('h:mm:ss a'));
+                            logger.error('Trainee: '+email+' could not update their password. Error: ' + err + " "+moment().format('h:mm:ss a'));
+                        });
+                        });
+                    });
+                }
+            })
+        }     
+    });
+});
+
 traineeRoutes.route('/findBank').post(function(req,res) {
     sortcode = req.body.sort_code;
     SortCodeCollection.findOne({SortCode: sortcode}, function(err, bank) {

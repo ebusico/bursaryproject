@@ -269,7 +269,55 @@ adminRoutes.route('/removeToken/:token').get(function(req, res) {
             )      
         }
         });
-    });       
+    });
+    
+        //updates user password      
+adminRoutes.route('/update-mypassword-staff/:id').post(function(req, res) {
+    //encrypt before updating
+    User.findById(req.params.id, function(err, staff) {
+        if (!staff)
+            res.status(404).send("data is not found");
+        else{
+            let email = CryptoJS.AES.decrypt(staff.email
+                , CryptoJS.enc.Hex.parse("253D3FB468A0E24677C28A624BE0F939")
+                , {iv: CryptoJS.enc.Hex.parse("00000000000000000000000000000000")})
+                .toString(CryptoJS.enc.Utf8)
+            let logger = databaseLogger.createLogger(email);
+
+            User.comparePassword(req.body.previous, staff.password, function(err, isMatch){
+                if(err){
+                      console.log(err);
+                      winston.error(err);
+                      logger.error('Unable to login, Error: ' + err);
+                      res.send('Something went wrong!');
+                  }
+                   else if(!isMatch){
+                      console.log('user: ' + staff._id + ' entered wrong password');
+                      winston.error('user: ' + staff._id + ' entered wrong password');
+                      res.send('Old password did not match!');
+                  }
+                  else {
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(req.body.password, salt, function(err, hash) {
+                            req.body.password = hash;
+                            staff.password = req.body.password;
+                            staff.save().then(staff => {
+                            winston.info('User: '+email+' has updated thier password ')
+                            logger.info('User: '+email+' has updated thier password ')
+                            res.json('Password updated!');
+                        })
+                        .catch(err => {
+                            winston.error('User: '+email+' could not update thier password. Error: ' + err);
+                            logger.error('User: '+email+' could not update thier password. Error: ' + err);
+                            res.status(400).send("Update not possible");
+                        });
+                        });
+                      });
+                  }
+           })
+        }      
+    });
+});
 
 //sends password reset email for staff
 adminRoutes.route('/send-email-staff').post(function(req, res) {
