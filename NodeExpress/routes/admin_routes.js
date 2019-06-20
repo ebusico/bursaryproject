@@ -353,7 +353,7 @@ adminRoutes.route('/send-email-staff').post(function(req, res) {
                     from: process.env.SYSTEM_EMAIL, // sender address
                     to: req.body.email, // list of receivers
                     subject: 'Password Reset', // Subject line
-                    text: 'Hello '+fname+',\n Please navigate to the following link to activate your staff account and set your password: http://'+process.env.REACT_APP_AWS_IP+':https/changePasswordStaff/'+token // plain text body
+                    text: 'Hello '+fname+',\n Please navigate to the following link to activate your staff account and set your password: https://'+process.env.REACT_APP_AWS_IP+'/changePasswordStaff/'+token // plain text body
                 }            
     
                 transporter.sendMail(mailOptions, (error, info) => {

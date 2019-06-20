@@ -23,7 +23,7 @@ chai.use(chaiHttp);
 // BEFORE TESTING
 describe('server', function() {
 	before(function () { 
-		server.listen(4000);
+		server.listen(https);
 	});
 	after(function () {
 		server.close();
@@ -32,7 +32,7 @@ describe('server', function() {
 
 describe('trainee/', () => {
 	it('Should get a staus of 200', (done) => {
-		chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
+		chai.request('http://localhost:https').get('/trainee/').end((err, res) => {
 			res.should.have.status(200);
 			done();
 		});
@@ -106,10 +106,10 @@ describe('trainee tests', () => {
 	var userEmail;
 	var token;
 	before((done) => { 
-		chai.request('http://localhost:4000').post('/trainee/add').set('content-type', 'application/json').send(addUser).end((err, res) => {
+		chai.request('http://localhost').post('/trainee/add').set('content-type', 'application/json').send(addUser).end((err, res) => {
 			 if (res.status == '200'){
 			 	console.log('Account has been created');
-				chai.request('http://localhost:4000').get('/trainee/').end((err, res) => {
+				chai.request('https://localhost').get('/trainee/').end((err, res) => {
 					let i = 0;
 						while(i < res.body.length){
 							if(res.body[i].trainee_email == addUser.trainee_email){
@@ -121,7 +121,7 @@ describe('trainee tests', () => {
 							}
 						i++;
 					}
-					chai.request('http://localhost:4000').post('/trainee/daysToWork').send({'trainee_email': userEmail}).end((err, res) => {
+					chai.request('https://localhost').post('/trainee/daysToWork').send({'trainee_email': userEmail}).end((err, res) => {
 					});
 					done();
 				});
@@ -181,7 +181,7 @@ describe('trainee tests', () => {
 	});
 
 	it('suspend trainee', (done) =>{
-		chai.request('http://localhost:4000').get('/trainee/delete/' + userId).end((err, res) => {
+		chai.request('https://localhost').get('/trainee/delete/' + userId).end((err, res) => {
 			if (res.status == '200'){
 				console.log(res.body);
 				done();
@@ -193,7 +193,7 @@ describe('trainee tests', () => {
 	});
 
 	it('unsuspend trainee', (done) =>{
-		chai.request('http://localhost:4000').get('/trainee/reactivate/' + userId).end((err, res) => {
+		chai.request('https://localhost').get('/trainee/reactivate/' + userId).end((err, res) => {
 			if (res.status == '200'){
 				console.log(res.body);
 				done();

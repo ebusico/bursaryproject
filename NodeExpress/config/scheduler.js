@@ -153,7 +153,7 @@ const autoEmail =  new CronJob('00 00 10,16 * * 1,2,3,4,5', function() {
                     from: process.env.SYSTEM_EMAIL, // sender address
                     to: email, // list of receivers
                     subject: 'Activate QA Account', // Subject line
-                    text: 'Hello '+ fname + ' ' + lname + '!\n It seems you have not activated your QA Concourse Acccount yet. !\n Please navigate to the following link to activate your account and create your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                    text: 'Hello '+ fname + ' ' + lname + '!\n It seems you have not activated your QA Concourse Acccount yet. !\n Please navigate to the following link to activate your account and create your password: https://'+process.env.REACT_APP_AWS_IP+'/changePassword/'+token // plain text body
                 }      
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
@@ -203,7 +203,7 @@ const autoEmailStaff =  new CronJob('00 30 10,16 * * 1,2,3,4,5', function() {
                    from: process.env.SYSTEM_EMAIL, // sender address
                    to: email, // list of receivers
                    subject: 'Activate QA Account', // Subject line
-                   text: 'Hello '+ fname + ' ' + lname + '!\n It seems you have not activated your QA Concourse staff acccount yet. !\n Please navigate to the following link to activate your account and create your password: http://'+process.env.REACT_APP_AWS_IP+':3000/changePassword/'+token // plain text body
+                   text: 'Hello '+ fname + ' ' + lname + '!\n It seems you have not activated your QA Concourse staff acccount yet. !\n Please navigate to the following link to activate your account and create your password: https://'+process.env.REACT_APP_AWS_IP+'/changePassword/'+token // plain text body
                }      
                transporter.sendMail(mailOptions, function(error, info) {
                    if (error) {
