@@ -251,6 +251,23 @@ traineeRoutes.route('/daysToWork').post(function(req, res){
                     res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
+            }else if(bursary_start.isSame(currentMonth, 'month')&&bench_end.isSame(currentMonth, 'month')){
+                let bankHolidays = 0;
+                if(bank === true){
+                    bankHolidays = england.holidays(bursary_start,bench_end).length
+                    console.log(bankHolidays);
+                }
+                let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD");
+                let workedDays = 1 + moment(start).businessDiff(end) - bankHolidays;
+                console.log('current month is start date month, days worked: ' + workedDays);
+                console.log(start);
+                console.log(end);
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
+                trainee.save().then(trainee => {
+                    res.json('Days worked updated!');
+                    logger.info("Trainee working days for current month updated (automatic)")
+                })
             }else if(bursary_start.isSame(currentMonth, 'month')){
 				let bankHolidays = 0;
                 if(bank === true){
