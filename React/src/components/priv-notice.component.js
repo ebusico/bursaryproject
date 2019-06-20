@@ -75,7 +75,7 @@ const privText = <div className='priv-text'><h4 id="modal-label" className="priv
     <p><strong>International Data Transfers</strong></p>
     <p>For some of our Services, your personal information may be transferred to, and processed in, countries outside of the EEA. However, we have taken appropriate safeguards to require that your personal information will remain protected in accordance with this Privacy Notice. These measures include transferring your personal data to third parties who are located in a country which the European Commission has determined has data protection laws that are at least as protective as those in Europe, and transferring your personal data to third parties who have entered into standard contractual clauses with us. For more information about these safeguards please contact us using the contact details provided below.</p>
     <p><strong>Cookies</strong></p>
-    <p>We use cookies and similar tracking technology (collectively, "Cookies") to collect and use personal information about you. For further information about the types of Cookies we use, why we use them and how you can control Cookies please see our Cookie Notice at: <a href="http://www.qa.com/legal/cookie-notice">www.qa.com/legal/cookie-notice</a></p>
+    <p>We use cookies and similar tracking technology (collectively, "Cookies") to collect and use personal information about you. For further information about the types of Cookies we use, why we use them and how you can control Cookies please see our Cookie Notice at: <a href="https://www.qa.com/legal/cookie-notice">www.qa.com/legal/cookie-notice</a></p>
     <p><strong>Legal Basis (EEA visitors only).</strong></p>
     <p>Our legal basis for collecting and using personal information will depend on the personal information being collected and the specific context in which we collect it.</p>
     <p>However, we will normally collect personal information from you only:</p>
@@ -118,7 +118,7 @@ const privText = <div className='priv-text'><h4 id="modal-label" className="priv
     </ul>
     <p>We welcome any queries, comments or requests you may have regarding this Privacy Notice. Please do not hesitate to contact us, or our DPO, via email at: <a href="mailto:privacy@qa.com">privacy@qa.com</a></p>
     <p><strong>Changes to the Privacy Notice</strong></p>
-    <p>We may change this Privacy Notice from time to time by updating this document. The online version is available at: <a href="http://www.qa.com/legal/privacy-notice">www.qa.com/legal/privacy-notice</a></p>
+    <p>We may change this Privacy Notice from time to time by updating this document. The online version is available at: <a href="https://www.qa.com/legal/privacy-notice">www.qa.com/legal/privacy-notice</a></p>
     <p>You should check this page from time to time to ensure that you are happy with any changes.</p>
     <p>If material changes are made to this Privacy Notice, we will notify you by placing a prominent notice on the Website or by contacting you to let you know via the contact details you have provided us with.</p>
     <p>By clicking the button below, you accept the terms of this Privacy Notice.</p>
@@ -142,7 +142,7 @@ class PrivNotice extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/privacy/' + this.state.currentUser.token._id)
+        axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/privacy/' + this.state.currentUser.token._id)
         .then(response => {
             console.log(response);
             if(response.data === 'Success'){
@@ -179,7 +179,7 @@ class PrivNotice extends Component {
                     //onClick={this.close}
                     onClick = {() => {
                         console.log(this.state.currentUser.token._id);
-                        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/privacy/accept/'+this.state.currentUser.token._id).then(() => this.setState({ showModal: false })) } }
+                        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/privacy/accept/'+this.state.currentUser.token._id).then(() => this.setState({ showModal: false })) } }
                     //Additional logic is required for click event
                 >Accept</Button>
                 <br></br>

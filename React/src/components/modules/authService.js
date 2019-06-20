@@ -19,7 +19,7 @@ function login(email, password) {
         body: JSON.stringify({ email, password })
     };
 
-    return fetch( 'http://'+process.env.REACT_APP_AWS_IP+':https/trainee/auth/protected', requestOptions)
+    return fetch( 'https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/auth/protected', requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

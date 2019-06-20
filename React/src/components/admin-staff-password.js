@@ -26,7 +26,7 @@ export default class PasswordStaff extends Component {
     }
     
     async componentDidMount() {
-        await axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/admin/reset-staff/'+this.props.match.params.token)
+        await axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/reset-staff/'+this.props.match.params.token)
             .then(response => {
                     console.log(response.data.message);
                     if (response.data.message === 'password reset link a-ok') {
@@ -43,7 +43,7 @@ export default class PasswordStaff extends Component {
                         error: true
                     });
             })
-        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/admin/staff/'+this.state.id)
+        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/staff/'+this.state.id)
             .then(response => {
                 this.setState({
                     email: response.data.email,
@@ -88,9 +88,9 @@ export default class PasswordStaff extends Component {
                 previous: this.state.oldPassword
             };
             console.log(obj);
-            axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/admin/update-mypassword-staff/'+this.state.currentUser.token._id, obj)
+            axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/update-mypassword-staff/'+this.state.currentUser.token._id, obj)
           
-            // .then(res => {axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeToken/'+this.props.match.params.token)
+            // .then(res => {axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeToken/'+this.props.match.params.token)
             //               console.log(res.data);
             //              })
             .then(res => {console.log(res);

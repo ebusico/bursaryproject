@@ -48,16 +48,16 @@ export default class Navigation extends React.Component {
     } else {
       console.log("token id is: "+ this.state.currentUser.token._id);
       console.log(this.state.currentUser);
-      axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/' + this.state.currentUser.token._id)
+      axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/' + this.state.currentUser.token._id)
         .then(response => {
           console.log(response);
           if (response.data == null) {
-            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/staff/' + this.state.currentUser.token._id)
+            axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
               .then(response => {
                 if(response.data == null){
                   authService.logout();
                   if (!authService.currentUserValue) {
-                    document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+                    document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';
                   }
                 }
                 else{
@@ -81,12 +81,12 @@ export default class Navigation extends React.Component {
   }
 
   login() {
-    document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+    document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';
   }
   logout() {
     authService.logout();
     if (!authService.currentUserValue) {
-      document.location.href = 'http://' + process.env.REACT_APP_AWS_IP + ':3000/login';
+      document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';
     }
 
   }
