@@ -142,7 +142,7 @@ class PrivNotice extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/privacy/' + this.state.currentUser.token._id)
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/privacy/' + this.state.currentUser.token._id)
         .then(response => {
             console.log(response);
             if(response.data === 'Success'){
@@ -179,7 +179,7 @@ class PrivNotice extends Component {
                     //onClick={this.close}
                     onClick = {() => {
                         console.log(this.state.currentUser.token._id);
-                        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/privacy/accept/'+this.state.currentUser.token._id).then(() => this.setState({ showModal: false })) } }
+                        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/privacy/accept/'+this.state.currentUser.token._id).then(() => this.setState({ showModal: false })) } }
                     //Additional logic is required for click event
                 >Accept</Button>
                 <br></br>

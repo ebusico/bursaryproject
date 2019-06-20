@@ -29,7 +29,7 @@ export default class TraineeExpenses extends Component {
     onSave = () => {
     
     
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/expenses/'+this.props.match.params.id, {expenseType: this.state.expenseType, amount: this.state.monthly_expenses })
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/expenses/'+this.props.match.params.id, {expenseType: this.state.expenseType, amount: this.state.monthly_expenses })
         .then(res => {
             console.log(res.data);
             window.location.reload();
@@ -68,7 +68,7 @@ export default class TraineeExpenses extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/getRecord/' + this.props.match.params.id)
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/getRecord/' + this.props.match.params.id)
             .then(response => {
                 this.setState({ record: response.data });
                 console.log(this.state.record)
@@ -76,10 +76,10 @@ export default class TraineeExpenses extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.props.match.params.id)
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/staff/' + this.props.match.params.id)
             .then(response => {
                 if (response.data === null) {
-                    axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/' + this.props.match.params.id)
+                    axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/' + this.props.match.params.id)
                         .then(response => {
                             if (response.data === null) {
                                 this.setState({ recordOf: 'Not Found', userType: 'User' });
@@ -97,7 +97,7 @@ export default class TraineeExpenses extends Component {
                 console.log(error);
             })
 
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/getexp/'+this.props.match.params.id)
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/getexp/'+this.props.match.params.id)
         .then(response => {
             response.data.monthly_expenses.map(expenses=>
                 {
@@ -177,7 +177,7 @@ export default class TraineeExpenses extends Component {
                                                     <td>£{monthly_expenses.amount}</td>
                                                     <td><button className="actionBtn" onClick={() => { 
                                                             if (window.confirm('Are you sure you wish to delete this expense?'))
-                                                            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/removeExpenses/'+this.props.match.params.id, {"expenseType": monthly_expenses.type, "amount": monthly_expenses.amount }).then(() => window.location.reload()) } }>
+                                                            axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/admin/removeExpenses/'+this.props.match.params.id, {"expenseType": monthly_expenses.type, "amount": monthly_expenses.amount }).then(() => window.location.reload()) } }>
                                                             Delete
                                                             <img src={close}></img>
                                         </button></td>

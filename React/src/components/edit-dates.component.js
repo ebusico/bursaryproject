@@ -109,7 +109,7 @@ export default class EditDates extends Component {
     }
 	
     componentDidMount() {
-        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/'+this.props.match.params.id)
             .then(response => {
                 console.log(response);
                 
@@ -211,15 +211,15 @@ export default class EditDates extends Component {
 		
         console.log(obj);
         console.log(bursary);
-        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editDates/'+this.props.match.params.id, obj)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/editDates/'+this.props.match.params.id, obj)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
                           window.location.reload();});
-		axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/daysToWork/'+this.props.match.params.id, workingDays)
+		axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/daysToWork/'+this.props.match.params.id, workingDays)
             .then(res => {console.log(res.data);
                           this.props.history.push('/');
                           window.location.reload();});
-        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/editBursary/'+this.props.match.params.id, bursary)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/editBursary/'+this.props.match.params.id, bursary)
                 .then(res => {console.log(res.data);
                              this.props.history.push('/');
                              window.location.reload();});                 
@@ -279,6 +279,7 @@ export default class EditDates extends Component {
 						&nbsp;&nbsp;
                                 <input 
                                     type="number"
+                                    step="0.01"
                                     value={this.state.bursary_amount}
                                     onChange={this.onChangeBursaryAmount}
                                     required/>

@@ -64,9 +64,9 @@ export default class CostReport extends Component {
     }
     
     componentDidMount() {
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport', {month: moment().format("MMMM YYYY")})
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/monthlyReport', {month: moment().format("MMMM YYYY")})
             .then( () => {
-                axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/getMonthlyReport', {month: moment().format("MMMM YYYY")}).then(response => {
+                axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/getMonthlyReport', {month: moment().format("MMMM YYYY")}).then(response => {
                     if(response.data === 'no report'){
                         console.log('No reports found');
                     } else{
@@ -144,7 +144,7 @@ export default class CostReport extends Component {
             })
             
 
-            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/staff/' + this.state.currentUser.token._id)
             .then(response => {
               if(response.data == null){
                 authService.logout();
@@ -236,7 +236,7 @@ export default class CostReport extends Component {
         else if(this.state.currentUser.token.role === "finance"){
             role = 'finance'
         }
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport/updateStatus', {month: this.state.date, user_role: role})
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/monthlyReport/updateStatus', {month: this.state.date, user_role: role})
             .then(() =>{window.location.reload()})
     }
 
@@ -274,11 +274,11 @@ export default class CostReport extends Component {
             startDate: ''
             });
 
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport', {month: moment().format("MMMM YYYY")})
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/monthlyReport', {month: moment().format("MMMM YYYY")})
         .then( () => {
-        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/monthlyReport', {month: moment(date).format("MMMM YYYY")})
+        axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/monthlyReport', {month: moment(date).format("MMMM YYYY")})
         .then( () => {
-            axios.post('http://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/getMonthlyReport', {month: moment(date).format("MMMM YYYY")}).then(response => {
+            axios.post('http://' + process.env.REACT_APP_AWS_IP + ':https/trainee/getMonthlyReport', {month: moment(date).format("MMMM YYYY")}).then(response => {
                 console.log(response.data)
                 if(response.data === 'no report' || response.data.reportTrainees.length === 0){
                     this.setState({
@@ -355,7 +355,7 @@ export default class CostReport extends Component {
         })})
         
 
-        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+        axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/staff/' + this.state.currentUser.token._id)
         .then(response => {
           if(response.data == null){
             authService.logout();

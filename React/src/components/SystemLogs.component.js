@@ -18,7 +18,7 @@ export default class SystemLogs extends Component {
 			}
 			
 	async componentDidMount() {
-		axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/getServerLogs')
+		axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/admin/getServerLogs')
 		.then(response => {
 			this.setState({
 				logs: response.data,

@@ -43,7 +43,7 @@ export default class EditTrainee extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/'+this.props.match.params.id)
             .then(response => {
                 console.log(response.data);
                 if(response.data.bursary==="True"){
@@ -148,7 +148,7 @@ export default class EditTrainee extends Component {
                 sortcode = sortcode.slice(1);
                 console.log(sortcode);
             }
-            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/findBank', {sort_code: sortcode})
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/findBank', {sort_code: sortcode})
             .then(res => {
                 if(res.data.Match == true){
                     console.log(res.data.BankName)
@@ -227,11 +227,11 @@ export default class EditTrainee extends Component {
                 Branch: this.state.trainee_bank_branch.toUpperCase()
             }
             if(this.state.show_non_matching_bank == true){
-                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/update/'+this.props.match.params.id, updated_trainee)
                 .then(res => {
                     console.log(res.data);
                     console.log(new_bank);
-                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/addBank/', new_bank)
+                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/addBank/', new_bank)
                     .then(res => {
                         console.log(res.data);
                         this.props.history.push('/trainee-details/'+this.props.match.params.id);
@@ -239,14 +239,14 @@ export default class EditTrainee extends Component {
                 });
             }
             else{
-                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
+                axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/update/'+this.props.match.params.id, updated_trainee)
                 .then(res => {
                     console.log(res.data);
                     this.props.history.push('/trainee-details/'+this.props.match.params.id);
                 });
             }
         }else{
-            axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update/'+this.props.match.params.id, updated_trainee)
+            axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/update/'+this.props.match.params.id, updated_trainee)
                 .then(res => {
                     console.log(res.data);
                     this.props.history.push('/trainee-details/'+this.props.match.params.id);

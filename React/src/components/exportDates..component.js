@@ -58,7 +58,7 @@ export default class ListTrainee extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/')
+        axios.get('http://'+process.env.REACT_APP_AWS_IP+':https/trainee/')
             .then(response => {
                 console.log(response.data);
                 this.setState({trainees: response.data});
@@ -66,7 +66,7 @@ export default class ListTrainee extends Component {
             .catch(function (error){
                 console.log(error);
             });
-            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+            axios.get('http://' + process.env.REACT_APP_AWS_IP + ':https/admin/staff/' + this.state.currentUser.token._id)
             .then(response => {
               if(response.data == null){
                 authService.logout();

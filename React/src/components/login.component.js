@@ -50,7 +50,7 @@ export default class Login extends Component {
             token: ''
         };
 
-        axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/auth/login', user)
+        axios.post('http://'+process.env.REACT_APP_AWS_IP+':https/auth/login', user)
             .then(function (res) {
                 if (res.status === 200) {
                     var status = res.data.user.status;
