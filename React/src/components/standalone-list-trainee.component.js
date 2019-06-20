@@ -319,6 +319,11 @@ export default class ListTrainee extends Component {
                                                 <button className="actionBtn" value={t._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
                                                 <button className="actionBtn" value={t._id} onClick={this.handleExpensesClick}> Expenses <img src={addmoney}></img></button>&nbsp;
                                                 <a href={"mailto:"+t.trainee_email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                                <button className="actionBtn" onClick={() => { 
+                                                                axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email/', {trainee_email: t.trainee_email}).then(() => window.alert("Email Sent!")) } }>
+                                                                Send Password Reset Email 
+                                                                <img src={mail}></img>
+                                                </button>&nbsp;
                                                 </center>
                                            </td>
                                         </tr>

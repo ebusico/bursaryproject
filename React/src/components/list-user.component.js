@@ -81,6 +81,12 @@ export default class ListUser extends Component {
         window.location.href="history/"+e.target.value   
     }
 
+    handlePasswordStaff(e){
+        window.location.href="update-mypassword-staff/"+e.target.value   
+    }
+
+
+
     
     render() {
         let users = this.state.users;
@@ -136,7 +142,7 @@ export default class ListUser extends Component {
                     <img src={filterIcon}></img>
                     </button>
                     <div id="addUser">
-                        <Link className="link" to ={"/addUser"}><button className="qabtn">Add User<img src={add}></img></button></Link>
+                        <Link className="link" to ={"/addUser"}><button className="qabtn">Add User<img src={add}></img></button></Link>&nbsp;
                     </div>
                     <Collapse in={this.state.open}>
                     <p>
@@ -188,7 +194,13 @@ export default class ListUser extends Component {
                                                     <img src={close}></img>
                                     </button>&nbsp;
                                     <button className="actionBtn" value={user._id} onClick={this.handleHistoryClick}>View History <img src={history}></img></button>&nbsp;
+                                    
                                     <a href={"mailto:"+user.email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
+                                    <button className="actionBtn" onClick={() => { 
+                                                    axios.post('http://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff/', {email: user.email}).then(() => window.alert("Email Sent!")) } }>
+                                                    Send Password Reset Email
+                                                    <img src={mail}></img>
+                                    </button>&nbsp;
                                     </center>
                                 </td>
                             </tr>
