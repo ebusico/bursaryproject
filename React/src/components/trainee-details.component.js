@@ -29,7 +29,7 @@ export default class TraineeDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
+        axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/'+this.props.match.params.id)
             .then(response => {
                 console.log(response.data);
                 this.setState({

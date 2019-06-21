@@ -48,11 +48,11 @@ export default class Navigation extends React.Component {
     } else {
       console.log("token id is: "+ this.state.currentUser.token._id);
       console.log(this.state.currentUser);
-      axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/trainee/' + this.state.currentUser.token._id)
+      axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/trainee/' + this.state.currentUser.token._id)
         .then(response => {
           console.log(response);
           if (response.data == null) {
-            axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/admin/staff/' + this.state.currentUser.token._id)
+            axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/admin/staff/' + this.state.currentUser.token._id)
               .then(response => {
                 if(response.data == null){
                   authService.logout();

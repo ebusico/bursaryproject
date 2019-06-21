@@ -20,7 +20,7 @@ export default class UserRecord extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/getRecord/'+this.props.match.params.id)
+        axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/getRecord/'+this.props.match.params.id)
             .then(response => {
                 this.setState({record: response.data});
                 console.log(this.state.record)
@@ -28,10 +28,10 @@ export default class UserRecord extends Component {
             .catch(function (error){
                 console.log(error);
             })
-        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/staff/'+this.props.match.params.id)
+        axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/staff/'+this.props.match.params.id)
              .then(response => {
                 if(response.data === null){
-                    axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.props.match.params.id)
+                    axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/'+this.props.match.params.id)
                          .then(response =>{
                             if(response.data === null){
                                 this.setState({recordOf: 'Not Found', userType: 'User'});

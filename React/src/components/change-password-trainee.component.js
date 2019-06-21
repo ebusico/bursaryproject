@@ -20,7 +20,7 @@ export default class ChangePassword extends Component {
     }
     
     async componentDidMount() {
-        await axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/reset/'+this.props.match.params.token)
+        await axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/reset/'+this.props.match.params.token)
             .then(response => {
                     console.log(response);
                     if (response.data.message === 'password reset link a-ok') {
@@ -36,7 +36,7 @@ export default class ChangePassword extends Component {
                         error: true
                     });
             })
-        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/'+this.state.trainee_id)
+        axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/'+this.state.trainee_id)
             .then(response => {
                 this.setState({
                     trainee_email: response.data.trainee_email,
@@ -74,8 +74,8 @@ export default class ChangePassword extends Component {
                 trainee_password: this.state.trainee_password
             };
             console.log(obj);
-            axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/update-password/'+this.props.match.params.token, obj)
-            .then(res => {axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/removeToken/'+this.props.match.params.token);
+            axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/update-password/'+this.props.match.params.token, obj)
+            .then(res => {axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/removeToken/'+this.props.match.params.token);
                           console.log(res.data);
                          })
             .then(res => {console.log(res);

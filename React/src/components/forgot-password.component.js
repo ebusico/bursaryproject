@@ -25,16 +25,16 @@ export default class ForgotPass extends Component {
     onSubmit(e) {
 		e.preventDefault();
 		
-		axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/getByEmail', {trainee_email: this.state.email})
+		axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/getByEmail', {trainee_email: this.state.email})
 		.then( (response) => {console.log(response);
                                 if(response.data === "") {
-                                    axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/getByEmail', {staff_email: this.state.email})
+                                    axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/getByEmail', {staff_email: this.state.email})
 									.then ( (response) => {
 										if(response.data == null){
 											alert("email not found");
 										}
 										else{
-											axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: this.state.email})
+											axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/send-email-staff', {email: this.state.email})
 											.then( (response) => {console.log(response.data);
 																  this.props.history.push('/login');
 																  window.location.reload();
@@ -44,7 +44,7 @@ export default class ForgotPass extends Component {
                                  }
                                 else{
                                     console.log("trainee found")
-									axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/trainee/send-email', {trainee_email: this.state.email})
+									axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/trainee/send-email', {trainee_email: this.state.email})
 									.then( (response) => {console.log(response.data);
 														  this.props.history.push('/login');
 														  window.location.reload();

@@ -105,7 +105,7 @@ export default class CreateUser extends Component {
                 alert("You must select a role")
             }
             else{
-                axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/addUser', newUser)
+                axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/addUser', newUser)
                 .then( (response) => {console.log(response);
                                     if(response.status === 205){
                                         console.log("dupe email");
@@ -113,7 +113,7 @@ export default class CreateUser extends Component {
                                      }
                                      else{
                                         console.log("else");
-                                        axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff', {email: this.state.user_email})
+                                        axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/send-email-staff', {email: this.state.user_email})
                                         .then( (response) => {console.log(response.data)
                                                               this.props.history.push('/admin');
                                                               window.location.reload();

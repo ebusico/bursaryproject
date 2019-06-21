@@ -18,7 +18,7 @@ export default class SystemLogs extends Component {
 			}
 			
 	async componentDidMount() {
-		axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/getServerLogs')
+		axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/getServerLogs')
 		.then(response => {
 			this.setState({
 				logs: response.data,
@@ -33,7 +33,7 @@ export default class SystemLogs extends Component {
 	download(){
 		<button  className='system_btn' onClick={this.download}>Download Logs</button>
 		var FileSaver = require('file-saver');
-		axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/getServerLogs')
+		axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/getServerLogs')
 		.then(response => {
 			var data = new blob([data], {
 				type: "text"

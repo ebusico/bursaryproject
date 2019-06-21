@@ -19,7 +19,7 @@ export default class TraineeSettings extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
     componentDidMount(){
-        axios.get('https://' + process.env.REACT_APP_AWS_IP + ':4000/settings/').then(response =>{
+        axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/settings/').then(response =>{
             console.log(response.data);
             this.setState({bank_holidays: response.data.pay_bank_holidays,
                             bursary_amount: response.data.default_bursary});
@@ -55,7 +55,7 @@ export default class TraineeSettings extends Component{
     onSubmit(e){
         e.preventDefault();
         console.log(this.state);
-        axios.post('https://' + process.env.REACT_APP_AWS_IP + ':4000/settings/editSettings', this.state).then(response =>{
+        axios.post('https://' + process.env.REACT_APP_BACKEND_IP + '/settings/editSettings', this.state).then(response =>{
                 alert("Settings updated");
             }
         )

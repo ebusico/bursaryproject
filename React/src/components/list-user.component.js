@@ -40,7 +40,7 @@ export default class ListUser extends Component {
 	
     
     componentDidMount() {
-        axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/')
+        axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/')
             .then(response => {
                 console.log(response.data);
 			if(this.state.currentUser.token.role === 'admin'){
@@ -189,7 +189,7 @@ export default class ListUser extends Component {
                                 <td>
                                         <center><button className="actionBtn" onClick={() => { 
                                                     if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this user?'))
-                                                    axios.get('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
+                                                    axios.get('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/'+deleteRoute+'/'+user._id).then(() => window.location.reload()) } }>
                                                     {deleteToggle}
                                                     <img src={close}></img>
                                     </button>&nbsp;
@@ -197,7 +197,7 @@ export default class ListUser extends Component {
                                     
                                     <a href={"mailto:"+user.email}><button className="actionBtn">Email <img src={mail}></img></button> </a>
                                     <button className="actionBtn" onClick={() => { 
-                                                    axios.post('https://'+process.env.REACT_APP_AWS_IP+':4000/admin/send-email-staff/', {email: user.email}).then(() => window.alert("Email Sent!")) } }>
+                                                    axios.post('https://'+process.env.REACT_APP_BACKEND_IP+'/admin/send-email-staff/', {email: user.email}).then(() => window.alert("Email Sent!")) } }>
                                                     Send Password Reset Email
                                                     <img src={mail}></img>
                                     </button>&nbsp;
