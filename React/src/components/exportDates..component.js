@@ -351,7 +351,7 @@ export default class ListTrainee extends Component {
                         </ModalBody>
                     </Modal>
                     <div id="addUser">
-                        <CSVLink className="link" data={output} filename='CSV-Report.csv'><button className="qabtn">Download CSV Template<img src={download}></img></button></CSVLink>
+                        <CSVLink className="link" data={output} filename='CSV-Report.csv'><button className="qabtn">Download CSV<img src={download}></img></button></CSVLink>
                     </div>
                     <Collapse in={this.state.filterBoolean}>
                     <p>
@@ -455,7 +455,7 @@ export default class ListTrainee extends Component {
                             </ModalBody>
                         </Modal>
                         <div id="addUser">
-                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV template <img src={download}></img></CSVLink></button>
+                            <CSVLink className="link" data={output} filename='CSV-Report.csv'><button className="qabtn">CSV Template <img src={download}></img></button></CSVLink>
                             <CSVLink className="link" data={out} filename='CSV.csv'><button className="qabtn">Download CSV<img src={download}></img></button></CSVLink>
                         </div>
                         <Collapse in={this.state.filterBoolean}>
