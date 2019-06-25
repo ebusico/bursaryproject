@@ -60,6 +60,8 @@ traineeRoutes.route('/', requireAuth, AuthenticationController.roleAuthorization
                 currentTrainee.trainee_end_date = bytes.toString(CryptoJS.enc.Utf8);
                 bytes = CryptoJS.AES.decrypt(currentTrainee.trainee_days_worked, '3FJSei8zPx');
                 currentTrainee.trainee_days_worked = bytes.toString(CryptoJS.enc.Utf8);
+                currentTrainee.trainee_bench_start_date = CryptoJS.AES.decrypt(currentTrainee.trainee_bench_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
+                currentTrainee.trainee_bench_end_date = CryptoJS.AES.decrypt(currentTrainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8);
                 currentTrainee.monthly_expenses.map(expense => {
                     //console.log(expense);
                     expense.expenseType = CryptoJS.AES.decrypt(expense.expenseType,'3FJSei8zPx').toString(CryptoJS.enc.Utf8);

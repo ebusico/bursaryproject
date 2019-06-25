@@ -27,6 +27,7 @@ export default class ListTrainee extends Component {
             splitDays:[],
             currentUser: authService.currentUserValue,
             csv: '',
+            csvN:'',
             modal: false,
             filterBoolean: false,
             searchString: "",
@@ -178,6 +179,7 @@ export default class ListTrainee extends Component {
         let search = this.state.selectedDays;
         let splitDays = this.state.splitDays;
         let output = this.state.csv;
+        let out = this.state.csvN;
         let role = this.state.currentUser.token.role;
         let searchString = this.state.searchString.trim().toLowerCase().replace(/\s+/g, '');
         let filter = this.state.filter;
@@ -254,17 +256,28 @@ export default class ListTrainee extends Component {
 
 
         if(role === 'finance'){
-			output = [];
+            output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place", "Append", "Data to Copy to Clipboard"]];
+            out = [];
+            
             trainees.map( t => {
-                output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place", "Append", "Data to Copy to Clipboard"]]
-                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
+                let totalexpenses = 0;
+                t.monthly_expenses.map(expense => {
+                    totalexpenses = +totalexpenses + +Number(expense.amount).toFixed(2);
+                })
+                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2),"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2)+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
+                var old = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2),"BURSARY","99"];
                     output.push(obj);
+                    out.push(old);
                 }
             )
         }else if(role === 'admin'){
-            output = [["First Name", "Last Name", "Bursary", "Days Worked", "Bursary Amount", "Expenses total for month","Total payment for month", "Start-Date", "End-Date", "Bench start", "Bench end", "Bench or training"]];
+            output = [["First Name", "Last Name", "Bursary", "Days Worked", "Bursary Amount", "Expenses total for month","Total payment for month", "Start-Date", "End-Date", "Bench start", "Bench end"]];
             trainees.map( t => {
-                    var obj = [t.trainee_fname, t.trainee_lname, t.bursary, t.trainee_days_worked,t.bursary_amount, t.trainee_days_worked,"0", t.bursary_amountt.trainee_days_worked+t.monthly_expenses, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY'), moment(t.trainee_bench_start_date).format('MMMM Do YYYY'), moment(t.trainee_bench_end_date).format('MMMM Do YYYY'), t.bursary];
+                    let totalexpenses = 0;
+                    t.monthly_expenses.map(expense => {
+                        totalexpenses = +totalexpenses + +Number(expense.amount).toFixed(2);
+                    })
+                    var obj = [t.trainee_fname, t.trainee_lname, t.bursary, t.trainee_days_worked,t.bursary_amount, t.monthly_expenses.length, Number((t.bursary_amount*t.trainee_days_worked)+totalexpenses).toFixed(2), moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY'), moment(t.trainee_bench_start_date).format('MMMM Do YYYY'), moment(t.trainee_bench_end_date).format('MMMM Do YYYY')];
                     output.push(obj);
                 }
             )
@@ -338,7 +351,7 @@ export default class ListTrainee extends Component {
                         </ModalBody>
                     </Modal>
                     <div id="addUser">
-                        <CSVLink className="link" data={output} filename='CSV-Report.csv'><button className="qabtn">Download CSV <img src={download}></img></button></CSVLink>
+                        <CSVLink className="link" data={output} filename='CSV-Report.csv'><button className="qabtn">Download CSV Template<img src={download}></img></button></CSVLink>
                     </div>
                     <Collapse in={this.state.filterBoolean}>
                     <p>
@@ -442,7 +455,8 @@ export default class ListTrainee extends Component {
                             </ModalBody>
                         </Modal>
                         <div id="addUser">
-                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV <img src={download}></img></CSVLink></button>
+                            <button className="qabtn"><CSVLink className="link" data={output} filename='CSV-Report.csv'>Download CSV template <img src={download}></img></CSVLink></button>
+                            <CSVLink className="link" data={out} filename='CSV.csv'><button className="qabtn">Download CSV<img src={download}></img></button></CSVLink>
                         </div>
                         <Collapse in={this.state.filterBoolean}>
                         <p>
