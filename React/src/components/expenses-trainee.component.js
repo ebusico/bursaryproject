@@ -29,7 +29,7 @@ export default class TraineeExpenses extends Component {
     onSave = () => {
     
     
-        axios.post('https://' + process.env.REACT_APP_BACKEND_IP + '/admin/expenses/'+this.props.match.params.id, {expenseType: this.state.expenseType, amount: this.state.monthly_expenses })
+        axios.post('https://' + process.env.REACT_APP_BACKEND_IP + '/admin/expenses/'+this.props.match.params.id, {expenseType: this.state.expenseType, amount: Number(this.state.monthly_expenses).toFixed(2) })
         .then(res => {
             console.log(res.data);
             window.location.reload();

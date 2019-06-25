@@ -85,7 +85,7 @@ export default class CostReport extends Component {
                         let expenses = 0;
                         console.log(reportTrainee.monthly_expenses)
                         reportTrainee.monthly_expenses.map(expense =>{
-                            expenses += parseInt(expense.amount);
+                            expenses += +Number(expense.amount).toFixed(2);
                         })
                         if(reportTrainee.status === 'Pending'|| reportTrainee.status === 'Incomplete'){
                             await pending++
@@ -121,10 +121,18 @@ export default class CostReport extends Component {
                         console.log("DATA")
                         console.log(data)
                         if(reportTrainee.status === 'Training'||reportTrainee.status === 'Bench'){
+                            let traineeExpenses = 0;
+                            if(reportTrainee.monthly_expenses !== undefined){
+                                reportTrainee.monthly_expenses.map(expense => {
+                                    console.log(expense.amount);
+                                    traineeExpenses = +traineeExpenses + +Number(expense.amount).toFixed(2);
+                                    console.log(traineeExpenses);
+                                })
+                            }
                             totalDays = totalDays + parseInt(reportTrainee.trainee_days_worked)
                             console.log(reportTrainee.bursary_amount)
                             traineeAmount = reportTrainee.trainee_days_worked*reportTrainee.bursary_amount
-                            totalAmount = totalAmount + traineeAmount
+                            totalAmount = totalAmount + traineeAmount + traineeExpenses
                             console.log(this.state.values.status)
                         }
                         this.setState({
@@ -301,6 +309,12 @@ export default class CostReport extends Component {
                     status: response.data.status,
                 })
                 response.data.reportTrainees.map(async reportTrainee =>{
+                    let expenses = 0;
+                    reportTrainee.monthly_expenses.map(expense =>{
+                        console.log(Number(expense.amount).toFixed(2));
+                        expenses += +Number(expense.amount).toFixed(2);
+                        console.log(expenses);
+                    })
                     if(reportTrainee.status === 'Pending'|| reportTrainee.status === 'Incomplete'){
                         await pending++
                     }
@@ -316,27 +330,53 @@ export default class CostReport extends Component {
                         await bench++
                     }
                     let data = this.state.trainee_data
-                    let trainee_row = {
-                        name: reportTrainee.trainee_fname +' '+reportTrainee.trainee_lname,
-                        email: reportTrainee.trainee_email,
-                        displayStart: moment(reportTrainee.trainee_start_date).format('DD/MM/YYYY'),
-                        start: reportTrainee.trainee_start_date,
-                        recruitedBy: reportTrainee.added_By,
-                        status: reportTrainee.status,
-                        days: reportTrainee.trainee_days_worked,
-                        bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
-                        expenses : 0,
-                        totalMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked
+                    let trainee_row;
+                    if(moment().format('MMMM YYYY') === response.data.month){
+                        trainee_row = {
+                            name: reportTrainee.trainee_fname +' '+reportTrainee.trainee_lname,
+                            email: reportTrainee.trainee_email,
+                            displayStart: moment(reportTrainee.trainee_start_date).format('DD/MM/YYYY'),
+                            start: reportTrainee.trainee_start_date,
+                            recruitedBy: reportTrainee.added_By,
+                            status: reportTrainee.status,
+                            days: reportTrainee.trainee_days_worked,
+                            bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
+                            expenses : expenses,
+                            totalMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked +expenses
+                        }
+                    }else{
+                        trainee_row = {
+                            name: reportTrainee.trainee_fname +' '+reportTrainee.trainee_lname,
+                            email: reportTrainee.trainee_email,
+                            displayStart: moment(reportTrainee.trainee_start_date).format('DD/MM/YYYY'),
+                            start: reportTrainee.trainee_start_date,
+                            recruitedBy: reportTrainee.added_By,
+                            status: reportTrainee.status,
+                            days: reportTrainee.trainee_days_worked,
+                            bursary:{amountDay: reportTrainee.bursary_amount, amountMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked,},
+                            expenses : 0,
+                            totalMonth: reportTrainee.bursary_amount*reportTrainee.trainee_days_worked
+                        }
                     }
                     data.push(trainee_row)
                     this.setState({
                         trainee_data: data
                     })
                     if(reportTrainee.status === 'Training'||reportTrainee.status === 'Bench'){
+                        let traineeExpenses = 0;
+                        if(moment().format('MMMM YYYY') === response.data.month){
+                            if (reportTrainee.monthly_expenses !== undefined) {
+                                reportTrainee.monthly_expenses.map(expense => {
+                                    console.log(expense.amount);
+                                    traineeExpenses = +traineeExpenses + +Number(expense.amount).toFixed(2);
+                                    console.log(traineeExpenses);
+                                })
+                            }
+                        }
                         totalDays = totalDays + parseInt(reportTrainee.trainee_days_worked)
                         console.log(reportTrainee.bursary_amount)
                         traineeAmount = reportTrainee.trainee_days_worked*reportTrainee.bursary_amount
-                        totalAmount = totalAmount + traineeAmount
+                        totalAmount = totalAmount + traineeAmount + traineeExpenses
                         console.log("STATUS"+this.state.values.status)
                     }
                     this.setState({
@@ -518,7 +558,7 @@ export default class CostReport extends Component {
                     <tbody>                          
                             <tr>
                                 &nbsp;&nbsp;<th>Status:</th><td>{this.state.values.status}</td>&nbsp;&nbsp;
-                                <th>Amount Payable:</th><td>£{this.state.values.amountPayable}</td>&nbsp;&nbsp;
+                                <th>Amount Payable:</th><td>£{Number(this.state.values.amountPayable).toFixed(2)}</td>&nbsp;&nbsp;
                                 <th>Trainees in training:</th><td>{this.state.values.training_number}</td>&nbsp;&nbsp;
                                 <th>Trainees on bench:</th><td>{this.state.values.bench_number}</td>&nbsp;&nbsp;
                                 <th>Pending trainees:</th><td>{this.state.values.pending_number}</td>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -628,36 +668,36 @@ export default class CostReport extends Component {
                         {
                         Header: () => <div><strong>Bursary this month</strong></div>,
                         accessor: "bursary",
-                        Cell: row =>(<span>£{row.row.bursary.amountMonth}</span>),
+                        Cell: row =>(<span>£{Number(row.row.bursary.amountMonth).toFixed(2)}</span>),
                         width: 200,
                         Footer: () => {    
                             let total = 0
                             trainees.map(t => {
                                 total += t.bursary.amountMonth
                             })
-                            return 'Total: £' + total}
+                            return 'Total: £' + Number(total).toFixed(2)}
                         },
                         {
                         Header: () => <div><strong>Expenses</strong></div>,
                         accessor: "expenses",
-                        Cell: row =>(<div>£{row.value}</div>),
+                        Cell: row =>(<div>£{Number(row.value).toFixed(2)}</div>),
                         Footer: () => {    
                             let total = 0
                             trainees.map(t => {
-                                total += parseInt(t.expenses)
+                                total += +Number(t.expenses).toFixed(2)
                             })
-                            return 'Total: £' + total}
+                            return 'Total: £' + Number(total).toFixed(2)}
                         },
                         {
                         Header: () => <div><strong>Payment this month</strong></div>,
                         accessor: "totalMonth",
-                        Cell: row =>(<div>£{row.value}</div>),
+                        Cell: row =>(<div>£{Number(row.value).toFixed(2)}</div>),
                         Footer: () => {    
                             let total = 0
                             trainees.map(t => {
                                 total += t.totalMonth
                             })
-                            return 'Total: £' + total}
+                            return 'Total: £' + Number(total).toFixed(2)}
                         }
                         
                     ]}

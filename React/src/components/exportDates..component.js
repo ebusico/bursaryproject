@@ -252,19 +252,19 @@ export default class ListTrainee extends Component {
             }
         }
 
+
         if(role === 'finance'){
 			output = [];
             trainees.map( t => {
-                if(t.status === "Active" && t.bursary === "True"){
-                    var obj = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,t.bursary_amount*t.trainee_days_worked+".00","BURSARY","99"];
-                        output.push(obj);
-                }    
+                output = [["Trainee/Payee Name", "Account Number", "Sort Code", "Total Value", "Decimal Place", "Append", "Data to Copy to Clipboard"]]
+                var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,t.bursary_amount*t.trainee_days_worked,"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+t.bursary_amount*t.trainee_days_worked+".00"+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
+                    output.push(obj);
                 }
             )
         }else if(role === 'admin'){
-            output = [["First Name", "Last Name", "Email", "Start-Date", "End-Date"]];
+            output = [["First Name", "Last Name", "Bursary", "Days Worked", "Bursary Amount", "Expenses total for month","Total payment for month", "Start-Date", "End-Date", "Bench start", "Bench end", "Bench or training"]];
             trainees.map( t => {
-                    var obj = [t.trainee_fname, t.trainee_lname, t.trainee_email, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY')];
+                    var obj = [t.trainee_fname, t.trainee_lname, t.bursary, t.trainee_days_worked,t.bursary_amountt.trainee_days_worked,"0", t.bursary_amountt.trainee_days_worked+t.monthly_expenses, moment(t.trainee_start_date).format('MMMM Do YYYY'), moment(t.trainee_end_date).format('MMMM Do YYYY'), moment(t.trainee_bench_start_date).format('MMMM Do YYYY'), moment(t.trainee_bench_end_date).format('MMMM Do YYYY'), t.bursary];
                     output.push(obj);
                 }
             )

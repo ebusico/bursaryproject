@@ -285,7 +285,7 @@ export default class ListTrainee extends Component {
                                 <th><center>Status</center></th>
                                 <th>Recruited By</th>
                                 <th><center>Bursary</center></th>
-                                <th><center>Payment This Month (£)</center></th>
+                                <th><center>Payment This Month</center></th>
                                 <th><center>Action</center></th>
                             </tr>
                         </thead>               
@@ -293,6 +293,10 @@ export default class ListTrainee extends Component {
                             {trainees.map(t => {
                                 let deleteToggle = '';
                                 let deleteRoute = '';
+                                let expenses = 0;
+                                t.monthly_expenses.map(expense =>{
+                                    expenses += +Number(expense.amount).toFixed(2);
+                                })
                                 if(t.status === "Suspended"){
                                     deleteToggle = "Reactivate";
                                     deleteRoute = "reactivate";
@@ -308,7 +312,7 @@ export default class ListTrainee extends Component {
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.status}</center></td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> {t.added_By}</td>
                                         <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary}</center></td>
-                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
+                                        <td onClick={() => window.location.href = "/editDates/" + t._id}> <center>£{Number(t.bursary_amount * t.trainee_days_worked + expenses).toFixed(2)}</center></td>
                                             <td>
                                             <center><button className="actionBtn" onClick={() => { 
                                                                 if (window.confirm('Are you sure you wish to '+deleteToggle.toLowerCase()+' this trainee?'))
@@ -382,12 +386,16 @@ export default class ListTrainee extends Component {
                             <th>Last Name</th>
                             <th><center>Status</center></th>
                             <th><center>Bursary</center></th>
-                            <th><center>Payment This Month (£)</center></th>
+                            <th><center>Payment This Month</center></th>
                             <th><center>Action</center></th>
                         </tr>
                     </thead>               
                     <tbody>
                         {trainees.map(t => {
+                            let expenses = 0;
+                            t.monthly_expenses.map(expense => {
+                                expenses += +Number(expense.amount).toFixed(2);
+                            })
 							if(this.state.currentUser.token.role === 'finance'){
                                 if(t.status != "Suspended"){
                                     return (
@@ -396,7 +404,7 @@ export default class ListTrainee extends Component {
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> {t.trainee_lname}</td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.status}</center></td>
                                             <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary}</center></td>
-                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{t.bursary_amount * t.trainee_days_worked}</center></td>
+                                            <td onClick={() => window.location.href = "/trainee-details/" + t._id}> <center>{Number(t.bursary_amount * t.trainee_days_worked + expenses).toFixed(2)}</center></td>
                                             <td> 
                                                 <center>
                                                 <button className="actionBtn" onClick={() => window.location.href = "/trainee-details/" + t._id}> View Details <img src={eye}></img></button>&nbsp;
