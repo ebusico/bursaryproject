@@ -266,8 +266,10 @@ export default class ListTrainee extends Component {
                 })
                 var obj = [t.trainee_fname+' '+t.trainee_lname, t.trainee_account_no, t.trainee_sort_code,Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2),"2","00","\""+"\""+t.trainee_sort_code+"\""+"\""+','+"\""+"\""+t.trainee_fname+' '+t.trainee_lname+"\""+"\""+','+"\""+"\""+t.trainee_account_no+"\""+"\""+','+"\""+"\""+Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2)+"\""+"\""+','+"\""+"\""+"BURSARY"+"\""+"\""+','+"\""+"\""+"99"+"\""+"\""];
                 var old = [t.trainee_sort_code,t.trainee_fname+' '+t.trainee_lname,t.trainee_account_no,Number(t.bursary_amount*t.trainee_days_worked + totalexpenses).toFixed(2),"BURSARY","99"];
+                if(t.status === 'Active'){
                     output.push(obj);
                     out.push(old);
+                }
                 }
             )
         }else if(role === 'admin'){
