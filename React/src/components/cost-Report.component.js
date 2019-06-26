@@ -305,8 +305,7 @@ export default class CostReport extends Component {
                 let bench = 0;
                 let pending = 0;
                 this.setState({
-                    date: response.data.month,
-                    status: response.data.status,
+                    date: response.data.month
                 })
                 response.data.reportTrainees.map(async reportTrainee =>{
                     let expenses = 0;
@@ -386,7 +385,8 @@ export default class CostReport extends Component {
                             daysPayable: totalDays,
                             bench_number: bench,
                             training_number: training,
-                            pending_number: pending
+                            pending_number: pending,
+                            status: response.data.status
                         }
                     });
                 })
