@@ -18,13 +18,14 @@ let Trainee = require('../models/trainee.model');
 let User = require('../models/staff');
 
 //Will start after 1am on the first every month
-const onceMonth = new CronJob('0 1 1 * *', function() {
+const onceMonth = new CronJob('* * * * * ', function() {
 	winston.info('Cron Job for Trainee working days for current month updated (automatic)');
 	console.log("Cron Job has started");
-    Trainee.find(function(err, trainee) {
-      trainee.map(async function(trainee){
+    Trainee.find(function(err, trainees) {
+      trainees.map(async function(trainee){
+		let logger = databaseLogger.createLogger(trainee.trainee_email);
         if(!trainee){
-            res.status(404).send("trainee is not found");
+			console.log("trainee is not found");
             logger.error("Trainee not found");
             winston.error("Trainee not found");
         }else{
@@ -46,7 +47,7 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
             if(bursary == "False"){
                 trainee.trainee_days_worked = 0;
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
+                    console.log('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(bench_end, "month")){
@@ -55,38 +56,35 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
                 console.log("same start end month, days:" + workedDays);
                 trainee.trainee_days_worked = workedDays;
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(currentMonth.isBefore(bursary_start, 'month')){
                 console.log("Bursary starting in July, 0 days");
                 trainee.trainee_days_worked = 0
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
-            }else if(bursary_start.isSame(currentMonth, 'month')&&bench_end.isSame(currentMonth, 'month')){ 
-                let bankHolidays = 0; 
-                if(bank === true){ 
-                    bankHolidays = england.holidays(bursary_start,bench_end).length 
-                    console.log(bankHolidays); 
-                } 
-                let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD");
-                let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
-                let workedDays = moment(start).businessDiff(end) - bankHolidays; 
-                console.log('current month is start date month, days worked: ' + workedDays); 
-                console.log(start); 
-                console.log(end); 
-                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString(); 
-                trainee.save().then(trainee => { 
-                    res.json('Days worked updated!'); 
-                    logger.info("Trainee working days for current month updated (automatic)") 
-            })
+            }else if(bursary_start.isSame(currentMonth, 'month')&&bench_end.isSame(currentMonth, 'month')){
+                let bankHolidays = 0;
+                if(bank === true){
+                    bankHolidays = england.holidays(bursary_start,bench_end).length
+                    console.log(bankHolidays);
+                }
+                let start = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_start_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
+                let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD");
+                let workedDays = moment(start).businessDiff(end) - bankHolidays;
+                console.log('current month is start date month, days worked: ' + workedDays);
+                console.log(start);
+                console.log(end);
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();
+                trainee.save().then(trainee => {
+                    logger.info("Trainee working days for current month updated (automatic)")
+					console.log(trainee.trainee_days_worked + ' DAYS')
+                })
             }else if(currentMonth.isAfter(bench_end, 'month')){
                 console.log("Bursary ending in April, 0 days");
                 trainee.trainee_days_worked = 0
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
             }else if(bursary_start.isSame(currentMonth, 'month')){
@@ -97,10 +95,10 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
                 console.log('current month is start date month, days worked: ' + workedDays);
 				console.log(start);
 				console.log(end);
-                trainee.trainee_days_worked = workedDays;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();;
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)")
+					console.log(trainee.trainee_days_worked + ' WEEEEEEKKS')
                 })
             }else if(bench_end.isSame(currentMonth, "month")){
 				let bankHolidays = england.holidays(currentMonth.startOf('month'),bench_end).length
@@ -108,9 +106,8 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
                 let end = moment(moment(CryptoJS.AES.decrypt(trainee.trainee_bench_end_date, '3FJSei8zPx').toString(CryptoJS.enc.Utf8)).toDate(), "YYYY-MM-DD"); 
                 let workedDays = 1 + moment(start).businessDiff(end) - bankHolidays;
                 console.log('current month is end date month, days:' + workedDays);
-                trainee.trainee_days_worked = workedDays;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();;
                 trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)")
                 })
             }
@@ -122,9 +119,8 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
 				console.log(end);
 				let workedDays = moment(start).businessDiff(end) - bankHolidays;
                 console.log("All days: "+workedDays);
-				trainee.trainee_days_worked = workedDays;
+				trainee.trainee_days_worked = CryptoJS.AES.encrypt(workedDays.toString(), '3FJSei8zPx').toString();;
 					trainee.save().then(trainee => {
-                    res.json('Days worked updated!');
 					winston.info("Trainee working days for current month updated (automatic)");
                     logger.info("Trainee working days for current month updated (automatic)");
                 })

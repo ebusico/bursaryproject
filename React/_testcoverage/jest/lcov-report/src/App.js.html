@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/App.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\prettify.css" />
+    <link rel="stylesheet" href="..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\index.html">All files</a> / <a href="index.html">src</a> App.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">28.57% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">16.67% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">28.57% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/7</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+import React, { Component } from 'react';
+import './App.css';
+import Nav from './Navigation.js'
+import { BrowserRouter as Router, Route} from "react-router-dom";
+&nbsp;
+import CreateTrainee from "./components/create-trainee.component";
+import EditTrainee from "./components/edit-trainee.component";
+import ListTrainee from "./components/list-trainee.component";
+import TabFinance from "./components/tab-finance.component";
+import SystemLogs from "./components/SystemLogs.component";
+import TraineeSettings from "./components/TraineeSettings.component";
+&nbsp;
+import ChangePassword from "./components/change-password-trainee.component";
+import TraineeDetails from "./components/trainee-details.component";
+import Login from "./components/login.component";
+import TabList from "./components/tab-list.component";
+import {authService} from "./components/modules/authService";
+import AddUser from "./components/create-user.component";
+import ChangePasswordStaff from './components/change-password-staff.component';
+import EditDates from './components/edit-dates.component';
+import { CookieBanner } from '@palmabit/react-cookie-law';
+import {codes} from './secrets/secrets';
+import ForgotPass from "./components/forgot-password.component";
+import UserRecord from "./components/user-history.component";
+import Privacy from "./components/priv-notice.component";
+import TraineeExpenses from "./components/expenses-trainee.component";
+import "./css/Login.css";
+import StaffPassword from './components/admin-staff-password';
+import PasswordStaff from './components/admin-staff-password';
+&nbsp;
+&nbsp;
+class App extends Component {
+  render() {
+	  <span class="missing-if-branch" title="else path not taken" >E</span>if (!authService.currentUserValue){
+    return (
+       &lt;Router&gt;    
+        &lt;div className="App"&gt;
+          &lt;Nav/&gt;
+        &lt;/div&gt;
+		&lt;Route path="/system_logs" component={Login} /&gt;
+        &lt;Route path="/admin" component={Login} /&gt;
+        &lt;Route path="/edit/:id" component={Login} /&gt;
+        &lt;Route path="/create" component={Login} /&gt;
+        &lt;Route path="/changePassword/:token" component={ChangePassword} /&gt;
+        &lt;Route path="/trainee-details/:id" component={Login} /&gt;
+		&lt;Route path="/login" component={Login} /&gt;
+        &lt;Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} /&gt;
+        &lt;Route path="/" exact component={Login} /&gt;
+		&lt;Route path="/addUser" component={Login} /&gt;
+    &lt;Route path="/editDates/:id" component={Login} /&gt;
+    &lt;Route path="/forgotPassword" component={ForgotPass} /&gt;
+      &lt;/Router&gt;    
+    );
+  }
+  else <span class="cstat-no" title="statement not covered" >if(authService.currentUserValue.token.role === 'admin'){</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;Router&gt;    
+         &lt;div className="App"&gt;
+           &lt;Nav/&gt;
+         &lt;/div&gt;
+		 &lt;Route path="/system_logs" component={SystemLogs} /&gt;
+         &lt;Route path="/admin" component={TabList} /&gt;
+         &lt;Route path="/edit/:id" component={EditTrainee} /&gt;
+         &lt;Route path="/create" component={CreateTrainee} /&gt;
+         &lt;Route path="/changePassword/:token" component={ChangePassword} /&gt;
+         &lt;Route path="/trainee-details/:id" component={TraineeDetails} /&gt;
+         &lt;Route path="/login" component={Login} /&gt;
+         &lt;Route path="/" exact component={TabList} /&gt;
+         &lt;Route path="/addUser" component={AddUser} /&gt;
+         &lt;Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} /&gt;
+         &lt;Route path="/editDates/:id" component={EditDates} /&gt;
+         &lt;Route path="/history/:id" component={UserRecord} /&gt;
+         &lt;Route path="/trainee-settings" component={TraineeSettings}/&gt;
+         &lt;Route path="/expenses/:id" component={TraineeExpenses} /&gt;
+         &lt;Route path="/update-mypassword-staff/:id" component={PasswordStaff} /&gt;
+&nbsp;
+         &lt;div data-keyboard="false"&gt;
+           &lt;Privacy/&gt;
+         &lt;/div&gt;
+       &lt;/Router&gt;  
+     );
+  }else <span class="cstat-no" title="statement not covered" >if(authService.currentUserValue.token.role === 'recruiter'){</span>
+<span class="cstat-no" title="statement not covered" >	  return (</span>
+	   &lt;Router&gt;    
+        &lt;div className="App"&gt;
+          &lt;Nav/&gt;
+        &lt;/div&gt;
+		&lt;Route path="/system_logs" component={ListTrainee} /&gt;
+        &lt;Route path="/admin" component={ListTrainee} /&gt;
+        &lt;Route path="/edit/:id" component={EditTrainee} /&gt;
+        &lt;Route path="/create" component={CreateTrainee} /&gt;
+        &lt;Route path="/changePassword/:token" component={ChangePassword} /&gt;
+        &lt;Route path="/trainee-details/:id" component={TraineeDetails} /&gt;
+		    &lt;Route path="/login" component={Login} /&gt;
+        &lt;Route path="/" exact component={ListTrainee} /&gt;
+		    &lt;Route path="/addUser" component={AddUser} /&gt;
+        &lt;Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} /&gt;
+        &lt;Route path="/editDates/:id" component={EditDates} /&gt;
+        &lt;div data-keyboard="false"&gt;
+          &lt;Privacy/&gt;
+        &lt;/div&gt;
+      &lt;/Router&gt;  
+	  );
+  } else{
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;Router&gt;    
+         &lt;div className="App"&gt;
+           &lt;Nav/&gt;
+         &lt;/div&gt;
+		 &lt;Route path="/system_logs" component={TabList} /&gt;
+         &lt;Route path="/admin" component={TabList} /&gt;
+         &lt;Route path="/edit/:id" component={EditTrainee} /&gt;
+         &lt;Route path="/create" component={CreateTrainee} /&gt;
+         &lt;Route path="/changePassword/:token" component={ChangePassword} /&gt;
+         &lt;Route path="/trainee-details/:id" component={TraineeDetails} /&gt;
+         &lt;Route path="/login" component={Login} /&gt;
+         &lt;Route path="/" exact component={TabFinance} /&gt;
+         &lt;Route path="/addUser" component={AddUser} /&gt;
+         &lt;Route path="/changePasswordStaff/:token" component={ChangePasswordStaff} /&gt;
+         &lt;Route path="/editDates/:id" component={Login} /&gt;
+         &lt;Route path="/update-mypassword-staff/:id" component={PasswordStaff} /&gt;
+         &lt;div data-keyboard="false"&gt;
+           &lt;Privacy/&gt;
+         &lt;/div&gt;
+       &lt;/Router&gt;  
+     );
+  }
+ }
+}
+&nbsp;
+export default App;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jun 27 2019 10:26:01 GMT+0100 (British Summer Time)
+</div>
+</div>
+<script src="..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\sorter.js"></script>
+</body>
+</html>

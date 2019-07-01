@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/Navigation.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\prettify.css" />
+    <link rel="stylesheet" href="..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\index.html">All files</a> / <a href="index.html">src</a> Navigation.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>7/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.29% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">22.22% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>7/28</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+import logo from './QA_logo.png';
+&nbsp;
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  Button,
+  NavLink
+} from 'reactstrap';
+import { authService } from "./components/modules/authService";
+import axios from 'axios';
+import './css/navigation.css';
+import TopNavBar from './components/topNavBar.component.js';
+&nbsp;
+export default class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+&nbsp;
+    this.logout = this.logout.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false,
+      currentUser: authService.currentUserValue,
+      token: '',
+      id: '',
+      staff_fname: '',
+	  staff_lname: '',
+      trainee_fname: '',
+      trainee_lname: ''
+    };
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  to</span>ggle() {
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      isOpen: !this.state.isOpen
+    });
+  }
+&nbsp;
+  //Display user
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
+    // if not logged in no name will be displaed
+<span class="cstat-no" title="statement not covered" >    if (!authService.currentUserValue) {</span>
+<span class="cstat-no" title="statement not covered" >      return null</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      console.log("token id is: "+ this.state.currentUser.token._id);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(this.state.currentUser);</span>
+<span class="cstat-no" title="statement not covered" >      axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/trainee/' + this.state.currentUser.token._id)</span>
+        .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; {
+<span class="cstat-no" title="statement not covered" >          console.log(response);</span>
+<span class="cstat-no" title="statement not covered" >          if (response.data == null) {</span>
+<span class="cstat-no" title="statement not covered" >            axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/admin/staff/' + this.state.currentUser.token._id)</span>
+              .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; {
+<span class="cstat-no" title="statement not covered" >                if(response.data == null){</span>
+<span class="cstat-no" title="statement not covered" >                  authService.logout();</span>
+<span class="cstat-no" title="statement not covered" >                  if (!authService.currentUserValue) {</span>
+<span class="cstat-no" title="statement not covered" >                    document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';</span>
+                  }
+                }
+                else{
+<span class="cstat-no" title="statement not covered" >                  this.setState({</span>
+                    staff_fname: response.data.fname,
+					staff_lname: response.data.lname
+                  })
+                }
+              })
+          } else {
+<span class="cstat-no" title="statement not covered" >            this.setState({</span>
+              trainee_fname: response.data.trainee_fname,
+              trainee_lname: response.data.trainee_lname
+            })
+          }
+        })
+        .catch(<span class="fstat-no" title="function not covered" >fu</span>nction (error) {
+<span class="cstat-no" title="statement not covered" >          console.log(error);</span>
+        })
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  lo</span>gin() {
+<span class="cstat-no" title="statement not covered" >    document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';</span>
+  }
+<span class="fstat-no" title="function not covered" >  lo</span>gout() {
+<span class="cstat-no" title="statement not covered" >    authService.logout();</span>
+<span class="cstat-no" title="statement not covered" >    if (!authService.currentUserValue) {</span>
+<span class="cstat-no" title="statement not covered" >      document.location.href = 'https://' + process.env.REACT_APP_AWS_IP + '/login';</span>
+    }
+&nbsp;
+  }
+  render() {
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (authService.currentUserValue) {
+<span class="cstat-no" title="statement not covered" >      return (</span>
+        &lt;div id='bar'&gt;
+		&lt;div id="navigation-bar"&gt;
+          &lt;Navbar color="light" light expand="md"&gt;
+            &lt;NavbarBrand href="/login"&gt;&lt;img src={logo} alt="QA logo" width="60px" /&gt;&lt;/NavbarBrand&gt;
+                      &lt;NavbarToggler onClick={this.toggle} /&gt;
+                      &lt;TopNavBar pageWrapId={"navigation-bar"} outerContainerId={"bar"} /&gt;
+            &lt;Collapse isOpen={this.state.isOpen} navbar&gt;
+              &lt;Nav className="ml-auto" navbar&gt;
+                &lt;NavItem className="display_name"&gt;Logged in as: {this.state.trainee_fname} {this.state.trainee_lname} {this.state.staff_fname} {this.state.staff_lname}  |  &lt;/NavItem&gt;
+                &lt;NavItem&gt;
+                  &lt;Button id="logoutBtn" onClick={this.logout} href='/login'&gt;
+                    Logout
+                  &lt;/Button&gt;
+                &lt;/NavItem&gt;
+              &lt;/Nav&gt;
+            &lt;/Collapse&gt;
+          &lt;/Navbar&gt;
+		 &lt;/div&gt;
+		&lt;/div&gt;
+      );
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (!authService.currentUserValue) {
+      return (
+        &lt;div id="navigation-bar"&gt;
+          &lt;Navbar color="light" light expand="md"&gt;
+            &lt;NavbarBrand href="/"&gt;&lt;img src={logo} width="60px" /&gt;
+			&lt;/NavbarBrand&gt;
+            &lt;NavbarToggler onClick={this.toggle} /&gt;
+            &lt;Collapse isOpen={this.state.isOpen} navbar&gt;
+              &lt;Nav className="ml-auto" navbar&gt;
+                &lt;Button id="loginBtn" onClick={this.login} href='/login'&gt;
+                  Login
+                &lt;/Button&gt;
+              &lt;/Nav&gt;
+            &lt;/Collapse&gt; 
+          &lt;/Navbar&gt;
+        &lt;/div&gt;
+      );
+&nbsp;
+    }
+  }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jun 27 2019 10:26:01 GMT+0100 (British Summer Time)
+</div>
+</div>
+<script src="..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\sorter.js"></script>
+</body>
+</html>

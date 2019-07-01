@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/TraineeSettings.component.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/components</a> TraineeSettings.component.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/24</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react';
+import axios from 'axios';
+import AccessDenied from './modules/AccessDenied';
+import { authService } from './modules/authService';
+import '../css/edit-list-trainee.css';
+import '../css/global-settings.css';
+&nbsp;
+export default class TraineeSettings extends Component{
+<span class="fstat-no" title="function not covered" >    co</span>nstructor(props){
+<span class="cstat-no" title="statement not covered" >        super(props)</span>
+<span class="cstat-no" title="statement not covered" >        this.state = {</span>
+            bank_holidays: false,
+            bursary_amount: "30",
+            apply_old: false
+        }
+<span class="cstat-no" title="statement not covered" >        this.onClickBankHolidays = this.onClickBankHolidays.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >        this.onChangeBursaryAmount = this.onChangeBursaryAmount.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >        this.onClickApplyOld = this.onClickApplyOld.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >        this.onSubmit = this.onSubmit.bind(this);</span>
+    }
+<span class="fstat-no" title="function not covered" >    co</span>mponentDidMount(){
+<span class="cstat-no" title="statement not covered" >        axios.get('https://' + process.env.REACT_APP_BACKEND_IP + '/settings/').then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt;{</span>
+<span class="cstat-no" title="statement not covered" >            console.log(response.data);</span>
+<span class="cstat-no" title="statement not covered" >            this.setState({bank_holidays: response.data.pay_bank_holidays,</span>
+                            bursary_amount: response.data.default_bursary});
+        })
+    }
+<span class="fstat-no" title="function not covered" >    on</span>ClickBankHolidays(e) {
+<span class="cstat-no" title="statement not covered" >        if(this.state.bank_holidays===true){</span>
+<span class="cstat-no" title="statement not covered" >            this.setState({</span>
+                bank_holidays: false
+            
+			});
+<span class="cstat-no" title="statement not covered" >			console.log(this.state.bank_holidays);</span>
+        }
+        else{
+<span class="cstat-no" title="statement not covered" >            this.setState({</span>
+                bank_holidays: true
+            });
+<span class="cstat-no" title="statement not covered" >			console.log(this.state.bank_holidays);</span>
+        }
+    }
+<span class="fstat-no" title="function not covered" >    on</span>ClickApplyOld(e){
+<span class="cstat-no" title="statement not covered" >        if(this.state.apply_old===true){</span>
+<span class="cstat-no" title="statement not covered" >            this.setState({apply_old: false});</span>
+        }else{
+<span class="cstat-no" title="statement not covered" >            this.setState({apply_old: true});</span>
+        }
+    }
+<span class="fstat-no" title="function not covered" >    on</span>ChangeBursaryAmount(e){
+<span class="cstat-no" title="statement not covered" >        this.setState({</span>
+            bursary_amount: e.target.value.toString()
+        })
+    }
+<span class="fstat-no" title="function not covered" >    on</span>Submit(e){
+<span class="cstat-no" title="statement not covered" >        e.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >        console.log(this.state);</span>
+<span class="cstat-no" title="statement not covered" >        axios.post('https://' + process.env.REACT_APP_BACKEND_IP + '/settings/editSettings', this.state).then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt;{</span>
+<span class="cstat-no" title="statement not covered" >                alert("Settings updated");</span>
+            }
+        )
+    }
+<span class="fstat-no" title="function not covered" >    re</span>nder(){
+<span class="cstat-no" title="statement not covered" >        console.log(this.state)</span>
+<span class="cstat-no" title="statement not covered" >        return(</span>
+            &lt;div className="QAtable" id="gSFrame"&gt;
+                &lt;div className="QASearchBar"&gt;
+                &lt;h3&gt; &lt;div className="gSTitle"&gt;Global settings for Trainees &lt;/div&gt;&lt;/h3&gt;
+                &lt;/div&gt;
+            &lt;div className="createTrainee" style={{marginLeft: 0, marginRight: 0}}&gt;
+                    &lt;form id="gS" className="createTraineeForm" onSubmit={this.onSubmit}&gt;
+                    &lt;div &gt;
+						&lt;label className="gSLabel"&gt; Pay for Bank Holidays: &lt;/label&gt; 
+						&amp;nbsp;&amp;nbsp;
+						&lt;input type="checkbox" id="bursaryValue" checked={this.state.bank_holidays} onClick={this.onClickBankHolidays}/&gt;
+                    &lt;/div&gt;
+                    &lt;div &gt;
+						&lt;label className="gSLabel"&gt; Apply to old Trainees: &lt;/label&gt; 
+						&amp;nbsp;&amp;nbsp;
+						&lt;input type="checkbox" id="bursaryValue" checked={this.state.apply_old} onClick={this.onClickApplyOld}/&gt;
+                    &lt;/div&gt;
+                    &lt;div &gt;
+                        &lt;label className="gSLabel"&gt; Default daily bursary amount:&lt;/label&gt;
+                        &amp;nbsp;&amp;nbsp;
+                        &lt;input id="gSInput" type="number" 
+                                value={this.state.bursary_amount}
+                                onChange={this.onChangeBursaryAmount}
+                                required/&gt;
+                    &lt;/div&gt;
+                        &lt;div&gt;
+&nbsp;
+                        &lt;input type="submit" value="Update settings" id="gSUpdateBtn" /&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+        );
+    }
+    
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Jun 27 2019 10:26:01 GMT+0100 (British Summer Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
