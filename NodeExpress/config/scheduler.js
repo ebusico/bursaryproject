@@ -18,7 +18,7 @@ let Trainee = require('../models/trainee.model');
 let User = require('../models/staff');
 
 //Will start after 1am on the first every month
-const onceMonth = new CronJob('* * * * * ', function() {
+const onceMonth = new CronJob('0 1 1 * *', function() {
 	winston.info('Cron Job for Trainee working days for current month updated (automatic)');
 	console.log("Cron Job has started");
     Trainee.find(function(err, trainees) {
