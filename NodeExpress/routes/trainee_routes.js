@@ -343,7 +343,7 @@ traineeRoutes.route('/add').post(function(req, res) {
     req.body.status = CryptoJS.AES.encrypt('Pending', '3FJSei8zPx').toString();
     req.body.bursary = CryptoJS.AES.encrypt(req.body.bursary, '3FJSei8zPx').toString();
 	req.body.bursary_amount = CryptoJS.AES.encrypt(req.body.bursary_amount, '3FJSei8zPx').toString();
-
+	req.body.trainee_days_worked = CryptoJS.AES.encrypt('NotSet', '3FJSei8zPx').toString();
 	
     let trainee = new Trainee(req.body);
     trainee.save()
