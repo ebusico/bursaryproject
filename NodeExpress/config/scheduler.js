@@ -17,7 +17,7 @@ let iv = CryptoJS.enc.Hex.parse("00000000000000000000000000000000");
 let Trainee = require('../models/trainee.model');
 let User = require('../models/staff');
 
-//Will start after 1am on the first every month
+//Will start after 1am on the first every month '0 1 1 * *'
 const onceMonth = new CronJob('0 1 1 * *', function() {
 	winston.info('Cron Job for Trainee working days for current month updated (automatic)');
 	console.log("Cron Job has started");
@@ -45,7 +45,7 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
             console.log("end: "+bench_end.format("MM"));
             
             if(bursary == "False"){
-                trainee.trainee_days_worked = 0;
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     console.log('Days worked updated!');
                     logger.info("Trainee working days for current month updated (automatic)");
@@ -60,7 +60,7 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
                 })
             }else if(currentMonth.isBefore(bursary_start, 'month')){
                 console.log("Bursary starting in July, 0 days");
-                trainee.trainee_days_worked = 0
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
@@ -83,7 +83,7 @@ const onceMonth = new CronJob('0 1 1 * *', function() {
                 })
             }else if(currentMonth.isAfter(bench_end, 'month')){
                 console.log("Bursary ending in April, 0 days");
-                trainee.trainee_days_worked = 0
+                trainee.trainee_days_worked = CryptoJS.AES.encrypt(0, '3FJSei8zPx').toString();
                 trainee.save().then(trainee => {
                     logger.info("Trainee working days for current month updated (automatic)");
                 })
